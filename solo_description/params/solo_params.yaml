@@ -1,0 +1,52 @@
+wb_controller:
+  type: wb_controller/Controller
+  default_duty_factor: 0.3
+  default_swing_frequency: 4.2
+  default_contact_threshold: 4.0
+  default_base_linear_velocity: 0.25
+  default_base_angular_velocity: 0.25
+  default_step_height: 0.04
+  max_step_height: 0.2
+  max_step_length: 0.5
+  estimation_position_type: ground_truth
+  estimation_orientation_type: ground_truth
+  
+  gains:
+
+      clik_gain: 5.0
+
+      lf_haa_joint: {p: 5.0, i: 0.0, d: 0.1}
+      lf_hfe_joint: {p: 5.0, i: 0.0, d: 0.1}
+      lf_kfe_joint: {p: 5.0, i: 0.0, d: 0.1}
+      rf_haa_joint: {p: 5.0, i: 0.0, d: 0.1}
+      rf_hfe_joint: {p: 5.0, i: 0.0, d: 0.1}
+      rf_kfe_joint: {p: 5.0, i: 0.0, d: 0.1}
+      lh_haa_joint: {p: 5.0, i: 0.0, d: 0.1}
+      lh_hfe_joint: {p: 5.0, i: 0.0, d: 0.1}
+      lh_kfe_joint: {p: 5.0, i: 0.0, d: 0.1}
+      rh_haa_joint: {p: 5.0, i: 0.0, d: 0.1}
+      rh_hfe_joint: {p: 5.0, i: 0.0, d: 0.1}
+      rh_kfe_joint: {p: 5.0, i: 0.0, d: 0.1}
+
+      # Working gains with no inertia comp
+      #kp_swing: {haa: 1000.0, hfe: 1000.0, kfe: 1000.0}
+      #kd_swing: {haa: 100, hfe: 100, kfe: 100}
+
+      # M^-1 per leg:
+      #229.271 0.00979601 -0.0209117
+      #0.00979601     626.21   -1336.78
+      #-0.0209117   -1336.78    4696.57
+
+      kp_swing: {haa: 10.0, hfe: 2.0, kfe: 0.25}
+      kd_swing: {haa: 1.0, hfe: 0.5, kfe: 0.1}
+
+      kp_stance: {haa: 200.0, hfe: 200.0, kfe: 200.0}
+      kd_stance: {haa: 20.0, hfe: 20.0, kfe: 20.0}
+
+      waistRPY:
+          Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 160.0, pitch: 160.0, yaw: 100.0}
+          Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 20.0, pitch: 20.0, yaw: 10.0}
+          weight: 100.0
+
+      CoM:
+          weight: 50.0
