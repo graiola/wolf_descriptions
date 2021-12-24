@@ -8,7 +8,7 @@ See the documentation [here](https://github.com/graiola/wolf-setup/blob/master/R
 
 ## How to add a new robot
 
-To add a new robot you can start by copying the structure of an existing one. The robot descriptions are defined as ROS packages, so you will need to add it to the ros workspace.
+To add a new robot you can start by copying the structure of an existing one. The robot descriptions are defined as ROS packages, so you will need to add it to your ROS workspace.
 The required files in the package are the following:
 
 - `params/robot_name_params.yaml` it contains the controller parameters, use this file to tune a robot.
