@@ -22,7 +22,7 @@ def unpause(gazebo_namespace):
 if __name__ == "__main__":
 	rospy.init_node('go0', anonymous=True)
 
-        # Defined the variables
+	# Defined the variables
 	param_name              = ""
 	model_name              = ""
 	robot_namespace         = ""
@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
 	robot = SRDF.from_xml_string(srdf_data)
 
-        for joint in robot.group_state_map['standup'].joints:
+	for joint in robot.group_state_map['standup'].joints:
 		joint_names.append(joint.name)
 		joint_positions.append(joint.value[0])
 
