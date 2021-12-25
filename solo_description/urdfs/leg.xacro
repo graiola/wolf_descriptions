@@ -451,7 +451,7 @@
         </link> <!-- END FOOT LINK -->
 
         <!-- Extensions -->
-        <xacro:leg_transmission name="${prefix}"/>
-        <xacro:leg_gazebo name="${prefix}" load_force_sensors="${load_force_sensors}"/>
+        <xacro:leg_transmission prefix="${prefix}"/>
+        <xacro:leg_gazebo prefix="${prefix}" load_force_sensors="${load_force_sensors}" robot_name="solo"/>
     </xacro:macro>
 </robot>
