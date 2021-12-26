@@ -17,6 +17,7 @@
         <arg name="task_period" default="0.004"/>
         <arg name="arm_enabled" default="false"/>
         <arg name="arm_name" default="kinova"/>
+        <arg name="engine" default="ode"/>
 
         <arg if="$(arg wb_empty_world)" name="full_world_name" default="$(find wb_gazebo_resources)/worlds/$(arg world_name)"/>
 	<arg unless="$(arg wb_empty_world)" name="full_world_name" default="worlds/$(arg world_name)"/>
@@ -33,10 +34,12 @@
 	<arg if="$(arg headless)" name="command_arg2" value="-r"/>
 	<arg unless="$(arg debug)" name="script_type" value="gzserver"/>
 	<arg if="$(arg debug)" name="script_type" value="debug"/>
+	
+	<arg name="dynamic_engine" value="-e $(arg engine)"/>
 
 	<!-- Start gazebo server-->
 	<node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="false" output="screen"
-		args="$(arg command_arg1) $(arg command_arg2) $(arg full_world_name)" />
+		args="$(arg command_arg1) $(arg command_arg2) $(arg full_world_name) $(arg dynamic_engine)" />
 	
 	<!-- Start gazebo client -->
 	<group if="$(arg gui)">
