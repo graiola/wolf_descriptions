@@ -8,6 +8,7 @@ wb_controller:
   default_step_height: 0.065
   max_step_height: 0.15
   max_step_length: 0.5
+  max_base_height: 0.42
   estimation_position_type: ground_truth
   estimation_orientation_type: ground_truth
 
