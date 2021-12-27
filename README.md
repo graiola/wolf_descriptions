@@ -1,6 +1,6 @@
 # WoLF: Whole-body Locomotion Framework for quadruped robots
 
-This repo contains the robot and sensor descriptions used with WoLF.
+This repo contains a collection of different robots and sensors used in WoLF.
 
 ## Setup
 
