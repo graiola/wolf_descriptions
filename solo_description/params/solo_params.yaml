@@ -28,25 +28,43 @@ wb_controller:
       rh_hfe_joint: {p: 5.0, i: 0.0, d: 0.1}
       rh_kfe_joint: {p: 5.0, i: 0.0, d: 0.1}
 
-      # Working gains with no inertia comp
-      #kp_swing: {haa: 1000.0, hfe: 1000.0, kfe: 1000.0}
-      #kd_swing: {haa: 100, hfe: 100, kfe: 100}
-
-      # M^-1 per leg:
-      #229.271 0.00979601 -0.0209117
-      #0.00979601     626.21   -1336.78
-      #-0.0209117   -1336.78    4696.57
-
       kp_swing: {haa: 10.0, hfe: 2.0, kfe: 0.25}
       kd_swing: {haa: 1.0, hfe: 0.5, kfe: 0.1}
 
       kp_stance: {haa: 200.0, hfe: 200.0, kfe: 200.0}
       kd_stance: {haa: 20.0, hfe: 20.0, kfe: 20.0}
-
-      waistRPY:
-          Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 160.0, pitch: 160.0, yaw: 100.0}
-          Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 20.0, pitch: 20.0, yaw: 10.0}
+      
+      lf_foot:
+          Kp: {x: 100.0, y: 100.0, z: 100.0, roll: 0, pitch: 0, yaw: 0}
+          Kd: {x: 5.0, y: 5.0, z: 5.0, roll: 0, pitch: 0, yaw: 0}
+          weight: 100.0
+      rf_foot:
+          Kp: {x: 100.0, y: 100.0, z: 100.0, roll: 0, pitch: 0, yaw: 0}
+          Kd: {x: 5.0, y: 5.0, z: 5.0, roll: 0, pitch: 0, yaw: 0}
+          weight: 100.0
+      rh_foot:
+          Kp: {x: 100.0, y: 100.0, z: 100.0, roll: 0, pitch: 0, yaw: 0}
+          Kd: {x: 5.0, y: 5.0, z: 5.0, roll: 0, pitch: 0, yaw: 0}
+          weight: 100.0
+      lh_foot:
+          Kp: {x: 100.0, y: 100.0, z: 100.0, roll: 0, pitch: 0, yaw: 0}
+          Kd: {x: 5.0, y: 5.0, z: 5.0, roll: 0, pitch: 0, yaw: 0}
           weight: 100.0
 
+      waistRPY:
+          Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 100.0, pitch: 100.0, yaw: 100.0}
+          Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 5.0, pitch: 5.0, yaw: 5.0}
+          weight: 100.0
+          
+      waistZ:
+          Kp: {x: 0.0, y: 0.0, z: 50.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
+          Kd: {x: 0.0, y: 0.0, z: 5.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
+          weight: 0.0
+
       CoM:
-          weight: 50.0
+          Kp: {x: 50.0, y: 50.0, z: 50.0}
+          Kd: {x: 5.0, y: 5.0, z: 5.0}
+          weight: 1.0
+
+      angular_momentum:
+          weight: 0.1
