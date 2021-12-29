@@ -15,7 +15,7 @@ wb_controller:
   push_recovery:
       k: {x: 0.5, y: 0.5, r: 0.01}
       dynamic_th: {x: 0.5, y: 0.5, r: 0.5}
-      static_th: {x: 0.06, y: 0.06, r: 0.06}
+      static_th: {x: 0.03, y: 0.03, r: 0.03}
 
   gains:
 
