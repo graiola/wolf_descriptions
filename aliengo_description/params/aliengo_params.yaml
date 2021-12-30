@@ -39,11 +39,11 @@ wb_controller:
       rh_hfe_joint: {p: 300.0, i: 0.0, d: 8.0}
       rh_kfe_joint: {p: 300.0, i: 0.0, d: 8.0}
 
-      kp_swing: {haa: 100.0, hfe: 100.0, kfe: 100.0}
-      kd_swing: {haa: 10.0, hfe: 10.0, kfe: 10.0}
+      kp_swing: {haa: 0.0, hfe: 0.0, kfe: 0.0}
+      kd_swing: {haa: 0.0, hfe: 0.0, kfe: 0.0}
 
-      kp_stance: {haa: 100.0, hfe: 100.0, kfe: 100.0}
-      kd_stance: {haa: 5.0, hfe: 5.0, kfe: 5.0}
+      kp_stance: {haa: 1, hfe: 1, kfe: 1}
+      kd_stance: {haa: 0.1, hfe: 0.1, kfe: 0.01}
 
       lf_foot:
           Kp: {x: 100.0, y: 100.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
