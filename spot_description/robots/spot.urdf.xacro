@@ -145,7 +145,7 @@
         <axis xyz="1 0 0" />
         <parent link="base_link" />
         <child link="lf_hip" />
-        <limit effort="50" velocity="1000.00" lower="-0.78539816339744827899" upper="0.78539816339744827899" />
+        <limit effort="50" velocity="10" lower="-0.78539816339744827899" upper="0.78539816339744827899" />
     </joint>
     <link name="lf_upperleg">
         <visual>
@@ -172,7 +172,7 @@
         <axis xyz="0 1 0" />
         <parent link="lf_hip" />
         <child link="lf_upperleg" />
-        <limit effort="50" velocity="1000.00" lower="-0.89884456477707963539" upper="2.2951079663725435509" />
+        <limit effort="50" velocity="10" lower="-0.89884456477707963539" upper="2.2951079663725435509" />
     </joint>
     <link name="lf_lowerleg">
         <visual>
@@ -199,7 +199,7 @@
         <axis xyz="0 1 0" />
         <parent link="lf_upperleg" />
         <child link="lf_lowerleg" />
-        <limit effort="50" velocity="1000.00" lower="-2.7929" upper="-0.254801" />
+        <limit effort="50" velocity="10" lower="-2.7929" upper="-0.254801" />
     </joint>
     <joint name="lf_foot_joint" type="fixed">
         <origin xyz="${foot_x} 0.0 ${foot_z}" rpy="0 0 0" />
@@ -250,7 +250,7 @@
         <axis xyz="1 0 0" />
         <parent link="base_link" />
         <child link="rf_hip" />
-        <limit effort="50" velocity="1000.00" lower="-0.78539816339744827899" upper="0.78539816339744827899" />
+        <limit effort="50" velocity="10" lower="-0.78539816339744827899" upper="0.78539816339744827899" />
     </joint>
     <link name="rf_upperleg">
         <visual>
@@ -277,7 +277,7 @@
         <axis xyz="0 1 0" />
         <parent link="rf_hip" />
         <child link="rf_upperleg" />
-        <limit effort="50" velocity="1000.00" lower="-0.89884456477707963539" upper="2.2951079663725435509" />
+        <limit effort="50" velocity="10" lower="-0.89884456477707963539" upper="2.2951079663725435509" />
     </joint>
     <link name="rf_lowerleg">
         <visual>
@@ -304,7 +304,7 @@
         <axis xyz="0 1 0" />
         <parent link="rf_upperleg" />
         <child link="rf_lowerleg" />
-        <limit effort="50" velocity="1000.00" lower="-2.7929" upper="-0.247563" />
+        <limit effort="50" velocity="10" lower="-2.7929" upper="-0.247563" />
     </joint>
     <joint name="rf_foot_joint" type="fixed">
         <origin xyz="${foot_x} 0.0 ${foot_z}" rpy="0 0 0" />
@@ -355,7 +355,7 @@
         <axis xyz="1 0 0" />
         <parent link="base_link" />
         <child link="lh_hip" />
-        <limit effort="50" velocity="1000.00" lower="-0.78539816339744827899" upper="0.78539816339744827899" />
+        <limit effort="50" velocity="10" lower="-0.78539816339744827899" upper="0.78539816339744827899" />
     </joint>
     <link name="lh_upperleg">
         <visual>
@@ -382,7 +382,7 @@
         <axis xyz="0 1 0" />
         <parent link="lh_hip" />
         <child link="lh_upperleg" />
-        <limit effort="50" velocity="1000.00" lower="-0.89884456477707963539" upper="2.2951079663725435509" />
+        <limit effort="50" velocity="10" lower="-0.89884456477707963539" upper="2.2951079663725435509" />
     </joint>
     <link name="lh_lowerleg">
         <visual>
@@ -409,7 +409,7 @@
         <axis xyz="0 1 0" />
         <parent link="lh_upperleg" />
         <child link="lh_lowerleg" />
-        <limit effort="50" velocity="1000.00" lower="-2.7929" upper="-0.267153" />
+        <limit effort="50" velocity="10" lower="-2.7929" upper="-0.267153" />
     </joint>
     <joint name="lh_foot_joint" type="fixed">
         <origin xyz="${foot_x} 0.0 ${foot_z}" rpy="0 0 0" />
@@ -460,7 +460,7 @@
         <axis xyz="1 0 0" />
         <parent link="base_link" />
         <child link="rh_hip" />
-        <limit effort="50" velocity="1000.00" lower="-0.78539816339744827899" upper="0.78539816339744827899" />
+        <limit effort="50" velocity="10" lower="-0.78539816339744827899" upper="0.78539816339744827899" />
     </joint>
     <link name="rh_upperleg">
         <visual>
@@ -487,7 +487,7 @@
         <axis xyz="0 1 0" />
         <parent link="rh_hip" />
         <child link="rh_upperleg" />
-        <limit effort="50" velocity="1000.00" lower="-0.89884456477707963539" upper="2.2951079663725435509" />
+        <limit effort="50" velocity="10" lower="-0.89884456477707963539" upper="2.2951079663725435509" />
     </joint>
     <link name="rh_lowerleg">
         <visual>
@@ -514,7 +514,7 @@
         <axis xyz="0 1 0" />
         <parent link="rh_upperleg" />
         <child link="rh_lowerleg" />
-        <limit effort="50" velocity="1000.00" lower="-2.7929" upper="-0.257725" />
+        <limit effort="50" velocity="10" lower="-2.7929" upper="-0.257725" />
     </joint>
     <joint name="rh_foot_joint" type="fixed">
         <origin xyz="${foot_x} 0.0 ${foot_z}" rpy="0 0 0" />
