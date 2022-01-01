@@ -19,28 +19,9 @@ wb_controller:
 
   gains:
 
-      clik_gain: 5.0
-
-      lf_haa_joint: {p: 100.0, i: 0.0, d: 5.0}
-      lf_hfe_joint: {p: 300.0, i: 0.0, d: 8.0}
-      lf_kfe_joint: {p: 300.0, i: 0.0, d: 8.0}
-
-      rf_haa_joint: {p: 100.0, i: 0.0, d: 5.0}
-      rf_hfe_joint: {p: 300.0, i: 0.0, d: 8.0}
-      rf_kfe_joint: {p: 300.0, i: 0.0, d: 8.0}
-
-      lh_haa_joint: {p: 100.0, i: 0.0, d: 5.0}
-      lh_hfe_joint: {p: 300.0, i: 0.0, d: 8.0}
-      lh_kfe_joint: {p: 300.0, i: 0.0, d: 8.0}
-
-      rh_haa_joint: {p: 100.0, i: 0.0, d: 5.0}
-      rh_hfe_joint: {p: 300.0, i: 0.0, d: 8.0}
-      rh_kfe_joint: {p: 300.0, i: 0.0, d: 8.0}
-
-      kp_swing: {haa: 0.0, hfe: 0.0, kfe: 0.0}
-      kd_swing: {haa: 0.0, hfe: 0.0, kfe: 0.0}
-
-      kp_stance: {haa: 1, hfe: 1, kfe: 1}
+      kp_swing: {haa: 1.0, hfe: 1.0, kfe: 1.0}
+      kd_swing: {haa: 0.1, hfe: 0.1, kfe: 0.01}
+      kp_stance: {haa: 1.0, hfe: 1.0, kfe: 1.0}
       kd_stance: {haa: 0.1, hfe: 0.1, kfe: 0.01}
 
       lf_foot:
