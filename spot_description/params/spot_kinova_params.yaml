@@ -15,10 +15,12 @@ wolf_controller:
   push_recovery:
       k: {x: 0.5, y: 0.5, r: 0.01}
       dynamic_th: {x: 0.5, y: 0.5, r: 0.5}
-      static_th: {x: 0.06, y: 0.06, r: 0.06}
+      static_th: {x: 0.03, y: 0.03, r: 0.03}
 
   gains:
 
+      kp_arm: {j0: 50.0, j1: 50.0, j2: 50.0, j3: 50.0}
+      kd_arm: {j0: 1.0, j1: 1.0, j2: 1.0, j3: 1.0}
       kp_swing: {haa: 1.0, hfe: 1.0, kfe: 1.0}
       kd_swing: {haa: 0.1, hfe: 0.1, kfe: 0.01}
       kp_stance: {haa: 1.0, hfe: 1.0, kfe: 1.0}
