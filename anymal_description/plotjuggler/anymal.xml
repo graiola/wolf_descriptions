@@ -9,32 +9,32 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.313266" bottom="0.313182"/>
         <limitY/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/lf_foot/pose_actual/position/x"/>
-        <curve color="#d62728" name="/anymal/wb_controller/lf_foot/pose_reference/position/x"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/lf_foot/pose_actual/position/x"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/lf_foot/pose_reference/position/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="-0.282461" bottom="-0.282500"/>
         <limitY/>
-        <curve color="#17becf" name="/anymal/wb_controller/lh_foot/pose_actual/position/x"/>
-        <curve color="#d62728" name="/anymal/wb_controller/lh_foot/pose_reference/position/x"/>
+        <curve color="#17becf" name="/anymal/wolf_controller/lh_foot/pose_actual/position/x"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/lh_foot/pose_reference/position/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.313271" bottom="0.313184"/>
         <limitY/>
-        <curve color="#f14cc1" name="/anymal/wb_controller/rf_foot/pose_actual/position/x"/>
-        <curve color="#bcbd22" name="/anymal/wb_controller/rf_foot/pose_reference/position/x"/>
+        <curve color="#f14cc1" name="/anymal/wolf_controller/rf_foot/pose_actual/position/x"/>
+        <curve color="#bcbd22" name="/anymal/wolf_controller/rf_foot/pose_reference/position/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="-0.282462" bottom="-0.282501"/>
         <limitY/>
-        <curve color="#1ac938" name="/anymal/wb_controller/rh_foot/pose_actual/position/x"/>
-        <curve color="#9467bd" name="/anymal/wb_controller/rh_foot/pose_reference/position/x"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/rh_foot/pose_actual/position/x"/>
+        <curve color="#9467bd" name="/anymal/wolf_controller/rh_foot/pose_reference/position/x"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -43,32 +43,32 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.271955" bottom="0.271766"/>
         <limitY/>
-        <curve color="#1ac938" name="/anymal/wb_controller/lf_foot/pose_actual/position/y"/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/lf_foot/pose_reference/position/y"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/lf_foot/pose_actual/position/y"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/lf_foot/pose_reference/position/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.272092" bottom="0.271929"/>
         <limitY/>
-        <curve color="#bcbd22" name="/anymal/wb_controller/lh_foot/pose_actual/position/y"/>
-        <curve color="#1ac938" name="/anymal/wb_controller/lh_foot/pose_reference/position/y"/>
+        <curve color="#bcbd22" name="/anymal/wolf_controller/lh_foot/pose_actual/position/y"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/lh_foot/pose_reference/position/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="-0.271880" bottom="-0.272074"/>
         <limitY/>
-        <curve color="#9467bd" name="/anymal/wb_controller/rf_foot/pose_actual/position/y"/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/rf_foot/pose_reference/position/y"/>
+        <curve color="#9467bd" name="/anymal/wolf_controller/rf_foot/pose_actual/position/y"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/rf_foot/pose_reference/position/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="-0.272049" bottom="-0.272193"/>
         <limitY/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/rh_foot/pose_actual/position/y"/>
-        <curve color="#17becf" name="/anymal/wb_controller/rh_foot/pose_reference/position/y"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/rh_foot/pose_actual/position/y"/>
+        <curve color="#17becf" name="/anymal/wolf_controller/rh_foot/pose_reference/position/y"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -77,32 +77,32 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="-0.000000" bottom="-0.000000"/>
         <limitY/>
-        <curve color="#f14cc1" name="/anymal/wb_controller/lf_foot/pose_actual/position/z"/>
-        <curve color="#9467bd" name="/anymal/wb_controller/lf_foot/pose_reference/position/z"/>
+        <curve color="#f14cc1" name="/anymal/wolf_controller/lf_foot/pose_actual/position/z"/>
+        <curve color="#9467bd" name="/anymal/wolf_controller/lf_foot/pose_reference/position/z"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="-0.000001" bottom="-0.000001"/>
         <limitY/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/lh_foot/pose_actual/position/z"/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/lh_foot/pose_reference/position/z"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/lh_foot/pose_actual/position/z"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/lh_foot/pose_reference/position/z"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.000001" bottom="0.000001"/>
         <limitY/>
-        <curve color="#17becf" name="/anymal/wb_controller/rf_foot/pose_actual/position/z"/>
-        <curve color="#d62728" name="/anymal/wb_controller/rf_foot/pose_reference/position/z"/>
+        <curve color="#17becf" name="/anymal/wolf_controller/rf_foot/pose_actual/position/z"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/rf_foot/pose_reference/position/z"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.000000" bottom="0.000000"/>
         <limitY/>
-        <curve color="#f14cc1" name="/anymal/wb_controller/rh_foot/pose_actual/position/z"/>
-        <curve color="#bcbd22" name="/anymal/wb_controller/rh_foot/pose_reference/position/z"/>
+        <curve color="#f14cc1" name="/anymal/wolf_controller/rh_foot/pose_actual/position/z"/>
+        <curve color="#bcbd22" name="/anymal/wolf_controller/rh_foot/pose_reference/position/z"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -156,27 +156,27 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.013226" bottom="-0.000323"/>
         <limitY/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/Postural/position_actual.6"/>
-        <curve color="#f14cc1" name="/anymal/wb_controller/Postural/position_reference.6"/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/Postural/position_error.6"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/Postural/position_actual.6"/>
+        <curve color="#f14cc1" name="/anymal/wolf_controller/Postural/position_reference.6"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/Postural/position_error.6"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="4.157349" bottom="-0.101399"/>
         <limitY/>
-        <curve color="#d62728" name="/anymal/wb_controller/Postural/position_actual.7"/>
-        <curve color="#9467bd" name="/anymal/wb_controller/Postural/position_reference.7"/>
-        <curve color="#d62728" name="/anymal/wb_controller/Postural/position_error.7"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/Postural/position_actual.7"/>
+        <curve color="#9467bd" name="/anymal/wolf_controller/Postural/position_reference.7"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/Postural/position_error.7"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="1.285350" bottom="-0.674484"/>
         <limitY/>
-        <curve color="#1ac938" name="/anymal/wb_controller/Postural/position_actual.8"/>
-        <curve color="#17becf" name="/anymal/wb_controller/Postural/position_reference.8"/>
-        <curve color="#1ac938" name="/anymal/wb_controller/Postural/position_error.8"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/Postural/position_actual.8"/>
+        <curve color="#17becf" name="/anymal/wolf_controller/Postural/position_reference.8"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/Postural/position_error.8"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -185,27 +185,27 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="3.218461" bottom="-0.078499"/>
         <limitY/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/Postural/position_actual.9"/>
-        <curve color="#bcbd22" name="/anymal/wb_controller/Postural/position_reference.9"/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/Postural/position_error.9"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/Postural/position_actual.9"/>
+        <curve color="#bcbd22" name="/anymal/wolf_controller/Postural/position_reference.9"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/Postural/position_error.9"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.209444" bottom="-0.003586"/>
         <limitY/>
-        <curve color="#f14cc1" name="/anymal/wb_controller/Postural/position_actual.10"/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/Postural/position_reference.10"/>
-        <curve color="#f14cc1" name="/anymal/wb_controller/Postural/position_error.10"/>
+        <curve color="#f14cc1" name="/anymal/wolf_controller/Postural/position_actual.10"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/Postural/position_reference.10"/>
+        <curve color="#f14cc1" name="/anymal/wolf_controller/Postural/position_error.10"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.708170" bottom="-0.017422"/>
         <limitY/>
-        <curve color="#9467bd" name="/anymal/wb_controller/Postural/position_actual.11"/>
-        <curve color="#d62728" name="/anymal/wb_controller/Postural/position_reference.11"/>
-        <curve color="#9467bd" name="/anymal/wb_controller/Postural/position_error.11"/>
+        <curve color="#9467bd" name="/anymal/wolf_controller/Postural/position_actual.11"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/Postural/position_reference.11"/>
+        <curve color="#9467bd" name="/anymal/wolf_controller/Postural/position_error.11"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -214,27 +214,27 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.036921" bottom="-1.435023"/>
         <limitY/>
-        <curve color="#17becf" name="/anymal/wb_controller/Postural/position_actual.12"/>
-        <curve color="#1ac938" name="/anymal/wb_controller/Postural/position_reference.12"/>
-        <curve color="#17becf" name="/anymal/wb_controller/Postural/position_error.12"/>
+        <curve color="#17becf" name="/anymal/wolf_controller/Postural/position_actual.12"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/Postural/position_reference.12"/>
+        <curve color="#17becf" name="/anymal/wolf_controller/Postural/position_error.12"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.209822" bottom="-0.003536"/>
         <limitY/>
-        <curve color="#bcbd22" name="/anymal/wb_controller/Postural/position_actual.13"/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/Postural/position_reference.13"/>
-        <curve color="#bcbd22" name="/anymal/wb_controller/Postural/position_error.13"/>
+        <curve color="#bcbd22" name="/anymal/wolf_controller/Postural/position_actual.13"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/Postural/position_reference.13"/>
+        <curve color="#bcbd22" name="/anymal/wolf_controller/Postural/position_error.13"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.707841" bottom="-0.016022"/>
         <limitY/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/Postural/position_actual.14"/>
-        <curve color="#f14cc1" name="/anymal/wb_controller/Postural/position_reference.14"/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/Postural/position_error.14"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/Postural/position_actual.14"/>
+        <curve color="#f14cc1" name="/anymal/wolf_controller/Postural/position_reference.14"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/Postural/position_error.14"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -243,27 +243,27 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.034273" bottom="-1.432654"/>
         <limitY/>
-        <curve color="#d62728" name="/anymal/wb_controller/Postural/position_actual.15"/>
-        <curve color="#9467bd" name="/anymal/wb_controller/Postural/position_reference.15"/>
-        <curve color="#d62728" name="/anymal/wb_controller/Postural/position_error.15"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/Postural/position_actual.15"/>
+        <curve color="#9467bd" name="/anymal/wolf_controller/Postural/position_reference.15"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/Postural/position_error.15"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.006660" bottom="-0.209490"/>
         <limitY/>
-        <curve color="#1ac938" name="/anymal/wb_controller/Postural/position_actual.16"/>
-        <curve color="#17becf" name="/anymal/wb_controller/Postural/position_reference.16"/>
-        <curve color="#1ac938" name="/anymal/wb_controller/Postural/position_error.16"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/Postural/position_actual.16"/>
+        <curve color="#17becf" name="/anymal/wolf_controller/Postural/position_reference.16"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/Postural/position_error.16"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.708332" bottom="-0.017776"/>
         <limitY/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/Postural/position_actual.17"/>
-        <curve color="#bcbd22" name="/anymal/wb_controller/Postural/position_reference.17"/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/Postural/position_error.17"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/Postural/position_actual.17"/>
+        <curve color="#bcbd22" name="/anymal/wolf_controller/Postural/position_reference.17"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/Postural/position_error.17"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -278,24 +278,24 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="3.082000" right="8.082000" top="0.408710" bottom="0.402989"/>
         <limitY/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/kinova_end_effector/pose_actual/position/x"/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/kinova_end_effector/pose_reference/position/x"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/kinova_end_effector/pose_actual/position/x"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/kinova_end_effector/pose_reference/position/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="3.082000" right="8.082000" top="-0.006993" bottom="-0.007706"/>
         <limitY/>
-        <curve color="#d62728" name="/anymal/wb_controller/kinova_end_effector/pose_actual/position/y"/>
-        <curve color="#f14cc1" name="/anymal/wb_controller/kinova_end_effector/pose_reference/position/y"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/kinova_end_effector/pose_actual/position/y"/>
+        <curve color="#f14cc1" name="/anymal/wolf_controller/kinova_end_effector/pose_reference/position/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="3.082000" right="8.082000" top="0.364579" bottom="0.357539"/>
         <limitY/>
-        <curve color="#1ac938" name="/anymal/wb_controller/kinova_end_effector/pose_actual/position/z"/>
-        <curve color="#9467bd" name="/anymal/wb_controller/kinova_end_effector/pose_reference/position/z"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/kinova_end_effector/pose_actual/position/z"/>
+        <curve color="#9467bd" name="/anymal/wolf_controller/kinova_end_effector/pose_reference/position/z"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -304,24 +304,24 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="3.082000" right="8.082000" top="-2.702502" bottom="-3.150075"/>
         <limitY/>
-        <curve color="#17becf" name="/anymal/wb_controller/kinova_end_effector/rpy_actual/x"/>
-        <curve color="#d62728" name="/anymal/wb_controller/kinova_end_effector/rpy_reference/x"/>
+        <curve color="#17becf" name="/anymal/wolf_controller/kinova_end_effector/rpy_actual/x"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/kinova_end_effector/rpy_reference/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="3.082000" right="8.082000" top="-1.490314" bottom="-1.540817"/>
         <limitY/>
-        <curve color="#bcbd22" name="/anymal/wb_controller/kinova_end_effector/rpy_actual/y"/>
-        <curve color="#1ac938" name="/anymal/wb_controller/kinova_end_effector/rpy_reference/y"/>
+        <curve color="#bcbd22" name="/anymal/wolf_controller/kinova_end_effector/rpy_actual/y"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/kinova_end_effector/rpy_reference/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="3.082000" right="8.082000" top="1.577716" bottom="1.129850"/>
         <limitY/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/kinova_end_effector/rpy_actual/z"/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/kinova_end_effector/rpy_reference/z"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/kinova_end_effector/rpy_actual/z"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/kinova_end_effector/rpy_reference/z"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -335,8 +335,8 @@
       <plot style="Lines" mode="TimeSeries">
        <range left="0.001000" right="5.001000" top="0.509732" bottom="0.180768"/>
        <limitY/>
-       <curve color="#1f77b4" name="/anymal/wb_controller/waistZ/pose_actual/position/z"/>
-       <curve color="#d62728" name="/anymal/wb_controller/waistZ/pose_reference/position/z"/>
+       <curve color="#1f77b4" name="/anymal/wolf_controller/waistZ/pose_actual/position/z"/>
+       <curve color="#d62728" name="/anymal/wolf_controller/waistZ/pose_reference/position/z"/>
        <curve color="#1f77b4" name="/rt_logger/FootholdsPlanner/desired_height/array.0/array/data.0"/>
        <curve color="#d62728" name="/rt_logger/StateEstimator/actual_height/array.0/array/data.0"/>
       </plot>
@@ -351,24 +351,24 @@
       <plot style="Lines" mode="TimeSeries">
        <range left="0.001000" right="5.001000" top="0.000889" bottom="-0.000581"/>
        <limitY/>
-       <curve color="#1f77b4" name="/anymal/wb_controller/waistRPY/rpy_actual/x"/>
-       <curve color="#ff7f0e" name="/anymal/wb_controller/waistRPY/rpy_reference/x"/>
+       <curve color="#1f77b4" name="/anymal/wolf_controller/waistRPY/rpy_actual/x"/>
+       <curve color="#ff7f0e" name="/anymal/wolf_controller/waistRPY/rpy_reference/x"/>
       </plot>
      </DockArea>
      <DockArea name="...">
       <plot style="Lines" mode="TimeSeries">
        <range left="0.001000" right="5.001000" top="0.000048" bottom="-0.000875"/>
        <limitY/>
-       <curve color="#d62728" name="/anymal/wb_controller/waistRPY/rpy_actual/y"/>
-       <curve color="#f14cc1" name="/anymal/wb_controller/waistRPY/rpy_reference/y"/>
+       <curve color="#d62728" name="/anymal/wolf_controller/waistRPY/rpy_actual/y"/>
+       <curve color="#f14cc1" name="/anymal/wolf_controller/waistRPY/rpy_reference/y"/>
       </plot>
      </DockArea>
      <DockArea name="...">
       <plot style="Lines" mode="TimeSeries">
        <range left="0.001000" right="5.001000" top="-0.000095" bottom="-0.000197"/>
        <limitY/>
-       <curve color="#1ac938" name="/anymal/wb_controller/waistRPY/rpy_actual/z"/>
-       <curve color="#9467bd" name="/anymal/wb_controller/waistRPY/rpy_reference/z"/>
+       <curve color="#1ac938" name="/anymal/wolf_controller/waistRPY/rpy_actual/z"/>
+       <curve color="#9467bd" name="/anymal/wolf_controller/waistRPY/rpy_reference/z"/>
       </plot>
      </DockArea>
     </DockSplitter>
@@ -450,24 +450,24 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.016024" bottom="-0.000391"/>
         <limitY/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/CoM/pose_actual/position/x"/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/CoM/pose_reference/position/x"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/CoM/pose_actual/position/x"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/CoM/pose_reference/position/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.001751" bottom="-0.000043"/>
         <limitY/>
-        <curve color="#d62728" name="/anymal/wb_controller/CoM/pose_actual/position/y"/>
-        <curve color="#f14cc1" name="/anymal/wb_controller/CoM/pose_reference/position/y"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/CoM/pose_actual/position/y"/>
+        <curve color="#f14cc1" name="/anymal/wolf_controller/CoM/pose_reference/position/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.533227" bottom="-0.013006"/>
         <limitY/>
-        <curve color="#1ac938" name="/anymal/wb_controller/CoM/pose_actual/position/z"/>
-        <curve color="#9467bd" name="/anymal/wb_controller/CoM/pose_reference/position/z"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/CoM/pose_actual/position/z"/>
+        <curve color="#9467bd" name="/anymal/wolf_controller/CoM/pose_reference/position/z"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -476,24 +476,24 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.100000" bottom="-0.100000"/>
         <limitY/>
-        <curve color="#17becf" name="/anymal/wb_controller/CoM/twist_actual/linear/x"/>
-        <curve color="#d62728" name="/anymal/wb_controller/CoM/twist_reference/linear/x"/>
+        <curve color="#17becf" name="/anymal/wolf_controller/CoM/twist_actual/linear/x"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/CoM/twist_reference/linear/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.100000" bottom="-0.100000"/>
         <limitY/>
-        <curve color="#bcbd22" name="/anymal/wb_controller/CoM/twist_actual/linear/y"/>
-        <curve color="#1ac938" name="/anymal/wb_controller/CoM/twist_reference/linear/y"/>
+        <curve color="#bcbd22" name="/anymal/wolf_controller/CoM/twist_actual/linear/y"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/CoM/twist_reference/linear/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.100000" bottom="-0.100000"/>
         <limitY/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/CoM/twist_actual/linear/z"/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/CoM/twist_reference/linear/z"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/CoM/twist_actual/linear/z"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/CoM/twist_reference/linear/z"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -554,28 +554,28 @@
       <plot style="Lines" mode="TimeSeries">
        <range left="0.001000" right="5.001000" top="1.100000" bottom="0.900000"/>
        <limitY/>
-       <curve color="#1f77b4" name="/anymal/wb_controller/contact_forces/contact.0"/>
+       <curve color="#1f77b4" name="/anymal/wolf_controller/contact_forces/contact.0"/>
       </plot>
      </DockArea>
      <DockArea name="...">
       <plot style="Lines" mode="TimeSeries">
        <range left="0.001000" right="5.001000" top="1.100000" bottom="0.900000"/>
        <limitY/>
-       <curve color="#d62728" name="/anymal/wb_controller/contact_forces/contact.1"/>
+       <curve color="#d62728" name="/anymal/wolf_controller/contact_forces/contact.1"/>
       </plot>
      </DockArea>
      <DockArea name="...">
       <plot style="Lines" mode="TimeSeries">
        <range left="0.001000" right="5.001000" top="1.100000" bottom="0.900000"/>
        <limitY/>
-       <curve color="#1ac938" name="/anymal/wb_controller/contact_forces/contact.2"/>
+       <curve color="#1ac938" name="/anymal/wolf_controller/contact_forces/contact.2"/>
       </plot>
      </DockArea>
      <DockArea name="...">
       <plot style="Lines" mode="TimeSeries">
        <range left="0.001000" right="5.001000" top="1.100000" bottom="0.900000"/>
        <limitY/>
-       <curve color="#ff7f0e" name="/anymal/wb_controller/contact_forces/contact.3"/>
+       <curve color="#ff7f0e" name="/anymal/wolf_controller/contact_forces/contact.3"/>
       </plot>
      </DockArea>
     </DockSplitter>
@@ -589,24 +589,24 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="2.574142" bottom="-0.062322"/>
         <limitY/>
-        <curve color="#f14cc1" name="/anymal/wb_controller/contact_forces/contact_forces.0/force/x"/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/contact_forces/des_contact_forces.0/force/x"/>
+        <curve color="#f14cc1" name="/anymal/wolf_controller/contact_forces/contact_forces.0/force/x"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/contact_forces/des_contact_forces.0/force/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="1.322999" bottom="-0.033851"/>
         <limitY/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/contact_forces/contact_forces.0/force/y"/>
-        <curve color="#d62728" name="/anymal/wb_controller/contact_forces/des_contact_forces.0/force/y"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/contact_forces/contact_forces.0/force/y"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/contact_forces/des_contact_forces.0/force/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="79.851648" bottom="64.206024"/>
         <limitY/>
-        <curve color="#d62728" name="/anymal/wb_controller/contact_forces/contact_forces.0/force/z"/>
-        <curve color="#1ac938" name="/anymal/wb_controller/contact_forces/des_contact_forces.0/force/z"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/contact_forces/contact_forces.0/force/z"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/contact_forces/des_contact_forces.0/force/z"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -615,24 +615,24 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="2.604094" bottom="-0.063052"/>
         <limitY/>
-        <curve color="#9467bd" name="/anymal/wb_controller/contact_forces/contact_forces.1/force/x"/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/contact_forces/des_contact_forces.1/force/x"/>
+        <curve color="#9467bd" name="/anymal/wolf_controller/contact_forces/contact_forces.1/force/x"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/contact_forces/des_contact_forces.1/force/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="1.452168" bottom="-0.036953"/>
         <limitY/>
-        <curve color="#1ac938" name="/anymal/wb_controller/contact_forces/contact_forces.1/force/y"/>
-        <curve color="#f14cc1" name="/anymal/wb_controller/contact_forces/des_contact_forces.1/force/y"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/contact_forces/contact_forces.1/force/y"/>
+        <curve color="#f14cc1" name="/anymal/wolf_controller/contact_forces/des_contact_forces.1/force/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="80.669778" bottom="64.062821"/>
         <limitY/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/contact_forces/contact_forces.1/force/z"/>
-        <curve color="#9467bd" name="/anymal/wb_controller/contact_forces/des_contact_forces.1/force/z"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/contact_forces/contact_forces.1/force/z"/>
+        <curve color="#9467bd" name="/anymal/wolf_controller/contact_forces/des_contact_forces.1/force/z"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -641,24 +641,24 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="2.603192" bottom="-0.063074"/>
         <limitY/>
-        <curve color="#17becf" name="/anymal/wb_controller/contact_forces/contact_forces.2/force/x"/>
-        <curve color="#17becf" name="/anymal/wb_controller/contact_forces/des_contact_forces.2/force/x"/>
+        <curve color="#17becf" name="/anymal/wolf_controller/contact_forces/contact_forces.2/force/x"/>
+        <curve color="#17becf" name="/anymal/wolf_controller/contact_forces/des_contact_forces.2/force/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.027289" bottom="-1.183322"/>
         <limitY/>
-        <curve color="#f14cc1" name="/anymal/wb_controller/contact_forces/contact_forces.2/force/y"/>
-        <curve color="#bcbd22" name="/anymal/wb_controller/contact_forces/des_contact_forces.2/force/y"/>
+        <curve color="#f14cc1" name="/anymal/wolf_controller/contact_forces/contact_forces.2/force/y"/>
+        <curve color="#bcbd22" name="/anymal/wolf_controller/contact_forces/des_contact_forces.2/force/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="78.848154" bottom="63.378413"/>
         <limitY/>
-        <curve color="#9467bd" name="/anymal/wb_controller/contact_forces/contact_forces.2/force/z"/>
-        <curve color="#1f77b4" name="/anymal/wb_controller/contact_forces/des_contact_forces.2/force/z"/>
+        <curve color="#9467bd" name="/anymal/wolf_controller/contact_forces/contact_forces.2/force/z"/>
+        <curve color="#1f77b4" name="/anymal/wolf_controller/contact_forces/des_contact_forces.2/force/z"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -667,24 +667,24 @@
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="2.821333" bottom="-0.068394"/>
         <limitY/>
-        <curve color="#bcbd22" name="/anymal/wb_controller/contact_forces/contact_forces.3/force/x"/>
-        <curve color="#d62728" name="/anymal/wb_controller/contact_forces/des_contact_forces.3/force/x"/>
+        <curve color="#bcbd22" name="/anymal/wolf_controller/contact_forces/contact_forces.3/force/x"/>
+        <curve color="#d62728" name="/anymal/wolf_controller/contact_forces/des_contact_forces.3/force/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="0.025959" bottom="-1.126773"/>
         <limitY/>
-        <curve color="#17becf" name="/anymal/wb_controller/contact_forces/contact_forces.3/force/y"/>
-        <curve color="#1ac938" name="/anymal/wb_controller/contact_forces/des_contact_forces.3/force/y"/>
+        <curve color="#17becf" name="/anymal/wolf_controller/contact_forces/contact_forces.3/force/y"/>
+        <curve color="#1ac938" name="/anymal/wolf_controller/contact_forces/des_contact_forces.3/force/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range left="0.001000" right="5.001000" top="79.382079" bottom="63.242037"/>
         <limitY/>
-        <curve color="#bcbd22" name="/anymal/wb_controller/contact_forces/contact_forces.3/force/z"/>
-        <curve color="#ff7f0e" name="/anymal/wb_controller/contact_forces/des_contact_forces.3/force/z"/>
+        <curve color="#bcbd22" name="/anymal/wolf_controller/contact_forces/contact_forces.3/force/z"/>
+        <curve color="#ff7f0e" name="/anymal/wolf_controller/contact_forces/des_contact_forces.3/force/z"/>
        </plot>
       </DockArea>
      </DockSplitter>

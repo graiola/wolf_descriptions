@@ -9,32 +9,32 @@
        <plot style="Lines" mode="TimeSeries">
         <range right="62.755000" top="0.347530" left="57.755000" bottom="0.342677"/>
         <limitY/>
-        <curve color="#1f77b4" name="/hyq/wb_controller/lf_foot/pose_actual/position/x"/>
-        <curve color="#ff7f0e" name="/hyq/wb_controller/lf_foot/pose_reference/position/x"/>
+        <curve color="#1f77b4" name="/hyq/wolf_controller/lf_foot/pose_actual/position/x"/>
+        <curve color="#ff7f0e" name="/hyq/wolf_controller/lf_foot/pose_reference/position/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range right="62.755000" top="-0.395937" left="57.755000" bottom="-0.408979"/>
         <limitY/>
-        <curve color="#17becf" name="/hyq/wb_controller/lh_foot/pose_actual/position/x"/>
-        <curve color="#d62728" name="/hyq/wb_controller/lh_foot/pose_reference/position/x"/>
+        <curve color="#17becf" name="/hyq/wolf_controller/lh_foot/pose_actual/position/x"/>
+        <curve color="#d62728" name="/hyq/wolf_controller/lh_foot/pose_reference/position/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range right="62.755000" top="0.372912" left="57.755000" bottom="0.370730"/>
         <limitY/>
-        <curve color="#f14cc1" name="/hyq/wb_controller/rf_foot/pose_actual/position/x"/>
-        <curve color="#bcbd22" name="/hyq/wb_controller/rf_foot/pose_reference/position/x"/>
+        <curve color="#f14cc1" name="/hyq/wolf_controller/rf_foot/pose_actual/position/x"/>
+        <curve color="#bcbd22" name="/hyq/wolf_controller/rf_foot/pose_reference/position/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range right="62.755000" top="-0.350428" left="57.756000" bottom="-0.351285"/>
         <limitY/>
-        <curve color="#1ac938" name="/hyq/wb_controller/rh_foot/pose_actual/position/x"/>
-        <curve color="#9467bd" name="/hyq/wb_controller/rh_foot/pose_reference/position/x"/>
+        <curve color="#1ac938" name="/hyq/wolf_controller/rh_foot/pose_actual/position/x"/>
+        <curve color="#9467bd" name="/hyq/wolf_controller/rh_foot/pose_reference/position/x"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -43,32 +43,32 @@
        <plot style="Lines" mode="TimeSeries">
         <range right="62.755000" top="0.375459" left="57.755000" bottom="0.344605"/>
         <limitY/>
-        <curve color="#d62728" name="/hyq/wb_controller/lf_foot/pose_actual/position/y"/>
-        <curve color="#f14cc1" name="/hyq/wb_controller/lf_foot/pose_reference/position/y"/>
+        <curve color="#d62728" name="/hyq/wolf_controller/lf_foot/pose_actual/position/y"/>
+        <curve color="#f14cc1" name="/hyq/wolf_controller/lf_foot/pose_reference/position/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range right="62.755000" top="0.325178" left="57.755000" bottom="0.292710"/>
         <limitY/>
-        <curve color="#bcbd22" name="/hyq/wb_controller/lh_foot/pose_actual/position/y"/>
-        <curve color="#1ac938" name="/hyq/wb_controller/lh_foot/pose_reference/position/y"/>
+        <curve color="#bcbd22" name="/hyq/wolf_controller/lh_foot/pose_actual/position/y"/>
+        <curve color="#1ac938" name="/hyq/wolf_controller/lh_foot/pose_reference/position/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range right="62.755000" top="-0.306916" left="57.755000" bottom="-0.346021"/>
         <limitY/>
-        <curve color="#9467bd" name="/hyq/wb_controller/rf_foot/pose_actual/position/y"/>
-        <curve color="#1f77b4" name="/hyq/wb_controller/rf_foot/pose_reference/position/y"/>
+        <curve color="#9467bd" name="/hyq/wolf_controller/rf_foot/pose_actual/position/y"/>
+        <curve color="#1f77b4" name="/hyq/wolf_controller/rf_foot/pose_reference/position/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range right="62.755000" top="-0.339304" left="57.756000" bottom="-0.382555"/>
         <limitY/>
-        <curve color="#ff7f0e" name="/hyq/wb_controller/rh_foot/pose_actual/position/y"/>
-        <curve color="#17becf" name="/hyq/wb_controller/rh_foot/pose_reference/position/y"/>
+        <curve color="#ff7f0e" name="/hyq/wolf_controller/rh_foot/pose_actual/position/y"/>
+        <curve color="#17becf" name="/hyq/wolf_controller/rh_foot/pose_reference/position/y"/>
        </plot>
       </DockArea>
      </DockSplitter>
@@ -77,32 +77,32 @@
        <plot style="Lines" mode="TimeSeries">
         <range right="62.755000" top="0.000157" left="57.755000" bottom="-0.000016"/>
         <limitY/>
-        <curve color="#1ac938" name="/hyq/wb_controller/lf_foot/pose_actual/position/z"/>
-        <curve color="#9467bd" name="/hyq/wb_controller/lf_foot/pose_reference/position/z"/>
+        <curve color="#1ac938" name="/hyq/wolf_controller/lf_foot/pose_actual/position/z"/>
+        <curve color="#9467bd" name="/hyq/wolf_controller/lf_foot/pose_reference/position/z"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range right="62.755000" top="0.000080" left="57.755000" bottom="0.000004"/>
         <limitY/>
-        <curve color="#1f77b4" name="/hyq/wb_controller/lh_foot/pose_actual/position/z"/>
-        <curve color="#ff7f0e" name="/hyq/wb_controller/lh_foot/pose_reference/position/z"/>
+        <curve color="#1f77b4" name="/hyq/wolf_controller/lh_foot/pose_actual/position/z"/>
+        <curve color="#ff7f0e" name="/hyq/wolf_controller/lh_foot/pose_reference/position/z"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range right="62.755000" top="0.000064" left="57.755000" bottom="-0.000008"/>
         <limitY/>
-        <curve color="#17becf" name="/hyq/wb_controller/rf_foot/pose_actual/position/z"/>
-        <curve color="#d62728" name="/hyq/wb_controller/rf_foot/pose_reference/position/z"/>
+        <curve color="#17becf" name="/hyq/wolf_controller/rf_foot/pose_actual/position/z"/>
+        <curve color="#d62728" name="/hyq/wolf_controller/rf_foot/pose_reference/position/z"/>
        </plot>
       </DockArea>
       <DockArea name="...">
        <plot style="Lines" mode="TimeSeries">
         <range right="62.755000" top="0.000198" left="57.756000" bottom="0.000008"/>
         <limitY/>
-        <curve color="#f14cc1" name="/hyq/wb_controller/rh_foot/pose_actual/position/z"/>
-        <curve color="#bcbd22" name="/hyq/wb_controller/rh_foot/pose_reference/position/z"/>
+        <curve color="#f14cc1" name="/hyq/wolf_controller/rh_foot/pose_actual/position/z"/>
+        <curve color="#bcbd22" name="/hyq/wolf_controller/rh_foot/pose_reference/position/z"/>
        </plot>
       </DockArea>
      </DockSplitter>

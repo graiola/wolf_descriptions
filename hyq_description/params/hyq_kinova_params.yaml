@@ -1,5 +1,5 @@
-wb_controller:
-  type: wb_controller/Controller
+wolf_controller:
+  type: wolf_controller/Controller
   publish_rate: 250
   default_duty_factor: 0.3
   default_swing_frequency: 5.0

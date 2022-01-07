@@ -1,5 +1,5 @@
-wb_controller:
-  type: wb_controller/Controller
+wolf_controller:
+  type: wolf_controller/Controller
   default_duty_factor: 0.3
   default_swing_frequency: 4.2
   default_contact_threshold: 30.0
