@@ -19,4 +19,4 @@ You can add plotjuggler and rviz visualization files in the respective folders `
 
 To launch the new robot with the WoLF controller:
 
-`roslaunch wb_controller wb_controller_bringup.launch robot_name:=new_robot`
+`roslaunch wolf_controller wolf_controller_bringup.launch robot_name:=new_robot`
