@@ -52,7 +52,7 @@
                 <arg name="arm_enabled" value="$(arg arm_enabled)" />
 	</include>
 
-	<!-- Spawn a robot into Gazebo -->
-        <node name="spawn_spot_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param gazebo_robot_description -model $(arg robot_name) -z 0.05"/>
+        <!-- Spawn and set the robot to the stand down position loaded from the SRDF file -->
+        <node name="goto0" pkg="wolf_description_utils" type="go0"/>
 </launch>
 
