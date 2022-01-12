@@ -3,7 +3,7 @@
 <robot name="hyq" xmlns:xacro="http://ros.org/wiki/xacro">
 
  <group name="base">
-   <link name="base_link"/>
+   <link name="trunk"/>
  </group>
   <group name="kinova_arm">
     <chain base_link="kinova_link_base" tip_link="kinova_end_effector"/>
@@ -73,5 +73,22 @@
     <joint name="kinova_joint_3" value="4.0"/>
     <joint name="kinova_joint_4" value="-1.5"/>
   </group_state>
-
+  <group_state group="chains" name="standdown">
+      <joint name="lf_haa_joint" value="-0.1"/>
+      <joint name="lf_hfe_joint" value="0.8"/>
+      <joint name="lf_kfe_joint" value="-2.3"/>
+      <joint name="lh_haa_joint" value="-0.1"/>
+      <joint name="lh_hfe_joint" value="-0.8"/>
+      <joint name="lh_kfe_joint" value="2.3"/>
+      <joint name="rf_haa_joint" value="-0.1"/>
+      <joint name="rf_hfe_joint" value="0.8"/>
+      <joint name="rf_kfe_joint" value="-2.3"/>
+      <joint name="rh_haa_joint" value="-0.1"/>
+      <joint name="rh_hfe_joint" value="-0.8"/>
+      <joint name="rh_kfe_joint" value="2.3"/>
+      <joint name="kinova_joint_1" value="0.0"/>
+      <joint name="kinova_joint_2" value="1.80"/>
+      <joint name="kinova_joint_3" value="4.0"/>
+      <joint name="kinova_joint_4" value="-1.5"/>
+  </group_state>
 </robot>
