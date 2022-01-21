@@ -86,8 +86,8 @@
       <joint name="rh_hfe_joint" value="1.35"/>
       <joint name="rh_kfe_joint" value="-2.7"/>
       <joint name="kinova_joint_1" value="0.0"/>
-      <joint name="kinova_joint_2" value="4.9"/>
+      <joint name="kinova_joint_2" value="4.0"/>
       <joint name="kinova_joint_3" value="5.6"/>
-      <joint name="kinova_joint_4" value="0.0"/>
+      <joint name="kinova_joint_4" value="3.14"/>
     </group_state>
 </robot>

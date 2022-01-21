@@ -4,7 +4,7 @@
 
 <link name="kinova_adapter_link"/>
 <joint name="joint_base_robots" type="fixed">
-       <parent link="base_link"/>
+       <parent link="trunk"/>
        <child link="kinova_adapter_link"/>
        <origin xyz="0.5 0.0 0.0" rpy="0 1.57 0"/>
 </joint>

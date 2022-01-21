@@ -1,5 +1,5 @@
-wb_controller:
-  type: wb_controller/Controller
+wolf_controller:
+  type: wolf_controller/Controller
   default_duty_factor: 0.3
   default_swing_frequency: 4.2
   default_contact_threshold: 4.0
@@ -8,31 +8,22 @@ wb_controller:
   default_step_height: 0.04
   max_step_height: 0.2
   max_step_length: 0.5
-  estimation_position_type: ground_truth
-  estimation_orientation_type: ground_truth
+  max_base_height: 0.2
+  estimation_position_type: estimated_z
+  estimation_orientation_type: imu_magnetometer
+  initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.05, roll: 0.0, pitch: 0.0, yaw: 0.0}
+
+  push_recovery:
+      k: {x: 0.5, y: 0.5, r: 0.01}
+      dynamic_th: {x: 0.5, y: 0.5, r: 0.5}
+      static_th: {x: 0.03, y: 0.03, r: 0.03}
   
   gains:
 
-      clik_gain: 5.0
-
-      lf_haa_joint: {p: 5.0, i: 0.0, d: 0.1}
-      lf_hfe_joint: {p: 5.0, i: 0.0, d: 0.1}
-      lf_kfe_joint: {p: 5.0, i: 0.0, d: 0.1}
-      rf_haa_joint: {p: 5.0, i: 0.0, d: 0.1}
-      rf_hfe_joint: {p: 5.0, i: 0.0, d: 0.1}
-      rf_kfe_joint: {p: 5.0, i: 0.0, d: 0.1}
-      lh_haa_joint: {p: 5.0, i: 0.0, d: 0.1}
-      lh_hfe_joint: {p: 5.0, i: 0.0, d: 0.1}
-      lh_kfe_joint: {p: 5.0, i: 0.0, d: 0.1}
-      rh_haa_joint: {p: 5.0, i: 0.0, d: 0.1}
-      rh_hfe_joint: {p: 5.0, i: 0.0, d: 0.1}
-      rh_kfe_joint: {p: 5.0, i: 0.0, d: 0.1}
-
-      kp_swing: {haa: 10.0, hfe: 2.0, kfe: 0.25}
-      kd_swing: {haa: 1.0, hfe: 0.5, kfe: 0.1}
-
-      kp_stance: {haa: 200.0, hfe: 200.0, kfe: 200.0}
-      kd_stance: {haa: 20.0, hfe: 20.0, kfe: 20.0}
+      kp_swing: {haa: 1.0, hfe: 1.0, kfe: 1.0}
+      kd_swing: {haa: 0.0001, hfe: 0.0001, kfe: 0.0001}
+      kp_stance: {haa: 1.0, hfe: 1.0, kfe: 1.0}
+      kd_stance: {haa: 0.0001, hfe: 0.0001, kfe: 0.0001}
       
       lf_foot:
           Kp: {x: 100.0, y: 100.0, z: 100.0, roll: 0, pitch: 0, yaw: 0}
