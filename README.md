@@ -20,3 +20,11 @@ You can add plotjuggler and rviz visualization files in the respective folders `
 To launch the new robot with the WoLF controller:
 
 `roslaunch wolf_controller wolf_controller_bringup.launch robot_name:=new_robot`
+
+## How to reset the robot pose and posture
+
+To reset the robot pose in gazebo you can simply use the gazebo's shortcut `ctrl-r`, this command should set the robot pose to the origin. Then, to reset the robot's posture run the following:
+
+`rosrun wolf_description_utils go0`
+
+now your robot should be ready to stand up again!
