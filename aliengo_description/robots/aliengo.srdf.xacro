@@ -4,6 +4,9 @@
     <group name="base">
       <link name="trunk"/>
     </group>
+    <group name="imu">
+      <link name="trunk_imu"/>
+    </group>
     <group name="lf_leg">
       <chain base_link="trunk" tip_link="lf_foot"/>
       <joint name="lf_haa_joint"/>
