@@ -12,7 +12,7 @@
 	<arg name="gui" default="true"/>
 	<arg name="headless" default="false"/>
 	<arg name="debug" default="false"/>
-        <arg name="full_world_name" default="empty.world"/>
+        <arg name="world_name" default="empty.world"/>
         <arg name="task_period" default="0.004"/>
         <arg name="arm_enabled" default="false"/>
         <arg name="arm_name" default="kinova"/>
@@ -35,7 +35,7 @@
 
 	<!-- Start gazebo server-->
 	<node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="false" output="screen"
-		args="$(arg command_arg1) $(arg command_arg2) $(arg full_world_name) $(arg dynamic_engine)" />
+                args="$(arg command_arg1) $(arg command_arg2) $(arg world_name) $(arg dynamic_engine)" />
 	
 	<!-- Start gazebo client -->
 	<group if="$(arg gui)">

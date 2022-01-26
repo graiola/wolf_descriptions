@@ -3,6 +3,7 @@
 
     <!-- This argument allows us to load joint sensors that measure the internal wrenches -->
     <xacro:arg name="load_force_sensors" default="false"/>
+    <xacro:arg name="sensors" default="false"/>
     <xacro:arg name="task_period" default="0.004"/>
     <xacro:arg name="arm_enabled" default="false"/>
     <xacro:arg name="arm_name" default="kinova"/>
@@ -541,7 +542,9 @@
     </link>
 
     <!-- Standard accessories. -->
-    <xacro:include filename="$(find spot_description)/urdfs/accessories.urdf.xacro" />
+    <xacro:if value="$(arg sensors)">
+        <xacro:include filename="$(find spot_description)/urdfs/accessories.urdf.xacro" />
+    </xacro:if>
 
     <!-- Extensions -->
     <xacro:leg_transmission prefix="rf"/>
