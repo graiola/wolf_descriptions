@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <root xmlns:xacro="http://ros.org/wiki/xacro">
 
-	<xacro:macro name="velodyne_sensor" params="link_name frame_name lidar_name">
+        <xacro:macro name="velodyne_sensor" params="link_name frame_name lidar_name update_rate">
 
 		<gazebo reference="${link_name}">
 			<sensor name="${link_name}_velodyne_sensor" type="ray">
 				<always_on>true</always_on>
-				<update_rate>1.0</update_rate>
+                                <update_rate>${update_rate}</update_rate>
 				<pose>0 0 0 0 0 0</pose>
 				<ray>
 					<scan>
@@ -29,15 +29,21 @@
 						<resolution>0.02</resolution>
 					</range>
 				</ray>
-				<!-- test plugin -->
-				<plugin name="${link_name}_controller" filename="libgazebo_ros_block_laser.so">
+                                <!-- plugin -->
+                                <!--<plugin name="${link_name}_controller" filename="libgazebo_ros_block_laser.so">
 					<gaussianNoise>0.005</gaussianNoise>
 					<alwaysOn>true</alwaysOn>
-					<updateRate>10</updateRate>
+                                        <updateRate>10</updateRate>
 					<topicName>/${lidar_name}/velodyne_pointcloud</topicName>
 					<frameName>${frame_name}</frameName>
 					<hokuyoMinIntensity>101</hokuyoMinIntensity>
-				</plugin>
+                                </plugin>-->
+                                <plugin name="${link_name}_controller" filename="libgazebo_ros_velodyne_laser.so">
+                                    <gaussianNoise>0.005</gaussianNoise>
+                                    <updateRate>${update_rate}</updateRate>
+                                    <topicName>/${lidar_name}/velodyne_pointcloud</topicName>
+                                    <frameName>${frame_name}</frameName>
+                                </plugin>
 			</sensor>
 		</gazebo>
 	</xacro:macro>
