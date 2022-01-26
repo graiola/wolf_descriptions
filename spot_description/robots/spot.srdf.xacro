@@ -5,7 +5,7 @@
       <link name="base_link"/>
     </group>
     <group name="imu">
-      <link name="imu_link"/>
+      <link name="trunk_imu"/>
     </group>
     <group name="contacts">
       <link name="lf_foot"/>
