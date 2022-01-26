@@ -1,9 +1,6 @@
 <?xml version="1.0" ?>
 <launch>
 
-	<!-- Load the sensors that measured the internal wrench in the joints -->
-	<arg name="internal_wrench" default="false"/>
-
 	<!-- These are the arguments you can pass this launch file, for example paused:=true -->
         <arg name="sensors" default="false" />
         <arg name="robot_name" default="spot"/>
@@ -20,7 +17,7 @@
 
 	<!-- Set use_sim_time flag -->
 	<group if="$(arg use_sim_time)">
-		<param name="/use_sim_time" value="true" />
+            <param name="/use_sim_time" value="true" />
 	</group>
 
 	<!-- Set command arguments -->
@@ -39,17 +36,16 @@
 	
 	<!-- Start gazebo client -->
 	<group if="$(arg gui)">
-		<node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" respawn="false" output="screen"/>
+            <node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" respawn="false" output="screen"/>
 	</group>
 
         <!-- Send the robot urdf to parameter server -->
         <include file="$(find wolf_description_utils)/launch/upload.launch">
-                <arg name="sensors" value="$(arg sensors)" />
-                <arg name="task_period" value="$(arg task_period)" />
-                <arg name="robot_name" value="$(arg robot_name)" />
-		<arg name="internal_wrench" value="$(arg internal_wrench)" />
-                <arg name="arm_name" value="$(arg arm_name)" />
-                <arg name="arm_enabled" value="$(arg arm_enabled)" />
+            <arg name="sensors" value="$(arg sensors)" />
+            <arg name="task_period" value="$(arg task_period)" />
+            <arg name="robot_name" value="$(arg robot_name)" />
+            <arg name="arm_name" value="$(arg arm_name)" />
+            <arg name="arm_enabled" value="$(arg arm_enabled)" />
 	</include>
 
         <!-- Spawn and set the robot to the stand down position loaded from the SRDF file -->
