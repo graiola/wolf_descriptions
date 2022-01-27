@@ -20,10 +20,8 @@ wolf_controller:
 
   gains:
 
-      kp_swing: {haa: 1.0, hfe: 1.0, kfe: 1.0}
-      kd_swing: {haa: 0.1, hfe: 0.1, kfe: 0.01}
-      kp_stance: {haa: 1.0, hfe: 1.0, kfe: 1.0}
-      kd_stance: {haa: 0.1, hfe: 0.1, kfe: 0.01}
+      Kp_leg: {haa: 1.0, hfe: 1.0, kfe: 1.0}
+      Kd_leg: {haa: 0.1, hfe: 0.1, kfe: 0.01}
 
       lf_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
@@ -45,14 +43,6 @@ wolf_controller:
       waistRPY:
           Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 240.0, pitch: 140.0, yaw: 80.0}
           Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 50.0, pitch: 30.0, yaw: 16.0}
-          weight: 1.0
-
-      waistZ:
-          Kp: {x: 0.0, y: 0.0, z: 200.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
-          Kd: {x: 0.0, y: 0.0, z: 50.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
-          weight: 0.0
-
-      Postural:
           weight: 1.0
 
       CoM:
