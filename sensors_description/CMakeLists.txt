@@ -9,9 +9,12 @@ find_package(catkin REQUIRED COMPONENTS
              roscpp
              std_msgs
              sensor_msgs
+             gazebo_ros
              geometry_msgs
              gazebo_plugins
-tf
+             image_transport
+             camera_info_manager
+             tf
 )
 
 find_package(gazebo REQUIRED)
@@ -43,8 +46,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 ## Declare a cpp library
 add_library(MultiSenseSLPlugin src/MultiSenseSLPlugin.cpp)
 #target_link_libraries(MultiSenseSLPlugin ${catkin_LIBRARIES})
+add_library(RealsenseGazeboPlugin
+    src/RealSensePlugin.cpp
+    src/gazebo_ros_realsense.cpp)
+target_link_libraries(RealsenseGazeboPlugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
 
-install(TARGETS MultiSenseSLPlugin
+install(TARGETS MultiSenseSLPlugin RealsenseGazeboPlugin
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

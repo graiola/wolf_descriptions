@@ -36,4 +36,12 @@
   <run_depend>gazebo_ros</run_depend>
   <run_depend>gazebo_msgs</run_depend>
 
+  <export>
+    <gazebo_ros
+      plugin_path="${prefix}/lib"
+      gazebo_media_path="${prefix}"
+      gazebo_model_path="${prefix}/models"
+      />
+  </export>
+
 </package>
