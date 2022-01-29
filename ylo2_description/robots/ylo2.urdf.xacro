@@ -25,11 +25,21 @@
         <xacro:include filename="$(find sensors_description)/urdfs/sensors/imu.gazebo.xacro"/>
     </xacro:if>
 
-    <xacro:include filename="$(find ylo2_description)/urdfs/const.xacro"/>
-    <xacro:include filename="$(find ylo2_description)/urdfs/leg.xacro"/>
+    <xacro:include filename="$(find ylo2_urdf_2022_description)/urdfs/const.xacro"/>
+    <xacro:include filename="$(find ylo2_urdf_2022_description)/urdfs/leg.xacro"/>
 
     <!-- Rollover Protection mode will add an additional stick on the top, use "true" or "false" to switch it. -->
     <xacro:property name="rolloverProtection" value="false"/>
+
+    <!-- Debug mode will hung up the robot, use "true" or "false" to switch it. -->
+    <!-- <xacro:if value="$(arg DEBUG)">
+        <link name="world"/>
+        <joint name="base_static_joint" type="fixed">
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <parent link="world"/>
+            <child link="base"/>
+        </joint>
+    </xacro:if>  -->
 
     <!-- Floating-base Joint -->
     <xacro:if value="$(arg floating_base_link)">
@@ -43,24 +53,18 @@
 
     <link name="trunk">
         <visual>
-            <origin rpy="0 0 0" xyz="${trunk_offset_x} ${trunk_offset_y} ${trunk_offset_z}"/>
+            <origin rpy="0 0 0" xyz="${trunk_offset_x} 0 ${abab_motors_offset_z}"/>
             <geometry>
-                <mesh filename="package://ylo2_description/meshes/base_link_resized.stl" scale="-1 1 1"/>
+                <mesh filename="package://ylo2_urdf_2022_description/meshes/body/body_parts.stl" scale="1 1 1"/>
             </geometry>
-            <material name="orange"/>
+            <material name="grey"/>
         </visual>
         <collision>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <origin rpy="0 0 0" xyz="${trunk_offset_x} 0 ${abab_motors_offset_z}"/>
             <geometry>
-                <box size="${trunk_length} ${trunk_width} ${trunk_height}"/>
+                <mesh filename="package://ylo2_urdf_2022_description/meshes/body/covers_collision.stl" scale="1 1 1"/>
             </geometry>
         </collision>
-        <!-- <collision>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <geometry>
-                <mesh filename="package://ylo2_description/meshes/base_link_resized.stl" scale="1 1 1"/>
-            </geometry>
-        </collision> -->
         <inertial>
             <origin rpy="0 0 0" xyz="${trunk_com_x} ${trunk_com_y} ${trunk_com_z}"/>
             <mass value="${trunk_mass}"/>
@@ -71,6 +75,88 @@
         </inertial>
     </link>
 
+    <link name="abad_motors">
+        <visual>
+            <origin rpy="0 0 0" xyz="${trunk_offset_x} ${trunk_offset_y} ${abab_motors_offset_z}"/>
+            <geometry>
+                <mesh filename="package://ylo2_urdf_2022_description/meshes/body/abad_motors.stl" scale="1 1 1"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+    </link>
+
+    <joint name="abad_motors_joint" type="fixed">
+        <parent link="trunk"/>
+        <child link="abad_motors"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+
+    <link name="battery">
+        <visual>
+            <origin rpy="0 0 0" xyz="${trunk_offset_x} ${trunk_offset_y} ${abab_motors_offset_z}"/>
+            <geometry>
+                <mesh filename="package://ylo2_urdf_2022_description/meshes/body/battery.stl" scale="1 1 1"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+    </link>
+
+    <joint name="battery_joint" type="fixed">
+        <parent link="trunk"/>
+        <child link="battery"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+
+    <link name="covers">
+        <visual>
+            <origin rpy="0 0 0" xyz="${trunk_offset_x} ${trunk_offset_y} ${abab_motors_offset_z}"/>
+            <geometry>
+                <mesh filename="package://ylo2_urdf_2022_description/meshes/body/covers.stl" scale="1 1 1"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+    </link>
+
+    <joint name="covers_joint" type="fixed">
+        <parent link="trunk"/>
+        <child link="covers"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+
+    <link name="D435">
+        <visual>
+            <origin rpy="0 0 0" xyz="${trunk_offset_x} ${trunk_offset_y} ${abab_motors_offset_z}"/>
+            <geometry>
+                <mesh filename="package://ylo2_urdf_2022_description/meshes/body/D435_fake_camera.stl" scale="1 1 1"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+    </link>
+
+    <joint name="D435_joint" type="fixed">
+        <parent link="trunk"/>
+        <child link="D435"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+
+    <link name="T265">
+        <visual>
+            <origin rpy="0 0 0" xyz="${trunk_offset_x} ${trunk_offset_y} ${abab_motors_offset_z}"/>
+            <geometry>
+                <mesh filename="package://ylo2_urdf_2022_description/meshes/body/T265_fake_camera.stl" scale="1 1 1"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+    </link>
+
+    <joint name="T265_joint" type="fixed">
+        <parent link="trunk"/>
+        <child link="T265"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+
+
+    <!-- adding a lateral cylinder as collision object, to avoid robot to fall on it side-->
     <xacro:if value="${(rolloverProtection == 'true')}">
         <joint name="stick_joint" type="fixed">
             <parent link="trunk"/>
@@ -131,19 +217,19 @@
 
     <!-- ABAD POSITION OK pas touche-->
     <xacro:leg name="rf" mirror="-1" mirror_dae= "False" front_hind="1" front_hind_dae="True">
-        <origin rpy="0 0 0" xyz="${leg_offset_x} ${trunk_offset_y-leg_offset_y} 0.014"/>
+        <origin rpy="0 0 0" xyz="${leg_offset_x-0.019} ${0-leg_offset_y+0.006} ${0-leg_offset_z}"/>
     </xacro:leg>
 
     <xacro:leg name="lf" mirror="1" mirror_dae="True" front_hind="1" front_hind_dae="True">
-        <origin rpy="0 0 0" xyz="${leg_offset_x} ${trunk_offset_y+leg_offset_y} 0.014"/>
+        <origin rpy="0 0 0" xyz="${leg_offset_x-0.019} ${0+leg_offset_y+0.006} ${0-leg_offset_z}"/>
     </xacro:leg>
 
     <xacro:leg name="rh" mirror="-1" mirror_dae="False" front_hind="-1" front_hind_dae="False">
-        <origin rpy="0 0 0" xyz="${-leg_offset_x} ${trunk_offset_y-leg_offset_y} 0.014"/>
+        <origin rpy="0 0 0" xyz="${-leg_offset_x-0.019} ${0-leg_offset_y+0.006} ${0-leg_offset_z}"/>
     </xacro:leg>
 
     <xacro:leg name="lh" mirror="1" mirror_dae="True" front_hind="-1" front_hind_dae="False">
-        <origin rpy="0 0 0" xyz="${-leg_offset_x} ${trunk_offset_y+leg_offset_y} 0.014"/>
+        <origin rpy="0 0 0" xyz="${-leg_offset_x-0.019} ${0+leg_offset_y+0.006} ${0-leg_offset_z}"/>
     </xacro:leg>
 
     <!-- <xacro:stairs stairs="15" xpos="0" ypos="2.0" zpos="0" /> -->
