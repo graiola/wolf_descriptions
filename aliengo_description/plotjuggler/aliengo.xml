@@ -1,104 +1,105 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<root version="2.3.8">
+<root>
  <tabbed_widget parent="main_window" name="Main Window">
   <Tab tab_name="feet" containers="1">
    <Container>
-    <DockSplitter sizes="0.333333;0.333333;0.333333" count="3" orientation="-">
-     <DockSplitter sizes="0.249833;0.250502;0.249833;0.249833" count="4" orientation="|">
+    <DockSplitter orientation="-" count="3" sizes="0.332961;0.334078;0.332961">
+     <DockSplitter orientation="|" count="4" sizes="0.251436;0.248245;0.251436;0.248883">
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.231286" right="3.542000" bottom="0.229419" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="8.934000" top="0.361230" left="3.934000" bottom="0.308812"/>
         <limitY/>
         <curve color="#1f77b4" name="/aliengo/wolf_controller/lf_foot/pose_actual/position/x"/>
         <curve color="#d62728" name="/aliengo/wolf_controller/lf_foot/pose_reference/position/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="-0.237958" right="3.542000" bottom="-0.239837" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="8.933000" top="-0.251888" left="3.934000" bottom="-0.305524"/>
         <limitY/>
         <curve color="#17becf" name="/aliengo/wolf_controller/lh_foot/pose_actual/position/x"/>
         <curve color="#d62728" name="/aliengo/wolf_controller/lh_foot/pose_reference/position/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.229351" right="3.542000" bottom="0.229351" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="8.933000" top="0.346554" left="3.933000" bottom="0.294709"/>
         <limitY/>
+        <curve color="#f14cc1" name="/aliengo/wolf_controller/rf_foot/pose_actual/position/x"/>
         <curve color="#bcbd22" name="/aliengo/wolf_controller/rf_foot/pose_reference/position/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="-0.238263" right="3.542000" bottom="-0.240029" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="8.933000" top="-0.262543" left="3.933000" bottom="-0.316054"/>
         <limitY/>
         <curve color="#1ac938" name="/aliengo/wolf_controller/rh_foot/pose_actual/position/x"/>
         <curve color="#9467bd" name="/aliengo/wolf_controller/rh_foot/pose_reference/position/x"/>
        </plot>
       </DockArea>
      </DockSplitter>
-     <DockSplitter sizes="0.249833;0.250502;0.249833;0.249833" count="4" orientation="|">
+     <DockSplitter orientation="|" count="4" sizes="0.251436;0.248245;0.251436;0.248883">
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.174884" right="3.542000" bottom="0.174853" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="8.934000" top="0.232117" left="3.934000" bottom="0.218419"/>
         <limitY/>
         <curve color="#1ac938" name="/aliengo/wolf_controller/lf_foot/pose_actual/position/y"/>
         <curve color="#ff7f0e" name="/aliengo/wolf_controller/lf_foot/pose_reference/position/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.175824" right="3.542000" bottom="0.175791" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="8.933000" top="0.243926" left="3.934000" bottom="0.230129"/>
         <limitY/>
         <curve color="#bcbd22" name="/aliengo/wolf_controller/lh_foot/pose_actual/position/y"/>
         <curve color="#1ac938" name="/aliengo/wolf_controller/lh_foot/pose_reference/position/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="-0.169746" right="3.542000" bottom="-0.169998" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="8.933000" top="-0.228326" left="3.933000" bottom="-0.238610"/>
         <limitY/>
         <curve color="#9467bd" name="/aliengo/wolf_controller/rf_foot/pose_actual/position/y"/>
         <curve color="#1f77b4" name="/aliengo/wolf_controller/rf_foot/pose_reference/position/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="-0.170751" right="3.542000" bottom="-0.171006" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="8.933000" top="-0.217053" left="3.933000" bottom="-0.229645"/>
         <limitY/>
         <curve color="#ff7f0e" name="/aliengo/wolf_controller/rh_foot/pose_actual/position/y"/>
         <curve color="#17becf" name="/aliengo/wolf_controller/rh_foot/pose_reference/position/y"/>
        </plot>
       </DockArea>
      </DockSplitter>
-     <DockSplitter sizes="0.249833;0.250502;0.249833;0.249833" count="4" orientation="|">
+     <DockSplitter orientation="|" count="4" sizes="0.251436;0.248245;0.251436;0.248883">
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="-0.403157" right="3.542000" bottom="-0.403165" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="8.934000" top="-0.527261" left="3.934000" bottom="-0.528460"/>
         <limitY/>
         <curve color="#f14cc1" name="/aliengo/wolf_controller/lf_foot/pose_actual/position/z"/>
         <curve color="#9467bd" name="/aliengo/wolf_controller/lf_foot/pose_reference/position/z"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="-0.401053" right="3.542000" bottom="-0.401060" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="8.933000" top="-0.529154" left="3.934000" bottom="-0.529592"/>
         <limitY/>
         <curve color="#1f77b4" name="/aliengo/wolf_controller/lh_foot/pose_actual/position/z"/>
         <curve color="#ff7f0e" name="/aliengo/wolf_controller/lh_foot/pose_reference/position/z"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="-0.403450" right="3.542000" bottom="-0.403460" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="8.933000" top="-0.528919" left="3.933000" bottom="-0.529166"/>
         <limitY/>
         <curve color="#17becf" name="/aliengo/wolf_controller/rf_foot/pose_actual/position/z"/>
         <curve color="#d62728" name="/aliengo/wolf_controller/rf_foot/pose_reference/position/z"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="-0.401347" right="3.542000" bottom="-0.401355" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="8.933000" top="-0.529857" left="3.933000" bottom="-0.530845"/>
         <limitY/>
         <curve color="#f14cc1" name="/aliengo/wolf_controller/rh_foot/pose_actual/position/z"/>
         <curve color="#bcbd22" name="/aliengo/wolf_controller/rh_foot/pose_reference/position/z"/>
@@ -108,251 +109,28 @@
     </DockSplitter>
    </Container>
   </Tab>
-  <Tab tab_name="floating_base_vel" containers="1">
+  <Tab tab_name="baseRPY" containers="1">
    <Container>
-    <DockSplitter sizes="0.333333;0.333333;0.333333" count="3" orientation="-">
+    <DockSplitter orientation="-" count="3" sizes="0.35;0.35;0.3">
      <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="1025.000000" right="3.542000" bottom="-25.000000" left="-1.458000"/>
-       <limitY/>
-       <curve color="#1f77b4" name="/rt_logger/PushRecovery/base_velocity/array.0/array/data.0"/>
-       <curve color="#ff7f0e" name="/rt_logger/PushRecovery/cmd_velocity/array.0/array/data.0"/>
-       <curve color="#17becf" name="/rt_logger/PushRecovery/error/array.0/array/data.0"/>
-       <curve color="#1f77b4" name="/rt_logger/PushRecovery/current_th_dot_filt/array.0/array/data.0"/>
-       <curve color="#1f77b4" name="/rt_logger/PushRecovery/base_velocity_filt/array.0/array/data.0"/>
-      </plot>
-     </DockArea>
-     <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="1025.000000" right="3.542000" bottom="-25.000000" left="-1.458000"/>
-       <limitY/>
-       <curve color="#d62728" name="/rt_logger/PushRecovery/base_velocity/array.0/array/data.1"/>
-       <curve color="#f14cc1" name="/rt_logger/PushRecovery/cmd_velocity/array.0/array/data.1"/>
-       <curve color="#bcbd22" name="/rt_logger/PushRecovery/error/array.0/array/data.1"/>
-       <curve color="#d62728" name="/rt_logger/PushRecovery/current_th_dot_filt/array.0/array/data.1"/>
-       <curve color="#d62728" name="/rt_logger/PushRecovery/base_velocity_filt/array.0/array/data.1"/>
-      </plot>
-     </DockArea>
-     <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="1025.000000" right="3.542000" bottom="-25.000000" left="-1.458000"/>
-       <limitY/>
-       <curve color="#1ac938" name="/rt_logger/PushRecovery/base_velocity/array.0/array/data.2"/>
-       <curve color="#9467bd" name="/rt_logger/PushRecovery/cmd_velocity/array.0/array/data.2"/>
-       <curve color="#1f77b4" name="/rt_logger/PushRecovery/error/array.0/array/data.2"/>
-       <curve color="#1ac938" name="/rt_logger/PushRecovery/current_th_dot_filt/array.0/array/data.2"/>
-       <curve color="#1ac938" name="/rt_logger/PushRecovery/base_velocity_filt/array.0/array/data.2"/>
-      </plot>
-     </DockArea>
-    </DockSplitter>
-   </Container>
-  </Tab>
-  <Tab tab_name="Postural" containers="1">
-   <Container>
-    <DockSplitter sizes="0.251012;0.248988;0.251012;0.248988" count="4" orientation="-">
-     <DockSplitter sizes="0.338019;0.337349;0.324632" count="3" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#1f77b4" name="/aliengo/wolf_controller/Postural/position_actual.6"/>
-        <curve color="#f14cc1" name="/aliengo/wolf_controller/Postural/position_reference.6"/>
-        <curve color="#1f77b4" name="/aliengo/wolf_controller/Postural/position_error.6"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#d62728" name="/aliengo/wolf_controller/Postural/position_actual.7"/>
-        <curve color="#9467bd" name="/aliengo/wolf_controller/Postural/position_reference.7"/>
-        <curve color="#d62728" name="/aliengo/wolf_controller/Postural/position_error.7"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#1ac938" name="/aliengo/wolf_controller/Postural/position_actual.8"/>
-        <curve color="#17becf" name="/aliengo/wolf_controller/Postural/position_reference.8"/>
-        <curve color="#1ac938" name="/aliengo/wolf_controller/Postural/position_error.8"/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
-     <DockSplitter sizes="0.338019;0.337349;0.324632" count="3" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#ff7f0e" name="/aliengo/wolf_controller/Postural/position_actual.9"/>
-        <curve color="#bcbd22" name="/aliengo/wolf_controller/Postural/position_reference.9"/>
-        <curve color="#ff7f0e" name="/aliengo/wolf_controller/Postural/position_error.9"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#f14cc1" name="/aliengo/wolf_controller/Postural/position_actual.10"/>
-        <curve color="#1f77b4" name="/aliengo/wolf_controller/Postural/position_reference.10"/>
-        <curve color="#f14cc1" name="/aliengo/wolf_controller/Postural/position_error.10"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#9467bd" name="/aliengo/wolf_controller/Postural/position_actual.11"/>
-        <curve color="#d62728" name="/aliengo/wolf_controller/Postural/position_reference.11"/>
-        <curve color="#9467bd" name="/aliengo/wolf_controller/Postural/position_error.11"/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
-     <DockSplitter sizes="0.338019;0.337349;0.324632" count="3" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#17becf" name="/aliengo/wolf_controller/Postural/position_actual.12"/>
-        <curve color="#1ac938" name="/aliengo/wolf_controller/Postural/position_reference.12"/>
-        <curve color="#17becf" name="/aliengo/wolf_controller/Postural/position_error.12"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#bcbd22" name="/aliengo/wolf_controller/Postural/position_actual.13"/>
-        <curve color="#ff7f0e" name="/aliengo/wolf_controller/Postural/position_reference.13"/>
-        <curve color="#bcbd22" name="/aliengo/wolf_controller/Postural/position_error.13"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#1f77b4" name="/aliengo/wolf_controller/Postural/position_actual.14"/>
-        <curve color="#f14cc1" name="/aliengo/wolf_controller/Postural/position_reference.14"/>
-        <curve color="#1f77b4" name="/aliengo/wolf_controller/Postural/position_error.14"/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
-     <DockSplitter sizes="0.338019;0.337349;0.324632" count="3" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#d62728" name="/aliengo/wolf_controller/Postural/position_actual.15"/>
-        <curve color="#9467bd" name="/aliengo/wolf_controller/Postural/position_reference.15"/>
-        <curve color="#d62728" name="/aliengo/wolf_controller/Postural/position_error.15"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#1ac938" name="/aliengo/wolf_controller/Postural/position_actual.16"/>
-        <curve color="#17becf" name="/aliengo/wolf_controller/Postural/position_reference.16"/>
-        <curve color="#1ac938" name="/aliengo/wolf_controller/Postural/position_error.16"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#ff7f0e" name="/aliengo/wolf_controller/Postural/position_actual.17"/>
-        <curve color="#bcbd22" name="/aliengo/wolf_controller/Postural/position_reference.17"/>
-        <curve color="#ff7f0e" name="/aliengo/wolf_controller/Postural/position_error.17"/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
-    </DockSplitter>
-   </Container>
-  </Tab>
-  <Tab tab_name="arm" containers="1">
-   <Container>
-    <DockSplitter sizes="0.5;0.5" count="2" orientation="-">
-     <DockSplitter sizes="0.338019;0.337349;0.324632" count="3" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="1.000000" right="1.000000" bottom="0.000000" left="0.000000"/>
-        <limitY/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="1.000000" right="1.000000" bottom="0.000000" left="0.000000"/>
-        <limitY/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="1.000000" right="1.000000" bottom="0.000000" left="0.000000"/>
-        <limitY/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
-     <DockSplitter sizes="0.338019;0.337349;0.324632" count="3" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="1.000000" right="1.000000" bottom="0.000000" left="0.000000"/>
-        <limitY/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="1.000000" right="1.000000" bottom="0.000000" left="0.000000"/>
-        <limitY/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="1.000000" right="1.000000" bottom="0.000000" left="0.000000"/>
-        <limitY/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
-    </DockSplitter>
-   </Container>
-  </Tab>
-  <Tab tab_name="waistZ" containers="1">
-   <Container>
-    <DockSplitter sizes="1" count="1" orientation="-">
-     <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="0.412330" right="3.542000" bottom="-0.010057" left="-1.458000"/>
-       <limitY/>
-       <curve color="#1f77b4" name="/aliengo/wolf_controller/waistZ/pose_actual/position/z"/>
-       <curve color="#d62728" name="/aliengo/wolf_controller/waistZ/pose_reference/position/z"/>
-       <curve color="#1f77b4" name="/rt_logger/FootholdsPlanner/desired_height/array.0/array/data.0"/>
-       <curve color="#d62728" name="/rt_logger/StateEstimator/actual_height/array.0/array/data.0"/>
-      </plot>
-     </DockArea>
-    </DockSplitter>
-   </Container>
-  </Tab>
-  <Tab tab_name="waistRPY" containers="1">
-   <Container>
-    <DockSplitter sizes="0.333333;0.333333;0.333333" count="3" orientation="-">
-     <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="0.000852" right="3.542000" bottom="0.000852" left="-1.458000"/>
+      <plot mode="TimeSeries" style="Lines">
+       <range right="5.000000" top="0.000065" left="0.000000" bottom="0.000036"/>
        <limitY/>
        <curve color="#1f77b4" name="/aliengo/wolf_controller/waistRPY/rpy_actual/x"/>
        <curve color="#ff7f0e" name="/aliengo/wolf_controller/waistRPY/rpy_reference/x"/>
       </plot>
      </DockArea>
      <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="0.004486" right="3.542000" bottom="0.004486" left="-1.458000"/>
+      <plot mode="TimeSeries" style="Lines">
+       <range right="5.000000" top="0.001931" left="0.000000" bottom="0.000506"/>
        <limitY/>
        <curve color="#d62728" name="/aliengo/wolf_controller/waistRPY/rpy_actual/y"/>
        <curve color="#f14cc1" name="/aliengo/wolf_controller/waistRPY/rpy_reference/y"/>
       </plot>
      </DockArea>
      <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="-0.000623" right="3.542000" bottom="-0.000623" left="-1.458000"/>
+      <plot mode="TimeSeries" style="Lines">
+       <range right="5.000000" top="0.023571" left="0.000000" bottom="0.023295"/>
        <limitY/>
        <curve color="#1ac938" name="/aliengo/wolf_controller/waistRPY/rpy_actual/z"/>
        <curve color="#9467bd" name="/aliengo/wolf_controller/waistRPY/rpy_reference/z"/>
@@ -361,206 +139,105 @@
     </DockSplitter>
    </Container>
   </Tab>
-  <Tab tab_name="delta_push_recovery" containers="1">
+  <Tab tab_name="baseZ" containers="1">
    <Container>
-    <DockSplitter sizes="0.251012;0.248988;0.251012;0.248988" count="4" orientation="-">
-     <DockSplitter sizes="0.500334;0.499666" count="2" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#1f77b4" name="/rt_logger/PushRecovery/delta_lf/array.0/array/data.0"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#f14cc1" name="/rt_logger/PushRecovery/delta_lf/array.0/array/data.1"/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
-     <DockSplitter sizes="0.500334;0.499666" count="2" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#d62728" name="/rt_logger/PushRecovery/delta_lh/array.0/array/data.0"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#9467bd" name="/rt_logger/PushRecovery/delta_lh/array.0/array/data.1"/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
-     <DockSplitter sizes="0.500334;0.499666" count="2" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#1ac938" name="/rt_logger/PushRecovery/delta_rf/array.0/array/data.0"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#17becf" name="/rt_logger/PushRecovery/delta_rf/array.0/array/data.1"/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
-     <DockSplitter sizes="0.500334;0.499666" count="2" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#ff7f0e" name="/rt_logger/PushRecovery/delta_rh/array.0/array/data.0"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-        <limitY/>
-        <curve color="#bcbd22" name="/rt_logger/PushRecovery/delta_rh/array.0/array/data.1"/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
+    <DockSplitter orientation="-" count="1" sizes="1">
+     <DockArea name="...">
+      <plot mode="TimeSeries" style="Lines">
+       <range right="5.000000" top="0.529716" left="0.000000" bottom="0.507956"/>
+       <limitY/>
+       <curve color="#17becf" name="/aliengo/wolf_controller/des_base_height/array.0/array/data.0"/>
+       <curve color="#bcbd22" name="/aliengo/wolf_controller/base_height/array.0/array/data.0"/>
+      </plot>
+     </DockArea>
     </DockSplitter>
    </Container>
   </Tab>
   <Tab tab_name="com" containers="1">
    <Container>
-    <DockSplitter sizes="0.5;0.5" count="2" orientation="-">
-     <DockSplitter sizes="0.33801;0.337372;0.324617" count="3" orientation="|">
+    <DockSplitter orientation="-" count="2" sizes="0.5;0.5">
+     <DockSplitter orientation="|" count="3" sizes="0.336957;0.336957;0.326087">
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="-0.012796" right="9.613000" bottom="-0.012798" left="4.613000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="-0.004143" left="0.000000" bottom="-0.004307"/>
         <limitY/>
-        <curve color="#1f77b4" name="/rt_logger/ComPlanner/com_position_ref/array.0/array/data.0"/>
-        <curve color="#17becf" name="/aliengo/wolf_controller/CoM/position_actual/x"/>
+        <curve color="#1ac938" name="/aliengo/wolf_controller/CoM/position_actual/x"/>
+        <curve color="#9467bd" name="/aliengo/wolf_controller/CoM/position_reference/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.000032" right="9.613000" bottom="0.000032" left="4.613000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="0.001964" left="0.000000" bottom="0.001836"/>
         <limitY/>
-        <curve color="#d62728" name="/rt_logger/ComPlanner/com_position_ref/array.0/array/data.1"/>
-        <curve color="#bcbd22" name="/aliengo/wolf_controller/CoM/position_actual/y"/>
+        <curve color="#ff7f0e" name="/aliengo/wolf_controller/CoM/position_actual/y"/>
+        <curve color="#17becf" name="/aliengo/wolf_controller/CoM/position_reference/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.383499" right="9.613000" bottom="0.383492" left="4.613000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="0.508828" left="0.000000" bottom="0.508465"/>
         <limitY/>
-        <curve color="#1ac938" name="/rt_logger/ComPlanner/com_position_ref/array.0/array/data.2"/>
-        <curve color="#1f77b4" name="/aliengo/wolf_controller/CoM/position_actual/z"/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
-     <DockSplitter sizes="0.33801;0.337372;0.324617" count="3" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="9.613000" bottom="-0.100000" left="4.612000"/>
-        <limitY/>
-        <curve color="#ff7f0e" name="/rt_logger/ComPlanner/com_velocity_ref/array.0/array/data.0"/>
-        <curve color="#d62728" name="/aliengo/wolf_controller/CoM/velocity_actual/x"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="9.613000" bottom="-0.100000" left="4.612000"/>
-        <limitY/>
-        <curve color="#f14cc1" name="/rt_logger/ComPlanner/com_velocity_ref/array.0/array/data.1"/>
-        <curve color="#1ac938" name="/aliengo/wolf_controller/CoM/velocity_actual/y"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.100000" right="9.613000" bottom="-0.100000" left="4.612000"/>
-        <limitY/>
-        <curve color="#9467bd" name="/rt_logger/ComPlanner/com_velocity_ref/array.0/array/data.2"/>
-        <curve color="#ff7f0e" name="/aliengo/wolf_controller/CoM/velocity_actual/z"/>
+        <curve color="#f14cc1" name="/aliengo/wolf_controller/CoM/position_actual/z"/>
+        <curve color="#bcbd22" name="/aliengo/wolf_controller/CoM/position_reference/z"/>
        </plot>
       </DockArea>
      </DockSplitter>
-    </DockSplitter>
-   </Container>
-  </Tab>
-  <Tab tab_name="com_planner" containers="1">
-   <Container>
-    <DockSplitter sizes="1" count="1" orientation="-">
-     <DockSplitter sizes="0.5;0.5" count="2" orientation="|">
-      <DockSplitter sizes="0.5;0.5" count="2" orientation="-">
-       <DockArea name="...">
-        <plot style="Lines" mode="TimeSeries">
-         <range top="1.000000" right="1.000000" bottom="0.000000" left="0.000000"/>
-         <limitY/>
-        </plot>
-       </DockArea>
-       <DockArea name="...">
-        <plot style="Lines" mode="TimeSeries">
-         <range top="1.000000" right="1.000000" bottom="0.000000" left="0.000000"/>
-         <limitY/>
-        </plot>
-       </DockArea>
-      </DockSplitter>
-      <DockSplitter sizes="0.35;0.35;0.3" count="3" orientation="-">
-       <DockArea name="...">
-        <plot style="Lines" mode="TimeSeries">
-         <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-         <limitY/>
-         <curve color="#1ac938" name="/rt_logger/ComPlanner/com_velocity_ref/array.0/array/data.0"/>
-        </plot>
-       </DockArea>
-       <DockArea name="...">
-        <plot style="Lines" mode="TimeSeries">
-         <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-         <limitY/>
-         <curve color="#ff7f0e" name="/rt_logger/ComPlanner/com_velocity_ref/array.0/array/data.1"/>
-        </plot>
-       </DockArea>
-       <DockArea name="...">
-        <plot style="Lines" mode="TimeSeries">
-         <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-         <limitY/>
-         <curve color="#f14cc1" name="/rt_logger/ComPlanner/com_velocity_ref/array.0/array/data.2"/>
-        </plot>
-       </DockArea>
-      </DockSplitter>
+     <DockSplitter orientation="|" count="3" sizes="0.336957;0.336957;0.326087">
+      <DockArea name="...">
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="0.100000" left="0.000000" bottom="-0.100000"/>
+        <limitY/>
+        <curve color="#1f77b4" name="/aliengo/wolf_controller/CoM/velocity_actual/x"/>
+        <curve color="#ff7f0e" name="/aliengo/wolf_controller/CoM/velocity_reference/x"/>
+       </plot>
+      </DockArea>
+      <DockArea name="...">
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="0.100000" left="0.000000" bottom="-0.100000"/>
+        <limitY/>
+        <curve color="#d62728" name="/aliengo/wolf_controller/CoM/velocity_actual/y"/>
+        <curve color="#f14cc1" name="/aliengo/wolf_controller/CoM/velocity_reference/y"/>
+       </plot>
+      </DockArea>
+      <DockArea name="...">
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="0.100000" left="0.000000" bottom="-0.100000"/>
+        <limitY/>
+        <curve color="#1ac938" name="/aliengo/wolf_controller/CoM/velocity_actual/z"/>
+        <curve color="#9467bd" name="/aliengo/wolf_controller/CoM/velocity_reference/z"/>
+       </plot>
+      </DockArea>
      </DockSplitter>
     </DockSplitter>
    </Container>
   </Tab>
   <Tab tab_name="contacts" containers="1">
    <Container>
-    <DockSplitter sizes="0.25;0.25;0.25;0.25" count="4" orientation="-">
+    <DockSplitter orientation="-" count="4" sizes="0.25;0.25;0.25;0.25">
      <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="1.100000" right="3.542000" bottom="0.900000" left="-1.458000"/>
+      <plot mode="TimeSeries" style="Lines">
+       <range right="5.000000" top="1.100000" left="0.000000" bottom="0.900000"/>
        <limitY/>
        <curve color="#1f77b4" name="/aliengo/wolf_controller/contact_forces/contact.0"/>
       </plot>
      </DockArea>
      <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="1.100000" right="3.542000" bottom="0.900000" left="-1.458000"/>
+      <plot mode="TimeSeries" style="Lines">
+       <range right="5.000000" top="1.100000" left="0.000000" bottom="0.900000"/>
        <limitY/>
        <curve color="#d62728" name="/aliengo/wolf_controller/contact_forces/contact.1"/>
       </plot>
      </DockArea>
      <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="1.100000" right="3.542000" bottom="0.900000" left="-1.458000"/>
+      <plot mode="TimeSeries" style="Lines">
+       <range right="5.000000" top="1.100000" left="0.000000" bottom="0.900000"/>
        <limitY/>
        <curve color="#1ac938" name="/aliengo/wolf_controller/contact_forces/contact.2"/>
       </plot>
      </DockArea>
      <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="1.100000" right="3.542000" bottom="0.900000" left="-1.458000"/>
+      <plot mode="TimeSeries" style="Lines">
+       <range right="5.000000" top="1.100000" left="0.000000" bottom="0.900000"/>
        <limitY/>
        <curve color="#ff7f0e" name="/aliengo/wolf_controller/contact_forces/contact.3"/>
       </plot>
@@ -570,105 +247,105 @@
   </Tab>
   <Tab tab_name="contact_forces" containers="1">
    <Container>
-    <DockSplitter sizes="0.251012;0.248988;0.251012;0.248988" count="4" orientation="-">
-     <DockSplitter sizes="0.337442;0.337442;0.325116" count="3" orientation="|">
+    <DockSplitter orientation="-" count="4" sizes="0.25;0.25;0.25;0.25">
+     <DockSplitter orientation="|" count="3" sizes="0.336957;0.336957;0.326087">
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.227403" right="3.542000" bottom="-0.005544" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="0.127145" left="0.000000" bottom="-0.192530"/>
         <limitY/>
         <curve color="#f14cc1" name="/aliengo/wolf_controller/contact_forces/contact_forces.0/force/x"/>
         <curve color="#1f77b4" name="/aliengo/wolf_controller/contact_forces/des_contact_forces.0/force/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.176936" right="3.542000" bottom="-0.004261" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="0.113351" left="0.000000" bottom="-0.143016"/>
         <limitY/>
         <curve color="#1f77b4" name="/aliengo/wolf_controller/contact_forces/contact_forces.0/force/y"/>
         <curve color="#d62728" name="/aliengo/wolf_controller/contact_forces/des_contact_forces.0/force/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="55.520098" right="3.542000" bottom="55.520077" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="55.996310" left="0.000000" bottom="55.991770"/>
         <limitY/>
         <curve color="#d62728" name="/aliengo/wolf_controller/contact_forces/contact_forces.0/force/z"/>
         <curve color="#1ac938" name="/aliengo/wolf_controller/contact_forces/des_contact_forces.0/force/z"/>
        </plot>
       </DockArea>
      </DockSplitter>
-     <DockSplitter sizes="0.337442;0.337442;0.325116" count="3" orientation="|">
+     <DockSplitter orientation="|" count="3" sizes="0.336957;0.336957;0.326087">
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.006187" right="3.542000" bottom="-0.253577" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="-0.177096" left="0.000000" bottom="-0.505177"/>
         <limitY/>
         <curve color="#9467bd" name="/aliengo/wolf_controller/contact_forces/contact_forces.1/force/x"/>
         <curve color="#ff7f0e" name="/aliengo/wolf_controller/contact_forces/des_contact_forces.1/force/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.177597" right="3.542000" bottom="-0.004278" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="0.109040" left="0.000000" bottom="-0.150288"/>
         <limitY/>
         <curve color="#1ac938" name="/aliengo/wolf_controller/contact_forces/contact_forces.1/force/y"/>
         <curve color="#f14cc1" name="/aliengo/wolf_controller/contact_forces/des_contact_forces.1/force/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="55.519385" right="3.542000" bottom="55.519362" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="55.199034" left="0.000000" bottom="55.184846"/>
         <limitY/>
         <curve color="#ff7f0e" name="/aliengo/wolf_controller/contact_forces/contact_forces.1/force/z"/>
         <curve color="#9467bd" name="/aliengo/wolf_controller/contact_forces/des_contact_forces.1/force/z"/>
        </plot>
       </DockArea>
      </DockSplitter>
-     <DockSplitter sizes="0.337442;0.337442;0.325116" count="3" orientation="|">
+     <DockSplitter orientation="|" count="3" sizes="0.336957;0.336957;0.326087">
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.227393" right="3.542000" bottom="-0.005543" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="0.127569" left="0.000000" bottom="-0.186267"/>
         <limitY/>
         <curve color="#17becf" name="/aliengo/wolf_controller/contact_forces/contact_forces.2/force/x"/>
         <curve color="#17becf" name="/aliengo/wolf_controller/contact_forces/des_contact_forces.2/force/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.004361" right="3.542000" bottom="-0.176535" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="-0.130185" left="0.000000" bottom="-0.383475"/>
         <limitY/>
         <curve color="#f14cc1" name="/aliengo/wolf_controller/contact_forces/contact_forces.2/force/y"/>
         <curve color="#bcbd22" name="/aliengo/wolf_controller/contact_forces/des_contact_forces.2/force/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="55.519990" right="3.542000" bottom="55.519965" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="55.290468" left="0.000000" bottom="55.277540"/>
         <limitY/>
         <curve color="#9467bd" name="/aliengo/wolf_controller/contact_forces/contact_forces.2/force/z"/>
         <curve color="#1f77b4" name="/aliengo/wolf_controller/contact_forces/des_contact_forces.2/force/z"/>
        </plot>
       </DockArea>
      </DockSplitter>
-     <DockSplitter sizes="0.337442;0.337442;0.325116" count="3" orientation="|">
+     <DockSplitter orientation="|" count="3" sizes="0.336957;0.336957;0.326087">
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.006190" right="3.542000" bottom="-0.253673" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="-0.171134" left="0.000000" bottom="-0.501195"/>
         <limitY/>
         <curve color="#bcbd22" name="/aliengo/wolf_controller/contact_forces/contact_forces.3/force/x"/>
         <curve color="#d62728" name="/aliengo/wolf_controller/contact_forces/des_contact_forces.3/force/x"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.004392" right="3.542000" bottom="-0.177867" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="-0.137393" left="0.000000" bottom="-0.400548"/>
         <limitY/>
         <curve color="#17becf" name="/aliengo/wolf_controller/contact_forces/contact_forces.3/force/y"/>
         <curve color="#1ac938" name="/aliengo/wolf_controller/contact_forces/des_contact_forces.3/force/y"/>
        </plot>
       </DockArea>
       <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="55.519274" right="3.542000" bottom="55.519252" left="-1.458000"/>
+       <plot mode="TimeSeries" style="Lines">
+        <range right="5.000000" top="54.494161" left="0.000000" bottom="54.471304"/>
         <limitY/>
         <curve color="#bcbd22" name="/aliengo/wolf_controller/contact_forces/contact_forces.3/force/z"/>
         <curve color="#ff7f0e" name="/aliengo/wolf_controller/contact_forces/des_contact_forces.3/force/z"/>
@@ -678,179 +355,14 @@
     </DockSplitter>
    </Container>
   </Tab>
-  <Tab tab_name="Efforts" containers="1">
-   <Container>
-    <DockSplitter sizes="0.25;0.25;0.25;0.25" count="4" orientation="-">
-     <DockSplitter sizes="0.336957;0.336957;0.326087" count="3" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="-5.741393" right="3.542000" bottom="-5.741412" left="-1.458000"/>
-        <limitY/>
-        <curve color="#1f77b4" name="/rt_logger/Controller/des_joint_efforts/array.0/array/data.0"/>
-        <curve color="#f14cc1" name="/rt_logger/Controller/joint_efforts/array.0/array/data.6"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="-0.041708" right="3.542000" bottom="-0.041709" left="-1.458000"/>
-        <limitY/>
-        <curve color="#d62728" name="/rt_logger/Controller/des_joint_efforts/array.0/array/data.1"/>
-        <curve color="#9467bd" name="/rt_logger/Controller/joint_efforts/array.0/array/data.7"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="7.329266" right="3.542000" bottom="7.329262" left="-1.458000"/>
-        <limitY/>
-        <curve color="#1ac938" name="/rt_logger/Controller/des_joint_efforts/array.0/array/data.2"/>
-        <curve color="#17becf" name="/rt_logger/Controller/joint_efforts/array.0/array/data.8"/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
-     <DockSplitter sizes="0.336957;0.336957;0.326087" count="3" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="-5.790366" right="3.542000" bottom="-5.790399" left="-1.458000"/>
-        <limitY/>
-        <curve color="#ff7f0e" name="/rt_logger/Controller/des_joint_efforts/array.0/array/data.3"/>
-        <curve color="#bcbd22" name="/rt_logger/Controller/joint_efforts/array.0/array/data.9"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.514975" right="3.542000" bottom="0.514972" left="-1.458000"/>
-        <limitY/>
-        <curve color="#f14cc1" name="/rt_logger/Controller/des_joint_efforts/array.0/array/data.4"/>
-        <curve color="#1f77b4" name="/rt_logger/Controller/joint_efforts/array.0/array/data.10"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="7.682592" right="3.542000" bottom="7.682586" left="-1.458000"/>
-        <limitY/>
-        <curve color="#9467bd" name="/rt_logger/Controller/des_joint_efforts/array.0/array/data.5"/>
-        <curve color="#d62728" name="/rt_logger/Controller/joint_efforts/array.0/array/data.11"/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
-     <DockSplitter sizes="0.336957;0.336957;0.326087" count="3" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="5.520608" right="3.542000" bottom="5.520585" left="-1.458000"/>
-        <limitY/>
-        <curve color="#17becf" name="/rt_logger/Controller/des_joint_efforts/array.0/array/data.6"/>
-        <curve color="#1ac938" name="/rt_logger/Controller/joint_efforts/array.0/array/data.12"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="-0.051918" right="3.542000" bottom="-0.051919" left="-1.458000"/>
-        <limitY/>
-        <curve color="#bcbd22" name="/rt_logger/Controller/des_joint_efforts/array.0/array/data.7"/>
-        <curve color="#ff7f0e" name="/rt_logger/Controller/joint_efforts/array.0/array/data.13"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="7.374789" right="3.542000" bottom="7.374783" left="-1.458000"/>
-        <limitY/>
-        <curve color="#1f77b4" name="/rt_logger/Controller/des_joint_efforts/array.0/array/data.8"/>
-        <curve color="#f14cc1" name="/rt_logger/Controller/joint_efforts/array.0/array/data.14"/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
-     <DockSplitter sizes="0.336957;0.336957;0.326087" count="3" orientation="|">
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="5.573126" right="3.542000" bottom="5.573096" left="-1.458000"/>
-        <limitY/>
-        <curve color="#d62728" name="/rt_logger/Controller/des_joint_efforts/array.0/array/data.9"/>
-        <curve color="#9467bd" name="/rt_logger/Controller/joint_efforts/array.0/array/data.15"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="0.500860" right="3.542000" bottom="0.500860" left="-1.458000"/>
-        <limitY/>
-        <curve color="#1ac938" name="/rt_logger/Controller/des_joint_efforts/array.0/array/data.10"/>
-        <curve color="#17becf" name="/rt_logger/Controller/joint_efforts/array.0/array/data.16"/>
-       </plot>
-      </DockArea>
-      <DockArea name="...">
-       <plot style="Lines" mode="TimeSeries">
-        <range top="7.725920" right="3.542000" bottom="7.725913" left="-1.458000"/>
-        <limitY/>
-        <curve color="#ff7f0e" name="/rt_logger/Controller/des_joint_efforts/array.0/array/data.11"/>
-        <curve color="#bcbd22" name="/rt_logger/Controller/joint_efforts/array.0/array/data.17"/>
-       </plot>
-      </DockArea>
-     </DockSplitter>
-    </DockSplitter>
-   </Container>
-  </Tab>
-  <Tab tab_name="costs" containers="1">
-   <Container>
-    <DockSplitter sizes="0.142566;0.142566;0.142566;0.144603;0.142566;0.142566;0.142566" count="7" orientation="-">
-     <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="0.000000" right="3.542000" bottom="0.000000" left="-1.458000"/>
-       <limitY/>
-       <curve color="#1f77b4" name="/aliengo/wolf_controller/lf_foot/cost"/>
-      </plot>
-     </DockArea>
-     <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="0.000000" right="3.542000" bottom="0.000000" left="-1.458000"/>
-       <limitY/>
-       <curve color="#d62728" name="/aliengo/wolf_controller/lh_foot/cost"/>
-      </plot>
-     </DockArea>
-     <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="0.000000" right="3.542000" bottom="0.000000" left="-1.458000"/>
-       <limitY/>
-       <curve color="#1ac938" name="/aliengo/wolf_controller/rf_foot/cost"/>
-      </plot>
-     </DockArea>
-     <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="0.000000" right="3.542000" bottom="0.000000" left="-1.458000"/>
-       <limitY/>
-       <curve color="#ff7f0e" name="/aliengo/wolf_controller/rh_foot/cost"/>
-      </plot>
-     </DockArea>
-     <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="0.000000" right="3.542000" bottom="0.000000" left="-1.458000"/>
-       <limitY/>
-       <curve color="#f14cc1" name="/aliengo/wolf_controller/waistRPY/cost"/>
-      </plot>
-     </DockArea>
-     <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="0.100000" right="3.542000" bottom="-0.100000" left="-1.458000"/>
-       <limitY/>
-       <curve color="#9467bd" name="/aliengo/wolf_controller/CoM/cost"/>
-      </plot>
-     </DockArea>
-     <DockArea name="...">
-      <plot style="Lines" mode="TimeSeries">
-       <range top="0.000000" right="3.542000" bottom="0.000000" left="-1.458000"/>
-       <limitY/>
-       <curve color="#17becf" name="/aliengo/wolf_controller/Postural/cost"/>
-      </plot>
-     </DockArea>
-    </DockSplitter>
-   </Container>
-  </Tab>
-  <currentTabIndex index="7"/>
+  <currentTabIndex index="0"/>
  </tabbed_widget>
  <use_relative_time_offset enabled="1"/>
  <!-- - - - - - - - - - - - - - - -->
  <!-- - - - - - - - - - - - - - - -->
  <Plugins>
   <plugin ID="DataLoad CSV">
-   <default time_axis=""/>
+   <default time_axis="" delimiter="0"/>
   </plugin>
   <plugin ID="DataLoad ROS bags">
    <use_header_stamp value="false"/>
@@ -867,7 +379,6 @@
   </plugin>
   <plugin ID="UDP Server"/>
   <plugin ID="WebSocket Server"/>
-  <plugin ID="ZMQ Subscriber"/>
   <plugin status="idle" ID="CSV Exporter"/>
   <plugin status="idle" ID="ROS /rosout Visualization"/>
   <plugin status="idle" ID="ROS Topic Re-Publisher"/>

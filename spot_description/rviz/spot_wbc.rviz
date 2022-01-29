@@ -6,12 +6,9 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /RobotModel1
         - /RobotModel1/Links1
-        - /RobotModel1/Links1/kinova_end_effector1
-        - /InteractiveMarkers1
       Splitter Ratio: 0.5
-    Tree Height: 363
+    Tree Height: 549
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -56,7 +53,7 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
-    - Alpha: 0.20000000298023224
+    - Alpha: 0.5
       Class: rviz/RobotModel
       Collision Enabled: false
       Enabled: true
@@ -75,59 +72,6 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        kinova_adapter_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        kinova_end_effector:
-          Alpha: 1
-          Show Axes: true
-          Show Trail: false
-        kinova_link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        kinova_link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        kinova_link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        kinova_link_4:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        kinova_link_base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        kinova_link_finger_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        kinova_link_finger_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        kinova_link_finger_tip_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        kinova_link_finger_tip_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         lf_foot:
           Alpha: 1
           Show Axes: false
@@ -212,6 +156,10 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        trunk_imu:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         world:
           Alpha: 1
           Show Axes: false
@@ -224,7 +172,7 @@ Visualization Manager:
       Visual Enabled: true
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: /spot/plot_node/CoM_visual_marker
+      Marker Topic: /spot/wolf_plot_node/CoM_visual_marker
       Name: MarkerArray
       Namespaces:
         Arrow: true
@@ -233,7 +181,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: /spot/plot_node/contact_forces_visual_marker
+      Marker Topic: /spot/wolf_plot_node/contact_forces_visual_marker
       Name: MarkerArray
       Namespaces:
         Arrow: true
@@ -241,33 +189,24 @@ Visualization Manager:
       Value: true
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: /spot/plot_node/friction_cones_visual_marker
+      Marker Topic: /spot/wolf_plot_node/friction_cones_visual_marker
       Name: MarkerArray
       Namespaces:
-        Triangle: true
+        Arrow: true
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: /spot/plot_node/terrain_estimation_visual_marker
+      Marker Topic: /spot/wolf_plot_node/terrain_estimation_visual_marker
       Name: MarkerArray
       Namespaces:
         Arrow: true
         Triangle: true
       Queue Size: 100
-      Value: true
-    - Class: rviz/InteractiveMarkers
-      Enable Transparency: true
-      Enabled: true
-      Name: InteractiveMarkers
-      Show Axes: true
-      Show Descriptions: true
-      Show Visual Aids: false
-      Update Topic: /kinova_end_effector/update
       Value: true
   Enabled: true
   Global Options:
-    Background Color: 48; 48; 48
+    Background Color: 238; 238; 236
     Default Light: true
     Fixed Frame: world
     Frame Rate: 30
@@ -293,25 +232,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.088561534881592
+      Distance: 1.9124661684036255
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.41775062680244446
-        Y: -0.29838827252388
-        Z: 0.8201817274093628
+        X: 0.32174092531204224
+        Y: -0.37417539954185486
+        Z: 0.28848421573638916
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.055398501455783844
+      Pitch: 0.5303986072540283
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.658591270446777
+      Yaw: 5.418579578399658
     Saved: ~
 Window Geometry:
   Displays:
@@ -329,5 +268,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1267
-  X: 653
+  X: 483
   Y: 27
