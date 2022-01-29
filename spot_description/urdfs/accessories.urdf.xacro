@@ -4,7 +4,7 @@
   <xacro:include filename="$(find sensors_description)/urdfs/common.xacro"/>
   <!--<xacro:include filename="$(find sensors_description)/urdfs/sensors/velodyne.gazebo.xacro"/>-->
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
-  <xacro:include filename="$(find sensors_description)/urdfs/sensors/_d435.urdf.xacro" />
+  <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_d435.urdf.xacro" />
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_t265.xacro" />
 
   <xacro:if value="$(optenv SPOT_PACK 1)">
@@ -76,7 +76,7 @@
         <origin xyz="0 0 0" rpy="0 0 0" />
       </xacro:VLP-16>
 
-      <xacro:sensor_d435 parent="front_rail">
+      <xacro:sensor_d435 name="d435" topics_ns="d435" parent="front_rail">
         <origin xyz="0.13 0 0" rpy="0 0 0" />
       </xacro:sensor_d435>
 
