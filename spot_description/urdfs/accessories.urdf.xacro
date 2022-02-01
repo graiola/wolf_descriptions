@@ -72,7 +72,8 @@
         </collision>
       </link>
 
-      <xacro:VLP-16 parent="velodyne_mount" name="velodyne" topic="/velodyne_pointcloud" organize_cloud="false" hz="10" samples="440" gpu="true">
+      <xacro:VLP-16 parent="velodyne_mount" name="velodyne" topic="/velodyne_pointcloud"
+                    organize_cloud="false" hz="10" samples="440" gpu="true">
         <origin xyz="0 0 0" rpy="0 0 0" />
       </xacro:VLP-16>
 
@@ -80,8 +81,8 @@
         <origin xyz="0.13 0 0" rpy="0 0 0" />
       </xacro:sensor_d435>
 
-      <xacro:realsense_T265 sensor_name="t265" parent_link="d435_bottom_screw_frame" rate="30.0">
-        <origin xyz="0 0 0.04" rpy="0 0 0" />
+      <xacro:realsense_T265 sensor_name="t265" parent_link="front_rail" rate="30.0">
+        <origin xyz="0.13 0 0.04" rpy="0 0 0" />
       </xacro:realsense_T265>
 
     </xacro:if>
