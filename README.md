@@ -23,29 +23,32 @@ To launch the new robot with the WoLF controller:
 
 ## Parameters description
 
- - `default_duty_factor` defines the ratio between the stance and total cycle time: `T_stance / T_cycle`.
- - `default_swing_frequency` defines the frequency of the swing: `1 / T_swing`.
- - `default_contact_threshold` defines the force magnitude  that is used to detect if the robot is contact with the enviroment or not.
- - `default_step_reflex_contact_threshold` if the step reflex is active, it represents the magnitude of the contact force that triggers a step reflex.
+- `default_duty_factor` defines the ratio between the stance and total cycle time: `T_stance / T_cycle`.
+- `default_swing_frequency` defines the frequency of the swing: `1 / T_swing`.
+- `default_contact_threshold` defines the force magnitude  that is used to detect if the robot is contact with the enviroment or not.
+- `default_step_reflex_contact_threshold` if the step reflex is active, it represents the magnitude of the contact force that triggers a step reflex.
 - `default_base_linear_velocity_x` linear velocity along robot's x axis.
 - `default_base_linear_velocity_y` linear velocity along robot's y axis.
 - `default_base_linear_velocity_z` linear velocity along robot's z axis.
 - `default_base_linear_velocity` defines a common velocity value along xyz axis, it overrides the previous linear velocities.
- - `default_base_angular_velocity_roll`  angular velocity along robot's roll axis.
- - `default_base_angular_velocity_pitch`  angular velocity along robot's pitch axis.
- - `default_base_angular_velocity_yaw`  angular velocity along robot's yaw axis.
- - `default_base_angular_velocity` defines a common velocity value along roll pitch and yaw axis, it overrides the previous angular velocities.
- - `default_step_height` defines the step height.
- - `max_step_height` defines the maximum step height allowed.
- - `max_step_length` defines the maximum step length allowed.
- - `max_base_height` defines the maximum base height allowed.
- - `max_base_roll` defines the maximum rotation along the robot's roll axis.
- - `min_base_roll` defines the minimum rotation along the robot's roll axis.
- - `max_base_pitch` defines the maximum rotation along the robot's pitch axis. 
- - `min_base_pitch` defines the minimum rotation along the robot's pitch axis.
- - `estimation_position_type [ground_truth (simulation only) | estimated_z]` 
- - `estimation_orientation_type [ground_truth (simulation only) | imu_magnetometer | imu_gyroscope]` 
- - `activate_step_reflex [true | false]` activate the step reflex.
+- `default_base_angular_velocity_roll`  angular velocity along robot's roll axis.
+- `default_base_angular_velocity_pitch`  angular velocity along robot's pitch axis.
+- `default_base_angular_velocity_yaw`  angular velocity along robot's yaw axis.
+- `default_base_angular_velocity` defines a common velocity value along roll pitch and yaw axis, it overrides the previous angular velocities.
+- `default_step_height` defines the step height.
+- `default_cutoff_freq_gyroscope` cut off frequency for the gyroscope filter.
+- `default_cutoff_freq_qdot` cut off frequency for the joint velocities filter.
+- `default_friction_cones_mu` friction cones [mu](https://scaron.info/robot-locomotion/friction-cones.html).
+- `max_step_height` defines the maximum step height allowed.
+- `max_step_length` defines the maximum step length allowed.
+- `max_base_height` defines the maximum base height allowed.
+- `max_base_roll` defines the maximum rotation along the robot's roll axis.
+- `min_base_roll` defines the minimum rotation along the robot's roll axis.
+- `max_base_pitch` defines the maximum rotation along the robot's pitch axis. 
+- `min_base_pitch` defines the minimum rotation along the robot's pitch axis.
+- `estimation_position_type [ground_truth (simulation only) | estimated_z]` 
+- `estimation_orientation_type [ground_truth (simulation only) | imu_magnetometer | imu_gyroscope]` 
+- `activate_step_reflex [true | false]` activate the step reflex.
 - `activate_push_recovery [true | false]` activate the push recovery .
 - `initial_pose_simulation` Initial robot's pose in simulation.
 
