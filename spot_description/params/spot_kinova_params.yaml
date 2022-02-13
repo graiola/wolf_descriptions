@@ -19,11 +19,6 @@ wolf_controller:
   activate_push_recovery: false
   initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.25, roll: 0.0, pitch: 0.0, yaw: 0.0}
 
-  push_recovery:
-      k: {x: 0.5, y: 0.5, r: 0.01}
-      dynamic_th: {x: 0.5, y: 0.5, r: 0.5}
-      static_th: {x: 0.03, y: 0.03, r: 0.03}
-
   gains:
 
       Kp_arm: {j0: 50.0, j1: 50.0, j2: 50.0, j3: 50.0}
