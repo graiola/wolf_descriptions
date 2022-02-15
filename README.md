@@ -92,3 +92,7 @@ To reset the robot pose in gazebo you can simply use the gazebo's shortcut `ctrl
 `rosrun wolf_description_utils go0`
 
 now your robot should be ready to stand up again!
+
+## Legal notes
+
+`wolf_description_utils` and `sensors_description` are licensed under a license GNU General Public License v3.0. Regarding the robot descriptions,  all rights belong to their respective owners.
