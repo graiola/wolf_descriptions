@@ -79,11 +79,19 @@ gains:
           weight: xxx
 ```
 
-- `Kp_leg, Kd_leg` define the impedance gains for the joints in each leg. These gains are  in two istances: to zero the joints during the init phase and in case of anomaly to perform a controlled shutdown (in this istance, only the damping is used).
+- `Kp_leg` and `Kd_leg` define the impedance gains for the joints in each leg. These gains are used in two istances: 
+	- to zero the joints during the init phase.
+	- to perform a controlled shutdown in case of anomaly (using only the damping value of the impedance).
 - tasks:
-	- `Kp,Kd` task's gains.
+	- `Kp` and `Kd` define the proportional and derivative gains for each task.
 	- `type  [force|acceleration]` by default the tasks' gains are defined as force gains meaning that `Kp` and `Kd` work as Cartesian impedance gains. Please check Appendix A in the following [paper](https://hal.archives-ouvertes.fr/hal-03005133/document) for a better explanation of Cartesian impedance.
-	- `weight` relative task weight compared to the other tasks. A higher value means that the selected task has a higher priority and therefore the solver will try to minimize this task first.
+	- `weight` relative task weight. A higher value means that the selected task has a higher priority compared to the others and therefore the solver will try to minimize this task first.
+- The default tasks in WoLF are the following:
+	- `xx_foot` these tasks allow the robot to track the swing trajectories with its legs. Since we are working with a quadruped we usually have 4 of them.
+	- `waistRPY` this task is used for the attitude control of the robot's base/trunk.
+	- `CoM` this task is used to stabilize the Center of Mass (CoM) of the robot with respect to its [support polygon](https://scaron.info/robot-locomotion/zmp-support-area.html).
+	- `angular_momentum` this task is used to counteract angular momentum variations generated on the robot's base/trunk by disturbances.
+	- `xx_arm` if the robot has an arm mounted on top, it is possible to add a task to control the arm end-effector position and orientation.
 
 ## How to reset the robot pose and posture
 
