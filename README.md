@@ -95,4 +95,5 @@ now your robot should be ready to stand up again!
 
 ## Legal notes
 
-`wolf_description_utils` and `sensors_description` are licensed under a license GNU General Public License v3.0. Regarding the robot descriptions,  all rights belong to their respective owners.
+`wolf_description_utils` and `sensors_description` are licensed under a license GNU General Public License v3.0.
+ For the robot descriptions all rights belong to their respective owners.
