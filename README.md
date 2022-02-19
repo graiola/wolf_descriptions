@@ -41,7 +41,6 @@ To launch the new robot with the WoLF controller:
 - `default_friction_cones_mu` friction cones [mu](https://scaron.info/robot-locomotion/friction-cones.html).
 - `max_step_height` defines the maximum step height allowed.
 - `max_step_length` defines the maximum step length allowed.
-- `max_base_height` defines the maximum base height allowed.
 - `max_base_roll` defines the maximum rotation along the robot's roll axis.
 - `min_base_roll` defines the minimum rotation along the robot's roll axis.
 - `max_base_pitch` defines the maximum rotation along the robot's pitch axis. 
@@ -49,7 +48,7 @@ To launch the new robot with the WoLF controller:
 - `estimation_position_type [ground_truth (simulation only) | estimated_z]` 
 - `estimation_orientation_type [ground_truth (simulation only) | imu_magnetometer | imu_gyroscope]` 
 - `activate_step_reflex [true | false]` activate the step reflex.
-- `activate_push_recovery [true | false]` activate the push recovery .
+- `activate_push_recovery [true | false]` activate the push recovery.
 - `initial_pose_simulation` Initial robot's pose in simulation.
 
 ```
