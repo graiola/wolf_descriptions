@@ -9,23 +9,22 @@ wolf_controller:
   max_step_height: 0.15
   max_step_length: 0.5
   max_base_height: 0.55
+  max_base_roll: 0.523
+  min_base_roll: -0.523
+  max_base_pitch: 0.523
+  min_base_pitch: -0.523
   estimation_position_type: estimated_z
   estimation_orientation_type: imu_magnetometer
+  activate_step_reflex: true
+  activate_push_recovery: false
   initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.25, roll: 0.0, pitch: 0.0, yaw: 0.0}
-
-  push_recovery:
-      k: {x: 0.5, y: 0.5, r: 0.01}
-      dynamic_th: {x: 0.5, y: 0.5, r: 0.5}
-      static_th: {x: 0.03, y: 0.03, r: 0.03}
 
   gains:
 
-      kp_arm: {j0: 50.0, j1: 50.0, j2: 50.0, j3: 50.0}
-      kd_arm: {j0: 1.0, j1: 1.0, j2: 1.0, j3: 1.0}
-      kp_swing: {haa: 1.0, hfe: 1.0, kfe: 1.0}
-      kd_swing: {haa: 0.1, hfe: 0.1, kfe: 0.01}
-      kp_stance: {haa: 1.0, hfe: 1.0, kfe: 1.0}
-      kd_stance: {haa: 0.1, hfe: 0.1, kfe: 0.01}
+      Kp_arm: {j0: 50.0, j1: 50.0, j2: 50.0, j3: 50.0}
+      Kd_arm: {j0: 1.0, j1: 1.0, j2: 1.0, j3: 1.0}
+      Kp_leg: {haa: 1.0, hfe: 1.0, kfe: 1.0}
+      Kd_leg: {haa: 0.1, hfe: 0.1, kfe: 0.01}
 
       kinova_end_effector:
           Kp: {x: 100.0, y: 100.0, z: 100.0, roll: 50.0, pitch: 50.0, yaw: 50.0}
@@ -53,14 +52,6 @@ wolf_controller:
           Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 240.0, pitch: 140.0, yaw: 80.0}
           Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 50.0, pitch: 30.0, yaw: 16.0}
           weight: 10.0
-
-      waistZ:
-          Kp: {x: 0.0, y: 0.0, z: 200.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
-          Kd: {x: 0.0, y: 0.0, z: 50.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
-          weight: 0.0
-
-      Postural:
-          weight: 1.0
 
       CoM:
           Kp: {x: 200.0, y: 200.0, z: 200.0}
