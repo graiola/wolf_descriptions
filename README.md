@@ -100,6 +100,16 @@ To reset the robot pose in gazebo you can simply use the gazebo's shortcut `ctrl
 
 now your robot should be ready to stand up again!
 
+## How to define the standup and standdown posture
+
+To define the stand up and stand down posture in the SRDF file, you can use the `joint_state_publisher` by launching the following command in your terminal:
+
+`roslaunch wolf_description_utils standalone.launch robot_name:=your_robot`
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/4747910/154806597-4985929f-7dc1-4f8f-8aa2-5a6daad717be.png" alt="joint_state_publisher" width="400"/>
+</p>
+
 ## Legal notes
 
 `wolf_description_utils` and `sensors_description` are licensed under a license GNU General Public License v3.0.
