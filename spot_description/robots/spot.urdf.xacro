@@ -106,7 +106,7 @@
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://spot_description/meshes/body_collision.stl" />
+                <mesh filename="package://spot_description/meshes/body_collision_low.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -141,7 +141,7 @@
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://spot_description/meshes/front_left_hip_collision.stl" />
+                <mesh filename="package://spot_description/meshes/front_left_hip_collision_low.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -168,7 +168,7 @@
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://spot_description/meshes/front_left_upper_leg_collision.stl" />
+                <mesh filename="package://spot_description/meshes/front_left_upper_leg_collision_low.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -195,7 +195,7 @@
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://spot_description/meshes/front_left_lower_leg_collision.stl" />
+                <mesh filename="package://spot_description/meshes/front_left_lower_leg_collision_low.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -246,7 +246,7 @@
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://spot_description/meshes/front_right_hip_collision.stl" />
+                <mesh filename="package://spot_description/meshes/front_right_hip_collision_low.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -273,7 +273,7 @@
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://spot_description/meshes/front_right_upper_leg_collision.stl" />
+                <mesh filename="package://spot_description/meshes/front_right_upper_leg_collision_low.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -300,7 +300,7 @@
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://spot_description/meshes/front_right_lower_leg_collision.stl" />
+                <mesh filename="package://spot_description/meshes/front_right_lower_leg_collision_low.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -351,7 +351,7 @@
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://spot_description/meshes/rear_left_hip_collision.stl" />
+                <mesh filename="package://spot_description/meshes/rear_left_hip_collision_low.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -378,7 +378,7 @@
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://spot_description/meshes/rear_left_upper_leg_collision.stl" />
+                <mesh filename="package://spot_description/meshes/rear_left_upper_leg_collision_low.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -405,7 +405,7 @@
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://spot_description/meshes/rear_left_lower_leg_collision.stl" />
+                <mesh filename="package://spot_description/meshes/rear_left_lower_leg_collision_low.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -456,7 +456,7 @@
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://spot_description/meshes/rear_right_hip_collision.stl" />
+                <mesh filename="package://spot_description/meshes/rear_right_hip_collision_low.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -483,7 +483,7 @@
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://spot_description/meshes/rear_right_upper_leg_collision.stl" />
+                <mesh filename="package://spot_description/meshes/rear_right_upper_leg_collision_low.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -510,7 +510,7 @@
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://spot_description/meshes/rear_right_lower_leg_collision.stl" />
+                <mesh filename="package://spot_description/meshes/rear_right_lower_leg_collision_low.stl" />
             </geometry>
         </collision>
         <inertial>
