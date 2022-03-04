@@ -15,12 +15,9 @@ wolf_controller:
   min_base_pitch: -0.523
   estimation_position_type: estimated_z
   estimation_orientation_type: imu_magnetometer
+  activate_step_reflex: true
+  activate_push_recovery: true
   initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.25, roll: 0.0, pitch: 0.0, yaw: 0.0}
-
-  push_recovery:
-      k: {x: 0.5, y: 0.5, r: 0.01}
-      dynamic_th: {x: 0.5, y: 0.5, r: 0.5}
-      static_th: {x: 0.03, y: 0.03, r: 0.03}
 
   gains:
 
