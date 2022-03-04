@@ -12,11 +12,6 @@ wolf_controller:
   estimation_position_type: ground_truth
   estimation_orientation_type: ground_truth
 
-  push_recovery:
-      k: {x: 0.5, y: 0.5, r: 0.01}
-      dynamic_th: {x: 0.5, y: 0.5, r: 0.5}
-      static_th: {x: 0.06, y: 0.06, r: 0.06}
-
   gains:
 
       Kp_leg: {haa: 1.0, hfe: 1.0, kfe: 1.0}

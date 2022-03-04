@@ -17,7 +17,7 @@
 			</plugin>	
 		</gazebo>
 		
-		<!-- Imu definition required for DLS hardware interface of ros control -->
+                <!-- Imu definition required for the hardware interface of ros control -->
 		<gazebo reference="${imu_name}">
 			<sensor name="${imu_name}" type="imu">
 				<always_on>1</always_on>

@@ -13,11 +13,6 @@ wolf_controller:
   estimation_orientation_type: imu_magnetometer
   initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.55, roll: 0.0, pitch: 0.0, yaw: 0.0}
 
-  push_recovery:
-      k: {x: 1.0, y: 1.0, r: 1.0}
-      dynamic_th: {x: 0.5, y: 0.5, r: 0.5}
-      static_th: {x: 0.06, y: 0.06, r: 0.06}
-
   gains:
 
       Kp_arm: {j0: 50.0, j1: 50.0, j2: 50.0, j3: 50.0}
