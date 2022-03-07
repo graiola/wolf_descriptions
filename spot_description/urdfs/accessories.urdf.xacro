@@ -73,7 +73,7 @@
       </link>
 
       <xacro:VLP-16 parent="velodyne_mount" name="velodyne" topic="/velodyne_pointcloud"
-                    organize_cloud="true" hz="10" samples="440" gpu="true">
+                    organize_cloud="true" hz="10" gpu="true">
         <origin xyz="0 0 0" rpy="0 0 0" />
       </xacro:VLP-16>
 
