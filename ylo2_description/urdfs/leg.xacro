@@ -37,12 +37,6 @@
                 </geometry>
                 <material name="white"/>
             </visual>
-            <collision>
-                <origin rpy="${PI/2.0} 0 0" xyz="0 ${hip_offset*mirror} 0"/>
-                <geometry>
-                    <cylinder length="${hip_length}" radius="${hip_radius}"/>
-                </geometry>
-            </collision>
             <inertial>
                 <origin rpy="0 0 0" xyz="${hip_com_x*front_hind} ${hip_com_y*mirror} ${hip_com_z}"/>
                 <mass value="${hip_mass}"/>

@@ -2,10 +2,11 @@ wolf_controller:
   type: wolf_controller/Controller
   default_duty_factor: 0.3 # 0.3 ratio between the stance and total cycle time: T_stance / T_cycle
   default_swing_frequency: 4.2 # 4.2 frequency of the swing: 1 / T_swing
-  default_contact_threshold: 4.0 # 4.0 orce magnitude that is used to detect if the robot is contact with the enviroment
-  default_step_reflex_contact_threshold: 12.0 # 2.0 magnitude of the contact force that triggers a step reflex
+  default_contact_threshold: 4.0 # 4.0 force magnitude that is used to detect if the robot is contact with the enviroment
+  default_step_reflex_contact_threshold: 10.0 # 2.0 magnitude of the contact force that triggers a step reflex
+  default_step_reflex_max_step_retraction: 0.1
   
-  default_base_linear_velocity_x: 0.4
+  default_base_linear_velocity_x: 0.6
   default_base_linear_velocity_y: 0.3
   default_base_linear_velocity_z: 0.3
   
@@ -16,8 +17,8 @@ wolf_controller:
   default_step_height: 0.04             # 0.065 
   default_step_length: 0.20
   
-  max_step_height: 0.15                # 0.15 
-  max_step_length: 0.4                 # 0.4
+  max_step_height: 0.15                # 0.15
+  max_step_length: 0.35                 # 0.4  
   
   max_base_height: 0.35                 # 0.4
   
@@ -67,8 +68,8 @@ wolf_controller:
           weight: 1.0
 
       CoM:
-          Kp: {x: 30.0, y: 30.0, z: 30.0}
-          Kd: {x: 5.0, y: 5.0, z: 5.0}
+          Kp: {x: 30.0, y: 30.0, z: 50.0}
+          Kd: {x: 5.0, y: 5.0, z: 10.0}
           weight: 5.0
 
       angular_momentum:
