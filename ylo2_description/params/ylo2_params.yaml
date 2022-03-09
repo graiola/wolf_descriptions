@@ -4,7 +4,7 @@ wolf_controller:
   default_swing_frequency: 4.2 # 4.2 frequency of the swing: 1 / T_swing
   default_contact_threshold: 4.0 # 4.0 force magnitude that is used to detect if the robot is contact with the enviroment
   default_step_reflex_contact_threshold: 10.0 # 2.0 magnitude of the contact force that triggers a step reflex
-  default_step_reflex_max_step_retraction: 0.1
+  default_step_reflex_max_retraction: 0.1
   
   default_base_linear_velocity_x: 0.6
   default_base_linear_velocity_y: 0.3

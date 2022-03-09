@@ -27,6 +27,7 @@ To launch the new robot with the WoLF controller:
 - `default_swing_frequency` defines the frequency of the swing: `1 / T_swing`.
 - `default_contact_threshold` defines the force magnitude  that is used to detect if the robot is contact with the enviroment or not.
 - `default_step_reflex_contact_threshold` if the step reflex is active, it represents the magnitude of the contact force that triggers a step reflex.
+- `default_step_reflex_max_retraction` if the step reflex is active, this is the maximum step retraction length, by default it is calculated as `max_step_height/2.0`.
 - `default_base_linear_velocity_x` linear velocity along robot's x axis.
 - `default_base_linear_velocity_y` linear velocity along robot's y axis.
 - `default_base_linear_velocity_z` linear velocity along robot's z axis.
