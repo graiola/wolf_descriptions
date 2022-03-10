@@ -27,6 +27,9 @@
     </xacro:if>
 
     <!-- dynamics inertial value -->
+    <!-- Constants for robot dimensions -->
+    <xacro:property name="PI" value="3.1415926535897931"/>
+
     <!-- body -->
     <xacro:property name="body_mass" value="11.041"/>
     <xacro:property name="body_com_x" value="0.008465"/>
@@ -81,6 +84,23 @@
     <xacro:property name="foot_x" value="-0.005"/>
     <xacro:property name="foot_z" value="-0.348"/>
 
+    <!-- simplified collision value -->
+    <xacro:property name="trunk_width" value="0.150"/>
+    <xacro:property name="trunk_length" value="0.647"/>
+    <xacro:property name="trunk_height" value="0.112"/>
+    <xacro:property name="hip_radius" value="0.046"/>
+    <xacro:property name="hip_length" value="0.0418"/>
+    <xacro:property name="upperleg_shoulder_radius" value="0.044"/>
+    <xacro:property name="upperleg_shoulder_length" value="0.08"/>
+    <xacro:property name="upperleg_width" value="0.0374"/>
+    <xacro:property name="upperleg_height" value="0.05"/>
+    <xacro:property name="lowerleg_length" value="0.34"/>
+    <xacro:property name="lowerleg_width" value="0.04"/>
+    <xacro:property name="lowerleg_height" value="0.06"/>
+    <xacro:property name="foot_radius" value="0.0265"/>
+    <xacro:property name="stick_radius" value="0.01"/>
+    <xacro:property name="stick_length" value="0.2"/>
+
     <!-- Floating-base Joint -->
     <xacro:if value="$(arg floating_base_link)">
         <link name="world"/>
@@ -106,7 +126,7 @@
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://spot_description/meshes/body_collision_low.stl" />
+                <mesh filename="package://spot_description/meshes/body_collision.stl" />
             </geometry>
         </collision>
         <inertial>
@@ -139,11 +159,6 @@
                 <mesh filename="package://spot_description/meshes/front_left_hip.dae" />
             </geometry>
         </visual>
-        <collision>
-            <geometry>
-                <mesh filename="package://spot_description/meshes/front_left_hip_collision_low.stl" />
-            </geometry>
-        </collision>
         <inertial>
             <origin rpy="0 0 0" xyz="${hip_com_x*1} ${hip_com_y*1} ${hip_com_z}"/>
             <mass value="${hip_mass}"/>
@@ -166,11 +181,6 @@
                 <mesh filename="package://spot_description/meshes/front_left_upper_leg.dae" />
             </geometry>
         </visual>
-        <collision>
-            <geometry>
-                <mesh filename="package://spot_description/meshes/front_left_upper_leg_collision_low.stl" />
-            </geometry>
-        </collision>
         <inertial>
             <origin rpy="0 0 0" xyz="${upperleg_com_x} ${upperleg_com_y*1} ${upperleg_com_z}"/>
             <mass value="${upperleg_mass}"/>
@@ -194,8 +204,9 @@
             </geometry>
         </visual>
         <collision>
+            <origin rpy="0 ${PI/2.0} 0" xyz="0 0 ${-lowerleg_length/2.0}"/>
             <geometry>
-                <mesh filename="package://spot_description/meshes/front_left_lower_leg_collision_low.stl" />
+                <box size="${lowerleg_length} ${lowerleg_width} ${lowerleg_height}"/>
             </geometry>
         </collision>
         <inertial>
@@ -229,6 +240,12 @@
           <color rgba="0.0 0.8 0.0 1.0"/>
         </material>
     </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+            <sphere radius="${foot_radius}"/>
+        </geometry>
+    </collision>
     <inertial>
         <mass value="${foot_mass}"/>
         <inertia
@@ -244,11 +261,6 @@
                 <mesh filename="package://spot_description/meshes/front_right_hip.dae" />
             </geometry>
         </visual>
-        <collision>
-            <geometry>
-                <mesh filename="package://spot_description/meshes/front_right_hip_collision_low.stl" />
-            </geometry>
-        </collision>
         <inertial>
             <origin rpy="0 0 0" xyz="${hip_com_x*1} ${hip_com_y*-1} ${hip_com_z}"/>
             <mass value="${hip_mass}"/>
@@ -271,11 +283,6 @@
                 <mesh filename="package://spot_description/meshes/front_right_upper_leg.dae" />
             </geometry>
         </visual>
-        <collision>
-            <geometry>
-                <mesh filename="package://spot_description/meshes/front_right_upper_leg_collision_low.stl" />
-            </geometry>
-        </collision>
         <inertial>
             <origin rpy="0 0 0" xyz="${upperleg_com_x} ${upperleg_com_y*-1} ${upperleg_com_z}"/>
             <mass value="${upperleg_mass}"/>
@@ -299,8 +306,9 @@
             </geometry>
         </visual>
         <collision>
+            <origin rpy="0 ${PI/2.0} 0" xyz="0 0 ${-lowerleg_length/2.0}"/>
             <geometry>
-                <mesh filename="package://spot_description/meshes/front_right_lower_leg_collision_low.stl" />
+                <box size="${lowerleg_length} ${lowerleg_width} ${lowerleg_height}"/>
             </geometry>
         </collision>
         <inertial>
@@ -334,6 +342,12 @@
           <color rgba="0.0 0.8 0.0 1.0"/>
         </material>
     </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+            <sphere radius="${foot_radius}"/>
+        </geometry>
+    </collision>
     <inertial>
         <mass value="${foot_mass}"/>
         <inertia
@@ -349,11 +363,6 @@
                 <mesh filename="package://spot_description/meshes/rear_left_hip.dae" />
             </geometry>
         </visual>
-        <collision>
-            <geometry>
-                <mesh filename="package://spot_description/meshes/rear_left_hip_collision_low.stl" />
-            </geometry>
-        </collision>
         <inertial>
             <origin rpy="0 0 0" xyz="${hip_com_x*-1} ${hip_com_y*1} ${hip_com_z}"/>
             <mass value="${hip_mass}"/>
@@ -376,11 +385,6 @@
                 <mesh filename="package://spot_description/meshes/rear_left_upper_leg.dae" />
             </geometry>
         </visual>
-        <collision>
-            <geometry>
-                <mesh filename="package://spot_description/meshes/rear_left_upper_leg_collision_low.stl" />
-            </geometry>
-        </collision>
         <inertial>
             <origin rpy="0 0 0" xyz="${upperleg_com_x} ${upperleg_com_y*1} ${upperleg_com_z}"/>
             <mass value="${upperleg_mass}"/>
@@ -404,8 +408,9 @@
             </geometry>
         </visual>
         <collision>
+            <origin rpy="0 ${PI/2.0} 0" xyz="0 0 ${-lowerleg_length/2.0}"/>
             <geometry>
-                <mesh filename="package://spot_description/meshes/rear_left_lower_leg_collision_low.stl" />
+                <box size="${lowerleg_length} ${lowerleg_width} ${lowerleg_height}"/>
             </geometry>
         </collision>
         <inertial>
@@ -439,6 +444,12 @@
           <color rgba="0.0 0.8 0.0 1.0"/>
         </material>
     </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+            <sphere radius="${foot_radius}"/>
+        </geometry>
+    </collision>
     <inertial>
         <mass value="${foot_mass}"/>
         <inertia
@@ -454,11 +465,6 @@
                 <mesh filename="package://spot_description/meshes/rear_right_hip.dae" />
             </geometry>
         </visual>
-        <collision>
-            <geometry>
-                <mesh filename="package://spot_description/meshes/rear_right_hip_collision_low.stl" />
-            </geometry>
-        </collision>
         <inertial>
             <origin rpy="0 0 0" xyz="${hip_com_x*-1} ${hip_com_y*-1} ${hip_com_z}"/>
             <mass value="${hip_mass}"/>
@@ -481,11 +487,6 @@
                 <mesh filename="package://spot_description/meshes/rear_right_upper_leg.dae" />
             </geometry>
         </visual>
-        <collision>
-            <geometry>
-                <mesh filename="package://spot_description/meshes/rear_right_upper_leg_collision_low.stl" />
-            </geometry>
-        </collision>
         <inertial>
             <origin rpy="0 0 0" xyz="${upperleg_com_x} ${upperleg_com_y*-1} ${upperleg_com_z}"/>
             <mass value="${upperleg_mass}"/>
@@ -509,8 +510,9 @@
             </geometry>
         </visual>
         <collision>
+            <origin rpy="0 ${PI/2.0} 0" xyz="0 0 ${-lowerleg_length/2.0}"/>
             <geometry>
-                <mesh filename="package://spot_description/meshes/rear_right_lower_leg_collision_low.stl" />
+                <box size="${lowerleg_length} ${lowerleg_width} ${lowerleg_height}"/>
             </geometry>
         </collision>
         <inertial>
@@ -544,6 +546,12 @@
           <color rgba="0.0 0.8 0.0 1.0"/>
         </material>
     </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+            <sphere radius="${foot_radius}"/>
+        </geometry>
+    </collision>
     <inertial>
         <mass value="${foot_mass}"/>
         <inertia
