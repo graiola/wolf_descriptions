@@ -29,16 +29,16 @@
     <joint name="rh_kfe_joint"/>
   </group>
   <group name="lf_hip">
-    <chain base_link="trunk" tip_link="lf_hip"/>
+    <chain base_link="base_link" tip_link="lf_hip"/>
   </group>
   <group name="rf_hip">
-    <chain base_link="trunk" tip_link="rf_hip"/>
+    <chain base_link="base_link" tip_link="rf_hip"/>
   </group>
   <group name="lh_hip">
-    <chain base_link="trunk" tip_link="lh_hip"/>
+    <chain base_link="base_link" tip_link="lh_hip"/>
   </group>
   <group name="rh_hip">
-    <chain base_link="trunk" tip_link="rh_hip"/>
+    <chain base_link="base_link" tip_link="rh_hip"/>
   </group>
   <group name="chains">
     <group name="lf_leg"/>
