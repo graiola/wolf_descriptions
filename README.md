@@ -77,16 +77,21 @@ gains:
 
       angular_momentum:
           weight: xxx
+
+      postural:
+          weight: xxx
 ```
 
-- `Kp_leg` and `Kd_leg` define the impedance gains for the the `hip abduction/adduction (haa)`, `hip flexion/extension (hfe)` and `knee flexion/extension (kfe)` joints in each leg. These gains are used in two istances: 
+- `Kp_leg` and `Kd_leg` define the impedance gains for the the `hip abduction/adduction (haa)`, `hip flexion/extension (hfe)` and `knee flexion/extension (kfe)` joints in each leg. These gains are used for different things: 
 	- to zero the joints during the init phase.
 	- to perform a controlled shutdown in case of anomaly (using only the damping value of the impedance).
+	- to set the gains for the postural task.
 - The default tasks in WoLF are the following:
 	- `xx_foot` these tasks allow the robot to track the swing trajectories with its legs. Since we are working with a quadruped we usually have 4 of them defined as `left front (lf)`, `right front (rf)`, `left hind (lh)` and `right hind (rh)`.
 	- `waistRPY` this task is used to control the attitude of the robot's base/trunk.
 	- `CoM` this task is used to stabilize the Center of Mass (CoM) of the robot with respect to its [support polygon](https://scaron.info/robot-locomotion/zmp-support-area.html).
 	- `angular_momentum` this task is used to counteract angular momentum variations generated on the robot's base/trunk by disturbances.
+	- `postural` this task is used to keep the robot in a preferred joints configuration.
 	- `xx_arm` if the robot has an arm mounted on top, it is possible to add a task to control the arm end-effector position and orientation.
 - tasks' gains:
 	- `Kp` and `Kd` define the proportional and derivative gains for each task.
