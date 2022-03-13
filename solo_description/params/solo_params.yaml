@@ -47,3 +47,6 @@ wolf_controller:
 
       angular_momentum:
           weight: 0.1
+
+      postural:
+          weight: 0.01

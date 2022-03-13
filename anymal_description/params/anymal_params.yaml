@@ -13,7 +13,7 @@ wolf_controller:
   min_base_roll: -0.523
   max_base_pitch: 0.523
   min_base_pitch: -0.523
-  estimation_position_type: ground_truth
+  estimation_position_type: estimated_z
   estimation_orientation_type: ground_truth
   activate_step_reflex: true
   activate_push_recovery: true
@@ -21,8 +21,8 @@ wolf_controller:
 
   gains:
 
-      Kp_leg: {haa: 1.0, hfe: 1.0, kfe: 1.0}
-      Kd_leg: {haa: 0.1, hfe: 0.1, kfe: 0.01}
+      Kp_leg: {haa: 1.0, hfe: 10.0, kfe: 10.0}
+      Kd_leg: {haa: 0.001, hfe: 0.01, kfe: 0.01}
 
       lf_foot:
           Kp: {x: 2000.0, y: 2000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
@@ -53,3 +53,6 @@ wolf_controller:
 
       angular_momentum:
           weight: 0.1
+
+      postural:
+          weight: 0.01
