@@ -7,6 +7,12 @@
   <group name="imu">
     <link name="imu_link"/>
   </group>
+  <group name="contacts">
+    <link name="lf_foot"/>
+    <link name="rf_foot"/>
+    <link name="lh_foot"/>
+    <link name="rh_foot"/>
+  </group>
   <group name="lf_leg">
     <chain base_link="base" tip_link="lf_foot"/>
     <joint name="lf_haa_joint"/>
@@ -50,18 +56,18 @@
     <group name="rh_leg"/>
   </group>
   <group_state group="chains" name="standup">
-    <joint name="lf_haa_joint" value="-0.15"/>
-    <joint name="lf_hfe_joint" value="0.75"/>
-    <joint name="lf_kfe_joint" value="5.08"/>
-    <joint name="rf_haa_joint" value="0.15"/>
-    <joint name="rf_hfe_joint" value="0.75"/>
-    <joint name="rf_kfe_joint" value="5.08"/>
-    <joint name="lh_haa_joint" value="-0.15"/>
-    <joint name="lh_hfe_joint" value="-0.75"/>
-    <joint name="lh_kfe_joint" value="1.20"/>
-    <joint name="rh_haa_joint" value="0.15"/>
-    <joint name="rh_hfe_joint" value="-0.75"/>
-    <joint name="rh_kfe_joint" value="1.20"/>
+    <joint name="lf_haa_joint" value="-0.12"/>
+    <joint name="lf_hfe_joint" value="0.83"/>
+    <joint name="lf_kfe_joint" value="5.0"/>
+    <joint name="rf_haa_joint" value="0.12"/>
+    <joint name="rf_hfe_joint" value="0.83"/>
+    <joint name="rf_kfe_joint" value="5.0"/>
+    <joint name="lh_haa_joint" value="-0.12"/>
+    <joint name="lh_hfe_joint" value="-0.83"/>
+    <joint name="lh_kfe_joint" value="-5.0"/>
+    <joint name="rh_haa_joint" value="0.12"/>
+    <joint name="rh_hfe_joint" value="-0.83"/>
+    <joint name="rh_kfe_joint" value="-5.0"/>
   </group_state>
   <group_state group="chains" name="standdown">
     <joint name="lf_haa_joint" value="0.0"/>
