@@ -26,14 +26,14 @@ To launch the new robot with the WoLF controller:
 - `default_duty_factor` defines the ratio between the stance and total cycle time: `T_stance / T_cycle`.
 - `default_swing_frequency` defines the frequency of the swing: `1 / T_swing`.
 - `default_contact_threshold` defines the force magnitude  that is used to detect if the robot is contact with the enviroment or not.
-- `default_step_reflex_contact_threshold` if the step reflex is active, it represents the magnitude of the contact force that triggers a step reflex, by default it is calculated as `default_contact_threshold/3.0`.
+- `default_step_reflex_contact_threshold` if the step reflex is active, it represents the magnitude of the contact force that triggers a step reflex, by default it is calculated as `default_contact_threshold * 1.5`.
 - `default_step_reflex_max_retraction` if the step reflex is active, this is the maximum step retraction length, by default it is calculated as `max_step_height/2.0`.
 - `default_base_linear_velocity_x` linear velocity along robot's x axis.
 - `default_base_linear_velocity_y` linear velocity along robot's y axis.
 - `default_base_linear_velocity_z` linear velocity along robot's z axis.
 - `default_base_linear_velocity` defines a common velocity value along xyz axis, it overrides the previous linear velocities.
-- `default_base_angular_velocity_roll`  angular velocity along robot's roll axis.
-- `default_base_angular_velocity_pitch`  angular velocity along robot's pitch axis.
+- `default_base_angular_velocity_roll` angular velocity along robot's roll axis.
+- `default_base_angular_velocity_pitch` angular velocity along robot's pitch axis.
 - `default_base_angular_velocity_yaw`  angular velocity along robot's yaw axis.
 - `default_base_angular_velocity` defines a common velocity value along roll pitch and yaw axis, it overrides the previous angular velocities.
 - `default_step_height` defines the step height.
@@ -70,9 +70,15 @@ gains:
           type: [force|acceleration]
           weight: xxx
 
+      waistZ:
+          Kp: {x: 0.0, y: 0.0, z: xxx, roll: 0, pitch: 0, yaw: 0}
+          Kd: {x: 0.0, y: 0.0, z: xxx, roll: 0, pitch: 0, yaw: 0}
+          type: [force|acceleration]
+          weight: xxx
+
       CoM:
-          Kp: {x: xxx, y: xxx z: xxx}
-          Kd: {x: xxx, y: xxx, z: xxx}
+          Kp: {x: xxx, y: xxx z: 0}
+          Kd: {x: xxx, y: xxx, z: 0}
           weight: xxx
 
       angular_momentum:
@@ -89,7 +95,8 @@ gains:
 - The default tasks in WoLF are the following:
 	- `xx_foot` these tasks allow the robot to track the swing trajectories with its legs. Since we are working with a quadruped we usually have 4 of them defined as `left front (lf)`, `right front (rf)`, `left hind (lh)` and `right hind (rh)`.
 	- `waistRPY` this task is used to control the attitude of the robot's base/trunk.
-	- `CoM` this task is used to stabilize the Center of Mass (CoM) of the robot with respect to its [support polygon](https://scaron.info/robot-locomotion/zmp-support-area.html).
+        - `waistZ this task is used to control the altitude of the robot's base/trunk.
+        - `CoM` this task is used to stabilize the Center of Mass (CoM) of the robot with respect to its [support polygon](https://scaron.info/robot-locomotion/zmp-support-area.html).
 	- `angular_momentum` this task is used to counteract angular momentum variations generated on the robot's base/trunk by disturbances.
 	- `postural` this task is used to keep the robot in a preferred joints configuration.
 	- `xx_arm` if the robot has an arm mounted on top, it is possible to add a task to control the arm end-effector position and orientation.
