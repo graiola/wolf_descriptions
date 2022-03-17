@@ -99,18 +99,7 @@
         <child link="${sensor_name}_pose_frame"/>
         <origin rpy="0 0 0" xyz="0 0 0"/> <!-- check on real hw -->
     </joint>
-    <link name="${sensor_name}_odom_frame">
-    <inertial>
-        <mass value="0.0001"/>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <inertia ixx="0.0001"
-                 ixy="0"
-                 ixz="0"
-                 iyy="0.0001"
-                 iyz="0"
-                 izz="0.0001"/>
-    </inertial>
-    </link>
+    <link name="${sensor_name}_odom_frame"/>
 
     <link name="${sensor_name}_pose_frame">
         <visual>
