@@ -12,7 +12,7 @@
                         <controlPeriod>$(arg task_period)</controlPeriod>
 		</plugin>
 
-		<plugin filename="libgazebo_ros_p3d.so" name="gazebo_ros_p3d">
+              <plugin filename="libgazebo_ros_p3d.so" name="ground_truth">
                         <robotNamespace>$(arg robot_name)</robotNamespace>
                         <bodyName>$(arg base_name)</bodyName>
 			<topicName>ground_truth</topicName>
@@ -22,7 +22,7 @@
 			<gaussianNoise>0</gaussianNoise>
 			<alwaysOn>true</alwaysOn>
                         <updateRate>${1/ $(arg task_period)}</updateRate>
-		</plugin>
+                </plugin>
 	</gazebo>
 
 </robot>
