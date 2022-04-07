@@ -16,7 +16,7 @@ wolf_controller:
   estimation_position_type: estimated_z
   estimation_orientation_type: imu_magnetometer
   activate_step_reflex: true
-  activate_push_recovery: false
+  activate_push_recovery: true
   initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.25, roll: 0.0, pitch: 0.0, yaw: 0.0}
 
   gains:
@@ -34,19 +34,19 @@ wolf_controller:
       lf_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 15.0, y: 15.0, z: 15.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 1000.0
+          weight: 100.0
       rf_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 15.0, y: 15.0, z: 15.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 1000.0
+          weight: 100.0
       rh_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 15.0, y: 15.0, z: 15.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 1000.0
+          weight: 100.0
       lh_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 15.0, y: 15.0, z: 15.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 1000.0
+          weight: 100.0
 
       waistRPY:
           Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 240.0, pitch: 140.0, yaw: 80.0}
