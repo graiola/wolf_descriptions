@@ -1,21 +1,14 @@
 DWAPlannerROS:
   max_vel_x: 0.7
-  min_vel_x: 0.1
-  max_vel_theta: 0.5
-  min_in_place_vel_theta: 0.5
-  escape_vel: -0.55
+  min_vel_x: -0.7
+  max_vel_y: 0.5
+  min_vel_y: -0.5
+  max_rot_vel: 0.5
+  min_rot_vel: -0.5
 
-  acc_lim_theta: 3.2
+  acc_lim_th: 3.2
   acc_lim_x: 3.0
   acc_lim_y: 3.0
-
-  holonomic_robot: false
-  y_vels: [ -0.55, -0.1, 0.1, 0.55 ]
-
-  max_vel_trans: 0.65
-  min_vel_trans: 0.1
-  max_vel_theta: 1.0
-  min_vel_theta: 0.4
 
   # cost =
   # path_distance_bias * (distance to path from the endpoint of the trajectory in meters)
@@ -33,11 +26,11 @@ DWAPlannerROS:
   max_scaling_factor: 0.2
 
   # Forward simulation parameters
-  sim_time: 2.5
+  sim_time: 1.5
   sim_period: 0.1 # 10 hz
 
-  sim_granularity: 0.1
-  angular_sim_granularity: 0.1
+  sim_granularity: 0.025
+  angular_sim_granularity: 0.01
 
   vx_samples: 6
   vy_samples: 6
@@ -48,12 +41,14 @@ DWAPlannerROS:
   xy_goal_tolerance: 0.1
   yaw_goal_tolerance: 0.1
 
-  # When stopped?
-  trans_stopped_vel: 0.1
-  theta_stopped_vel: 0.1
+  # When stopped
+  trans_stopped_vel: 0.0
+  theta_stopped_vel: 0.0
 
-  # Prune the plan?
-  prune_plan: true
+  # Prune the plan while walking
+  prune_plan: false
+
+  publish_cost_grid: true
 
 
 TebLocalPlannerROS:

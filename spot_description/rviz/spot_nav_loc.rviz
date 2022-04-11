@@ -34,7 +34,11 @@ Panels:
     Help Height: 70
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /Map1
+        - /Map2
+        - /Path1
+        - /Path2
       Splitter Ratio: 0.5
     Tree Height: 157
 Preferences:
@@ -325,14 +329,14 @@ Visualization Manager:
       Value: true
     - Alpha: 0.699999988079071
       Class: rviz/Map
-      Color Scheme: map
+      Color Scheme: costmap
       Draw Behind: false
-      Enabled: false
+      Enabled: true
       Name: Map
       Topic: /move_base/global_costmap/costmap
       Unreliable: false
       Use Timestamp: false
-      Value: false
+      Value: true
     - Alpha: 1
       Class: rviz/Polygon
       Color: 25; 255; 0
@@ -344,7 +348,7 @@ Visualization Manager:
       Value: true
     - Alpha: 0.699999988079071
       Class: rviz/Map
-      Color Scheme: map
+      Color Scheme: costmap
       Draw Behind: false
       Enabled: true
       Name: Map
@@ -365,7 +369,7 @@ Visualization Manager:
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
-      Color: 245; 121; 0
+      Color: 239; 41; 41
       Enabled: true
       Head Diameter: 0.30000001192092896
       Head Length: 0.20000000298023224
@@ -646,7 +650,7 @@ Visualization Manager:
       Marker Topic: /follow_waypoints_node/waypoint_markers
       Name: Marker
       Namespaces:
-        {}
+        wolf_navigation: true
       Queue Size: 100
       Value: true
   Enabled: true
@@ -678,7 +682,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 13.841119766235352
+      Distance: 21.742366790771484
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -686,17 +690,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0.41775062680244446
-        Y: -0.29838827252388
-        Z: 0.8201817274093628
+        X: 4.633505344390869
+        Y: 0.38820603489875793
+        Z: -0.03617820888757706
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5397974252700806
+      Pitch: 1.2597962617874146
       Target Frame: <Fixed Frame>
-      Yaw: 4.0653839111328125
+      Yaw: 4.69037389755249
     Saved: ~
 Window Geometry:
   Displays:
