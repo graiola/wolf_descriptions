@@ -1,14 +1,16 @@
 Panels:
   - Class: rviz/Displays
-    Help Height: 85
+    Help Height: 78
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /RobotModel1/Links1
-        - /TF1/Frames1
-        - /PointCloud21
+        - /Global Options1
+        - /Status1
+        - /Map2
+        - /Map3
+        - /Path2
       Splitter Ratio: 0.5
-    Tree Height: 356
+    Tree Height: 549
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -27,20 +29,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: Image
-  - Class: wolf_rviz_plugin/WolfPanel
-    Name: WolfPanel
-  - Class: rviz/Displays
-    Help Height: 70
-    Name: Displays
-    Property Tree Widget:
-      Expanded:
-        - /Map1
-        - /Map2
-        - /Path1
-        - /Path2
-      Splitter Ratio: 0.5
-    Tree Height: 157
+    SyncSource: ""
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -65,6 +54,16 @@ Visualization Manager:
       Plane: XY
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
+      Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic: /map
+      Unreliable: false
+      Use Timestamp: false
       Value: true
     - Alpha: 1
       Class: rviz/RobotModel
@@ -286,47 +285,6 @@ Visualization Manager:
       Update Interval: 0
       Value: true
       Visual Enabled: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /spot/plot_node/CoM_visual_marker
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Class: rviz/MarkerArray
-      Enabled: false
-      Marker Topic: /spot/plot_node/contact_forces_visual_marker
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: false
-    - Class: rviz/MarkerArray
-      Enabled: false
-      Marker Topic: /spot/plot_node/friction_cones_visual_marker
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: false
-    - Class: rviz/MarkerArray
-      Enabled: false
-      Marker Topic: /spot/plot_node/terrain_estimation_visual_marker
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: false
-    - Class: rviz/InteractiveMarkers
-      Enable Transparency: true
-      Enabled: true
-      Name: InteractiveMarkers
-      Show Axes: true
-      Show Descriptions: true
-      Show Visual Aids: false
-      Update Topic: /kinova_end_effector/update
-      Value: true
     - Alpha: 0.699999988079071
       Class: rviz/Map
       Color Scheme: costmap
@@ -336,15 +294,6 @@ Visualization Manager:
       Topic: /move_base/global_costmap/costmap
       Unreliable: false
       Use Timestamp: false
-      Value: true
-    - Alpha: 1
-      Class: rviz/Polygon
-      Color: 25; 255; 0
-      Enabled: true
-      Name: Polygon
-      Queue Size: 10
-      Topic: /move_base/global_costmap/footprint
-      Unreliable: false
       Value: true
     - Alpha: 0.699999988079071
       Class: rviz/Map
@@ -356,15 +305,28 @@ Visualization Manager:
       Unreliable: false
       Use Timestamp: false
       Value: true
-    - Alpha: 0.699999988079071
-      Class: rviz/Map
-      Color Scheme: map
-      Draw Behind: false
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 25; 255; 0
       Enabled: true
-      Name: Map
-      Topic: /map
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic: /move_base/DWAPlannerROS/global_plan
       Unreliable: false
-      Use Timestamp: false
       Value: true
     - Alpha: 1
       Buffer Length: 1
@@ -383,275 +345,27 @@ Visualization Manager:
         Z: 0
       Pose Color: 255; 85; 255
       Pose Style: None
-      Queue Size: 10
       Radius: 0.029999999329447746
       Shaft Diameter: 0.10000000149011612
       Shaft Length: 0.10000000149011612
       Topic: /move_base/DWAPlannerROS/local_plan
       Unreliable: false
       Value: true
-    - Alpha: 1
-      Buffer Length: 1
-      Class: rviz/Path
-      Color: 25; 255; 0
-      Enabled: true
-      Head Diameter: 0.30000001192092896
-      Head Length: 0.20000000298023224
-      Length: 0.30000001192092896
-      Line Style: Lines
-      Line Width: 0.029999999329447746
-      Name: Path
-      Offset:
-        X: 0
-        Y: 0
-        Z: 0
-      Pose Color: 255; 85; 255
-      Pose Style: None
-      Queue Size: 10
-      Radius: 0.029999999329447746
-      Shaft Diameter: 0.10000000149011612
-      Shaft Length: 0.10000000149011612
-      Topic: /move_base/DWAPlannerROS/global_plan
-      Unreliable: false
-      Value: true
-    - Alpha: 1
-      Arrow Length: 0.30000001192092896
-      Axes Length: 0.30000001192092896
-      Axes Radius: 0.009999999776482582
-      Class: rviz/PoseArray
-      Color: 255; 0; 255
-      Enabled: true
-      Head Length: 0.07000000029802322
-      Head Radius: 0.029999999329447746
-      Name: PoseArray
-      Queue Size: 10
-      Shaft Length: 0.23000000417232513
-      Shaft Radius: 0.009999999776482582
-      Shape: Arrow (Flat)
-      Topic: /particlecloud
-      Unreliable: false
-      Value: true
-    - Class: rviz/Image
-      Enabled: true
-      Image Topic: /d435/color/image_raw
-      Max Value: 1
-      Median window: 5
-      Min Value: 0
-      Name: Image
-      Normalize Range: true
-      Queue Size: 2
-      Transport Hint: raw
-      Unreliable: false
-      Value: true
-    - Class: rviz/TF
-      Enabled: true
-      Frame Timeout: 15
-      Frames:
-        All Enabled: false
-        base_footprint:
-          Value: true
-        base_link:
-          Value: true
-        d435_bottom_screw_frame:
-          Value: false
-        d435_color_frame:
-          Value: false
-        d435_color_optical_frame:
-          Value: false
-        d435_depth_frame:
-          Value: false
-        d435_depth_optical_frame:
-          Value: false
-        d435_left_ir_frame:
-          Value: false
-        d435_left_ir_optical_frame:
-          Value: false
-        d435_link:
-          Value: false
-        d435_right_ir_frame:
-          Value: false
-        d435_right_ir_optical_frame:
-          Value: false
-        front_rail:
-          Value: false
-        lf_foot:
-          Value: false
-        lf_hip:
-          Value: false
-        lf_lowerleg:
-          Value: false
-        lf_upperleg:
-          Value: false
-        lh_foot:
-          Value: false
-        lh_hip:
-          Value: false
-        lh_lowerleg:
-          Value: false
-        lh_upperleg:
-          Value: false
-        lidar_mount:
-          Value: false
-        map:
-          Value: true
-        odom:
-          Value: true
-        pack_mount:
-          Value: false
-        rear_rail:
-          Value: false
-        rf_foot:
-          Value: false
-        rf_hip:
-          Value: false
-        rf_lowerleg:
-          Value: false
-        rf_upperleg:
-          Value: false
-        rh_foot:
-          Value: false
-        rh_hip:
-          Value: false
-        rh_lowerleg:
-          Value: false
-        rh_upperleg:
-          Value: false
-        t265_accel_frame:
-          Value: false
-        t265_fisheye1_frame:
-          Value: false
-        t265_fisheye1_optical_frame:
-          Value: false
-        t265_fisheye2_frame:
-          Value: false
-        t265_fisheye2_optical_frame:
-          Value: false
-        t265_gyro_frame:
-          Value: false
-        t265_link:
-          Value: false
-        t265_odom_frame:
-          Value: false
-        t265_pose_frame:
-          Value: false
-        trunk_imu:
-          Value: false
-        velodyne:
-          Value: false
-        velodyne_base_link:
-          Value: false
-        velodyne_mount:
-          Value: false
-        world:
-          Value: true
-      Marker Alpha: 1
-      Marker Scale: 1
-      Name: TF
-      Show Arrows: true
-      Show Axes: true
-      Show Names: true
-      Tree:
-        map:
-          odom:
-            base_footprint:
-              base_link:
-                front_rail:
-                  d435_bottom_screw_frame:
-                    d435_link:
-                      d435_depth_frame:
-                        d435_color_frame:
-                          d435_color_optical_frame:
-                            {}
-                        d435_depth_optical_frame:
-                          {}
-                        d435_left_ir_frame:
-                          d435_left_ir_optical_frame:
-                            {}
-                        d435_right_ir_frame:
-                          d435_right_ir_optical_frame:
-                            {}
-                  t265_odom_frame:
-                    t265_pose_frame:
-                      t265_link:
-                        t265_accel_frame:
-                          {}
-                        t265_fisheye1_frame:
-                          t265_fisheye1_optical_frame:
-                            {}
-                        t265_fisheye2_frame:
-                          t265_fisheye2_optical_frame:
-                            {}
-                        t265_gyro_frame:
-                          {}
-                lf_hip:
-                  lf_upperleg:
-                    lf_lowerleg:
-                      lf_foot:
-                        {}
-                lh_hip:
-                  lh_upperleg:
-                    lh_lowerleg:
-                      lh_foot:
-                        {}
-                pack_mount:
-                  lidar_mount:
-                    velodyne_mount:
-                      velodyne_base_link:
-                        velodyne:
-                          {}
-                rear_rail:
-                  {}
-                rf_hip:
-                  rf_upperleg:
-                    rf_lowerleg:
-                      rf_foot:
-                        {}
-                rh_hip:
-                  rh_upperleg:
-                    rh_lowerleg:
-                      rh_foot:
-                        {}
-                trunk_imu:
-                  {}
-              world:
-                {}
-      Update Interval: 0
-      Value: true
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: Intensity
-      Decay Time: 0
-      Enabled: true
-      Invert Rainbow: false
-      Max Color: 255; 255; 255
-      Min Color: 0; 0; 0
-      Name: PointCloud2
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.029999999329447746
-      Style: Flat Squares
-      Topic: /velodyne_pointcloud
-      Unreliable: false
-      Use Fixed Frame: true
-      Use rainbow: true
-      Value: true
     - Class: rviz/Marker
       Enabled: true
       Marker Topic: /follow_waypoints_node/waypoint_markers
       Name: Marker
       Namespaces:
-        wolf_navigation: true
+        {}
       Queue Size: 100
+      Value: true
+    - Alpha: 1
+      Class: rviz/Polygon
+      Color: 25; 255; 0
+      Enabled: true
+      Name: Polygon
+      Topic: /move_base/local_costmap/footprint
+      Unreliable: false
       Value: true
   Enabled: true
   Global Options:
@@ -677,40 +391,37 @@ Visualization Manager:
     - Class: rviz/PublishPoint
       Single click: true
       Topic: /clicked_point
-    - Class: wolf_rviz_plugin/Waypoint
   Value: true
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 21.742366790771484
+      Distance: 16.023786544799805
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
-      Field of View: 0.7853981852531433
       Focal Point:
-        X: 4.633505344390869
-        Y: 0.38820603489875793
-        Z: -0.03617820888757706
+        X: 1.1087779998779297
+        Y: -0.5412865281105042
+        Z: 0.4341171979904175
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.2597962617874146
+      Pitch: 0.8997969627380371
       Target Frame: <Fixed Frame>
-      Yaw: 4.69037389755249
+      Value: Orbit (rviz)
+      Yaw: 2.105395555496216
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1016
+  Height: 846
   Hide Left Dock: false
   Hide Right Dock: true
-  Image:
-    collapsed: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000024000000357fc020000000bfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073000000003d000001c3000000c900fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000a0049006d006100670065010000003d000001150000001600fffffffb000000120057006f006c006600500061006e0065006c0100000158000001160000010100fffffffb000000100044006900730070006c006100790073010000027400000120000000c900ffffff000000010000010f000002b0fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d000002b0000000a400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000073800000041fc0100000002fb0000000800540069006d0065010000000000000738000002eb00fffffffb0000000800540069006d00650100000000000004500000000000000000000004f20000035700000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd000000040000000000000156000002b0fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003d000002b0000000c900fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000002b0fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d000002b0000000a400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004f30000003efc0100000002fb0000000800540069006d00650100000000000004f3000002eb00fffffffb0000000800540069006d0065010000000000000450000000000000000000000397000002b000000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -719,8 +430,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: true
-  Width: 1848
-  WolfPanel:
-    collapsed: false
-  X: 72
-  Y: 27
+  Width: 1267
+  X: 60
+  Y: 0

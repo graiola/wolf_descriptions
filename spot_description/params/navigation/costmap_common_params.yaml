@@ -1,4 +1,6 @@
-footprint: [[0.55, 0.35 ], [0.55, -0.35], [-0.6, -0.35], [-0.6, 0.35]]
+robot_base_frame: $(arg base_frame)
+footprint: [ [0.55, 0.325 ], [0.55, -0.325], [-0.6, -0.325], [-0.6, 0.325] ]
+footprint_padding: 0.0
 
 publish_frequency: 1.0
 
@@ -6,9 +8,14 @@ obstacle_laser_layer:
   sensor_frame: velodyne
   obstacle_range: 2.5
   raytrace_range: 5.5
-  observation_sources: laser_scan_sensor
+  observation_sources: laser_scan_sensor point_cloud_sensor
   laser_scan_sensor:
     data_type: LaserScan
     topic: $(arg scan_topic)
+    marking: true
+    clearing: true
+  point_cloud_sensor:
+    data_type: PointCloud2
+    topic: $(arg pointcloud_topic)
     marking: true
     clearing: true
