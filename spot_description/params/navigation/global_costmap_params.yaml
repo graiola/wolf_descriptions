@@ -4,7 +4,8 @@ global_costmap:
   update_frequency: 5.0
 
   inflation_layer:
-    inflation_radius: 4.0
+    inflation_radius: 0.75
+    cost_scaling_factor: 2.58
 
   plugins:
 #    - name: obstacle_laser_layer
