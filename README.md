@@ -51,6 +51,9 @@ To launch the new robot with the WoLF controller:
 - `activate_step_reflex [true | false]` activate the step reflex.
 - `activate_push_recovery [true | false]` activate the push recovery.
 - `initial_pose_simulation` Initial robot's pose in simulation.
+- `activate_com_z [true | false]` activate the control of the robot's height through the CoM task, otherwise use the waist task. By default it is true.
+- `activate_postural [true | false]` activate the postural task, by default it is false.
+- `activate_angular_momentum [true | false]` activate the angular momentum task, by default it is true.
 
 ```
 gains:
@@ -64,15 +67,18 @@ gains:
           type: [force|acceleration]
           weight: xxx
 
-      waistRPY:
-          Kp: {x: 0.0, y: 0.0, z: 0.0, roll: xxx, pitch: xxx, yaw: xxx}
-          Kd: {x: 0.0, y: 0.0, z: 0.0, roll: xxx, pitch: xxx, yaw: xxx}
+      waist:
+          Kp: {x: 0.0, y: 0.0, z: xxx, roll: xxx, pitch: xxx, yaw: xxx}
+          Kd: {x: 0.0, y: 0.0, z: xxx, roll: xxx, pitch: xxx, yaw: xxx}
           type: [force|acceleration]
           weight: xxx
 
       CoM:
           Kp: {x: xxx, y: xxx z: xxx}
           Kd: {x: xxx, y: xxx, z: xxx}
+          weight: xxx
+
+      postural:
           weight: xxx
 
       angular_momentum:
@@ -84,9 +90,10 @@ gains:
 	- to perform a controlled shutdown in case of anomaly (using only the damping value of the impedance).
 - The default tasks in WoLF are the following:
 	- `xx_foot` these tasks allow the robot to track the swing trajectories with its legs. Since we are working with a quadruped we usually have 4 of them defined as `left front (lf)`, `right front (rf)`, `left hind (lh)` and `right hind (rh)`.
-	- `waistRPY` this task is used to control the attitude of the robot's base/trunk.
-	- `CoM` this task is used to stabilize the Center of Mass (CoM) of the robot with respect to its [support polygon](https://scaron.info/robot-locomotion/zmp-support-area.html).
-	- `angular_momentum` this task is used to counteract angular momentum variations generated on the robot's base/trunk by disturbances.
+	- `waist` this task is used to control the attitude of the robot's base/trunk and its height if `activate_com_z` is false.
+	- `CoM` this task is used to stabilize the Center of Mass (CoM) of the robot with respect to its [support polygon](https://scaron.info/robot-locomotion/zmp-support-area.html) along x and y, and control the CoM height if `activate_com_z` is true.
+	- `postural` this task is used to impose a preferred joint configutation to the robot, by default the stand up posture is used. This task can be activated with `activate_postural` set to true.
+	- `angular_momentum` this task is used to counteract angular momentum variations generated on the robot's base/trunk by disturbances. This task can be activated with `activate_angular_momentum` set to true.
 	- `xx_arm` if the robot has an arm mounted on top, it is possible to add a task to control the arm end-effector position and orientation.
 - tasks' gains:
 	- `Kp` and `Kd` define the proportional and derivative gains for each task.
