@@ -112,24 +112,24 @@
       <plot style="Lines" flip_y="false" mode="TimeSeries" flip_x="false">
        <range top="0.006666" left="0.000000" right="5.000000" bottom="-0.007070"/>
        <limitY/>
-       <curve name="/spot/wolf_controller/waistRPY/rpy_actual/x" color="#1f77b4"/>
-       <curve name="/spot/wolf_controller/waistRPY/rpy_reference/x" color="#ff7f0e"/>
+       <curve name="/spot/wolf_controller/waist/rpy_actual/x" color="#1f77b4"/>
+       <curve name="/spot/wolf_controller/waist/rpy_reference/x" color="#ff7f0e"/>
       </plot>
      </DockArea>
      <DockArea name="...">
       <plot style="Lines" flip_y="false" mode="TimeSeries" flip_x="false">
        <range top="0.000863" left="0.000000" right="5.000000" bottom="-0.022026"/>
        <limitY/>
-       <curve name="/spot/wolf_controller/waistRPY/rpy_actual/y" color="#d62728"/>
-       <curve name="/spot/wolf_controller/waistRPY/rpy_reference/y" color="#f14cc1"/>
+       <curve name="/spot/wolf_controller/waist/rpy_actual/y" color="#d62728"/>
+       <curve name="/spot/wolf_controller/waist/rpy_reference/y" color="#f14cc1"/>
       </plot>
      </DockArea>
      <DockArea name="...">
       <plot style="Lines" flip_y="false" mode="TimeSeries" flip_x="false">
        <range top="0.008732" left="0.000000" right="5.000000" bottom="-0.011059"/>
        <limitY/>
-       <curve name="/spot/wolf_controller/waistRPY/rpy_actual/z" color="#1ac938"/>
-       <curve name="/spot/wolf_controller/waistRPY/rpy_reference/z" color="#9467bd"/>
+       <curve name="/spot/wolf_controller/waist/rpy_actual/z" color="#1ac938"/>
+       <curve name="/spot/wolf_controller/waist/rpy_reference/z" color="#9467bd"/>
       </plot>
      </DockArea>
     </DockSplitter>

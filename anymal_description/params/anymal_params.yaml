@@ -42,7 +42,7 @@ wolf_controller:
           Kd: {x: 100.0, y: 100.0, z: 100.0, roll: 0, pitch: 0, yaw: 0}
           weight: 1000.0
 
-      waistRPY:
+      waist:
           Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 500.0, pitch: 1000.0, yaw: 2000.0}
           Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 50.0, pitch: 100.0, yaw: 200.0}
           type: acceleration

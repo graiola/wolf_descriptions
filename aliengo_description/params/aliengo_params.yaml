@@ -41,7 +41,7 @@ wolf_controller:
           Kd: {x: 15.0, y: 15.0, z: 30.0, roll: 0, pitch: 0, yaw: 0}
           weight: 100.0
 
-      waistRPY:
+      waist:
           Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 240.0, pitch: 140.0, yaw: 80.0}
           Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 50.0, pitch: 30.0, yaw: 16.0}
           weight: 1.0

@@ -116,24 +116,24 @@
       <plot mode="TimeSeries" style="Lines">
        <range right="5.000000" top="0.000065" left="0.000000" bottom="0.000036"/>
        <limitY/>
-       <curve color="#1f77b4" name="/solo/wolf_controller/waistRPY/rpy_actual/x"/>
-       <curve color="#ff7f0e" name="/solo/wolf_controller/waistRPY/rpy_reference/x"/>
+       <curve color="#1f77b4" name="/solo/wolf_controller/waist/rpy_actual/x"/>
+       <curve color="#ff7f0e" name="/solo/wolf_controller/waist/rpy_reference/x"/>
       </plot>
      </DockArea>
      <DockArea name="...">
       <plot mode="TimeSeries" style="Lines">
        <range right="5.000000" top="0.001931" left="0.000000" bottom="0.000506"/>
        <limitY/>
-       <curve color="#d62728" name="/solo/wolf_controller/waistRPY/rpy_actual/y"/>
-       <curve color="#f14cc1" name="/solo/wolf_controller/waistRPY/rpy_reference/y"/>
+       <curve color="#d62728" name="/solo/wolf_controller/waist/rpy_actual/y"/>
+       <curve color="#f14cc1" name="/solo/wolf_controller/waist/rpy_reference/y"/>
       </plot>
      </DockArea>
      <DockArea name="...">
       <plot mode="TimeSeries" style="Lines">
        <range right="5.000000" top="0.023571" left="0.000000" bottom="0.023295"/>
        <limitY/>
-       <curve color="#1ac938" name="/solo/wolf_controller/waistRPY/rpy_actual/z"/>
-       <curve color="#9467bd" name="/solo/wolf_controller/waistRPY/rpy_reference/z"/>
+       <curve color="#1ac938" name="/solo/wolf_controller/waist/rpy_actual/z"/>
+       <curve color="#9467bd" name="/solo/wolf_controller/waist/rpy_reference/z"/>
       </plot>
      </DockArea>
     </DockSplitter>
