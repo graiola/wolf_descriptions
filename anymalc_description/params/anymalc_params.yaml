@@ -32,19 +32,19 @@ wolf_controller:
       lf_foot:
           Kp: {x: 500.0, y: 500.0, z: 500.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 50.0, y: 50.0, z: 50.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 1000.0
+          weight: 100.0
       rf_foot:
           Kp: {x: 500.0, y: 500.0, z: 500.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 50.0, y: 50.0, z: 50.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 1000.0
+          weight: 100.0
       rh_foot:
           Kp: {x: 500.0, y: 500.0, z: 500.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 50.0, y: 50.0, z: 50.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 1000.0
+          weight: 100.0
       lh_foot:
           Kp: {x: 500.0, y: 500.0, z: 500.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 50.0, y: 50.0, z: 50.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 1000.0
+          weight: 100.0
 
       waist:
           Kp: {x: 0.0, y: 0.0, z: 50.0, roll: 500.0, pitch: 1000.0, yaw: 2000.0}

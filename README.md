@@ -26,14 +26,14 @@ To launch the new robot with the WoLF controller:
 - `default_duty_factor` defines the ratio between the stance and total cycle time: `T_stance / T_cycle`.
 - `default_swing_frequency` defines the frequency of the swing: `1 / T_swing`.
 - `default_contact_threshold` defines the force magnitude  that is used to detect if the robot is contact with the enviroment or not.
-- `default_step_reflex_contact_threshold` if the step reflex is active, it represents the magnitude of the contact force that triggers a step reflex, by default it is calculated as `default_contact_threshold/3.0`.
+- `default_step_reflex_contact_threshold` if the step reflex is active, it represents the magnitude of the contact force that triggers a step reflex, by default it is calculated as `default_contact_threshold * 1.5`.
 - `default_step_reflex_max_retraction` if the step reflex is active, this is the maximum step retraction length, by default it is calculated as `max_step_height/2.0`.
 - `default_base_linear_velocity_x` linear velocity along robot's x axis.
 - `default_base_linear_velocity_y` linear velocity along robot's y axis.
 - `default_base_linear_velocity_z` linear velocity along robot's z axis.
 - `default_base_linear_velocity` defines a common velocity value along xyz axis, it overrides the previous linear velocities.
-- `default_base_angular_velocity_roll`  angular velocity along robot's roll axis.
-- `default_base_angular_velocity_pitch`  angular velocity along robot's pitch axis.
+- `default_base_angular_velocity_roll` angular velocity along robot's roll axis.
+- `default_base_angular_velocity_pitch` angular velocity along robot's pitch axis.
 - `default_base_angular_velocity_yaw`  angular velocity along robot's yaw axis.
 - `default_base_angular_velocity` defines a common velocity value along roll pitch and yaw axis, it overrides the previous angular velocities.
 - `default_step_height` defines the step height.
@@ -73,9 +73,15 @@ gains:
           type: [force|acceleration]
           weight: xxx
 
+      waistZ:
+          Kp: {x: 0.0, y: 0.0, z: xxx, roll: 0, pitch: 0, yaw: 0}
+          Kd: {x: 0.0, y: 0.0, z: xxx, roll: 0, pitch: 0, yaw: 0}
+          type: [force|acceleration]
+          weight: xxx
+
       CoM:
-          Kp: {x: xxx, y: xxx z: xxx}
-          Kd: {x: xxx, y: xxx, z: xxx}
+          Kp: {x: xxx, y: xxx z: 0}
+          Kd: {x: xxx, y: xxx, z: 0}
           weight: xxx
 
       postural:
@@ -83,11 +89,15 @@ gains:
 
       angular_momentum:
           weight: xxx
+
+      postural:
+          weight: xxx
 ```
 
-- `Kp_leg` and `Kd_leg` define the impedance gains for the the `hip abduction/adduction (haa)`, `hip flexion/extension (hfe)` and `knee flexion/extension (kfe)` joints in each leg. These gains are used in two istances: 
+- `Kp_leg` and `Kd_leg` define the impedance gains for the the `hip abduction/adduction (haa)`, `hip flexion/extension (hfe)` and `knee flexion/extension (kfe)` joints in each leg. These gains are used for different things: 
 	- to zero the joints during the init phase.
 	- to perform a controlled shutdown in case of anomaly (using only the damping value of the impedance).
+	- to set the gains for the postural task.
 - The default tasks in WoLF are the following:
 	- `xx_foot` these tasks allow the robot to track the swing trajectories with its legs. Since we are working with a quadruped we usually have 4 of them defined as `left front (lf)`, `right front (rf)`, `left hind (lh)` and `right hind (rh)`.
 	- `waist` this task is used to control the attitude of the robot's base/trunk and its height if `activate_com_z` is false.
