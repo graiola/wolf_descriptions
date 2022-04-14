@@ -128,6 +128,16 @@ To define the stand up and stand down posture in the SRDF file, you can use the 
 <img src="https://user-images.githubusercontent.com/4747910/154806597-4985929f-7dc1-4f8f-8aa2-5a6daad717be.png" alt="joint_state_publisher" width="400"/>
 </p>
 
+## Disclaimer
+
+Some robots have been tuned better than others, please don't be sad if your favorite robot doesn't work perfectly.
+At the moment, the robots we feel more confident with are:
+
+- Spot
+- Aliengo
+
+Feel free to tune and share your parameters with us if you feel they improve the control of a specific robot :)
+
 ## Legal notes
 
 `wolf_description_utils` and `sensors_description` are licensed under a license GNU General Public License v3.0.
