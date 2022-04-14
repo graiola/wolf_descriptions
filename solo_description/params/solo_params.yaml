@@ -17,7 +17,7 @@ wolf_controller:
 
       Kp_leg: {haa: 1.0, hfe: 1.0, kfe: 1.0}
       Kd_leg: {haa: 0.0001, hfe: 0.0001, kfe: 0.0001}
-      
+
       lf_foot:
           Kp: {x: 100.0, y: 100.0, z: 100.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 5.0, y: 5.0, z: 5.0, roll: 0, pitch: 0, yaw: 0}
@@ -48,5 +48,3 @@ wolf_controller:
       angular_momentum:
           weight: 0.1
 
-      postural:
-          weight: 0.01

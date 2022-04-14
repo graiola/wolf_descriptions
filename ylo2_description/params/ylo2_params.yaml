@@ -5,41 +5,41 @@ wolf_controller:
   default_contact_threshold: 4.0 # 4.0 force magnitude that is used to detect if the robot is contact with the enviroment
   default_step_reflex_contact_threshold: 10.0 # 2.0 magnitude of the contact force that triggers a step reflex
   default_step_reflex_max_retraction: 0.1
-  
+
   default_base_linear_velocity_x: 0.6
   default_base_linear_velocity_y: 0.3
   default_base_linear_velocity_z: 0.3
-  
-  default_base_angular_velocity_roll: 0.3 
+
+  default_base_angular_velocity_roll: 0.3
   default_base_angular_velocity_pitch: 0.3
   default_base_angular_velocity_yaw: 0.5
-  
-  default_step_height: 0.04             # 0.065 
+
+  default_step_height: 0.04             # 0.065
   default_step_length: 0.20
-  
+
   max_step_height: 0.15                # 0.15
-  max_step_length: 0.35                 # 0.4  
-  
+  max_step_length: 0.35                 # 0.4
+
   max_base_height: 0.35                 # 0.4
-  
+
   max_base_roll: 0.5                    # 0.523
-  min_base_roll: -0.5                   # -0.523  
-    
-  max_base_pitch: 0.5                   # 0.523 
-  min_base_pitch: -0.5                  # -0.523 
+  min_base_roll: -0.5                   # -0.523
+
+  max_base_pitch: 0.5                   # 0.523
+  min_base_pitch: -0.5                  # -0.523
 
   activate_step_reflex: true
   activate_push_recovery: true
-  
+
   estimation_position_type: estimated_z # simu only
   estimation_orientation_type: imu_magnetometer # simu only
-  
+
   initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.15, roll: 0.0, pitch: 0.0, yaw: 0.0}
 
   gains:
-  
+
       # impedance gains for the joints in each leg. These gains are in two istances: to zero the joints during the init phase and in case of anomaly to perform a controlled shutdown (in this istance, only the damping is used)
-      
+
       Kp_leg: {haa: 1.0, hfe: 1.0, kfe: 1.0}
       Kd_leg: {haa: 0.005, hfe: 0.005, kfe: 0.0005}
 
@@ -67,18 +67,10 @@ wolf_controller:
           Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 5.0, pitch: 5.0, yaw: 5.0}
           weight: 1.0
 
-      waistZ:
-          Kp: {x: 0.0, y: 0.0, z: 500.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
-          Kd: {x: 0.0, y: 0.0, z: 100.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
-          weight: 1.0
-
       CoM:
-          Kp: {x: 30.0, y: 30.0, z: 0.0}
-          Kd: {x: 5.0, y: 5.0, z: 0.0}
+          Kp: {x: 30.0, y: 30.0, z: 50.0}
+          Kd: {x: 5.0, y: 5.0, z: 10.0}
           weight: 5.0
 
       angular_momentum:
           weight: 0.1
-
-      postural:
-          weight: 0.01

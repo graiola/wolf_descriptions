@@ -40,8 +40,8 @@ wolf_controller:
           weight: 1.0
 
       CoM:
-          Kp: {x: 200.0, y: 200.0, z: 200.0}
-          Kd: {x: 50.0, y: 50.0, z: 50.0}
+          Kp: {x: 100.0, y: 100.0, z: 100.0}
+          Kd: {x: 10.0, y: 10.0, z: 10.0}
           weight: 1.0
 
       angular_momentum:
