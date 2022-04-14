@@ -51,12 +51,12 @@ wolf_controller:
       waist:
           Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 240.0, pitch: 140.0, yaw: 80.0}
           Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 50.0, pitch: 30.0, yaw: 16.0}
-          weight: 10.0
+          weight: 2.0
 
       CoM:
           Kp: {x: 200.0, y: 200.0, z: 200.0}
           Kd: {x: 50.0, y: 50.0, z: 50.0}
-          weight: 10.0
+          weight: 2.0
 
       angular_momentum:
           weight: 0.1

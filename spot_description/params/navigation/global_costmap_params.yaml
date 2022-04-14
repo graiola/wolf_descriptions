@@ -1,5 +1,20 @@
 global_costmap:
-  global_frame: map
-  robot_base_frame: base_footprint
-  update_frequency: 10.0
-  static_map: true
+  global_frame: $(arg global_frame)
+  robot_base_frame: $(arg base_frame)
+  update_frequency: 5.0
+
+  inflation_layer:
+    inflation_radius: 0.75
+    cost_scaling_factor: 2.58
+
+  plugins:
+#    - name: obstacle_laser_layer
+#      type: "costmap_2d::VoxelLayer"
+#    - name: rgbd_obstacle_layer
+#      type: "costmap_2d::VoxelLayer"
+    - name: static_map
+      type: "costmap_2d::StaticLayer"
+#    - name: costmap_prohibition_layer
+#      type: "costmap_prohibition_layer_namespace::CostmapProhibitionLayer"
+    - name: inflation_layer
+      type: "costmap_2d::InflationLayer"
