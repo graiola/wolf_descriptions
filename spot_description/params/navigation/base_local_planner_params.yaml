@@ -1,32 +1,38 @@
 DWAPlannerROS:
   max_vel_x: 0.7
-  min_vel_x: 0.1
+  min_vel_x: 0.0
   max_vel_y: 0.5
-  min_vel_y: 0.1
-  max_vel_theta: 0.5
-  min_vel_theta: 0.1
+  min_vel_y: -0.5
+  max_rot_vel: 0.5
+  min_rot_vel: 0.0
 
-  acc_lim_th: 4.0
-  acc_lim_x: 3.0
-  acc_lim_y: 3.0
+  acc_lim_theta: 10.0
+  acc_lim_trans: 6.0
+  acc_lim_x: 6.0
+  acc_lim_y: 6.0
+
+  max_vel_trans: 0.7
+  min_vel_trans: 0.0
+
 
   # cost =
   # path_distance_bias * (distance to path from the endpoint of the trajectory in meters)
   # + goal_distance_bias * (distance to local goal from the endpoint of the trajectory in meters)
   # + occdist_scale * (maximum obstacle cost along the trajectory in obstacle cost (0-254))
+  path_distance_bias: 40.0
   goal_distance_bias: 32.0
-  path_distance_bias: 25.0
-  occdist_scale: 0.01
+  occdist_scale: 10.0
+  twirling_scale: 5.0
 
   stop_time_buffer: 0.2
   oscillation_reset_dist: 0.05
-  forward_point_distance: 1.0
+  forward_point_distance: 0.2
   scaling_speed: 0.25
   max_scaling_factor: 0.2
 
   # Forward simulation parameters
   sim_time: 4.0
-  sim_period: 0.1 # 10 hz
+  controller_frequency: 0.01 # 100 hz
   sim_granularity: 0.025
   angular_sim_granularity: 0.025
   vx_samples: 20
@@ -35,7 +41,8 @@ DWAPlannerROS:
 
   # Goal
   xy_goal_tolerance: 0.1
-  yaw_goal_tolerance: 0.1
+  yaw_goal_tolerance: 0.01
+  latch_xy_goal_tolerance: false
 
   # When stopped
   trans_stopped_vel: 0.0
