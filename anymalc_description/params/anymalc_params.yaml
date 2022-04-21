@@ -24,6 +24,7 @@ wolf_controller:
   activate_com_z: false
   activate_angular_momentum: true
   activate_postural: true
+  activate_joint_position_limits: true
 
   gains:
 
