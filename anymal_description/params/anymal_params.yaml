@@ -23,7 +23,7 @@ wolf_controller:
   initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.55, roll: 0.0, pitch: 0.0, yaw: 0.0}
   activate_com_z: false
   activate_angular_momentum: true
-  activate_postural: true
+  activate_postural: false
 
   gains:
 
