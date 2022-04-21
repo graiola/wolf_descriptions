@@ -75,15 +75,9 @@ gains:
           type: [force|acceleration]
           weight: xxx
 
-      waistZ:
-          Kp: {x: 0.0, y: 0.0, z: xxx, roll: 0, pitch: 0, yaw: 0}
-          Kd: {x: 0.0, y: 0.0, z: xxx, roll: 0, pitch: 0, yaw: 0}
-          type: [force|acceleration]
-          weight: xxx
-
       CoM:
-          Kp: {x: xxx, y: xxx z: 0}
-          Kd: {x: xxx, y: xxx, z: 0}
+          Kp: {x: xxx, y: xxx z: xxx}
+          Kd: {x: xxx, y: xxx, z: xxx}
           weight: xxx
 
       postural:
