@@ -54,8 +54,10 @@ To launch the new robot with the WoLF controller:
 - `activate_com_z [true | false]` activate the control of the robot's height through the CoM task, otherwise use the waist task. By default it is true.
 - `activate_postural [true | false]` activate the postural task, by default it is false.
 - `activate_angular_momentum [true | false]` activate the angular momentum task, by default it is true.
-
+- `activate_joint_position_limits [true | false]` activate the joint position limits constraint (the values are loaded from the URDF), by default it is false.
+- `regularization` regularization value for the solver, by default it is set to `1e-3` for the accelerations and `1e-6` for the forces.
 ```
+
 gains:
 
       Kp_leg: {haa: xxx, hfe: xxx, kfe:xxx}
