@@ -37,7 +37,7 @@ if __name__ == "__main__":
 	# Setting the parameters
 	model_name =                       rospy.get_param('/robot_name')
 	robot_description_name             = 'gazebo_robot_description'
-	robot_semantic_description_name    = 'robot_semantic_description'
+	robot_description_semantic_name    = 'robot_description_semantic'
 
 	# Wait for the spawn service
 	rospy.wait_for_service("/gazebo/spawn_urdf_model")
@@ -58,7 +58,7 @@ if __name__ == "__main__":
 	model_xml = rospy.get_param(robot_description_name)
 	gazebo_interface.spawn_urdf_model_client(model_name, model_xml, robot_namespace, initial_pose, reference_frame, gazebo_namespace)
 
-	srdf_data = rospy.get_param(robot_semantic_description_name)
+	srdf_data = rospy.get_param(robot_description_semantic_name)
 
 	robot = SRDF.from_xml_string(srdf_data)
 
