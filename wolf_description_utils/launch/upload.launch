@@ -18,10 +18,10 @@
 
         <!-- send robot semantic description srdf to param server -->
         <group if="$(arg arm_enabled)">
-             <param name="robot_semantic_description" command="$(find xacro)/xacro --inorder '$(arg srdf_file_arm)'" />
+             <param name="robot_description_semantic" command="$(find xacro)/xacro --inorder '$(arg srdf_file_arm)'" />
        </group>
        <group unless="$(arg arm_enabled)">
-            <param name="robot_semantic_description" command="$(find xacro)/xacro --inorder '$(arg srdf_file)'" />
+            <param name="robot_description_semantic" command="$(find xacro)/xacro --inorder '$(arg srdf_file)'" />
        </group>
 
 </launch>
