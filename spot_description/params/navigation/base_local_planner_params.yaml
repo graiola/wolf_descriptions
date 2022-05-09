@@ -1,10 +1,10 @@
-DWAPlannerROS:
+DWAPlannerROS: #dwa_local_planner/DWAPlannerROS"
   max_vel_x: 0.7
   min_vel_x: 0.0
   max_vel_y: 0.5
   min_vel_y: -0.5
   max_rot_vel: 0.5
-  min_rot_vel: 0.0
+  min_rot_vel: 0.1
 
   acc_lim_theta: 10.0
   acc_lim_trans: 6.0
@@ -12,17 +12,16 @@ DWAPlannerROS:
   acc_lim_y: 6.0
 
   max_vel_trans: 0.7
-  min_vel_trans: 0.0
-
+  min_vel_trans: 0.1 # This makes the robot turn on itself
 
   # cost =
   # path_distance_bias * (distance to path from the endpoint of the trajectory in meters)
   # + goal_distance_bias * (distance to local goal from the endpoint of the trajectory in meters)
   # + occdist_scale * (maximum obstacle cost along the trajectory in obstacle cost (0-254))
-  path_distance_bias: 40.0
-  goal_distance_bias: 32.0
-  occdist_scale: 10.0
-  twirling_scale: 5.0
+  path_distance_bias: 0.6
+  goal_distance_bias: 0.8
+  occdist_scale: 0.01
+  twirling_scale: 0.001
 
   stop_time_buffer: 0.2
   oscillation_reset_dist: 0.05
@@ -41,12 +40,12 @@ DWAPlannerROS:
 
   # Goal
   xy_goal_tolerance: 0.1
-  yaw_goal_tolerance: 0.01
+  yaw_goal_tolerance: 0.25
   latch_xy_goal_tolerance: false
 
   # When stopped
-  trans_stopped_vel: 0.0
-  theta_stopped_vel: 0.0
+  trans_stopped_vel: 0.1
+  theta_stopped_vel: 0.1
 
   # Prune the plan while walking
   prune_plan: false
@@ -54,8 +53,7 @@ DWAPlannerROS:
   publish_cost_grid: true
 
 
-TebLocalPlannerROS:
-
+TebLocalPlannerROS: #teb_local_planner/TebLocalPlannerROS
  odom_topic: $(arg odom_frame)
  map_frame: $(arg global_frame)
 
@@ -126,3 +124,39 @@ TebLocalPlannerROS:
  obstacle_keypoint_offset: 0.1
  obstacle_heading_threshold: 0.45
  visualize_hc_graph: false
+
+TrajectoryPlannerROS:
+  max_vel_x: 0.7
+  min_vel_x: 0.1
+  max_vel_theta: 0.5
+  min_vel_theta: 0.1
+  min_in_place_vel_theta: 0.25
+
+  acc_lim_theta: 10.0
+  acc_lim_x: 6.0
+  acc_lim_y: 6.0
+
+  # cost =
+  # path_distance_bias * (distance to path from the endpoint of the trajectory in meters)
+  # + goal_distance_bias * (distance to local goal from the endpoint of the trajectory in meters)
+  # + occdist_scale * (maximum obstacle cost along the trajectory in obstacle cost (0-254))
+  path_distance_bias: 1.2
+  goal_distance_bias: 0.8
+  occdist_scale: 0.01
+
+  heading_lookahead: 0.5
+  heading_scoring: true
+  heading_scoring_timestep: 0.8
+
+  holonomic_robot: true
+  y_vels: [-0.5,-0.1,0.1,0.5]
+
+  # Forward simulation parameters
+  sim_time: 4.0
+  controller_frequency: 0.01 # 100 hz
+  sim_granularity: 0.025
+  angular_sim_granularity: 0.025
+  vx_samples: 40
+  vtheta_samples: 40
+
+  dwa: true
