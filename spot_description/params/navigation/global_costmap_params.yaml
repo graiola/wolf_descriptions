@@ -1,7 +1,6 @@
 global_costmap:
   global_frame: $(arg global_frame)
   robot_base_frame: $(arg base_frame)
-  update_frequency: 5.0
 
   inflation_layer:
     inflation_radius: 0.75
