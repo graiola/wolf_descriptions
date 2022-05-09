@@ -1,7 +1,6 @@
 local_costmap:
   global_frame: $(arg odom_frame)
   robot_base_frame: $(arg base_frame)
-  update_frequency: 5.0
   rolling_window: true
   width: 7.0
   height: 7.0
@@ -12,7 +11,7 @@ local_costmap:
     cost_scaling_factor: 2.58
 
   plugins:
-    - name: obstacle_laser_layer
+    - name: obstacle_layer
       type: "costmap_2d::ObstacleLayer"
 #    - name: obstacle_camera_layer
 #      type: "costmap_2d::VoxelLayer"
