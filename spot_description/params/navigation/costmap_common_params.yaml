@@ -7,28 +7,6 @@ update_frequency: 4.0
 publish_frequency: 3.0
 transform_tolerance: 0.5
 
-#obstacle_laser_layer:
-#  sensor_frame: velodyne
-#  obstacle_range: 2.5
-#  raytrace_range: 5.5
-#  observation_sources: laser_scan_sensor velodyne_pointcloud_sensor depth_pointcloud_sensor
-#  laser_scan_sensor:
-#    data_type: LaserScan
-#    topic: $(arg scan_topic)
-#    marking: true
-#    clearing: true
-#    inf_is_valid: true
-#  velodyne_pointcloud_sensor:
-#    data_type: PointCloud2
-#    topic: $(arg velodyne_pointcloud_topic)
-#    marking: true
-#    clearing: true
-#  depth_pointcloud_sensor:
-#    data_type: PointCloud2
-#    topic: $(arg depth_pointcloud_topic)
-#    marking: true
-#    clearing: true
-
 obstacle_layer:
   obstacle_range: 2.5
   raytrace_range: 5.5
