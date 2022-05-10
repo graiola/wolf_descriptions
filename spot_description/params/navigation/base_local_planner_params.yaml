@@ -5,7 +5,7 @@ NavfnROS:
   allow_unknown: false # Specifies whether or not to allow navfn to create plans that traverse unknown space.
   default_tolerance: 0.1 # A tolerance on the goal point for the planner.
 
-TrajectoryPlannerROS:
+TrajectoryPlannerROS: #base_local_planner/TrajectoryPlannerROS
   # Robot Configuration Parameters
   acc_lim_x: 2.5
   acc_lim_theta:  3.2
@@ -60,7 +60,7 @@ DWAPlannerROS:
   max_vel_x: 0.5
   min_vel_x: 0.0
   max_vel_y: 0.5
-  min_vel_y: 0.0
+  min_vel_y: -0.5
 
   max_trans_vel: 0.5
   min_trans_vel: 0.1
