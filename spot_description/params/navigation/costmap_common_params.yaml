@@ -1,4 +1,6 @@
 robot_base_frame: $(arg base_frame)
+global_frame: $(arg global_frame)
+robot_base_frame: $(arg base_frame)
 footprint: [ [0.55, 0.325 ], [0.55, -0.325], [-0.6, -0.325], [-0.6, 0.325] ]
 robot_radius: 0.0
 footprint_padding: 0.01
