@@ -35,10 +35,8 @@ recovery_behaviors:
 
 conservative_reset:
   reset_distance: 20.0
-#  layer_names: [obstacle_laser_layer, obstacle_camera_layer]
-  layer_names: [obstacle_laser_layer]
+  layer_names: [obstacle_layer]
 
 aggresive_reset:
   reset_distance: 10.0
-#  layer_names: [obstacle_laser_layer, obstacle_camera_layer]
-  layer_names: [obstacle_laser_layer]
+  layer_names: [obstacle_layer]
