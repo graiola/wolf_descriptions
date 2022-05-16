@@ -1,7 +1,4 @@
 global_costmap:
-  global_frame: $(arg global_frame)
-  robot_base_frame: $(arg base_frame)
-
   inflation_layer:
     inflation_radius: 0.75
     cost_scaling_factor: 2.58

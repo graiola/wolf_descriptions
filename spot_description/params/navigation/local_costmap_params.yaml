@@ -1,6 +1,4 @@
 local_costmap:
-  global_frame: $(arg global_frame)
-  robot_base_frame: $(arg base_frame)
   rolling_window: true
   width: 7.0
   height: 7.0
