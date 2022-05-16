@@ -1,6 +1,10 @@
 controller_frequency: 5.0
 recovery_behaviour_enabled: true
 
+NavfnROS:
+  allow_unknown: true
+  visualize_potential: false
+
 TrajectoryPlannerROS: #base_local_planner/TrajectoryPlannerROS
   # Robot Configuration Parameters
   acc_lim_x: 2.5
@@ -53,20 +57,22 @@ DWAPlannerROS:
   acc_lim_y: 1.0
   acc_lim_th: 3.2
 
-  max_vel_x: 0.5
+  max_vel_x: 0.7
   min_vel_x: 0.0
-  max_vel_y: 0.5
-  min_vel_y: -0.5
+  max_vel_y: 0.0
+  min_vel_y: 0.0
 
-  max_trans_vel: 0.5
+  max_trans_vel: 0.7
   min_trans_vel: 0.1
   max_rot_vel: 1.0
   min_rot_vel: 0.01 #0.2
 
+  prune_plan: false
+
   # Goal Tolerance Parameters
   yaw_goal_tolerance: 0.1
   xy_goal_tolerance: 0.2
-  latch_xy_goal_tolerance: false
+  latch_xy_goal_tolerance: true
 
   # # Forward Simulation Parameters
   # sim_time: 2.0
