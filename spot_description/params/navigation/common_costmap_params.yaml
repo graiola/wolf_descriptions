@@ -16,13 +16,13 @@ static_layer:
   track_unknown_space: true
 
 obstacle_laser_layer:
-  track_unknown_space: true
+  track_unknown_space: false # false needed for enabling global path planning through unknown space
   footprint_clearing_enabled: true
   observation_sources: laser_scan_sensor
   laser_scan_sensor: {sensor_frame: velodyne, data_type: LaserScan, topic: $(arg scan_topic), marking: true, clearing: false, inf_is_valid: true}
 
 obstacle_camera_layer:
-  track_unknown_space: true
+  track_unknown_space: true # true needed for disabling global path planning through unknown space
   footprint_clearing_enabled: true
   observation_sources: depth_pointcloud_sensor #velodyne_pointcloud_sensor
   #velodyne_pointcloud_sensor: {sensor_frame: velodyne, data_type: PointCloud2, topic: $(arg velodyne_pointcloud_topic), marking: true, clearing: true, min_obstacle_height: 0.25}

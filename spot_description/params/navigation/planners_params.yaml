@@ -49,6 +49,8 @@ TrajectoryPlannerROS:
 
 # ----- dwa_local_planner/DWAPlannerROS -----
 DWAPlannerROS:
+  global_frame_id: $(arg odom_frame)
+
   # Robot configuration parameters
   acc_lim_x: 2.5
   acc_lim_y: 1.0
@@ -58,33 +60,33 @@ DWAPlannerROS:
   max_vel_y: -0.2
   min_vel_y: 0.2
   max_vel_trans: 0.55
-  min_vel_trans: 0.1
+  min_vel_trans: 0.0 # this is the min trans velocity when there is negligible rotational velocity
   max_vel_theta: 0.5
-  min_vel_theta: 0.01 #0.2
+  min_vel_theta: 0.1 # this is the min angular velocity when there is negligible translational velocity
+  theta_stopped_vel: 0.4
   prune_plan: false
   # Goal Tolerance Parameters
   yaw_goal_tolerance: 0.1
   xy_goal_tolerance: 0.2
   latch_xy_goal_tolerance: true
-  # # Forward Simulation Parameters
-  # sim_time: 2.0
-  # sim_granularity: 0.02
-  # vx_samples: 6
-  # vy_samples: 0
-  # vtheta_samples: 20
-  # penalize_negative_x: true
 
-  # # Trajectory scoring parameters
-  # path_distance_bias: 32.0 # The weighting for how much the controller should stay close to the path it was given
-  # goal_distance_bias: 24.0 # The weighting for how much the controller should attempt to reach its local goal, also controls speed
-  # occdist_scale: 0.01 # The weighting for how much the controller should attempt to avoid obstacles
-  # forward_point_distance: 0.325 # The distance from the center point of the robot to place an additional scoring point, in meters
-  # stop_time_buffer: 0.2  # The amount of time that the robot must stThe absolute value of the veolicty at which to start scaling the robot's footprint, in m/sop before a collision in order for a trajectory to be considered valid in seconds
-  # scaling_speed: 0.25 # The absolute value of the veolicty at which to start scaling the robot's footprint, in m/s
-  # max_scaling_factor: 0.2 # The maximum factor to scale the robot's footprint by
+  # Forward Simulation Parameters
+  sim_time: 3.0
+  vx_samples: 20
+  vy_samples: 20
+  vtheta_samples: 40
 
-  # # Oscillation Prevention Parameters
-  # oscillation_reset_dist: 0.25 #How far the robot must travel in meters before oscillation flags are reset (double, default: 0.05)
+  # Trajectory Scoring Parameters
+  path_distance_bias: 64.0      # 32.0   - weighting for how much it should stick to the global path plan
+  goal_distance_bias: 24.0      # 24.0   - wighting for how much it should attempt to reach its goal
+  occdist_scale: 0.5            # 0.01   - weighting for how much the controller should avoid obstacles
+  forward_point_distance: 0.325 # 0.325  - how far along to place an additional scoring point
+  stop_time_buffer: 0.2         # 0.2    - amount of time a robot must stop in before colliding for a valid traj.
+  scaling_speed: 0.25           # 0.25   - absolute velocity at which to start scaling the robot's footprint
+  max_scaling_factor: 0.2       # 0.2    - how much to scale the robot's footprint when at speed.
+
+  # Oscillation Prevention Parameters
+  oscillation_reset_dist: 0.05  # 0.05   - how far to travel before resetting oscillation flags
 
 # ----- teb_local_planner/TebLocalPlannerROS -----
 TebLocalPlannerROS:
