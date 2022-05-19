@@ -5,16 +5,11 @@ global_costmap:
 
   inflation_layer:
     inflation_radius: 0.75
-    cost_scaling_factor: 2.58
-
-  static_layer:
-      map_topic: $(arg global_frame)
-      subscribe_to_updates: true
-      track_unknown_space: true
+    #cost_scaling_factor: 2.58
 
   plugins:
-#    - name: obstacle_layer
-#      type: "costmap_2d::ObstacleLayer"
+    - name: obstacle_laser_layer
+      type: "costmap_2d::ObstacleLayer"
     - name: static_layer
       type: "costmap_2d::StaticLayer"
     - name: inflation_layer

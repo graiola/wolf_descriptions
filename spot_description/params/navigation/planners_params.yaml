@@ -1,31 +1,29 @@
-controller_frequency: 5.0
-recovery_behaviour_enabled: true
+# **************************** Global planners ****************************
 
+# ----- navfn/NavfnROS -----
 NavfnROS:
   visualize_potential: false
   allow_unknown: true # Specifies whether or not to allow navfn to create plans that traverse unknown space.
   default_tolerance: 0.1 # A tolerance on the goal point for the planner.
 
-TrajectoryPlannerROS: #base_local_planner/TrajectoryPlannerROS
+# **************************** Local planners ****************************
+
+# ----- base_local_planner/TrajectoryPlannerROS -----
+TrajectoryPlannerROS:
   # Robot Configuration Parameters
   acc_lim_x: 2.5
   acc_lim_theta:  3.2
-
   max_vel_x: 0.55
   min_vel_x: 0.0
-
   max_vel_theta: 0.5
   min_vel_theta: -0.5
   min_in_place_vel_theta: 0.2
-
   holonomic_robot: true
   escape_vel: -0.1
-
   # Goal Tolerance Parameters
   yaw_goal_tolerance: 0.1
   xy_goal_tolerance: 0.2
   latch_xy_goal_tolerance: true
-
   # Forward Simulation Parameters
   sim_time: 2.0
   sim_granularity: 0.02
@@ -33,48 +31,41 @@ TrajectoryPlannerROS: #base_local_planner/TrajectoryPlannerROS
   vx_samples: 6
   vtheta_samples: 20
   controller_frequency: 20.0
-
   # Trajectory scoring parameters
-  meter_scoring: true # Whether the gdist_scale and pdist_scale parameters should assume that goal_distance and path_distance are expressed in units of meters or cells. Cells are assumed by default (false).
-  occdist_scale:  0.1 #The weighting for how much the controller should attempt to avoid obstacles. default 0.01
-  pdist_scale: 0.75  #     The weighting for how much the controller should stay close to the path it was given . default 0.6
-  gdist_scale: 1.0 #     The weighting for how much the controller should attempt to reach its local goal, also controls speed  default 0.8
-
-  heading_lookahead: 0.325  #How far to look ahead in meters when scoring different in-place-rotation trajectories
-  heading_scoring: false  #Whether to score based on the robot's heading to the path or its distance from the path. default false
-  heading_scoring_timestep: 0.8   #How far to look ahead in time in seconds along the simulated trajectory when using heading scoring (double, default: 0.8)
-  dwa: true #Whether to use the Dynamic Window Approach (DWA)_ or whether to use Trajectory Rollout
+  meter_scoring: true               # Whether the gdist_scale and pdist_scale parameters should assume that goal_distance and path_distance are expressed in units of meters or cells. Cells are assumed by default (false).
+  occdist_scale:  0.1               # The weighting for how much the controller should attempt to avoid obstacles. default 0.01
+  pdist_scale: 0.75                 # The weighting for how much the controller should stay close to the path it was given . default 0.6
+  gdist_scale: 1.0                  # The weighting for how much the controller should attempt to reach its local goal, also controls speed  default 0.8
+  heading_lookahead: 0.325          # How far to look ahead in meters when scoring different in-place-rotation trajectories
+  heading_scoring: false            # Whether to score based on the robot's heading to the path or its distance from the path. default false
+  heading_scoring_timestep: 0.8     # How far to look ahead in time in seconds along the simulated trajectory when using heading scoring (double, default: 0.8)
+  dwa: true                         # Whether to use the Dynamic Window Approach (DWA) or whether to use Trajectory Rollout
   simple_attractor: false
   publish_cost_grid_pc: true
-
   # Oscillation Prevention Parameters
-  oscillation_reset_dist: 0.25 #How far the robot must travel in meters before oscillation flags are reset (double, default: 0.05)
+  oscillation_reset_dist: 0.25 # How far the robot must travel in meters before oscillation flags are reset (double, default: 0.05)
   escape_reset_dist: 0.1
   escape_reset_theta: 0.1
 
+# ----- dwa_local_planner/DWAPlannerROS -----
 DWAPlannerROS:
   # Robot configuration parameters
   acc_lim_x: 2.5
   acc_lim_y: 1.0
   acc_lim_theta: 2.0
-
   max_vel_x: 0.55
   min_vel_x: 0.0
   max_vel_y: 0.0
   min_vel_y: 0.0
-
   max_vel_trans: 0.55
   min_vel_trans: 0.1
   max_vel_theta: 0.5
   min_vel_theta: 0.01 #0.2
-
   prune_plan: false
-
   # Goal Tolerance Parameters
   yaw_goal_tolerance: 0.1
   xy_goal_tolerance: 0.2
   latch_xy_goal_tolerance: true
-
   # # Forward Simulation Parameters
   # sim_time: 2.0
   # sim_granularity: 0.02
@@ -95,13 +86,12 @@ DWAPlannerROS:
   # # Oscillation Prevention Parameters
   # oscillation_reset_dist: 0.25 #How far the robot must travel in meters before oscillation flags are reset (double, default: 0.05)
 
-
-TebLocalPlannerROS: # teb_local_planner/TebLocalPlannerROS
+# ----- teb_local_planner/TebLocalPlannerROS -----
+TebLocalPlannerROS:
   odom_topic: $(arg odom_frame)
   map_frame: $(arg global_frame)
 
   # Trajectory
-
   teb_autosize: True
   dt_ref: 0.3
   dt_hysteresis: 0.1
@@ -118,7 +108,6 @@ TebLocalPlannerROS: # teb_local_planner/TebLocalPlannerROS
   shrink_horizon_min_duration: 10
 
   # Robot
-
   max_vel_x: 0.75
   max_vel_x_backwards: 0.15
   max_vel_theta: 0.785
@@ -134,13 +123,11 @@ TebLocalPlannerROS: # teb_local_planner/TebLocalPlannerROS
     vertices: [ [0.55, 0.325 ], [0.55, -0.325], [-0.6, -0.325], [-0.6, 0.325] ]
 
   # GoalTolerance
-
   xy_goal_tolerance: 0.2
   yaw_goal_tolerance: 0.1
   free_goal_vel: False
 
   # Obstacles
-
   min_obstacle_dist: 0.30 # minimum distance to obstacle: it depends on the footprint_model
   include_costmap_obstacles: True # use the local costmap
   costmap_obstacles_behind_robot_dist: 1.0 # distance at which obstacles behind the robot are taken into account
@@ -154,7 +141,6 @@ TebLocalPlannerROS: # teb_local_planner/TebLocalPlannerROS
   costmap_converter_rate: 5
 
   # Optimization
-
   no_inner_iterations: 5
   no_outer_iterations: 4
   optimization_activate: True # optimize
@@ -177,7 +163,6 @@ TebLocalPlannerROS: # teb_local_planner/TebLocalPlannerROS
   weight_adapt_factor: 2 # factor to multiply some weights (currently only weight_obstacle) at each iteration (gives better results than a huge value for the weight)
 
   # Homotopy Class Planner
-
   enable_homotopy_class_planning: False # currently not used
   simple_exploration: False
   enable_multithreading: True
@@ -196,19 +181,18 @@ TebLocalPlannerROS: # teb_local_planner/TebLocalPlannerROS
   obstacle_keypoint_offset: 0.1
   visualize_hc_graph: False
 
-EBandPlannerROS: #eband_local_planner/EBandPlannerROS
+#----- eband_local_planner/EBandPlannerROS -----
+EBandPlannerROS:
 
   # GoalTolerance
   xy_goal_tolerance: 0.1                            # Distance tolerance for reaching goal pose (default: 0.1)
-  yaw_goal_tolerance: 0.05                           # Orientation tolerance for reaching the desired goal pose (default: 0.05)
+  yaw_goal_tolerance: 0.05                          # Orientation tolerance for reaching the desired goal pose (default: 0.05)
   rot_stopped_vel: 0.01                             # Angular velocity lower bound that determines if the robot should stop to avoid
                                                     # limit-cycles or locks (default: 0.01)
   trans_stopped_vel: 0.01                           # Linear velocity lower bound that determines if the robot should stop to avoid
                                                     # limit-cycles or locks (default: 0.01)
-
   # VISUALIZATION PAMETERS
   marker_lifetime: 0.5                              # Lifetime of eband visualization markers (default: 0.5)
-
 
   # ELASTIC BAND PARAMETERS
   eband_min_relative_overlap: 0.7                   # Min distance that denotes connectivity between consecutive bubbles (default: 0.7)
@@ -227,7 +211,6 @@ EBandPlannerROS: #eband_local_planner/EBandPlannerROS
                                                     # the calculations (default: 0.15)
   costmap_weight: 10                                # Costmap weight factor used in the calculation of distance to obstacles (default: 10.0)
 
-
   # TRAJECTORY CONTROLLER PARAMETERS
   max_vel_lin: 0.75                                 # Maximum linear velocity (default: 0.75)
   max_vel_th: 1.0                                   # Maximum angular velocity (default: 1.0)
@@ -245,6 +228,6 @@ EBandPlannerROS: #eband_local_planner/EBandPlannerROS
   rotation_correction_threshold: 0.5                # Rotation correction threshold (default: 0.5)
   differential_drive: False                         # Denotes whether to use the differential drive mode (default: True)
   bubble_velocity_multiplier: 2.0                   # Multiplier of bubble radius (default: 2.0)
-  rotation_threshold_multiplier: 1               # Multiplier of rotation threshold (default: 1.0)
+  rotation_threshold_multiplier: 1                  # Multiplier of rotation threshold (default: 1.0)
   disallow_hysteresis: False                        # Determines whether to try getting closer to the goal, in case of
                                                     # going past the tolerance (default: False)
