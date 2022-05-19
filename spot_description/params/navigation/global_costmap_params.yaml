@@ -11,7 +11,7 @@ global_costmap:
     - name: obstacle_laser_layer
       type: "costmap_2d::ObstacleLayer"
     - name: obstacle_camera_layer
-      type: "costmap_2d::ObstacleLayer"
+      type: "costmap_2d::VoxelLayer"
     - name: static_layer
       type: "costmap_2d::StaticLayer"
     - name: inflation_layer
