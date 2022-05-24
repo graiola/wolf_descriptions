@@ -5,9 +5,9 @@ artifacts_costmap:
 
   static_layer:
     map_topic: $(arg global_frame)
-    subscribe_to_updates: false
-    first_map_only: true
-    track_unknown_space: false
+    subscribe_to_updates: true
+    first_map_only: false
+    track_unknown_space: true
 
   inflation_layer:
     inflation_radius: 0.75
@@ -15,14 +15,15 @@ artifacts_costmap:
   obstacle_layer:
     obstacle_range: 2.5
     raytrace_range: 5.5
-    track_unknown_space: false
+    track_unknown_space: true
     footprint_clearing_enabled: true
-    observation_sources: depth_pointcloud_sensor
-    depth_pointcloud_sensor: {sensor_frame: d435_link, data_type: PointCloud2, topic: $(arg depth_camera_name)/depth/points, marking: true, clearing: true}
+    observation_sources: laser_scan_sensor depth_pointcloud_sensor
+    laser_scan_sensor: {sensor_frame: velodyne, data_type: LaserScan, topic: $(arg scan_topic), marking: true, clearing: false, inf_is_valid: false}
+    depth_pointcloud_sensor: {sensor_frame: d435_link, data_type: PointCloud2, topic: $(arg depth_camera_name)/depth/points, marking: true, clearing: false}
 
   plugins:
     - name: obstacle_layer
-      type: "costmap_2d::ObstacleLayer"
+      type: "costmap_2d::VoxelLayer"
     - name: inflation_layer
       type: "costmap_2d::InflationLayer"
     - name: static_layer
