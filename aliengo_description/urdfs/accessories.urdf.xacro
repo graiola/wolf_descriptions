@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find sensors_description)/urdfs/common.xacro"/>
+  <!--<xacro:include filename="$(find sensors_description)/urdfs/sensors/velodyne.gazebo.xacro"/>-->
+  <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+  <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_d435.urdf.xacro" />
+  <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_t265.xacro" />
+
+  <!-- parent to cage joint, located between mounting plate on base and the cage -->
+  <joint name="trunk_to_lidar_cage" type="fixed">
+      <parent link="trunk"/>
+      <child link="lidar_cage"/>
+      <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+  </joint>
+  <!-- Velodyne cage link -->
+  <link name="lidar_cage">
+      <visual>
+          <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+          <geometry>
+              <mesh filename="package://aliengo_description/meshes/lidar_cage.dae" scale="1.0 1.0 1.0"/>
+          </geometry>
+      </visual>
+      <collision>
+          <origin rpy="0 0 0" xyz="0 0 0.06"/>
+          <geometry>
+              <cylinder length="0.12" radius="0.07"/>
+          </geometry>
+      </collision>
+      <inertial>
+          <origin rpy="0.0 0.0 0.0" xyz="0.002 0.0 0.099"/>
+          <mass value="0.545"/>
+          <inertia ixx="0.003156254" ixy="0.0" ixz="1.0992e-05" iyy="0.002357216" iyz="0.0" izz="0.001326455"/>
+      </inertial>
+  </link>
+  <!-- parent to sensor joint -->
+  <joint name="lidar_cage_to_lidar" type="fixed">
+      <parent link="lidar_cage"/>
+      <child link="lidar"/>
+      <origin rpy="0.0 0.0 -1.57079632679" xyz="0.0 0.0 0.0687"/>
+  </joint>
+  <!-- Velodyne sensor link -->
+  <link name="lidar">
+      <inertial>
+          <origin rpy="0.0 0.0 0.0" xyz="-0.012 0.001 -0.008"/>
+          <mass value="0.695"/>
+          <inertia ixx="0.000846765" ixy="6.9565e-05" ixz="0.00027111" iyy="0.001367583" iyz="5.8984e-05" izz="0.001363673"/>
+      </inertial>
+      <visual>
+          <origin xyz="0 0 0"/>
+          <geometry>
+              <mesh filename="package://aliengo_description/meshes/lidar.dae"/>
+          </geometry>
+      </visual>
+  </link>
+
+  <xacro:VLP-16 parent="lidar" name="velodyne" topic="/velodyne_pointcloud"
+                organize_cloud="true" hz="10" gpu="true">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:VLP-16>
+
+  <xacro:sensor_d435 name="d435" topics_ns="d435" parent="trunk">
+    <origin xyz="0.325 0 0.025" rpy="0 0 0" />
+  </xacro:sensor_d435>
+
+  <xacro:realsense_T265 sensor_name="t265" parent_link="trunk" rate="30.0">
+    <origin xyz="0.33 0 0" rpy="0 0.24 0" />
+  </xacro:realsense_T265>
+
+</robot>
