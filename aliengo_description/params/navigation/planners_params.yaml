@@ -31,7 +31,7 @@ DWAPlannerROS:
   xy_goal_tolerance: 0.25
   yaw_goal_tolerance: 0.1
   trans_stopped_vel: 0.1
-  rot_stopped_vel: 0.1
+  theta_stopped_vel: 0.1
   sim_time: 3.0
   sim_granularity: 0.1
   angular_sim_granularity: 0.1
