@@ -86,7 +86,7 @@
 
   <!-- INTEL REALSENSE T265 -->
 
-  <xacro:macro name="realsense_T265" params="sensor_name parent_link rate *origin">
+  <xacro:macro name="realsense_T265" params="sensor_name parent_link rate *origin disable_lumping:=true">
 
     <joint name="${sensor_name}_odom_frame_joint" type="fixed">
         <parent link="${parent_link}"/>
@@ -206,7 +206,7 @@
 
 
     <gazebo reference="${sensor_name}_odom_frame_joint">
-        <disableFixedJointLumping>true</disableFixedJointLumping>
+        <disableFixedJointLumping>${disable_lumping}</disableFixedJointLumping>
     </gazebo>
     <gazebo> <!-- odometry -->
         <plugin name="t265_odom" filename="libgazebo_ros_p3d.so">
