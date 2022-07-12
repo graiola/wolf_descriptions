@@ -6,6 +6,12 @@ NavfnROS:
   allow_unknown: true # Specifies whether or not to allow navfn to create plans that traverse unknown space.
   default_tolerance: 0.1 # A tolerance on the goal point for the planner.
 
+# ----- global_planner/GlobalPlanner -----
+GlobalPlanner:
+  visualize_potential: false
+  allow_unknown: true # Specifies whether or not to allow navfn to create plans that traverse unknown space.
+  default_tolerance: 0.1 # A tolerance on the goal point for the planner.
+
 # **************************** Local planners ****************************
 
 # ----- base_local_planner/TrajectoryPlannerROS -----
