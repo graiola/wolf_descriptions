@@ -1,0 +1,3 @@
+trackingcamera_topics: ["/t265/odom"]
+base_frame_id: $(arg base_frame)
+twist_in_local_frame: false
