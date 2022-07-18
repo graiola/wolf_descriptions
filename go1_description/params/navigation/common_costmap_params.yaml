@@ -1,0 +1,13 @@
+robot_base_frame: $(arg base_frame)
+footprint: [ [0.3, 0.2 ], [0.3, -0.2], [-0.3, -0.2], [-0.3, 0.2] ]
+robot_radius: 0.0
+footprint_padding: 0.0
+
+update_frequency: 4.0
+publish_frequency: 3.0
+transform_tolerance: 0.5
+
+# NOTES:
+# If the observation source is set to 'marking', then it will place a lethal obstacle on the costmap if that distance is less than obstacle range. Similarly,
+# if the source is set to 'clearing' then it will mark all of the space between the sensor frame and the observation as free space if the distance is less than the raytrace range.
+# Otherwise, it will only clear the line that is raytrace_range long (closest to the sensor).
