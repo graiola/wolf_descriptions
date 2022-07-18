@@ -1663,7 +1663,7 @@
             accel_bias_stddev="0">
         </xacro:imu_sensor>
 
-        <xacro:VLP-16 parent="lidar" name="velodyne" topic="/velodyne_pointcloud"
+        <xacro:VLP-16 parent="lidar" name="velodyne" topic="/velodyne_points"
                       organize_cloud="true" hz="10" gpu="true">
           <origin xyz="0 0 0" rpy="0 0 0" />
         </xacro:VLP-16>
