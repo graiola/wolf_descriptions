@@ -21,8 +21,8 @@ wolf_controller:
 
   gains:
 
-      Kp_leg: {haa: 1.0, hfe: 1.0, kfe: 1.0}
-      Kd_leg: {haa: 0.1, hfe: 0.1, kfe: 0.01}
+      Kp_leg: {haa: 100.0, hfe: 100.0, kfe: 1}
+      Kd_leg: {haa: 1.0, hfe: 1.0, kfe: 0.1}
 
       lf_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
