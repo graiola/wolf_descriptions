@@ -5,7 +5,7 @@
 	<xacro:macro name="imu_sensor" params="imu_name imu_topic update_rate rate_mean rate_stddev
 		rate_bias_mean rate_bias_stddev accel_mean accel_stddev accel_bias_mean accel_bias_stddev">
  		<gazebo>
-			<plugin name="${imu_name}_controller" filename="libgazebo_ros_imu.so">
+                        <!--<plugin name="${imu_name}_controller" filename="libgazebo_ros_imu.so">
 				<alwaysOn>true</alwaysOn>
 				<updateRate>${update_rate}</updateRate>
 				<bodyName>${imu_name}</bodyName>
@@ -14,14 +14,25 @@
 				<xyzOffset>0 0 0</xyzOffset>
 				<rpyOffset>0 0 0</rpyOffset>
 				<serviceName>/${imu_name}_imu</serviceName>
-			</plugin>	
+                        </plugin>-->
+                        <plugin name="ignition::gazebo::systems::Imu" filename="libignition-gazebo-imu-system.so">
+                        </plugin>
 		</gazebo>
 		
                 <!-- Imu definition required for the hardware interface of ros control -->
-		<gazebo reference="${imu_name}">
-			<sensor name="${imu_name}" type="imu">
+                 <gazebo reference="${imu_name}">
+
+                        <sensor name="${imu_name}" type="imu">
+                            <always_on>1</always_on>
+                            <update_rate>${update_rate}</update_rate>
+                            <visualize>true</visualize>
+                            <topic>${imu_topic}</topic>
+                        </sensor>
+
+                        <!--<sensor name="${imu_name}" type="imu">
 				<always_on>1</always_on>
 				<update_rate>${update_rate}</update_rate>
+                                <topic>${imu_topic}</topic>
 				<imu>
 					<noise>
 						<type>gaussian</type>
@@ -39,8 +50,8 @@
 						</accel>
 					</noise>
 				</imu>
-			</sensor>
-		</gazebo>
+                        </sensor>  -->
+                </gazebo>
 	</xacro:macro>
 
 </robot>

@@ -9,11 +9,12 @@
 	<arg name="gui" default="true"/>
 	<arg name="headless" default="false"/>
 	<arg name="debug" default="false"/>
-        <arg name="world_name" default="empty.world"/>
+        <arg name="world_name" default="empty"/>
         <arg name="task_period" default="0.004"/>
         <arg name="arm_enabled" default="false"/>
         <arg name="arm_name" default="kinova"/>
         <arg name="engine" default="ode"/>
+        <arg name="world_file" value="$(eval find('wolf_gazebo_resources') + '/worlds/' + arg('world_name') + '.world')" />
 
 	<!-- Set use_sim_time flag -->
 	<group if="$(arg use_sim_time)">
@@ -31,13 +32,17 @@
 	<arg name="dynamic_engine" value="-e $(arg engine)"/>
 
 	<!-- Start gazebo server-->
-	<node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="false" output="screen"
-                args="$(arg command_arg1) $(arg command_arg2) $(arg world_name) $(arg dynamic_engine)" />
+        <!-- <node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="false" output="screen"
+                args="$(arg command_arg1) $(arg command_arg2) $(arg world_file) $(arg dynamic_engine)" /> -->
 	
 	<!-- Start gazebo client -->
-	<group if="$(arg gui)">
+        <!-- <group if="$(arg gui)">
             <node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" respawn="false" output="screen"/>
-	</group>
+        </group> -->
+
+        <include file="$(find ros_ign_gazebo)/launch/ign_gazebo.launch">
+          <arg name="ign_args" value="-r -v 3 $(arg world_name).sdf"/>
+        </include>
 
         <!-- Send the robot urdf to parameter server -->
         <include file="$(find wolf_description_utils)/launch/upload.launch">
@@ -49,6 +54,23 @@
 	</include>
 
         <!-- Spawn and set the robot to the stand down position loaded from the SRDF file -->
-        <node name="goto0" pkg="wolf_description_utils" type="go0"/>
+        <!--<node name="goto0" pkg="wolf_description_utils" type="go0"/> -->
+
+        <node
+          pkg="ros_ign_gazebo"
+          type="create"
+          name="$(anon ros_ign_gazebo)"
+          output="screen"
+          args="-world $(arg world_name) -param gazebo_robot_description -name $(arg robot_name) -allow_renaming true -z 1.0">
+        </node>
+
+        <node
+            pkg="ros_ign_bridge"
+            type="parameter_bridge"
+            name="$(anon ros_ign_bridge)"
+            output="screen"
+            args="/clock@rosgraph_msgs/Clock[ignition.msgs.Clock ">
+        </node>
+
 </launch>
 

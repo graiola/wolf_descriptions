@@ -70,9 +70,9 @@
                 </contact>
                 <!-- the sensor readings in terms of force torques are expressed in the lowerleg frame
                 because gazebo lumps the fake footframe with the real parent link, the normals are in the world frame-->
-                 <plugin name="${prefix}_shin_bumper" filename="libgazebo_ros_bumper.so">
+                 <!--  <plugin name="${prefix}_shin_bumper" filename="libgazebo_ros_bumper.so">
                   <bumperTopicName>/${robot_name}/${prefix}_shin_bumper</bumperTopicName>
-                </plugin>
+                </plugin> -->
             </sensor>   
 		</gazebo>
 
@@ -91,10 +91,10 @@
 				</contact>
                                 <!-- the sensor readings in terms of force torques are expressed in the lowerleg frame
                                 because gazebo lumps the fake footframe with the real parent link, the normals are in the world frame-->
-				<plugin name="${prefix}_foot_bumper" filename="libgazebo_ros_bumper.so">
+                                <!-- <plugin name="${prefix}_foot_bumper" filename="libgazebo_ros_bumper.so">
                                         <bumperTopicName>/${robot_name}/${prefix}_foot_bumper</bumperTopicName>
                                         <robotNamespace>${robot_name}</robotNamespace>
-				</plugin>
+                                </plugin> -->
 			</sensor>
 			<material>Gazebo/Black</material>
 		</gazebo>
