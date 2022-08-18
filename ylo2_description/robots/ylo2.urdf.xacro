@@ -45,14 +45,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="${trunk_offset_x} 0 ${abab_motors_offset_z}"/>
             <geometry>
-                <mesh filename="package://ylo2_description/meshes/body/textured/ylo2_textured_body.dae" scale="1 1 1"/>
+                <mesh filename="$(find ylo2_description)/meshes/body/textured/ylo2_textured_body.dae" scale="1 1 1"/>
             </geometry>
             <material name="grey"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="${trunk_offset_x} 0 ${abab_motors_offset_z}"/>
             <geometry>
-                <mesh filename="package://ylo2_description/meshes/body/covers_collision.stl" scale="1 1 1"/>
+                <mesh filename="$(find ylo2_description)/meshes/body/covers_collision.stl" scale="1 1 1"/>
             </geometry>
         </collision>
         <inertial>
@@ -69,7 +69,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="${trunk_offset_x} ${trunk_offset_y} ${abab_motors_offset_z}"/>
             <geometry>
-                <mesh filename="package://ylo2_description/meshes/body/textured/ylo2_textured_abad_motors.dae" scale="1 1 1"/>
+                <mesh filename="$(find ylo2_description)/meshes/body/textured/ylo2_textured_abad_motors.dae" scale="1 1 1"/>
             </geometry>
             <material name="white"/>
         </visual>
@@ -85,7 +85,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="${trunk_offset_x} ${trunk_offset_y} ${abab_motors_offset_z}"/>
             <geometry>
-                <mesh filename="package://ylo2_description/meshes/body/battery.stl" scale="1 1 1"/>
+                <mesh filename="$(find ylo2_description)/meshes/body/battery.stl" scale="1 1 1"/>
             </geometry>
             <material name="blue"/>
         </visual>
@@ -101,7 +101,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="${trunk_offset_x} ${trunk_offset_y} ${abab_motors_offset_z}"/>
             <geometry>
-                <mesh filename="package://ylo2_description/meshes/body/textured/ylo2_textured_cover.dae" scale="1 1 1"/>
+                <mesh filename="$(find ylo2_description)/meshes/body/textured/ylo2_textured_cover.dae" scale="1 1 1"/>
             </geometry>
             <material name="orange"/>
         </visual>
@@ -117,7 +117,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="${trunk_offset_x} ${trunk_offset_y} ${abab_motors_offset_z}"/>
             <geometry>
-                <mesh filename="package://ylo2_description/meshes/body/textured/accessories.dae" scale="1 1 1"/>
+                <mesh filename="$(find ylo2_description)/meshes/body/textured/accessories.dae" scale="1 1 1"/>
             </geometry>
             <material name="blue"/>
         </visual>
@@ -133,7 +133,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="${trunk_offset_x} ${trunk_offset_y+0.004} ${abab_motors_offset_z}"/>
             <geometry>
-                <mesh filename="package://ylo2_description/meshes/body/textured/ylo2_d435_textured.dae" scale="1 1 1"/>
+                <mesh filename="$(find ylo2_description)/meshes/body/textured/ylo2_d435_textured.dae" scale="1 1 1"/>
             </geometry>
             <material name="black"/>
         </visual>
@@ -149,7 +149,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="${trunk_offset_x+0.001} ${trunk_offset_y+0.0025} ${abab_motors_offset_z+0.00}"/>
             <geometry>
-                <mesh filename="package://ylo2_description/meshes/body/textured/ylo2_t265_textured.dae" scale="1 1.06 1.04"/>
+                <mesh filename="$(find ylo2_description)/meshes/body/textured/ylo2_t265_textured.dae" scale="1 1.06 1.04"/>
             </geometry>
             <material name="black"/>
         </visual>

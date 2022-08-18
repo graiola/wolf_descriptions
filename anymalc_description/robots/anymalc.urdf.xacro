@@ -30,7 +30,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/base.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/base.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <collision>
@@ -107,7 +107,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/top_shell.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/top_shell.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -127,7 +127,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/bottom_shell.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/bottom_shell.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -147,7 +147,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/remote.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/remote.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -167,7 +167,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/handle.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/handle.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -187,7 +187,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/face.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/face.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <collision>
@@ -226,7 +226,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/depth_camera.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/depth_camera.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -280,7 +280,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/wide_angle_camera.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/wide_angle_camera.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -308,7 +308,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/face.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/face.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <collision>
@@ -347,7 +347,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/depth_camera.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/depth_camera.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -401,7 +401,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/wide_angle_camera.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/wide_angle_camera.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -429,7 +429,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/battery.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/battery.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -490,7 +490,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/depth_camera.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/depth_camera.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -544,7 +544,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/depth_camera.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/depth_camera.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -597,7 +597,7 @@
         <visual>
             <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/lidar_cage.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/lidar_cage.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <collision>
@@ -628,7 +628,7 @@
         <visual>
             <origin xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/lidar.dae"/>
+                <mesh filename="$(find anymalc_description)/meshes/lidar.dae"/>
             </geometry>
         </visual>
     </link>
@@ -643,7 +643,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/drive.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/drive.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -680,7 +680,7 @@
         <visual>
             <origin rpy="0 0 0.0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/hip_l.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/hip_l.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -700,7 +700,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/drive.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/drive.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <collision>
@@ -743,7 +743,7 @@
         <visual>
             <origin rpy="0 0 0.0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/thigh.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/thigh.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <!-- Thigh collision -->
@@ -776,7 +776,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/drive.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/drive.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <collision>
@@ -819,7 +819,7 @@
         <visual>
             <origin rpy="0 0 0.0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/shank_l.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/shank_l.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <!-- Shank collision -->
@@ -853,7 +853,7 @@
         <visual>
             <origin rpy="0 0 -0.785398163397" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/foot.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/foot.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <!-- Adapter collision -->
@@ -887,7 +887,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/drive.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/drive.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -924,7 +924,7 @@
         <visual>
             <origin rpy="0 0 0.0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/hip_r.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/hip_r.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -944,7 +944,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/drive.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/drive.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <collision>
@@ -987,7 +987,7 @@
         <visual>
             <origin rpy="0 0 -3.14159265359" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/thigh.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/thigh.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <!-- Thigh collision -->
@@ -1020,7 +1020,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/drive.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/drive.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <collision>
@@ -1063,7 +1063,7 @@
         <visual>
             <origin rpy="0 0 0.0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/shank_r.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/shank_r.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <!-- Shank collision -->
@@ -1097,7 +1097,7 @@
         <visual>
             <origin rpy="0 0 0.785398163397" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/foot.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/foot.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <!-- Adapter collision -->
@@ -1131,7 +1131,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/drive.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/drive.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -1168,7 +1168,7 @@
         <visual>
             <origin rpy="0 0 -3.14159265359" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/hip_r.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/hip_r.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -1188,7 +1188,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/drive.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/drive.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <collision>
@@ -1231,7 +1231,7 @@
         <visual>
             <origin rpy="0 0 0.0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/thigh.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/thigh.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <!-- Thigh collision -->
@@ -1264,7 +1264,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/drive.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/drive.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <collision>
@@ -1307,7 +1307,7 @@
         <visual>
             <origin rpy="0 0 -3.14159265359" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/shank_r.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/shank_r.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <!-- Shank collision -->
@@ -1341,7 +1341,7 @@
         <visual>
             <origin rpy="0 0 -2.35619449019" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/foot.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/foot.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <!-- Adapter collision -->
@@ -1375,7 +1375,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/drive.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/drive.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -1412,7 +1412,7 @@
         <visual>
             <origin rpy="0 0 -3.14159265359" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/hip_l.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/hip_l.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
@@ -1432,7 +1432,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/drive.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/drive.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <collision>
@@ -1475,7 +1475,7 @@
         <visual>
             <origin rpy="0 0 -3.14159265359" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/thigh.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/thigh.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <!-- Thigh collision -->
@@ -1508,7 +1508,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/drive.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/drive.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <collision>
@@ -1551,7 +1551,7 @@
         <visual>
             <origin rpy="0 0 -3.14159265359" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/shank_l.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/shank_l.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <!-- Shank collision -->
@@ -1585,7 +1585,7 @@
         <visual>
             <origin rpy="0 0 -3.92699081699" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/foot.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/foot.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <!-- Adapter collision -->
@@ -1619,7 +1619,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0.116 0 0.073"/>
             <geometry>
-                <mesh filename="package://anymalc_description/meshes/hatch.dae" scale="1.0 1.0 1.0"/>
+                <mesh filename="$(find anymalc_description)/meshes/hatch.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <inertial>
