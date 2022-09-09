@@ -1651,7 +1651,7 @@
 
         <xacro:imu_sensor
             imu_name="imu_link"
-            imu_topic="imu_link/data"
+            imu_topic="$(arg robot_name)/imu_link/data"
             update_rate="${1.0 / $(arg task_period)}"
             rate_mean="0"
             rate_stddev="0"

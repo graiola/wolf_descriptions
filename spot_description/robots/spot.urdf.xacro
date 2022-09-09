@@ -651,7 +651,7 @@
         <xacro:include filename="$(find spot_description)/urdfs/accessories.urdf.xacro" />
         <xacro:imu_sensor
             imu_name="trunk_imu"
-            imu_topic="trunk_imu/data"
+            imu_topic="$(arg robot_name)/trunk_imu/data"
             update_rate="${1.0 / $(arg task_period)}"
             rate_mean="0"
             rate_stddev="0"
