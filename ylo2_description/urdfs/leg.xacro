@@ -33,7 +33,7 @@
                     <origin rpy="${PI} ${PI} 0" xyz="0.06 0 0"/>
                 </xacro:if>
                 <geometry>
-                    <mesh filename="$(find ylo2_description)/meshes/leg/textured/ylo2texturedhip.dae" scale="1 1 1"/>
+                    <mesh filename="file://$(find ylo2_description)/meshes/leg/textured/ylo2texturedhip.dae" scale="1 1 1"/>
                 </geometry>
                 <material name="white"/>
             </visual>
@@ -62,10 +62,10 @@
                 <origin rpy="0 0 0" xyz="0 ${-0.0732*mirror} 0"/> <!-- positionnement des 4 axes en meme temps -->
                 <geometry>
                     <xacro:if value="${mirror_dae == True}">
-                        <mesh filename="$(find ylo2_description)/meshes/leg/textured/ylo2_textured_upper_leg.dae" scale="1 1 1"/>
+                        <mesh filename="file://$(find ylo2_description)/meshes/leg/textured/ylo2_textured_upper_leg.dae" scale="1 1 1"/>
                     </xacro:if>
                     <xacro:if value="${mirror_dae == False}">
-                        <mesh filename="$(find ylo2_description)/meshes/leg/textured/ylo2_textured_upper_leg.dae" scale="1 -1 1"/>
+                        <mesh filename="file://$(find ylo2_description)/meshes/leg/textured/ylo2_textured_upper_leg.dae" scale="1 -1 1"/>
                     </xacro:if>
                 </geometry>
                 <material name="grey"/>
@@ -74,10 +74,10 @@
                 <origin rpy="0 0 0" xyz="0 ${-0.0732*mirror} 0"/> <!-- positionnement des 4 axes en meme temps -->
                 <geometry>
                     <xacro:if value="${mirror_dae == True}">
-                        <mesh filename="$(find ylo2_description)/meshes/leg/fl_upper_leg_collision.stl" scale="1 1 1"/>
+                        <mesh filename="file://$(find ylo2_description)/meshes/leg/fl_upper_leg_collision.stl" scale="1 1 1"/>
                     </xacro:if>
                     <xacro:if value="${mirror_dae == False}">
-                        <mesh filename="$(find ylo2_description)/meshes/leg/fl_upper_leg_collision.stl" scale="1 -1 1"/>
+                        <mesh filename="file://$(find ylo2_description)/meshes/leg/fl_upper_leg_collision.stl" scale="1 -1 1"/>
                     </xacro:if>
                 </geometry>
                 <material name="red"/>      
@@ -105,14 +105,14 @@
             <visual>
                 <origin rpy="0 0 0" xyz="0 ${0.001*mirror} 0"/>
                 <geometry>
-                    <mesh filename="$(find ylo2_description)/meshes/leg/textured/lower_leg.dae" scale="1 1 1"/>
+                    <mesh filename="file://$(find ylo2_description)/meshes/leg/textured/lower_leg.dae" scale="1 1 1"/>
                 </geometry>
                 <material name="white"/>
             </visual>
             <collision>
                 <origin rpy="0 0 0" xyz="0 ${0.001*mirror} 0"/>
                 <geometry>
-                    <mesh filename="$(find ylo2_description)/meshes/leg/fl_lower_leg_collision.stl" scale="1 -1 1"/>
+                    <mesh filename="file://$(find ylo2_description)/meshes/leg/fl_lower_leg_collision.stl" scale="1 -1 1"/>
                 </geometry>
                 <material name="red"/>      
             </collision>
@@ -144,14 +144,14 @@
             <visual>
                 <origin rpy="0 0 0" xyz="0.009 ${(0.001*mirror)+0.001} 0.069"/>
                 <geometry>
-                    <mesh filename="$(find ylo2_description)/meshes/leg/fl_foot.dae" scale="1.0 1.0 1.0"/>
+                    <mesh filename="file://$(find ylo2_description)/meshes/leg/fl_foot.dae" scale="1.0 1.0 1.0"/>
                 </geometry>
                 <material name="orange"/>
             </visual>
             <collision>
                 <origin rpy="0 0 0" xyz="0.009 ${(0.001*mirror)+0.001} 0.069"/>
                 <geometry>
-                    <mesh filename="$(find ylo2_description)/meshes/leg/fl_foot_collision.stl" scale="1.0 1.0 1.0"/>
+                    <mesh filename="file://$(find ylo2_description)/meshes/leg/fl_foot_collision.stl" scale="1.0 1.0 1.0"/>
                 </geometry>
                 <material name="red"/>
             </collision>
