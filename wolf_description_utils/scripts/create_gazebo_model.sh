@@ -40,8 +40,10 @@ fi
 ROBOT_PATH=`rospack find ${ROBOT_NAME}_description`
 mkdir -p $ROBOT_PATH/gazebo_model
 
+echo "I am going to parse the following file: ${ROBOT_PATH}/robots/${ROBOT_NAME}.urdf.xacro"
+
 # Create SDF
-rosrun xacro xacro --check-order ${ROBOT_PATH}/robots/${ROBOT_NAME}.urdf.xacro > /tmp/${ROBOT_NAME}.urdf
+rosrun xacro xacro ${ROBOT_PATH}/robots/${ROBOT_NAME}.urdf.xacro > /tmp/${ROBOT_NAME}.urdf
 gz sdf --print /tmp/${ROBOT_NAME}.urdf > ${ROBOT_PATH}/gazebo_model/model.sdf
 
 # Create config
@@ -64,4 +66,7 @@ cat >> ${ROBOT_PATH}/gazebo_model/model.config << EOF
   </description>
 </model>
 EOF
+
+echo "Finished!"
+echo "Created SDF model in ${ROBOT_PATH}/gazebo_model"
 
