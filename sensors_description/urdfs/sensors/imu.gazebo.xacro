@@ -13,7 +13,7 @@
 				<gaussianNoise>${rate_stddev*rate_stddev}</gaussianNoise>
 				<xyzOffset>0 0 0</xyzOffset>
 				<rpyOffset>0 0 0</rpyOffset>
-				<serviceName>/${imu_name}_imu</serviceName>
+                                <serviceName>/${imu_name}</serviceName>
 			</plugin>	
 		</gazebo>
 		
