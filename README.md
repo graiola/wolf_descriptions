@@ -46,10 +46,10 @@ To launch the new robot with the WoLF controller:
 - `min_base_roll` defines the minimum rotation along the robot's roll axis.
 - `max_base_pitch` defines the maximum rotation along the robot's pitch axis. 
 - `min_base_pitch` defines the minimum rotation along the robot's pitch axis.
-- `estimation_position_type [ground_truth (simulation only) | estimated_z]` 
-- `estimation_orientation_type [ground_truth (simulation only) | imu_magnetometer | imu_gyroscope]` 
-- `use_contact_sensors [true | false]` use the `hardware_interface::ContactSwitchSensorInterface` if available
-- `compute_odom [true | false]` compute the odometry i.e. create the odom -> base_footprint transformation
+- `estimation_position_type [ground_truth (simulation only) | estimated_z]` .
+- `estimation_orientation_type [ground_truth (simulation only) | imu_magnetometer | imu_gyroscope]` .
+- `use_contact_sensors [true | false]` use the `hardware_interface::ContactSwitchSensorInterface` if available.
+- `compute_odom [true | false]` compute the odometry i.e. create the `odom -> base_footprint` transformation.
 - `activate_step_reflex [true | false]` activate the step reflex.
 - `activate_push_recovery [true | false]` activate the push recovery.
 - `initial_pose_simulation` Initial robot's pose in simulation.
