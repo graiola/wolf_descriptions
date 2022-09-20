@@ -59,12 +59,12 @@ DWAPlannerROS:
 
   # Robot configuration parameters
   acc_lim_x: 2.5
-  acc_lim_y: 1.0
+  acc_lim_y: 0.0
   acc_lim_theta: 2.0
   max_vel_x: 0.55
-  min_vel_x: -0.25
-  max_vel_y: -0.25
-  min_vel_y: 0.25
+  min_vel_x: -0.2
+  max_vel_y: 0.0
+  min_vel_y: 0.0
   max_vel_trans: 0.55
   min_vel_trans: 0.0 # this is the min trans velocity when there is negligible rotational velocity
   max_vel_theta: 0.5
