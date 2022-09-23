@@ -3,8 +3,8 @@ wolf_controller:
   default_duty_factor: 0.3
   default_swing_frequency: 4.0
   default_contact_threshold: 65.0
-  default_base_linear_velocity_x: 0.5
-  default_base_linear_velocity_y: 0.5
+  default_base_linear_velocity_x: 0.3
+  default_base_linear_velocity_y: 0.3
   default_base_linear_velocity_z: 0.3
   default_base_angular_velocity: 0.3
   default_step_reflex_contact_threshold: 30.0
