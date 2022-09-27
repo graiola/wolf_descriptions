@@ -58,6 +58,8 @@ To launch the new robot with the WoLF controller:
 - `activate_angular_momentum [true | false]` activate the angular momentum task, by default it is true.
 - `activate_joint_position_limits [true | false]` activate the joint position limits constraint (the values are loaded from the URDF), by default it is false.
 - `regularization` regularization value for the solver, by default it is set to `1e-3` for the accelerations and `1e-6` for the forces.
+- `min_forces_weight` contact forces minimization task weight (higher values will reduce the contact forces produced by the solver), by default it is 0.0, i.e. not active.
+- `min_qddot_weight` joint accelerations minimization task weight (higher values will reduce the joint accelerations produced by the solver), by default it is 0.0, i.e. not active.
 ```
 
 gains:
