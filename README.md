@@ -84,9 +84,6 @@ gains:
           Kd: {x: xxx, y: xxx, z: xxx}
           weight: xxx
 
-      postural:
-          weight: xxx
-
       angular_momentum:
           weight: xxx
 
