@@ -1,14 +1,14 @@
 wolf_controller:
   type: wolf_controller/Controller
-  default_duty_factor: 0.3
-  default_swing_frequency: 4.2
-  default_contact_threshold: 30.0
-  default_base_linear_velocity: 0.4
+  default_duty_factor: 0.2
+  default_swing_frequency: 5.0
+  default_contact_threshold: 20.0
+  default_base_linear_velocity: 0.3
   default_base_angular_velocity: 0.4
   default_step_height: 0.065
   max_step_height: 0.15
-  max_step_length: 0.4
-  max_base_height: 0.42
+  max_step_length: 0.15
+  max_base_height: 0.35
   max_base_roll: 0.523
   min_base_roll: -0.523
   max_base_pitch: 0.523
@@ -18,6 +18,10 @@ wolf_controller:
   activate_step_reflex: true
   activate_push_recovery: true
   initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.25, roll: 0.0, pitch: 0.0, yaw: 0.0}
+  activate_com_z: false
+  activate_postural: false
+  #min_forces_weight: 0.001
+  #min_qddot_weight: 0.01
 
   gains:
 
@@ -42,15 +46,18 @@ wolf_controller:
           weight: 100.0
 
       waist:
-          Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 50.0, pitch: 50.0, yaw: 50.0}
-          Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 5.0, pitch: 5.0, yaw: 5.0}
+          Kp: {x: 0.0, y: 0.0, z: 1000.0, roll: 50.0, pitch: 50.0, yaw: 50.0}
+          Kd: {x: 0.0, y: 0.0, z: 100.0, roll: 5.0, pitch: 5.0, yaw: 5.0}
           weight: 1.0
 
       CoM:
-          Kp: {x: 30.0, y: 30.0, z: 50.0}
-          Kd: {x: 5.0, y: 5.0, z: 10.0}
-          weight: 5.0
+          Kp: {x: 30.0, y: 30.0, z: 0.0}
+          Kd: {x: 5.0, y: 5.0, z: 0.0}
+          weight: 1.0
 
       angular_momentum:
           weight: 0.1
+
+      postural:
+          weight: 0.00001
 
