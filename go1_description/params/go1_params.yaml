@@ -22,6 +22,7 @@ wolf_controller:
   activate_postural: false
   #min_forces_weight: 0.001
   #min_qddot_weight: 0.01
+  compute_odom: false
 
   gains:
 
