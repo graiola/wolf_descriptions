@@ -63,10 +63,10 @@
 
   <joint name="lidar_cage_to_lidar" type="fixed">
       <parent link="trunk"/>
-      <child link="lidar"/>
+      <child link="rslidar"/>
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.05"/>
   </joint>
-  <link name="lidar">
+  <link name="rslidar">
       <inertial>
           <origin rpy="0.0 0.0 0.0" xyz="-0.012 0.001 -0.008"/>
           <mass value="0.695"/>
@@ -74,7 +74,7 @@
       </inertial>
   </link>
 
-  <xacro:VLP-16 parent="lidar" name="velodyne" topic="/velodyne_points"
+  <xacro:VLP-16 parent="rslidar" name="rslidar-16" topic="/rslidar_points"
                 organize_cloud="true" hz="10" gpu="true">
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:VLP-16>
