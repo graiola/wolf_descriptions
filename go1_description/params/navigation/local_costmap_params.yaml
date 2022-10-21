@@ -16,9 +16,9 @@ local_costmap:
     track_unknown_space: true # true needed for disabling global path planning through unknown space
     footprint_clearing_enabled: true
     observation_sources: depth_pointcloud_sensor_left depth_pointcloud_sensor_right depth_pointcloud_sensor_face
-    depth_pointcloud_sensor_left:  {sensor_frame: camera_laserscan_link_left,  data_type: PointCloud2, topic: "/camera3/point_cloud_left",  marking: true, clearing: true, min_obstacle_height: 0.2}
-    depth_pointcloud_sensor_right: {sensor_frame: camera_laserscan_link_right, data_type: PointCloud2, topic: "/camera4/point_cloud_right", marking: true, clearing: true, min_obstacle_height: 0.2}
-    depth_pointcloud_sensor_face:  {sensor_frame: camera_optical_face,         data_type: PointCloud2, topic: "/camera1/point_cloud_face",  marking: true, clearing: true, min_obstacle_height: 0.2}
+    depth_pointcloud_sensor_left:  {sensor_frame: camera_laserscan_link_left,  data_type: PointCloud2, topic: "/camera3/point_cloud_left",  marking: true, clearing: true, min_obstacle_height: 0.35}
+    depth_pointcloud_sensor_right: {sensor_frame: camera_laserscan_link_right, data_type: PointCloud2, topic: "/camera4/point_cloud_right", marking: true, clearing: true, min_obstacle_height: 0.35}
+    depth_pointcloud_sensor_face:  {sensor_frame: camera_optical_face,         data_type: PointCloud2, topic: "/camera1/point_cloud_face",  marking: true, clearing: true, min_obstacle_height: 0.35}
 
   plugins:
     - name: obstacle_layer
