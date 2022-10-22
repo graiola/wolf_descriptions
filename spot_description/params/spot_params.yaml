@@ -15,14 +15,13 @@ wolf_controller:
   min_base_roll: -0.523
   max_base_pitch: 0.523
   min_base_pitch: -0.523
-  estimation_position_type: odom
-  estimation_orientation_type: odom
+  estimation_position_type: estimated_z
+  estimation_orientation_type: imu_magnetometer
   activate_step_reflex: true
   activate_push_recovery: true
   initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.25, roll: 0.0, pitch: 0.0, yaw: 0.0}
-  compute_odom: true
+  compute_odom: false
   use_contact_sensors: false
-  compute_odom: true
   min_forces_weight: 0.001
   min_qddot_weight: 0.01
 
