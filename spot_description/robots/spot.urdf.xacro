@@ -662,6 +662,28 @@
             accel_bias_mean="0"
             accel_bias_stddev="0">
         </xacro:imu_sensor>
+        <!-- GPS Sensor -->
+        <gazebo>
+            <!-- plugins are in hector_gazebo_plugins ros package -->
+            <plugin name="novatel_gps_sim" filename="libhector_gazebo_ros_gps.so">
+                <alwaysOn>1</alwaysOn>
+                <updateRate>10.0</updateRate>
+                <bodyName>base_link</bodyName>
+                <frameId>base_link</frameId>
+                <robotNamespace>$(arg robot_name)/gps/</robotNamespace>
+                <topicName>fix</topicName>
+                <velocityTopicName>fix_velocity</velocityTopicName>
+                <drift>5.0 5.0 5.0</drift>
+                <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
+                <velocityDrift>0 0 0</velocityDrift>
+                <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
+                <!-- Default starting values -->
+                <referenceLatitude>0.0</referenceLatitude>
+                <referenceLongitude>0.0</referenceLongitude>
+                <referenceHeading>0.0</referenceHeading>
+                <referenceAltitude>0.0</referenceAltitude>
+            </plugin>
+        </gazebo>
     </xacro:if>
 
     <!-- Extensions -->
