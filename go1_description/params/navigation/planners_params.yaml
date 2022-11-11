@@ -10,21 +10,21 @@ NavfnROS:
 
 # ----- dwa_local_planner/DWAPlannerROS -----
 DWAPlannerROS:
-  global_frame_id: $(arg odom_frame)
+  global_frame_id: $(arg global_frame)
 
   # Robot configuration parameters
   max_vel_trans: 0.8
   min_vel_trans: 0.0
   max_vel_x: 0.8
-  min_vel_x: 0.0
-  max_vel_y: 0.0
-  min_vel_y: 0.0
+  min_vel_x: -0.3
+  max_vel_y: 0.25
+  min_vel_y: -0.25
   max_vel_theta: 0.5
-  min_vel_theta: 0.0
+  min_vel_theta: 0.25
   acc_lim_x: 2.0
-  acc_lim_y: 0.0
-  acc_lim_theta: 4.0
-  acc_lim_trans: 3.0
+  acc_lim_y: 2.0
+  acc_lim_theta: 3.0
+  acc_lim_trans: 2.0
 
   prune_plan: false
 
@@ -32,7 +32,7 @@ DWAPlannerROS:
   xy_goal_tolerance: 0.25
   yaw_goal_tolerance: 0.1
 
-  trans_stopped_vel: 0.5
+  trans_stopped_vel: 0.2
   theta_stopped_vel: 0.2
   sim_time: 3.0
   sim_granularity: 0.1
@@ -60,11 +60,11 @@ TebLocalPlannerROS:
   map_frame: $(arg global_frame)
 
   # Trajectory
-  teb_autosize: True
+  teb_autosize: true
   dt_ref: 0.3
   dt_hysteresis: 0.1
   min_samples: 3
-  global_plan_overwrite_orientation: True
+  global_plan_overwrite_orientation: true
   global_plan_viapoint_sep: 0.5 # negative, do not use viapoints. positive, use them. the actual value does not matter
   max_global_plan_lookahead_dist: 3.0
   force_reinit_new_goal_dist: 1.0
@@ -76,28 +76,28 @@ TebLocalPlannerROS:
   shrink_horizon_min_duration: 10
 
   # Robot
-  max_vel_x: 0.75
+  max_vel_x: 0.8
   max_vel_x_backwards: 0.15
-  max_vel_theta: 0.785
+  max_vel_theta: 0.5
   max_vel_y: 0.5
-  acc_lim_y: 0.2
-  acc_lim_x: 0.2
-  acc_lim_theta: 0.2
+  acc_lim_y: 3.0
+  acc_lim_x: 3.0
+  acc_lim_theta: 4.0
   min_turning_radius: 0.0
   wheelbase: 0.0
   cmd_angle_instead_rotvel: false
   footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
     type: "polygon"
-    vertices: [ [0.55, 0.325 ], [0.55, -0.325], [-0.6, -0.325], [-0.6, 0.325] ]
+    vertices: [ [0.3, 0.2 ], [0.3, -0.2], [-0.3, -0.2], [-0.3, 0.2] ]
 
   # GoalTolerance
-  xy_goal_tolerance: 0.2
-  yaw_goal_tolerance: 0.1
-  free_goal_vel: False
+  xy_goal_tolerance: 0.3
+  yaw_goal_tolerance: 0.2
+  free_goal_vel: false
 
   # Obstacles
   min_obstacle_dist: 0.30 # minimum distance to obstacle: it depends on the footprint_model
-  include_costmap_obstacles: True # use the local costmap
+  include_costmap_obstacles: true # use the local costmap
   costmap_obstacles_behind_robot_dist: 1.0 # distance at which obstacles behind the robot are taken into account
   obstacle_poses_affected: 30 # unused if legacy_obstacle_association is false
   inflation_dist: 0.7 # greater than min_obstacle_dist to take effect
@@ -105,14 +105,14 @@ TebLocalPlannerROS:
   obstacle_association_force_inclusion_factor: 1.5 # the obstacles that will be taken into account are those closer than min_obstacle_dist*factor, if legacy is false
   obstacle_association_cutoff_factor: 5.0 # the obstacles that are further than min_obstacle_dist * factor will not be taken into account, if legacy is false
   costmap_converter_plugin: "costmap_converter::CostmapToPolygonsDBSMCCH"
-  costmap_converter_spin_thread: True
+  costmap_converter_spin_thread: true
   costmap_converter_rate: 5
 
   # Optimization
   no_inner_iterations: 5
   no_outer_iterations: 4
-  optimization_activate: True # optimize
-  optimization_verbose: False
+  optimization_activate: true # optimize
+  optimization_verbose: false
   penalty_epsilon: 0.1
   weight_max_vel_x: 20
   weight_max_vel_y: 20
@@ -131,14 +131,14 @@ TebLocalPlannerROS:
   weight_adapt_factor: 2 # factor to multiply some weights (currently only weight_obstacle) at each iteration (gives better results than a huge value for the weight)
 
   # Homotopy Class Planner
-  enable_homotopy_class_planning: False # currently not used
-  simple_exploration: False
-  enable_multithreading: True
+  enable_homotopy_class_planning: false # currently not used
+  simple_exploration: false
+  enable_multithreading: true
   max_number_classes: 4
   selection_cost_hysteresis: 1.0
   selection_obst_cost_scale: 4.0
   selection_viapoint_cost_scale: 1.0
-  selection_alternative_time_cost: False
+  selection_alternative_time_cost: false
   roadmap_graph_no_samples: 15
   roadmap_graph_area_width: 6
   h_signature_prescaler: 1.0
@@ -147,5 +147,5 @@ TebLocalPlannerROS:
   roadmap_graph_no_samples: 15
   roadmap_graph_area_width: 5
   obstacle_keypoint_offset: 0.1
-  visualize_hc_graph: False
+  visualize_hc_graph: false
 
