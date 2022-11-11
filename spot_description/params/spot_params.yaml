@@ -3,7 +3,9 @@ wolf_controller:
   default_duty_factor: 0.3
   default_swing_frequency: 4.5
   default_contact_threshold: 30.0
-  default_base_linear_velocity: 0.5
+  default_base_linear_velocity_x: 0.5
+  default_base_linear_velocity_y: 0.25
+  default_base_linear_velocity_z: 0.5
   default_base_angular_velocity: 0.5
   default_step_height: 0.08
   max_step_height: 0.15
@@ -13,11 +15,15 @@ wolf_controller:
   min_base_roll: -0.523
   max_base_pitch: 0.523
   min_base_pitch: -0.523
-  estimation_position_type: estimated_z
-  estimation_orientation_type: imu_magnetometer
+  estimation_position_type: ground_truth
+  estimation_orientation_type: ground_truth
   activate_step_reflex: true
   activate_push_recovery: true
   initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.25, roll: 0.0, pitch: 0.0, yaw: 0.0}
+  compute_odom: false
+  use_contact_sensors: false
+  min_forces_weight: 0.001
+  min_qddot_weight: 0.01
 
   gains:
 
