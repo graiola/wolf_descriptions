@@ -131,7 +131,7 @@ TebLocalPlannerROS:
   cmd_angle_instead_rotvel: false
   footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
     type: "polygon"
-    vertices: [ [0.55, 0.325 ], [0.55, -0.325], [-0.6, -0.325], [-0.6, 0.325] ]
+    vertices: [ [0.5, 0.32 ], [0.5, -0.32], [-0.5, -0.32], [-0.5, 0.32] ]
 
   # GoalTolerance
   xy_goal_tolerance: 0.2
