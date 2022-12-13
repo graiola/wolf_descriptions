@@ -272,15 +272,6 @@ Visualization Manager:
       Update Interval: 0
       Value: true
       Visual Enabled: true
-    - Class: rviz/InteractiveMarkers
-      Enable Transparency: true
-      Enabled: true
-      Name: Waypoints
-      Show Axes: false
-      Show Descriptions: true
-      Show Visual Aids: false
-      Update Topic: /waypoints/update
-      Value: true
     - Alpha: 0.699999988079071
       Class: rviz/Map
       Color Scheme: map
@@ -715,7 +706,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 8.969398498535156
+      Distance: 8.04079818725586
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -723,17 +714,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 1.7312703132629395
-        Y: -0.6432334184646606
-        Z: 3.12031626701355
+        X: -0.6997854709625244
+        Y: -0.475322961807251
+        Z: 2.3389461040496826
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.0153968334197998
+      Pitch: 0.9303969144821167
       Target Frame: <Fixed Frame>
-      Yaw: 4.7486066818237305
+      Yaw: 3.8685946464538574
     Saved: ~
 Window Geometry:
   Displays:
