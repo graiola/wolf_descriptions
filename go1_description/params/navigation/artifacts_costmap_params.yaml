@@ -1,0 +1,12 @@
+artifacts_costmap:
+  global_frame: $(arg global_frame)
+  rolling_window: false # Whether or not to use a rolling window version of the costmap. If the static_map parameter is set to true, this parameter must be set to false.
+  resolution: 0.1
+  inflation_radius: 0.1
+  cost_scaling_factor: 10.0
+  static_map: true
+  obstacle_range: 10.0
+  raytrace_range: 3.0
+  #combination_method: 0
+  observation_sources: laser_scan_sensor #point_cloud_sensor
+  laser_scan_sensor: {sensor_frame: rslidar, data_type: LaserScan, topic: $(arg scan_topic), marking: true, clearing: true}

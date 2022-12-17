@@ -13,19 +13,12 @@ wolf_controller:
   estimation_orientation_type: imu_magnetometer
   initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.55, roll: 0.0, pitch: 0.0, yaw: 0.0}
 
-  push_recovery:
-      k: {x: 1.0, y: 1.0, r: 1.0}
-      dynamic_th: {x: 0.5, y: 0.5, r: 0.5}
-      static_th: {x: 0.06, y: 0.06, r: 0.06}
-
   gains:
 
-      kp_arm: {j0: 50.0, j1: 50.0, j2: 50.0, j3: 50.0}
-      kd_arm: {j0: 1.0, j1: 1.0, j2: 1.0, j3: 1.0}
-      kp_swing: {haa: 1.0, hfe: 1.0, kfe: 1.0}
-      kd_swing: {haa: 0.1, hfe: 0.1, kfe: 0.01}
-      kp_stance: {haa: 1.0, hfe: 1.0, kfe: 1.0}
-      kd_stance: {haa: 0.1, hfe: 0.1, kfe: 0.01}
+      Kp_arm: {j0: 50.0, j1: 50.0, j2: 50.0, j3: 50.0}
+      Kd_arm: {j0: 1.0, j1: 1.0, j2: 1.0, j3: 1.0}
+      Kp_leg: {haa: 1.0, hfe: 1.0, kfe: 1.0}
+      Kd_leg: {haa: 0.1, hfe: 0.1, kfe: 0.01}
 
       kinova_end_effector:
           Kp: {x: 100.0, y: 100.0, z: 100.0, roll: 50.0, pitch: 50.0, yaw: 50.0}
@@ -49,19 +42,10 @@ wolf_controller:
           Kd: {x: 15.0, y: 15.0, z: 15.0, roll: 0, pitch: 0, yaw: 0}
           weight: 1000.0
 
-      waistRPY:
+      waist:
           Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 1500.0, pitch: 1500.0, yaw: 1000.0}
           Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 300.0, pitch: 300.0, yaw: 100.0}
           type: acceleration
-          weight: 1.0
-
-      waistZ:
-          Kp: {x: 0.0, y: 0.0, z: 1000.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
-          Kd: {x: 0.0, y: 0.0, z: 100.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
-          type: acceleration
-          weight: 0.0
-
-      Postural:
           weight: 1.0
 
       CoM:
@@ -72,3 +56,6 @@ wolf_controller:
 
       angular_momentum:
           weight: 0.1
+
+      postural:
+          weight: 0.01

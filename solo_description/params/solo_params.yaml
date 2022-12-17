@@ -13,18 +13,11 @@ wolf_controller:
   estimation_orientation_type: imu_magnetometer
   initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.05, roll: 0.0, pitch: 0.0, yaw: 0.0}
 
-  push_recovery:
-      k: {x: 0.5, y: 0.5, r: 0.01}
-      dynamic_th: {x: 0.5, y: 0.5, r: 0.5}
-      static_th: {x: 0.03, y: 0.03, r: 0.03}
-  
   gains:
 
-      kp_swing: {haa: 1.0, hfe: 1.0, kfe: 1.0}
-      kd_swing: {haa: 0.0001, hfe: 0.0001, kfe: 0.0001}
-      kp_stance: {haa: 1.0, hfe: 1.0, kfe: 1.0}
-      kd_stance: {haa: 0.0001, hfe: 0.0001, kfe: 0.0001}
-      
+      Kp_leg: {haa: 1.0, hfe: 1.0, kfe: 1.0}
+      Kd_leg: {haa: 0.0001, hfe: 0.0001, kfe: 0.0001}
+
       lf_foot:
           Kp: {x: 100.0, y: 100.0, z: 100.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 5.0, y: 5.0, z: 5.0, roll: 0, pitch: 0, yaw: 0}
@@ -42,15 +35,10 @@ wolf_controller:
           Kd: {x: 5.0, y: 5.0, z: 5.0, roll: 0, pitch: 0, yaw: 0}
           weight: 100.0
 
-      waistRPY:
+      waist:
           Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 100.0, pitch: 100.0, yaw: 100.0}
           Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 5.0, pitch: 5.0, yaw: 5.0}
           weight: 100.0
-          
-      waistZ:
-          Kp: {x: 0.0, y: 0.0, z: 50.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
-          Kd: {x: 0.0, y: 0.0, z: 5.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
-          weight: 0.0
 
       CoM:
           Kp: {x: 50.0, y: 50.0, z: 50.0}
@@ -59,3 +47,4 @@ wolf_controller:
 
       angular_momentum:
           weight: 0.1
+

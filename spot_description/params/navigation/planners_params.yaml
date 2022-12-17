@@ -1,0 +1,244 @@
+# **************************** Global planners ****************************
+
+# ----- navfn/NavfnROS -----
+NavfnROS:
+  visualize_potential: false
+  allow_unknown: true # Specifies whether or not to allow navfn to create plans that traverse unknown space.
+  default_tolerance: 0.1 # A tolerance on the goal point for the planner.
+
+# ----- global_planner/GlobalPlanner -----
+GlobalPlanner:
+  visualize_potential: false
+  allow_unknown: true # Specifies whether or not to allow navfn to create plans that traverse unknown space.
+  default_tolerance: 0.1 # A tolerance on the goal point for the planner.
+
+# **************************** Local planners ****************************
+
+# ----- base_local_planner/TrajectoryPlannerROS -----
+TrajectoryPlannerROS:
+  # Robot Configuration Parameters
+  acc_lim_x: 2.5
+  acc_lim_theta:  3.2
+  max_vel_x: 0.55
+  min_vel_x: 0.0
+  max_vel_theta: 0.5
+  min_vel_theta: -0.5
+  min_in_place_vel_theta: 0.2
+  holonomic_robot: true
+  escape_vel: -0.1
+  # Goal Tolerance Parameters
+  yaw_goal_tolerance: 0.1
+  xy_goal_tolerance: 0.2
+  latch_xy_goal_tolerance: true
+  # Forward Simulation Parameters
+  sim_time: 2.0
+  sim_granularity: 0.02
+  angular_sim_granularity: 0.02
+  vx_samples: 6
+  vtheta_samples: 20
+  controller_frequency: 20.0
+  # Trajectory scoring parameters
+  meter_scoring: true               # Whether the gdist_scale and pdist_scale parameters should assume that goal_distance and path_distance are expressed in units of meters or cells. Cells are assumed by default (false).
+  occdist_scale:  0.1               # The weighting for how much the controller should attempt to avoid obstacles. default 0.01
+  pdist_scale: 0.75                 # The weighting for how much the controller should stay close to the path it was given . default 0.6
+  gdist_scale: 1.0                  # The weighting for how much the controller should attempt to reach its local goal, also controls speed  default 0.8
+  heading_lookahead: 0.325          # How far to look ahead in meters when scoring different in-place-rotation trajectories
+  heading_scoring: false            # Whether to score based on the robot's heading to the path or its distance from the path. default false
+  heading_scoring_timestep: 0.8     # How far to look ahead in time in seconds along the simulated trajectory when using heading scoring (double, default: 0.8)
+  dwa: true                         # Whether to use the Dynamic Window Approach (DWA) or whether to use Trajectory Rollout
+  simple_attractor: false
+  publish_cost_grid_pc: true
+  # Oscillation Prevention Parameters
+  oscillation_reset_dist: 0.25 # How far the robot must travel in meters before oscillation flags are reset (double, default: 0.05)
+  escape_reset_dist: 0.1
+  escape_reset_theta: 0.1
+
+# ----- dwa_local_planner/DWAPlannerROS -----
+DWAPlannerROS:
+  global_frame_id: $(arg odom_frame)
+
+  # Robot configuration parameters
+  acc_lim_x: 2.5
+  acc_lim_y: 0.0
+  acc_lim_theta: 2.0
+  max_vel_x: 0.55
+  min_vel_x: 0.0
+  max_vel_y: 0.0
+  min_vel_y: 0.0
+  max_vel_trans: 0.55
+  min_vel_trans: 0.0 # this is the min trans velocity when there is negligible rotational velocity
+  max_vel_theta: 0.5
+  min_vel_theta: 0.1 # this is the min angular velocity when there is negligible translational velocity
+  theta_stopped_vel: 0.1
+  trans_stopped_vel: 0.1
+  prune_plan: true
+  # Goal Tolerance Parameters
+  yaw_goal_tolerance: 0.1
+  xy_goal_tolerance: 0.2
+  latch_xy_goal_tolerance: true
+
+  # Forward Simulation Parameters
+  sim_time: 3.0
+  vx_samples: 20
+  vy_samples: 20
+  vth_samples: 40
+  angular_sim_granularity: 0.01
+  sim_granularity: 0.025
+
+  # Trajectory Scoring Parameters
+  path_distance_bias: 64.0      # 32.0   - weighting for how much it should stick to the global path plan
+  goal_distance_bias: 24.0      # 24.0   - wighting for how much it should attempt to reach its goal
+  occdist_scale: 0.01           # 0.01   - weighting for how much the controller should avoid obstacles
+  forward_point_distance: 0.325 # 0.325  - how far along to place an additional scoring point (this value is being used as a cost value for robot alignment to the path.)
+  stop_time_buffer: 0.2         # 0.2    - amount of time a robot must stop in before colliding for a valid traj.
+  scaling_speed: 0.25           # 0.25   - absolute velocity at which to start scaling the robot's footprint
+  max_scaling_factor: 0.2       # 0.2    - how much to scale the robot's footprint when at speed.
+
+  # Oscillation Prevention Parameters
+  oscillation_reset_dist: 0.05  # 0.05   - how far to travel before resetting oscillation flags
+
+# ----- teb_local_planner/TebLocalPlannerROS -----
+TebLocalPlannerROS:
+  odom_topic: $(arg odom_frame)
+  map_frame: $(arg global_frame)
+
+  # Trajectory
+  teb_autosize: True
+  dt_ref: 0.3
+  dt_hysteresis: 0.1
+  min_samples: 3
+  global_plan_overwrite_orientation: True
+  global_plan_viapoint_sep: 0.5 # negative, do not use viapoints. positive, use them. the actual value does not matter
+  max_global_plan_lookahead_dist: 3.0
+  force_reinit_new_goal_dist: 1.0
+  feasibility_check_no_poses: 5
+  publish_feedback: false
+  shrink_horizon_backup: true
+  allow_init_with_backwards_motion: true
+  exact_arc_length: false
+  shrink_horizon_min_duration: 10
+
+  # Robot
+  max_vel_x: 0.75
+  max_vel_x_backwards: 0.15
+  max_vel_theta: 0.785
+  max_vel_y: 0.5
+  acc_lim_y: 0.2
+  acc_lim_x: 0.2
+  acc_lim_theta: 0.2
+  min_turning_radius: 0.0
+  wheelbase: 0.0
+  cmd_angle_instead_rotvel: false
+  footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
+    type: "polygon"
+    vertices: [ [0.5, 0.32 ], [0.5, -0.32], [-0.5, -0.32], [-0.5, 0.32] ]
+
+  # GoalTolerance
+  xy_goal_tolerance: 0.2
+  yaw_goal_tolerance: 0.1
+  free_goal_vel: False
+
+  # Obstacles
+  min_obstacle_dist: 0.30 # minimum distance to obstacle: it depends on the footprint_model
+  include_costmap_obstacles: True # use the local costmap
+  costmap_obstacles_behind_robot_dist: 1.0 # distance at which obstacles behind the robot are taken into account
+  obstacle_poses_affected: 30 # unused if legacy_obstacle_association is false
+  inflation_dist: 0.7 # greater than min_obstacle_dist to take effect
+  legacy_obstacle_association: false
+  obstacle_association_force_inclusion_factor: 1.5 # the obstacles that will be taken into account are those closer than min_obstacle_dist*factor, if legacy is false
+  obstacle_association_cutoff_factor: 5.0 # the obstacles that are further than min_obstacle_dist * factor will not be taken into account, if legacy is false
+  costmap_converter_plugin: "costmap_converter::CostmapToPolygonsDBSMCCH"
+  costmap_converter_spin_thread: True
+  costmap_converter_rate: 5
+
+  # Optimization
+  no_inner_iterations: 5
+  no_outer_iterations: 4
+  optimization_activate: True # optimize
+  optimization_verbose: False
+  penalty_epsilon: 0.1
+  weight_max_vel_x: 20
+  weight_max_vel_y: 20
+  weight_max_vel_theta: 20
+  weight_acc_lim_x: 1
+  weight_acc_lim_y: 1
+  weight_acc_lim_theta: 1
+  weight_kinematics_nh: 10 # is a nonholonomic robot
+  weight_kinematics_forward_drive: 50 # prefer forward driving, for differential
+  weight_kinematics_turning_radius: 1 # prefer turns that respect the min_turning_radius, not used if differential (min_turning_radius = 0)
+  weight_optimaltime: 10 # prefer trajectories with less transition time
+  weight_obstacle: 50 # prefer trajectories that respect the min_obstacle_dist
+  weight_inflation: 1 # prefer trajectories that respect the inflation of the obstacles
+  #weight_dynamic_obstacle: 10 # not in use yet
+  weight_viapoint: 100 # prefer trajectories that respect the viapoints in the global path
+  weight_adapt_factor: 2 # factor to multiply some weights (currently only weight_obstacle) at each iteration (gives better results than a huge value for the weight)
+
+  # Homotopy Class Planner
+  enable_homotopy_class_planning: False # currently not used
+  simple_exploration: False
+  enable_multithreading: True
+  max_number_classes: 4
+  selection_cost_hysteresis: 1.0
+  selection_obst_cost_scale: 4.0
+  selection_viapoint_cost_scale: 1.0
+  selection_alternative_time_cost: False
+  roadmap_graph_no_samples: 15
+  roadmap_graph_area_width: 6
+  h_signature_prescaler: 1.0
+  h_signature_threshold: 0.1
+  obstacle_heading_threshold: 0.45
+  roadmap_graph_no_samples: 15
+  roadmap_graph_area_width: 5
+  obstacle_keypoint_offset: 0.1
+  visualize_hc_graph: False
+
+#----- eband_local_planner/EBandPlannerROS -----
+EBandPlannerROS:
+
+  # GoalTolerance
+  xy_goal_tolerance: 0.1                            # Distance tolerance for reaching goal pose (default: 0.1)
+  yaw_goal_tolerance: 0.05                          # Orientation tolerance for reaching the desired goal pose (default: 0.05)
+  rot_stopped_vel: 0.01                             # Angular velocity lower bound that determines if the robot should stop to avoid
+                                                    # limit-cycles or locks (default: 0.01)
+  trans_stopped_vel: 0.01                           # Linear velocity lower bound that determines if the robot should stop to avoid
+                                                    # limit-cycles or locks (default: 0.01)
+  # VISUALIZATION PAMETERS
+  marker_lifetime: 0.5                              # Lifetime of eband visualization markers (default: 0.5)
+
+  # ELASTIC BAND PARAMETERS
+  eband_min_relative_overlap: 0.7                   # Min distance that denotes connectivity between consecutive bubbles (default: 0.7)
+  eband_tiny_bubble_distance: 0.01                  # Bubble geometric bound regarding tiny bubble distance (default: 0.01)
+  eband_tiny_bubble_expansion: 0.01                 # Bubble geometric bound regarding tiny bubble expansion  (default: 0.01)
+  eband_internal_force_gain: 1.0                    # Force gain of forces between consecutive bubbles that tend to stretch the elastic
+                                                    # band (default: 1.0)
+  eband_external_force_gain: 2.0                    # Force gain of forces that tend to move the bubbles away from obstacles
+                                                    # (default: 2.0)
+  num_iterations_eband_optimization: 3              # Number of iterations for eband optimization  (default: 3)
+  eband_equilibrium_approx_max_recursion_depth: 4   # Number of iterations for reaching the equilibrium between internal
+                                                    # and external forces (default: 4)
+
+  eband_equilibrium_relative_overshoot: 0.75        # Maximum relative equlibrium overshoot (default: 0.75)
+  eband_significant_force_lower_bound: 0.15         # Minimum magnitude of force that is considered significant and used in
+                                                    # the calculations (default: 0.15)
+  costmap_weight: 10                                # Costmap weight factor used in the calculation of distance to obstacles (default: 10.0)
+
+  # TRAJECTORY CONTROLLER PARAMETERS
+  max_vel_lin: 0.75                                 # Maximum linear velocity (default: 0.75)
+  max_vel_th: 1.0                                   # Maximum angular velocity (default: 1.0)
+  min_vel_lin: 0.1                                  # Minimum linear velocity (default: 0.1)
+  min_vel_th: 0.0                                   # Minimum angular velocity (default: 0.0)
+  min_in_place_vel_th: 0.0                          # Minimum in-place angular velocity (default: 0.0)
+  in_place_trans_vel: 0.0                           # Minimum in place linear velocity (default: 0.0)
+  k_prop: 4.0                                       # Proportional gain of the PID controller (default: 4.0)
+  k_damp: 3.5                                       # Damping gain of the PID controller (default: 3.5)
+  Ctrl_Rate: 10                                     # Control rate (default: 10.0)
+  max_acceleration: 0.5                             # Maximum allowable acceleration (default: 0.5)
+  virtual_mass: 0.75                                # Virtual mass (default: 0.75)
+  max_translational_acceleration: 0.5               # Maximum linear acceleration (default: 0.5)
+  max_rotational_acceleration: 1.5                  # Maximum angular acceleration (default: 1.5)
+  rotation_correction_threshold: 0.5                # Rotation correction threshold (default: 0.5)
+  differential_drive: False                         # Denotes whether to use the differential drive mode (default: True)
+  bubble_velocity_multiplier: 2.0                   # Multiplier of bubble radius (default: 2.0)
+  rotation_threshold_multiplier: 1                  # Multiplier of rotation threshold (default: 1.0)
+  disallow_hysteresis: False                        # Determines whether to try getting closer to the goal, in case of
+                                                    # going past the tolerance (default: False)

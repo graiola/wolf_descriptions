@@ -4,10 +4,10 @@
 
      <!-- This argument allows us to load joint sensors that measure the internal wrenches -->
     <xacro:arg name="load_force_sensors" default="false"/>
+    <xacro:arg name="sensors" default="false"/>
     <xacro:arg name="task_period" default="0.004"/>
     <xacro:arg name="arm_enabled" default="false"/>
     <xacro:arg name="arm_name" default="kinova"/>
-    <xacro:arg name="sensors" default="false"/>
     <xacro:arg name="floating_base_link" default="true"/>
     <xacro:arg name="robot_name"  default="aliengo"/>
     <xacro:arg name="base_name"   default="trunk"/>
@@ -32,16 +32,6 @@
 
     <!-- Rollover Protection mode will add an additional stick on the top, use "true" or "false" to switch it. -->
     <xacro:property name="rolloverProtection" value="false"/>
-
-    <!-- Debug mode will hung up the robot, use "true" or "false" to switch it. -->
-    <!-- <xacro:if value="$(arg DEBUG)">
-        <link name="world"/>
-        <joint name="base_static_joint" type="fixed">
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <parent link="world"/>
-            <child link="base"/>
-        </joint>
-    </xacro:if>  -->
 
     <!-- Floating-base Joint -->
     <xacro:if value="$(arg floating_base_link)">
@@ -157,8 +147,6 @@
         <origin rpy="0 0 0" xyz="${-leg_offset_x} ${leg_offset_y} 0"/>
     </xacro:leg>
 
-    <!-- <xacro:stairs stairs="15" xpos="0" ypos="2.0" zpos="0" /> -->
-
     <!-- Extensions -->
     <xacro:leg_transmission prefix="rf"/>
     <xacro:leg_gazebo prefix="rf" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
@@ -170,13 +158,15 @@
     <xacro:leg_gazebo prefix="lh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
 
     <xacro:if value="$(arg arm_enabled)">
-           <xacro:include filename="$(find aliengo_description)/urdfs/arm/$(arg arm_name)_adapter.urdf.xacro" /> -->
+           <xacro:include filename="$(find aliengo_description)/urdfs/arm/$(arg arm_name)_adapter.urdf.xacro" />
     </xacro:if>
 
+    <!-- Standard accessories. -->
     <xacro:if value="$(arg sensors)">
+        <xacro:include filename="$(find aliengo_description)/urdfs/accessories.urdf.xacro" />
             <xacro:imu_sensor
                 imu_name="trunk_imu"
-                imu_topic="trunk_imu/data"
+                imu_topic="$(arg robot_name)/trunk_imu/data"
                 update_rate="${1.0 / $(arg task_period)}"
                 rate_mean="0"
                 rate_stddev="0"

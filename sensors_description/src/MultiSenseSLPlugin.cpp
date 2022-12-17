@@ -425,15 +425,15 @@ void MultiSenseSL::QueueThread()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-bool MultiSenseSL::SetSpindleSpeed(std_srvs::Empty::Request &req,
-                                   std_srvs::Empty::Response &res)
+bool MultiSenseSL::SetSpindleSpeed(std_srvs::Empty::Request &/*req*/,
+                                   std_srvs::Empty::Response &/*res*/)
 {
   return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-bool MultiSenseSL::SetSpindleState(std_srvs::Empty::Request &req,
-                                   std_srvs::Empty::Response &res)
+bool MultiSenseSL::SetSpindleState(std_srvs::Empty::Request &/*req*/,
+                                   std_srvs::Empty::Response &/*res*/)
 {
   return true;
 }
@@ -451,7 +451,7 @@ void MultiSenseSL::SetSpindleSpeed(const std_msgs::Float64::ConstPtr &_msg)
 ////////////////////////////////////////////////////////////////////////////////
 void MultiSenseSL::SetSpindleState(const std_msgs::Bool::ConstPtr &_msg)
 {
-  this->spindleOn = static_cast<double>(_msg->data);
+  this->spindleOn = _msg->data;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

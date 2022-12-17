@@ -7,10 +7,10 @@
                 <transmission name="${prefix}_haa_trans">
 			<type>transmission_interface/SimpleTransmission</type>
                         <joint name="${prefix}_haa_joint">
-				<hardwareInterface>EffortJointInterface</hardwareInterface>
+                                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
 			</joint>
                         <actuator name="${prefix}_haa_motor">
-				<hardwareInterface>EffortJointInterface</hardwareInterface>
+                                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
 				<mechanicalReduction>1</mechanicalReduction>
 			</actuator>
 		</transmission>
@@ -18,10 +18,10 @@
                 <transmission name="${prefix}_hfe_trans">
 			<type>transmission_interface/SimpleTransmission</type>
                         <joint name="${prefix}_hfe_joint">
-				<hardwareInterface>EffortJointInterface</hardwareInterface>
+                                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
 			</joint>
                         <actuator name="${prefix}_hfe_motor">
-				<hardwareInterface>EffortJointInterface</hardwareInterface>
+                                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
 				<mechanicalReduction>1</mechanicalReduction>
 			</actuator>
 		</transmission>
@@ -29,10 +29,10 @@
                 <transmission name="${prefix}_kfe_trans">
 			<type>transmission_interface/SimpleTransmission</type>
                         <joint name="${prefix}_kfe_joint">
-				<hardwareInterface>EffortJointInterface</hardwareInterface>
+                                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
 			</joint>
                         <actuator name="${prefix}_kfe_motor">
-				<hardwareInterface>EffortJointInterface</hardwareInterface>
+                                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
 				<mechanicalReduction>1</mechanicalReduction>
 			</actuator>
 		</transmission>

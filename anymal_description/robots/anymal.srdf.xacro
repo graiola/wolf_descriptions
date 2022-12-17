@@ -29,16 +29,16 @@
     <joint name="rh_kfe_joint"/>
   </group>
   <group name="lf_hip">
-    <chain base_link="trunk" tip_link="lf_hip"/>
+    <chain base_link="base_link" tip_link="lf_hip"/>
   </group>
   <group name="rf_hip">
-    <chain base_link="trunk" tip_link="rf_hip"/>
+    <chain base_link="base_link" tip_link="rf_hip"/>
   </group>
   <group name="lh_hip">
-    <chain base_link="trunk" tip_link="lh_hip"/>
+    <chain base_link="base_link" tip_link="lh_hip"/>
   </group>
   <group name="rh_hip">
-    <chain base_link="trunk" tip_link="rh_hip"/>
+    <chain base_link="base_link" tip_link="rh_hip"/>
   </group>
   <group name="chains">
     <group name="lf_leg"/>
@@ -47,18 +47,32 @@
     <group name="rh_leg"/>
   </group>
   <group_state group="chains" name="standup">
-      <joint name="lf_haa_joint" value="0.0"/>
-      <joint name="lf_hfe_joint" value="0.75"/>
-      <joint name="lf_kfe_joint" value="-1.0"/>
-      <joint name="rf_haa_joint" value="0.0"/>
-      <joint name="rf_hfe_joint" value="0.75"/>
-      <joint name="rf_kfe_joint" value="-1.0"/>
-      <joint name="lh_haa_joint" value="0.0"/>
-      <joint name="lh_hfe_joint" value="-0.75"/>
-      <joint name="lh_kfe_joint" value="1.0"/>
-      <joint name="rh_haa_joint" value="0.0"/>
-      <joint name="rh_hfe_joint" value="-0.75"/>
-      <joint name="rh_kfe_joint" value="1.0"/>
+    <joint name="lf_haa_joint" value="-0.15"/>
+    <joint name="lf_hfe_joint" value="0.75"/>
+    <joint name="lf_kfe_joint" value="5.08"/>
+    <joint name="rf_haa_joint" value="0.15"/>
+    <joint name="rf_hfe_joint" value="0.75"/>
+    <joint name="rf_kfe_joint" value="5.08"/>
+    <joint name="lh_haa_joint" value="-0.15"/>
+    <joint name="lh_hfe_joint" value="-0.75"/>
+    <joint name="lh_kfe_joint" value="1.20"/>
+    <joint name="rh_haa_joint" value="0.15"/>
+    <joint name="rh_hfe_joint" value="-0.75"/>
+    <joint name="rh_kfe_joint" value="1.20"/>
+  </group_state>
+  <group_state group="chains" name="standdown">
+    <joint name="lf_haa_joint" value="0.0"/>
+    <joint name="lf_hfe_joint" value="1.7"/>
+    <joint name="lf_kfe_joint" value="3.66"/>
+    <joint name="rf_haa_joint" value="0.0"/>
+    <joint name="rf_hfe_joint" value="1.7"/>
+    <joint name="rf_kfe_joint" value="3.66"/>
+    <joint name="lh_haa_joint" value="0.0"/>
+    <joint name="lh_hfe_joint" value="-1.7"/>
+    <joint name="lh_kfe_joint" value="2.60"/>
+    <joint name="rh_haa_joint" value="0.0"/>
+    <joint name="rh_hfe_joint" value="-1.7"/>
+    <joint name="rh_kfe_joint" value="2.60"/>
   </group_state>
 </robot>
 

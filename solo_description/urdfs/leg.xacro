@@ -110,14 +110,14 @@
                             <!-- LF HIP ASSEMBLY -->
                             <origin xyz="0.01950 0 0" rpy="0 0 0" />
                         	<geometry>
-                        	    <mesh filename="package://solo_description/meshes/stl/solo12/solo12_hip_fe_fl.stl"/>
+                        	    <mesh filename="package://solo_description/meshes/stl/solo12/simple/solo12_hip_fe_fl.stl"/>
                         	</geometry>
                         </xacro:unless>
                         <xacro:if value="${is_right}">
                             <!-- RF HIP ASSEMBLY -->
                             <origin xyz="0.01950 0 0" rpy="0 0 0" />
                         	<geometry>
-                        	    <mesh filename="package://solo_description/meshes/stl/solo12/solo12_hip_fe_fr.stl"/>
+                        	    <mesh filename="package://solo_description/meshes/stl/solo12/simple/solo12_hip_fe_fr.stl"/>
                         	</geometry>
                         </xacro:if>
                     </xacro:if>
@@ -126,14 +126,14 @@
                             <!-- LH HIP ASSEMBLY -->
                             <origin xyz="-0.01950 0 0" rpy="0 0 0" />
                         	<geometry>
-                        	    <mesh filename="package://solo_description/meshes/stl/solo12/solo12_hip_fe_hl.stl"/>
+                        	    <mesh filename="package://solo_description/meshes/stl/solo12/simple/solo12_hip_fe_hl.stl"/>
                         	</geometry>
                         </xacro:unless>
                         <xacro:if value="${is_right}">
                             <!-- RH HIP ASSEMBLY -->
                             <origin xyz="-0.01950 0 0" rpy="0 0 0" />
                         	<geometry>
-                        	    <mesh filename="package://solo_description/meshes/stl/solo12/solo12_hip_fe_hr.stl"/>
+                        	    <mesh filename="package://solo_description/meshes/stl/solo12/simple/solo12_hip_fe_hr.stl"/>
                         	</geometry>
                         </xacro:if>
                     </xacro:unless>
@@ -278,10 +278,10 @@
                 <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
                     <xacro:unless value="${is_right}">
-                        <mesh filename="package://solo_description/meshes/stl/with_foot/solo_upper_leg_left_side.stl"/>
+                        <mesh filename="package://solo_description/meshes/stl/with_foot/simple/solo_upper_leg_left_side.stl"/>
                     </xacro:unless>
                     <xacro:if value="${is_right}">
-                        <mesh filename="package://solo_description/meshes/stl/with_foot/solo_upper_leg_right_side.stl"/>
+                        <mesh filename="package://solo_description/meshes/stl/with_foot/simple/solo_upper_leg_right_side.stl"/>
                     </xacro:if>
                 </geometry>
                 <material name="${color_name}">
@@ -373,10 +373,10 @@
                 <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
                     <xacro:unless value="${is_right}">
-                        <mesh filename="package://solo_description/meshes/stl/with_foot/solo_lower_leg_left_side.stl"/>
+                        <mesh filename="package://solo_description/meshes/stl/with_foot/simple/solo_lower_leg_left_side.stl"/>
                     </xacro:unless>
                     <xacro:if value="${is_right}">
-                        <mesh filename="package://solo_description/meshes/stl/with_foot/solo_lower_leg_right_side.stl"/>
+                        <mesh filename="package://solo_description/meshes/stl/with_foot/simple/solo_lower_leg_right_side.stl"/>
                     </xacro:if>
                 </geometry>
                 <material name="${color_name}">
@@ -436,7 +436,8 @@
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
-                    <mesh filename="package://solo_description/meshes/stl/with_foot/solo_foot_simple.stl"/>
+                    <!-- mesh filename="$(find solo_description)/meshes/stl/with_foot/simple/solo_foot.stl"/ -->
+                    <sphere radius="0.015"/>
                 </geometry>
                 <material name="${color_name}">
                     <color rgba="${color} ${opacity}"/>

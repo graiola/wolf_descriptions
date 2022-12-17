@@ -9,11 +9,12 @@
 	<arg name="gui" default="true"/>
 	<arg name="headless" default="false"/>
 	<arg name="debug" default="false"/>
-        <arg name="world_name" default="empty.world"/>
+        <arg name="world_name" default="empty"/>
         <arg name="task_period" default="0.004"/>
         <arg name="arm_enabled" default="false"/>
         <arg name="arm_name" default="kinova"/>
         <arg name="engine" default="ode"/>
+        <arg name="world_file" value="$(eval find('wolf_gazebo_resources') + '/worlds/' + arg('world_name') + '.world')" />
 
 	<!-- Set use_sim_time flag -->
 	<group if="$(arg use_sim_time)">
@@ -32,7 +33,7 @@
 
 	<!-- Start gazebo server-->
 	<node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="false" output="screen"
-                args="$(arg command_arg1) $(arg command_arg2) $(arg world_name) $(arg dynamic_engine)" />
+                args="$(arg command_arg1) $(arg command_arg2) $(arg world_file) $(arg dynamic_engine)" />
 	
 	<!-- Start gazebo client -->
 	<group if="$(arg gui)">
