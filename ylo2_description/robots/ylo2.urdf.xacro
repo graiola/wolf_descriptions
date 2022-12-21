@@ -161,39 +161,6 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
     </joint>
 
-
-    <!-- adding a lateral cylinder as collision object, to avoid robot to fall on it side-->
-    <xacro:if value="${(rolloverProtection == 'true')}">
-        <joint name="stick_joint" type="fixed">
-            <parent link="trunk"/>
-            <child link="stick_link"/>
-            <origin rpy="0 0 0" xyz="${0.18} 0 ${stick_length/2.0+0.08}"/>
-        </joint>
-
-        <link name="stick_link">
-            <visual>
-                <geometry>
-                    <cylinder length="${stick_length}" radius="${stick_radius}"/>
-                </geometry>
-                <origin rpy="0 0 0" xyz="0 0 0"/>
-                <material name="white"/>
-            </visual>
-            <collision>
-                <geometry>
-                    <cylinder length="${stick_length}" radius="${stick_radius}"/>
-                </geometry>
-                <origin rpy="0 0 0" xyz="0 0 0"/>
-            </collision>
-            <inertial>
-                <mass value="${stick_mass}"/>
-                <inertia
-                    ixx="${stick_mass / 2.0 * (stick_radius*stick_radius)}" ixy="0.0" ixz="0.0"
-                    iyy="${stick_mass / 12.0 * (3*stick_radius*stick_radius + stick_length*stick_length)}" iyz="0.0"
-                    izz="${stick_mass / 12.0 * (3*stick_radius*stick_radius + stick_length*stick_length)}"/>                   
-            </inertial>
-        </link>
-    </xacro:if> 
-
     <joint name="imu_joint" type="fixed">
         <parent link="trunk"/>
         <child link="trunk_imu"/>
@@ -203,7 +170,7 @@
     <link name="trunk_imu">
         <inertial>
             <mass value="0.001"/>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <origin rpy="0 0 0" xyz="3.1415 3.1415 0"/>
             <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001"/>
         </inertial>
         <visual>

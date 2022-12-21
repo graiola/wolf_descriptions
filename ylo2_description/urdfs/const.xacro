@@ -6,7 +6,6 @@
     <!-- Constants for robot dimensions -->
     
     <xacro:property name="PI" value="3.1415926535897931"/>
-    <xacro:property name="stick_mass" value="0.00001"/>
 
 
 
@@ -25,8 +24,6 @@
     <xacro:property name="trunk_offset_x" value="0.0"/>
     <xacro:property name="trunk_offset_y" value="0.0"/>
     <xacro:property name="abab_motors_offset_z" value="0.0"/>
-
-
 
     <!-- leg params. -->
     
@@ -78,8 +75,6 @@
     <xacro:property name="lowerleg_position_min" value="${-159*PI/180.0}"/>
     <xacro:property name="lowerleg_velocity_max" value="15"/>
     <xacro:property name="lowerleg_torque_max" value="14"/>
-
-
 
     <!-- dynamics inertial value 
             | ixx ixy ixz |
