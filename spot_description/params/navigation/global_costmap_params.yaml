@@ -10,7 +10,7 @@ global_costmap:
   static_layer:
     map_topic: $(arg global_frame)
     subscribe_to_updates: true
-    track_unknown_space: true
+    track_unknown_space: false
 
   obstacle_layer:
     obstacle_range: 2.5
