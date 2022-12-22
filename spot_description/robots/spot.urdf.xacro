@@ -677,11 +677,12 @@
                 <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
                 <velocityDrift>0 0 0</velocityDrift>
                 <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
+                <useWorldSphericalCoordinates>true</useWorldSphericalCoordinates>
                 <!-- Default starting values -->
-                <referenceLatitude>0.0</referenceLatitude>
+                  <!--<referenceLatitude>0.0</referenceLatitude>
                 <referenceLongitude>0.0</referenceLongitude>
                 <referenceHeading>0.0</referenceHeading>
-                <referenceAltitude>0.0</referenceAltitude>
+                <referenceAltitude>0.0</referenceAltitude>-->
             </plugin>
         </gazebo>
     </xacro:if>
