@@ -21,11 +21,6 @@
     <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.transmission.xacro"/>
     <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.gazebo.xacro"/>
 
-    <!-- sensors -->
-    <xacro:if value="$(arg sensors)">
-        <xacro:include filename="$(find sensors_description)/urdfs/sensors/imu.gazebo.xacro"/>
-    </xacro:if>
-
     <!-- dynamics inertial value -->
     <!-- Constants for robot dimensions -->
     <xacro:property name="PI" value="3.1415926535897931"/>
@@ -649,42 +644,6 @@
     <!-- Standard accessories. -->
     <xacro:if value="$(arg sensors)">
         <xacro:include filename="$(find spot_description)/urdfs/accessories.urdf.xacro" />
-        <xacro:imu_sensor
-            imu_name="trunk_imu"
-            imu_topic="$(arg robot_name)/trunk_imu/data"
-            update_rate="${1.0 / $(arg task_period)}"
-            rate_mean="0"
-            rate_stddev="0"
-            rate_bias_mean="0"
-            rate_bias_stddev="0"
-            accel_mean="0"
-            accel_stddev="0"
-            accel_bias_mean="0"
-            accel_bias_stddev="0">
-        </xacro:imu_sensor>
-        <!-- GPS Sensor -->
-        <gazebo>
-            <!-- plugins are in hector_gazebo_plugins ros package -->
-            <plugin name="novatel_gps_sim" filename="libhector_gazebo_ros_gps.so">
-                <alwaysOn>1</alwaysOn>
-                <updateRate>10.0</updateRate>
-                <bodyName>base_link</bodyName>
-                <frameId>base_link</frameId>
-                <robotNamespace>$(arg robot_name)/gps/</robotNamespace>
-                <topicName>fix</topicName>
-                <velocityTopicName>fix_velocity</velocityTopicName>
-                <drift>5.0 5.0 5.0</drift>
-                <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
-                <velocityDrift>0 0 0</velocityDrift>
-                <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
-                <useWorldSphericalCoordinates>true</useWorldSphericalCoordinates>
-                <!-- Default starting values -->
-                  <!--<referenceLatitude>0.0</referenceLatitude>
-                <referenceLongitude>0.0</referenceLongitude>
-                <referenceHeading>0.0</referenceHeading>
-                <referenceAltitude>0.0</referenceAltitude>-->
-            </plugin>
-        </gazebo>
     </xacro:if>
 
     <!-- Extensions -->

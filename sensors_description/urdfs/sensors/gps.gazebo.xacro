@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+        <xacro:macro name="gps_sensor" params="gps_name gps_topic vel_topic robot_name frame_name update_rate">
+            <gazebo>
+                <!-- plugins are in hector_gazebo_plugins ros package -->
+                <plugin name="${gps_name}" filename="libhector_gazebo_ros_gps.so">
+                    <robotNamespace>${robot_name}/gps/</robotNamespace>
+                    <alwaysOn>1</alwaysOn>
+                    <updateRate>10.0</updateRate>
+                    <bodyName>${frame_name}</bodyName>
+                    <frameId>${frame_name}</frameId>
+                    <topicName>${gps_topic}</topicName>
+                    <velocityTopicName>${vel_topic}</velocityTopicName>
+                    <drift>5.0 5.0 5.0</drift>
+                    <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
+                    <velocityDrift>0 0 0</velocityDrift>
+                    <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
+                    <useWorldSphericalCoordinates>true</useWorldSphericalCoordinates>
+                    <!-- Default starting values -->
+                    <!--
+                    <referenceLatitude>0.0</referenceLatitude>
+                    <referenceLongitude>0.0</referenceLongitude>
+                    <referenceHeading>0.0</referenceHeading>
+                    <referenceAltitude>0.0</referenceAltitude>
+                    -->
+                </plugin>
+            </gazebo>
+	</xacro:macro>
+</robot>
