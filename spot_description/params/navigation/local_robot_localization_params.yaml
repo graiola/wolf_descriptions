@@ -1,4 +1,4 @@
-frequency: 10.
+frequency: 10.0
 sensor_timeout: 0.2
 two_d_mode: true
 publish_tf: true
