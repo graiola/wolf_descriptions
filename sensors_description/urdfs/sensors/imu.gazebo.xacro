@@ -4,21 +4,21 @@
 
 	<xacro:macro name="imu_sensor" params="imu_name imu_topic update_rate rate_mean rate_stddev
 		rate_bias_mean rate_bias_stddev accel_mean accel_stddev accel_bias_mean accel_bias_stddev">
-                <gazebo>
+                <!-- old plugin -->
+                <!--<gazebo>
                         <plugin name="${imu_name}_controller" filename="libgazebo_ros_imu.so">
-				<alwaysOn>true</alwaysOn>
+                                <alwaysOn>true</alwaysOn>
                                 <updateRate>${update_rate}</updateRate>
                                 <bodyName>${imu_name}</bodyName>
-				<topicName>${imu_topic}</topicName>
-				<gaussianNoise>${rate_stddev*rate_stddev}</gaussianNoise>
-				<xyzOffset>0 0 0</xyzOffset>
-				<rpyOffset>0 0 0</rpyOffset>
+                                <topicName>${imu_topic}</topicName>
+                                <gaussianNoise>${rate_stddev*rate_stddev}</gaussianNoise>
+                                <xyzOffset>0 0 0</xyzOffset>
+                                <rpyOffset>0 0 0</rpyOffset>
                                 <serviceName>${imu_name}</serviceName>
 			</plugin>	
-                </gazebo>
-		
+                </gazebo>-->
                 <!-- Imu definition required for the hardware interface of ros control -->
-                <gazebo reference="${imu_name}">
+                <!--<gazebo reference="${imu_name}">
                         <sensor name="${imu_name}" type="imu">
                                 <always_on>1</always_on>
                                 <update_rate>${update_rate}</update_rate>
@@ -40,10 +40,9 @@
                                         </noise>
                                 </imu>
                         </sensor>
-                </gazebo>
-
-
-                <!--  <gazebo reference="${imu_name}">
+                </gazebo>-->
+                <!-- recent plugin with gravity acceleration -->
+                <gazebo reference="${imu_name}">
                    <gravity>true</gravity>
                    <sensor name="${imu_name}" type="imu">
                      <always_on>true</always_on>
@@ -62,7 +61,7 @@
                      </plugin>
                      <pose>0 0 0 0 0 0</pose>
                    </sensor>
-                 </gazebo> -->
+                 </gazebo>
 
 	</xacro:macro>
 
