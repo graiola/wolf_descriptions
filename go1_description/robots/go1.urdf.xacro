@@ -22,11 +22,6 @@
     <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.transmission.xacro"/>
     <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.gazebo.xacro"/>
 
-    <!-- sensors -->
-    <xacro:if value="$(arg sensors)">
-        <xacro:include filename="$(find sensors_description)/urdfs/sensors/imu.gazebo.xacro"/>
-    </xacro:if>
-
     <xacro:include filename="$(find go1_description)/urdfs/const.xacro"/>
     <xacro:include filename="$(find go1_description)/urdfs/leg.xacro"/>
 
@@ -156,23 +151,5 @@
     <xacro:leg_gazebo prefix="rh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
     <xacro:leg_transmission prefix="lh"/>
     <xacro:leg_gazebo prefix="lh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-
-    <!-- Standard accessories. -->
-    <xacro:if value="$(arg sensors)">
-        <xacro:include filename="$(find go1_description)/urdfs/accessories.urdf.xacro" />
-            <xacro:imu_sensor
-                imu_name="trunk_imu"
-                imu_topic="trunk_imu/data"
-                update_rate="${1.0 / $(arg task_period)}"
-                rate_mean="0"
-                rate_stddev="0"
-                rate_bias_mean="0"
-                rate_bias_stddev="0"
-                accel_mean="0"
-                accel_stddev="0"
-                accel_bias_mean="0"
-                accel_bias_stddev="0">
-            </xacro:imu_sensor>
-    </xacro:if>
 
 </robot>

@@ -6,6 +6,7 @@
   <xacro:include filename="$(find go1_description)/urdfs/depthCamera.xacro"/>
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_t265.xacro"/>
+  <xacro:include filename="$(find sensors_description)/urdfs/sensors/imu.gazebo.xacro"/>
 
   <xacro:depthCamera camID="1" name="face">
       <origin rpy="${PI} 0 0" xyz="0.2785 0.0125 0.0167"/>
@@ -78,5 +79,20 @@
                 organize_cloud="true" hz="10" gpu="true">
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:VLP-16>
+
+
+  <xacro:imu_sensor
+      imu_name="trunk_imu"
+      imu_topic="trunk_imu/data"
+      update_rate="${1.0 / $(arg task_period)}"
+      rate_mean="0"
+      rate_stddev="0"
+      rate_bias_mean="0"
+      rate_bias_stddev="0"
+      accel_mean="0"
+      accel_stddev="0"
+      accel_bias_mean="0"
+      accel_bias_stddev="0">
+  </xacro:imu_sensor>
 
 </robot>
