@@ -1,8 +1,8 @@
 local_costmap:
   global_frame: $(arg odom_frame)
   rolling_window: true
-  width: 7.0
-  height: 7.0
+  width: 50.0
+  height: 50.0
   resolution: 0.05 # To set based on the laserscan resolution
 
   inflation_layer:
