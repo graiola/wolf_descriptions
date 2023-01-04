@@ -2,7 +2,7 @@ frequency: 10.0
 sensor_timeout: 0.2
 two_d_mode: true
 publish_tf: true
-transform_time_offset: 0.0
+transform_time_offset: 0.05
 
 odom0_config:
     [true, true, true,
