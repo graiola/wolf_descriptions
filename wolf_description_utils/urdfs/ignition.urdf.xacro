@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<xacro:arg name="task_period" default="0.004"/>
+<xacro:arg name="robot_name"  default="robot"/>
+<xacro:arg name="base_name"   default="base"/>
+<plugin filename="ign_ros_control_plugin" name="ign_ros_control::IgnitionROSControlPlugin">
+    <updateRate>1.0/$(arg task_period)</updateRate>
+    <robotSimType>wolf_ign_interface/WolfRobotHwIgn</robotSimType>
+    <robotNamespace>$(arg robot_name)</robotNamespace>
+</plugin>
+</robot>
