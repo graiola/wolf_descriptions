@@ -1,32 +1,49 @@
-frequency: 10.0
+frequency: 50.0
 sensor_timeout: 0.2
 two_d_mode: true
 publish_tf: true
 transform_time_offset: 0.05
 
-odom0_config:
-    [false, false, false,
-    false, false, false,
-    true, true, true,
-    false, false, false,
-    false, false, false]
+# Robot odometry
+odom0_config: [false, false, false,  # x,   y,   z
+               false, false, false,  # r,   p,   w (yaw)
+               true,  true,  true,   # dx,  dy,  dz
+               false, false, false,  # dr,  dp,  dw
+               false, false, false]  # ddx, ddy, ddz
 odom0_differential: false
+odom0_nodelay: true
+odom0_queue_size: 10
 
-imu0_config:       
-    [false, false, false,
-    true, true, true,
-    false, false, false,
-    true, true, false,
-    true, true, true]
+# IMU
+imu0_config: [false, false, false,
+              true,  true,  true,
+              false, false, false,
+              true,  true,  true,
+              true,  true,  true]
 imu0_differential: false
+imu0_nodelay: true
+imu0_queue_size: 10
+imu0_remove_gravitational_acceleration: true
 
-odom1_config:
-    [true, true,  false,
-    false, false, false,
-    false, false, false,
-    false, false, false,
-    false, false, false]
+# GPS odometry
+odom1_config: [true, true,  false,
+               false, false, false,
+               false, false, false,
+               false, false, false,
+               false, false, false]
 odom1_differential: false
+odom1_nodelay: true
+odom1_queue_size: 10
+
+# Localization pose
+#pose0_config: [true,  true,  false,
+#               false, false, true,
+#               false, false, false,
+#               false, false, false,
+#               false, false, false]
+#pose0_differential: false
+#pose0_nodelay: true
+#pose0_queue_size: 10
 
 
 # [ADVANCED] The process noise covariance matrix can be difficult to tune, and can vary for each application, so it is exposed as a configuration parameter. This matrix represents the noise we add to the total error after each prediction step. 
