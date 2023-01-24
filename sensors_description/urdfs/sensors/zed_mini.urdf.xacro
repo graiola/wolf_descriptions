@@ -106,7 +106,7 @@
       right_color_optical_frame="${sensor_name}_r_camera_color_optical_frame"
       gyro_frame="${sensor_name}_gyro_frame" camera_center="${sensor_name}_camera_center"
       odom_frame="${sensor_name}_odom_frame" odom_frame_joint="${sensor_name}_odom_frame_joint"
-      disable_lumping="false" robot_name="${robot_name}"
+      disable_lumping="true" robot_name="${robot_name}"
     />
 
   </xacro:macro>

@@ -5,7 +5,7 @@
   <xacro:include filename="$(find go1_description)/urdfs/ultraSound.xacro"/>
   <xacro:include filename="$(find go1_description)/urdfs/depthCamera.xacro"/>
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
-  <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_t265.xacro"/>
+  <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_t265.urdf.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/imu.gazebo.xacro"/>
 
   <xacro:depthCamera camID="1" name="face">
