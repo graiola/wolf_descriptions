@@ -31,6 +31,25 @@
       <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
 
+    <!-- fake odom frame to disable odom lumping -->
+    <link name="${sensor_name}_fake_odom">
+      <inertial>
+        <mass value="0.001"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx="9.108e-08"
+                  ixy="0"
+                  ixz="0"
+                  iyy="2.51e-08"
+                  iyz="0"
+                  izz="8.931e-08"/>
+      </inertial>
+    </link>
+    <joint name="${sensor_name}_odom_fake_joint" type="fixed">
+      <parent link="${sensor_name}_odom_frame"/>
+      <child link="${sensor_name}_fake_odom"/>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
+
     <!-- Camera Center -->
     <link name="${sensor_name}_camera_center">
       <visual>
@@ -45,6 +64,16 @@
           <mesh filename="package://sensors_description/meshes/sensors/zed_mini.stl" />
         </geometry>
       </collision>
+      <inertial>
+        <mass value="0.055"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx="9.108e-05"
+                  ixy="0"
+                  ixz="0"
+                  iyy="2.51e-06"
+                  iyz="0"
+                  izz="8.931e-05"/>
+      </inertial>
     </link>
     <joint name="${sensor_name}_camera_center_joint" type="fixed">
       <parent link="${sensor_name}_base_link"/>
