@@ -20,7 +20,8 @@ wolf_controller:
   activate_step_reflex: true
   activate_push_recovery: true
   initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.25, roll: 0.0, pitch: 0.0, yaw: 0.0}
-  compute_odom: false
+  publish_odom_msg: $(arg publish_odom_msg)
+  publish_odom_tf: $(arg publish_odom_tf)
   use_contact_sensors: false
   min_forces_weight: 0.001
   min_qddot_weight: 0.01
