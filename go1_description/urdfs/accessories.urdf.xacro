@@ -7,6 +7,7 @@
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_t265.urdf.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/imu.gazebo.xacro"/>
+  <xacro:include filename="$(find sensors_description)/urdfs/sensors/gps.gazebo.xacro"/>
 
   <xacro:depthCamera camID="1" name="face">
       <origin rpy="${PI} 0 0" xyz="0.2785 0.0125 0.0167"/>
@@ -81,6 +82,7 @@
   </xacro:VLP-16>
 
 
+  <!-- IMU sensor -->
   <xacro:imu_sensor
       imu_name="trunk_imu"
       imu_topic="trunk_imu/data"
@@ -94,5 +96,14 @@
       accel_bias_mean="0"
       accel_bias_stddev="0">
   </xacro:imu_sensor>
+  <!-- GPS sensor -->
+  <xacro:gps_sensor
+      gps_name="novatel_gps_sim"
+      gps_topic="fix"
+      vel_topic="velocity_fix"
+      robot_name="$(arg robot_name)"
+      frame_name="trunk"
+      update_rate="10.0">
+  </xacro:gps_sensor>
 
 </robot>

@@ -142,6 +142,11 @@
         <origin rpy="0 0 0" xyz="${-leg_offset_x} ${leg_offset_y} 0"/>
     </xacro:leg>
 
+    <!-- Standard accessories. -->
+    <xacro:if value="$(arg sensors)">
+        <xacro:include filename="$(find go1_description)/urdfs/accessories.urdf.xacro" />
+    </xacro:if>
+
     <!-- Extensions -->
     <xacro:leg_transmission prefix="rf"/>
     <xacro:leg_gazebo prefix="rf" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
