@@ -2,6 +2,7 @@ global_costmap:
   global_frame: $(arg global_frame)
   rolling_window: false
   resolution: 0.05
+  #lethal_cost_threshold: 75.0
 
   inflation_layer:
     inflation_radius: 0.75
