@@ -1,5 +1,5 @@
 local_costmap:
-  global_frame: $(arg odom_frame)
+  global_frame: $(arg global_frame)
   rolling_window: true
   width: 50.0
   height: 50.0
