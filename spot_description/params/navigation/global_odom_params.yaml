@@ -46,14 +46,14 @@ odom2_nodelay: true
 odom2_queue_size: 10
 
 # Localization pose
-#pose0_config: [true,  true,  false,
-#               false, false, true,
-#               false, false, false,
-#               false, false, false,
-#               false, false, false]
-#pose0_differential: false
-#pose0_nodelay: true
-#pose0_queue_size: 10
+pose0_config: [true, true,   false,
+               false, false, true,
+               false, false, false,
+               false, false, false,
+               false, false, false]
+pose0_differential: true
+pose0_nodelay: true
+pose0_queue_size: 10
 
 # [ADVANCED] The process noise covariance matrix can be difficult to tune, and can vary for each application, so it is exposed as a configuration parameter. This matrix represents the noise we add to the total error after each prediction step. 
 
