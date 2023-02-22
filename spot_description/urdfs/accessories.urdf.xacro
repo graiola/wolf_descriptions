@@ -93,11 +93,11 @@
           imu_topic="trunk_imu/data"
           update_rate="${1.0 / $(arg task_period)}"
           rate_mean="0"
-          rate_stddev="0"
+          rate_stddev="0.01"
           rate_bias_mean="0"
           rate_bias_stddev="0"
           accel_mean="0"
-          accel_stddev="0"
+          accel_stddev="0.001"
           accel_bias_mean="0"
           accel_bias_stddev="0">
       </xacro:imu_sensor>
