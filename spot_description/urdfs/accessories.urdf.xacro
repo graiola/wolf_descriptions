@@ -5,7 +5,8 @@
   <!--<xacro:include filename="$(find sensors_description)/urdfs/sensors/velodyne.gazebo.xacro"/>-->
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_d435.urdf.xacro" />
-  <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_t265.xacro" />
+  <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_t265.urdf.xacro" />
+  <xacro:include filename="$(find sensors_description)/urdfs/sensors/gps.gazebo.xacro"/>
 
   <xacro:if value="$(optenv SPOT_PACK 1)">
     <joint name="pack_mount_joint" type="fixed">
@@ -72,7 +73,7 @@
         </collision>
       </link>
 
-      <xacro:VLP-16 parent="velodyne_mount" name="velodyne" topic="/velodyne_pointcloud"
+      <xacro:VLP-16 parent="velodyne_mount" name="velodyne" topic="/velodyne_points"
                     organize_cloud="true" hz="10" gpu="true">
         <origin xyz="0 0 0" rpy="0 0 0" />
       </xacro:VLP-16>
@@ -84,6 +85,16 @@
       <xacro:realsense_T265 sensor_name="t265" parent_link="front_rail" rate="30.0">
         <origin xyz="0.13 0 0.04" rpy="0 0 0" />
       </xacro:realsense_T265>
+
+      <!-- GPS sensor -->
+      <xacro:gps_sensor
+          gps_name="novatel_gps_sim"
+          gps_topic="fix"
+          vel_topic="velocity_fix"
+          robot_name="$(arg robot_name)"
+          frame_name="base_link"
+          update_rate="10.0">
+      </xacro:gps_sensor>
 
     </xacro:if>
   </xacro:if>

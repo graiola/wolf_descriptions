@@ -6,6 +6,12 @@ NavfnROS:
   allow_unknown: true # Specifies whether or not to allow navfn to create plans that traverse unknown space.
   default_tolerance: 0.1 # A tolerance on the goal point for the planner.
 
+# ----- global_planner/GlobalPlanner -----
+GlobalPlanner:
+  visualize_potential: false
+  allow_unknown: true # Specifies whether or not to allow navfn to create plans that traverse unknown space.
+  default_tolerance: 0.1 # A tolerance on the goal point for the planner.
+
 # **************************** Local planners ****************************
 
 # ----- base_local_planner/TrajectoryPlannerROS -----
@@ -53,18 +59,19 @@ DWAPlannerROS:
 
   # Robot configuration parameters
   acc_lim_x: 2.5
-  acc_lim_y: 1.0
+  acc_lim_y: 0.0
   acc_lim_theta: 2.0
   max_vel_x: 0.55
-  min_vel_x: -0.25
-  max_vel_y: -0.25
-  min_vel_y: 0.25
+  min_vel_x: 0.0
+  max_vel_y: 0.0
+  min_vel_y: 0.0
   max_vel_trans: 0.55
   min_vel_trans: 0.0 # this is the min trans velocity when there is negligible rotational velocity
   max_vel_theta: 0.5
   min_vel_theta: 0.1 # this is the min angular velocity when there is negligible translational velocity
-  theta_stopped_vel: 0.4
-  prune_plan: false
+  theta_stopped_vel: 0.1
+  trans_stopped_vel: 0.1
+  prune_plan: true
   # Goal Tolerance Parameters
   yaw_goal_tolerance: 0.1
   xy_goal_tolerance: 0.2
@@ -74,12 +81,14 @@ DWAPlannerROS:
   sim_time: 3.0
   vx_samples: 20
   vy_samples: 20
-  vtheta_samples: 40
+  vth_samples: 40
+  angular_sim_granularity: 0.01
+  sim_granularity: 0.025
 
   # Trajectory Scoring Parameters
   path_distance_bias: 64.0      # 32.0   - weighting for how much it should stick to the global path plan
   goal_distance_bias: 24.0      # 24.0   - wighting for how much it should attempt to reach its goal
-  occdist_scale: 0.5            # 0.01   - weighting for how much the controller should avoid obstacles
+  occdist_scale: 0.01           # 0.01   - weighting for how much the controller should avoid obstacles
   forward_point_distance: 0.325 # 0.325  - how far along to place an additional scoring point (this value is being used as a cost value for robot alignment to the path.)
   stop_time_buffer: 0.2         # 0.2    - amount of time a robot must stop in before colliding for a valid traj.
   scaling_speed: 0.25           # 0.25   - absolute velocity at which to start scaling the robot's footprint
@@ -122,7 +131,7 @@ TebLocalPlannerROS:
   cmd_angle_instead_rotvel: false
   footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
     type: "polygon"
-    vertices: [ [0.55, 0.325 ], [0.55, -0.325], [-0.6, -0.325], [-0.6, 0.325] ]
+    vertices: [ [0.5, 0.32 ], [0.5, -0.32], [-0.5, -0.32], [-0.5, 0.32] ]
 
   # GoalTolerance
   xy_goal_tolerance: 0.2

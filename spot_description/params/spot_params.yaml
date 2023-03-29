@@ -3,7 +3,9 @@ wolf_controller:
   default_duty_factor: 0.3
   default_swing_frequency: 4.5
   default_contact_threshold: 30.0
-  default_base_linear_velocity: 0.5
+  default_base_linear_velocity_x: 0.5
+  default_base_linear_velocity_y: 0.25
+  default_base_linear_velocity_z: 0.5
   default_base_angular_velocity: 0.5
   default_step_height: 0.08
   max_step_height: 0.15
@@ -18,6 +20,11 @@ wolf_controller:
   activate_step_reflex: true
   activate_push_recovery: true
   initial_pose_simulation: {x: 0.0, y: 0.0, z: 0.25, roll: 0.0, pitch: 0.0, yaw: 0.0}
+  publish_odom_msg: $(arg publish_odom_msg)
+  publish_odom_tf: $(arg publish_odom_tf)
+  use_contact_sensors: false
+  min_forces_weight: 0.001
+  min_qddot_weight: 0.01
 
   gains:
 

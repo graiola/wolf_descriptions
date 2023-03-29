@@ -46,16 +46,20 @@ To launch the new robot with the WoLF controller:
 - `min_base_roll` defines the minimum rotation along the robot's roll axis.
 - `max_base_pitch` defines the maximum rotation along the robot's pitch axis. 
 - `min_base_pitch` defines the minimum rotation along the robot's pitch axis.
-- `estimation_position_type [ground_truth (simulation only) | estimated_z]` 
-- `estimation_orientation_type [ground_truth (simulation only) | imu_magnetometer | imu_gyroscope]` 
+- `estimation_position_type [ground_truth (simulation only) | estimated_z]` .
+- `estimation_orientation_type [ground_truth (simulation only) | imu_magnetometer | imu_gyroscope]` .
+- `use_contact_sensors [true | false]` use the `hardware_interface::ContactSwitchSensorInterface` if available.
+- `compute_odom [true | false]` compute the odometry i.e. create the `odom -> base_footprint` transformation.
 - `activate_step_reflex [true | false]` activate the step reflex.
 - `activate_push_recovery [true | false]` activate the push recovery.
 - `initial_pose_simulation` Initial robot's pose in simulation.
 - `activate_com_z [true | false]` activate the control of the robot's height through the CoM task, otherwise use the waist task. By default it is true.
-- `activate_postural [true | false]` activate the postural task, by default it is false.
+- `activate_postural [true | false]` activate the postural task (the postural task is in charge of keeping the robot close to the standup pose), by default it is false.
 - `activate_angular_momentum [true | false]` activate the angular momentum task, by default it is true.
 - `activate_joint_position_limits [true | false]` activate the joint position limits constraint (the values are loaded from the URDF), by default it is false.
 - `regularization` regularization value for the solver, by default it is set to `1e-3` for the accelerations and `1e-6` for the forces.
+- `min_forces_weight` contact forces minimization task weight (higher values will reduce the contact forces produced by the solver), by default it is 0.0, i.e. not active.
+- `min_qddot_weight` joint accelerations minimization task weight (higher values will reduce the joint accelerations produced by the solver), by default it is 0.0, i.e. not active.
 ```
 
 gains:
@@ -78,9 +82,6 @@ gains:
       CoM:
           Kp: {x: xxx, y: xxx z: xxx}
           Kd: {x: xxx, y: xxx, z: xxx}
-          weight: xxx
-
-      postural:
           weight: xxx
 
       angular_momentum:

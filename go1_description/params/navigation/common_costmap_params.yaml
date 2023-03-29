@@ -1,7 +1,7 @@
 robot_base_frame: $(arg base_frame)
-footprint: [ [0.5, 0.32 ], [0.5, -0.32], [-0.5, -0.32], [-0.5, 0.32] ]
+footprint: [ [0.3, 0.2 ], [0.3, -0.2], [-0.3, -0.2], [-0.3, 0.2] ]
 robot_radius: 0.0
-footprint_padding: 0.1
+footprint_padding: 0.0
 
 update_frequency: 4.0
 publish_frequency: 3.0

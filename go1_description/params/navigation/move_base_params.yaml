@@ -1,4 +1,4 @@
-controller_frequency: 10.0
+controller_frequency: 20.0       
 controller_patience: 15.0         # How long the controller will wait in seconds
                                   # without receiving a valid control before space-clearing
                                   # operations are performed

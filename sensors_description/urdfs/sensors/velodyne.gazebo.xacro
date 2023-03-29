@@ -34,14 +34,14 @@
 					<gaussianNoise>0.005</gaussianNoise>
 					<alwaysOn>true</alwaysOn>
                                         <updateRate>10</updateRate>
-					<topicName>/${lidar_name}/velodyne_pointcloud</topicName>
+                                        <topicName>/${lidar_name}/velodyne_points</topicName>
 					<frameName>${frame_name}</frameName>
 					<hokuyoMinIntensity>101</hokuyoMinIntensity>
                                 </plugin>-->
                                 <plugin name="${link_name}_controller" filename="libgazebo_ros_velodyne_laser.so">
                                     <gaussianNoise>0.005</gaussianNoise>
                                     <updateRate>${update_rate}</updateRate>
-                                    <topicName>/${lidar_name}/velodyne_pointcloud</topicName>
+                                    <topicName>/${lidar_name}/velodyne_points</topicName>
                                     <frameName>${frame_name}</frameName>
                                 </plugin>
 			</sensor>

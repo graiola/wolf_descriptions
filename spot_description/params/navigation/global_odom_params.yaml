@@ -1,0 +1,106 @@
+frequency: 50.0
+sensor_timeout: 1.0
+two_d_mode: true
+publish_tf: true
+transform_time_offset: 0.05
+print_diagnostics: true
+
+# Imu
+imu0_config: [false, false, false, # x,   y,   z
+              true,  true,  true,  # r,   p,   w (yaw)
+              false, false, false, # dx,  dy,  dz
+              true,  true,  true,  # dr,  dp,  dw
+              true,  true,  true]  # ddx, ddy, ddz
+imu0_differential: false
+imu0_nodelay: true
+imu0_queue_size: 10
+imu0_remove_gravitational_acceleration: true
+
+# Robot odometry
+odom0_config: [false, false, false, # x,   y,   z
+               false, false, false, # r,   p,   w (yaw)
+               true,  true,  false, # dx,  dy,  dz
+               false, false, true,  # dr,  dp,  dw
+               false, false, false] # ddx, ddy, ddz
+odom0_differential: false
+odom0_nodelay: true
+odom0_queue_size: 10
+
+# Visual odometry
+odom1_config: [true,  true,  false, # x,   y,   z
+               false, false, true,  # r,   p,   w (yaw)
+               false, false, false, # dx,  dy,  dz
+               false, false, false, # dr,  dp,  dw
+               false, false, false] # ddx, ddy, ddz
+odom1_differential: true
+odom1_nodelay: true
+odom1_queue_size: 10
+
+# GPS odometry
+odom2_config: [true,  true,  false, # x,   y,   z
+               false, false, false, # r,   p,   w (yaw)
+               false, false, false, # dx,  dy,  dz
+               false, false, false, # dr,  dp,  dw
+               false, false, false] # ddx, ddy, ddz
+odom2_differential: false
+odom2_nodelay: true
+odom2_queue_size: 10
+
+# Localization pose
+pose0_config: [true,  true,  false, # x,   y,   z
+               false, false, true,  # r,   p,   w (yaw)
+               false, false, false, # dx,  dy,  dz
+               false, false, false, # dr,  dp,  dw
+               false, false, false] # ddx, ddy, ddz
+pose0_differential: false
+pose0_nodelay: true
+pose0_queue_size: 10
+pose0_relative: false
+
+# [ADVANCED] The process noise covariance matrix can be difficult to tune, and can vary for each application, so it is exposed as a configuration parameter. This matrix represents the noise we add to the total error after each prediction step. 
+
+# The better the omnidirectional motion model matches your system, the smaller these values can be. However, if users find that a given variable is slow to converge, one approach is to increase the process_noise_covariance diagonal value for the variable in question, which will cause the filter's predicted error to be larger, which will cause the filter to trust the incoming measurement more during correction. 
+
+# The values are ordered as x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az. 
+# Defaults to the matrix below if unspecified. 
+
+ss_noise_covariance:
+    [0.05, 0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+    0,    0.05, 0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0.06, 0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0.03, 0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0.03, 0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0.06, 0,     0,     0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0.025, 0,     0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,     0.025, 0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,     0,     0.04, 0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,     0,     0,    0.01, 0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0.01, 0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0.02, 0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0.01, 0,    0,
+    0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0.01, 0,
+    0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0.015]
+
+# [ADVANCED] This represents the initial value for the state estimate error covariance matrix. Setting a diagonal value (variance) to a large value will result in rapid convergence for initial measurements of the variable in question. Users should take care not to use large values for variables that will not be measured directly. 
+
+# The values are ordered as x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az.
+# Defaults to the matrix below if unspecified. 
+
+initial_estimate_covariance:
+    [1e-4, 0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+    0,    1e-4, 0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+    0,    0,    1e-4, 0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+    0,    0,    0,    1e-9, 0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+    0,    0,    0,    0,    1e-9, 0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+    0,    0,    0,    0,    0,    1e-9, 0,    0,    0,    0,     0,     0,     0,    0,    0,
+    0,    0,    0,    0,    0,    0,    1e-9, 0,    0,    0,     0,     0,     0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    1e-9, 0,    0,     0,     0,     0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    1e-9, 0,     0,     0,     0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    1e-9,  0,     0,     0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     1e-9,  0,     0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     1e-9,  0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     1e-9, 0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    1e-9, 0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    1e-9]
+
+

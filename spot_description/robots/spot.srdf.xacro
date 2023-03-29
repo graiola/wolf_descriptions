@@ -4,10 +4,10 @@
     <group name="base">
       <link name="base_link"/>
     </group>
-    <group name="imu">
+    <group name="imu"> <!-- where the imu sensor is mounted -->
       <link name="trunk_imu"/>
     </group>
-    <group name="contacts">
+    <group name="contacts"> <!-- where the contact sensors are mounted -->
       <link name="lf_foot"/>
       <link name="rf_foot"/>
       <link name="lh_foot"/>
