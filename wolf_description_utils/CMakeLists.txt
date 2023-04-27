@@ -15,3 +15,7 @@ install(DIRECTORY urdfs/
 
 catkin_install_python(PROGRAMS scripts/go0
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+install(PROGRAMS scripts/create_urdf_model.sh scripts/create_gazebo_model.sh
+        DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}/scripts
+        )
