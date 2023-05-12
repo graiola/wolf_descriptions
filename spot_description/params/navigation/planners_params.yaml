@@ -103,20 +103,20 @@ TebLocalPlannerROS:
   map_frame: $(arg global_frame)
 
   # Trajectory
-  teb_autosize: True
+  teb_autosize: true
   dt_ref: 0.3
   dt_hysteresis: 0.1
   min_samples: 3
-  global_plan_overwrite_orientation: True
-  global_plan_viapoint_sep: 0.5 # negative, do not use viapoints. positive, use them. the actual value does not matter
-  max_global_plan_lookahead_dist: 3.0
+  global_plan_viapoint_sep: -1 # negative, do not use viapoints. positive, use them. the actual value does not matter
+  global_plan_overwrite_orientation: false
+  max_global_plan_lookahead_dist: 10.0
   force_reinit_new_goal_dist: 1.0
   feasibility_check_no_poses: 5
   publish_feedback: false
   shrink_horizon_backup: true
-  allow_init_with_backwards_motion: true
+  allow_init_with_backwards_motion: true # If true, the underlying trajectories might be initialized with backwards motions in case the goal is behind the start within the local costmap (this is only recommended if the robot is equipped with rear sensors)
   exact_arc_length: false
-  shrink_horizon_min_duration: 10
+  shrink_horizon_min_duration: 20
 
   # Robot
   max_vel_x: 0.75
@@ -136,11 +136,11 @@ TebLocalPlannerROS:
   # GoalTolerance
   xy_goal_tolerance: 0.2
   yaw_goal_tolerance: 0.1
-  free_goal_vel: False
+  free_goal_vel: false
 
   # Obstacles
-  min_obstacle_dist: 0.30 # minimum distance to obstacle: it depends on the footprint_model
-  include_costmap_obstacles: True # use the local costmap
+  min_obstacle_dist: 0.5 # minimum distance to obstacle: it depends on the footprint_model
+  include_costmap_obstacles: true # use the local costmap
   costmap_obstacles_behind_robot_dist: 1.0 # distance at which obstacles behind the robot are taken into account
   obstacle_poses_affected: 30 # unused if legacy_obstacle_association is false
   inflation_dist: 0.7 # greater than min_obstacle_dist to take effect
@@ -154,8 +154,8 @@ TebLocalPlannerROS:
   # Optimization
   no_inner_iterations: 5
   no_outer_iterations: 4
-  optimization_activate: True # optimize
-  optimization_verbose: False
+  optimization_activate: true # optimize
+  optimization_verbose: false
   penalty_epsilon: 0.1
   weight_max_vel_x: 20
   weight_max_vel_y: 20
@@ -174,14 +174,14 @@ TebLocalPlannerROS:
   weight_adapt_factor: 2 # factor to multiply some weights (currently only weight_obstacle) at each iteration (gives better results than a huge value for the weight)
 
   # Homotopy Class Planner
-  enable_homotopy_class_planning: False # currently not used
-  simple_exploration: False
-  enable_multithreading: True
+  enable_homotopy_class_planning: true # currently not used
+  simple_exploration: true
+  enable_multithreading: true
   max_number_classes: 4
   selection_cost_hysteresis: 1.0
   selection_obst_cost_scale: 4.0
   selection_viapoint_cost_scale: 1.0
-  selection_alternative_time_cost: False
+  selection_alternative_time_cost: false
   roadmap_graph_no_samples: 15
   roadmap_graph_area_width: 6
   h_signature_prescaler: 1.0
@@ -190,7 +190,7 @@ TebLocalPlannerROS:
   roadmap_graph_no_samples: 15
   roadmap_graph_area_width: 5
   obstacle_keypoint_offset: 0.1
-  visualize_hc_graph: False
+  visualize_hc_graph: false
 
 #----- eband_local_planner/EBandPlannerROS -----
 EBandPlannerROS:
