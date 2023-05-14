@@ -35,7 +35,7 @@ if __name__ == "__main__":
 	model_xml               = ""
 
 	# Setting the parameters
-	model_name =                       rospy.get_param('/robot_name')
+	model_name = rospy.get_param('robot_model')
 	robot_description_name             = 'gazebo_robot_description'
 	robot_description_semantic_name    = 'robot_description_semantic'
 

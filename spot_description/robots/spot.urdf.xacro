@@ -4,7 +4,7 @@
     <!-- This argument allows us to load joint sensors that measure the internal wrenches -->
     <xacro:arg name="load_force_sensors" default="false"/>
     <xacro:arg name="sensors"            default="false"/>
-    <xacro:arg name="task_period"        default="0.004"/>
+    <xacro:arg name="period"             default="0.004"/>
     <xacro:arg name="arm_name"           default=""/>
     <xacro:arg name="floating_base_link" default="true"/>
     <xacro:arg name="robot_name"         default="spot"/>

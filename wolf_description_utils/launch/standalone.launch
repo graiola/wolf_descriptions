@@ -3,7 +3,7 @@
 <launch>
 
   <arg name="gui"         default="true"/>
-  <arg name="robot_name"  default="spot"/>
+  <arg name="robot_model" default="spot"/>
   <arg name="arm_enabled" default="false"/>
   <arg name="arm_name"    default="kinova"/>
 
@@ -11,8 +11,8 @@
 
   <!-- Send the robot urdf to parameter server -->
   <include file="$(find wolf_description_utils)/launch/upload.launch">
-          <arg name="robot_name" value="$(arg robot_name)" />
-          <arg name="arm_name" value="$(arg arm_name)" />
+          <arg name="robot_model" value="$(arg robot_model)" />
+          <arg name="arm_name"    value="$(arg arm_name)" />
           <arg name="arm_enabled" value="$(arg arm_enabled)" />
   </include>
 

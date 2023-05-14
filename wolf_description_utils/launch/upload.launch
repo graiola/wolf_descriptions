@@ -1,12 +1,13 @@
 <?xml version="1.0" ?>
 <launch>
-        <arg name="sensors"       default="false" />
-        <arg name="robot_name"    default="spot"/>
-        <arg name="task_period"   default="0.004"/>
-        <arg name="arm_name"      default=""/>
-        <arg name="urdf_file"     default="$(eval find(arg('robot_name') + '_description') + '/robots/' + arg('robot_name') + '.urdf.xacro')"/>
-        <arg name="srdf_file"     default="$(eval find(arg('robot_name') + '_description') + '/robots/' + arg('robot_name') + '.srdf.xacro')"/>
-        <arg name="srdf_file_arm" default="$(eval find(arg('robot_name') + '_description') + '/robots/' + arg('robot_name') + '_' + arg('arm_name') + '.srdf.xacro')"/>
+        <arg name="sensors"             default="false" />
+        <arg name="robot_model"         default="spot"/>
+        <arg name="robot_name"          default="ras_1"/>
+        <arg name="period"              default="0.001"/>
+        <arg name="arm_name"            default=""/>
+        <arg name="urdf_file"           default="$(eval find(arg('robot_model') + '_description') + '/robots/' + arg('robot_model') + '.urdf.xacro')"/>
+        <arg name="srdf_file"           default="$(eval find(arg('robot_model') + '_description') + '/robots/' + arg('robot_model') + '.srdf.xacro')"/>
+        <arg name="srdf_file_arm"       default="$(eval find(arg('robot_model') + '_description') + '/robots/' + arg('robot_model') + '_' + arg('arm_name') + '.srdf.xacro')"/>
 
         <!-- send robot semantic description srdf to param server -->
         <group if="$(eval arm_name != '')">
@@ -17,11 +18,11 @@
         </group>
 
         <!-- send robot urdf to param server -->
-        <param name="robot_description" command="$(find xacro)/xacro --inorder '$(arg urdf_file)'
-        arm_name:=$(arg arm_name) floating_base_link:=true sensors:=$(arg sensors) task_period:=$(arg task_period)"/>
+        <param name="robot_description" command="$(find xacro)/xacro --inorder '$(arg urdf_file)' robot_name:=$(arg robot_name)
+        arm_name:=$(arg arm_name) floating_base_link:=true sensors:=$(arg sensors) period:=$(arg period)"/>
 
-        <param name="gazebo_robot_description" command="$(find xacro)/xacro --inorder '$(arg urdf_file)'
-        arm_name:=$(arg arm_name) floating_base_link:=false sensors:=$(arg sensors) task_period:=$(arg task_period)"/>
+        <param name="gazebo_robot_description" command="$(find xacro)/xacro --inorder '$(arg urdf_file)' robot_name:=$(arg robot_name)
+        arm_name:=$(arg arm_name) floating_base_link:=false sensors:=$(arg sensors) period:=$(arg period)"/>
 
 
 
