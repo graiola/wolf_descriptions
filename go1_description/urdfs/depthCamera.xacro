@@ -59,13 +59,13 @@
                     <baseline>0.025</baseline>
                     <alwaysOn>true</alwaysOn>
                     <updateRate>0.0</updateRate>
-                    <cameraName>camera_${name}_ir</cameraName>
-                    <imageTopicName>/camera_${name}/color/image_raw</imageTopicName>
-                    <cameraInfoTopicName>/camera_${name}/color/camera_info</cameraInfoTopicName>
-                    <depthImageTopicName>/camera_${name}/depth/image_raw</depthImageTopicName>
-                    <depthImageInfoTopicName>/camera_${name}/depth/camera_info</depthImageInfoTopicName>
+                    <cameraName>/$(arg robot_name)/camera_${name}_ir</cameraName>
+                    <imageTopicName>/$(arg robot_name)/camera_${name}/color/image_raw</imageTopicName>
+                    <cameraInfoTopicName>/$(arg robot_name)/camera_${name}/color/camera_info</cameraInfoTopicName>
+                    <depthImageTopicName>/$(arg robot_name)/camera_${name}/depth/image_raw</depthImageTopicName>
+                    <depthImageInfoTopicName>/$(arg robot_name)/camera_${name}/depth/camera_info</depthImageInfoTopicName>
                     <!-- <pointCloudTopicName>/camera_${name}/depth/points</pointCloudTopicName> -->
-                    <pointCloudTopicName>/camera${camID}/point_cloud_${name}</pointCloudTopicName>
+                    <pointCloudTopicName>/$(arg robot_name)/camera${camID}/point_cloud_${name}</pointCloudTopicName>
                     <frameName>camera_optical_${name}</frameName>
                     <pointCloudCutoff>0.1</pointCloudCutoff>
                     <pointCloudCutoffMax>1.5</pointCloudCutoffMax>

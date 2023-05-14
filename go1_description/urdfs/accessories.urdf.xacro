@@ -59,7 +59,7 @@
       <origin rpy="0 0 0" xyz="0.2747 0.0 -0.0088"/>
   </xacro:ultraSound>
 
-  <xacro:realsense_T265 sensor_name="t265" parent_link="trunk" rate="30.0">
+  <xacro:realsense_T265 sensor_name="/$(arg robot_name)/t265" parent_link="trunk" rate="30.0">
     <origin xyz="0.3 0 0.05" rpy="0 0.24 0" />
   </xacro:realsense_T265>
 
@@ -76,7 +76,7 @@
       </inertial>
   </link>
 
-  <xacro:VLP-16 parent="rslidar" name="rslidar-16" topic="/rslidar_points"
+  <xacro:VLP-16 parent="rslidar" name="rslidar-16" topic="/$(arg robot_name)/rslidar_points"
                 organize_cloud="true" hz="10" gpu="true">
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:VLP-16>
@@ -85,7 +85,7 @@
   <!-- IMU sensor -->
   <xacro:imu_sensor
       imu_name="trunk_imu"
-      imu_topic="trunk_imu/data"
+      imu_topic="/$(arg robot_name)/trunk_imu/data"
       update_rate="${1.0 / $(arg period)}"
       rate_mean="0"
       rate_stddev="0"
