@@ -656,7 +656,7 @@
     <xacro:leg_gazebo prefix="lh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
 
     <xacro:if value="$(eval arm_name != '')">
-           <xacro:include filename="$(find spot_description)/urdfs/arm/$(arg arm_name)_adapter.urdf.xacro" /> -->
+           <xacro:include filename="$(find spot_description)/urdfs/arm/$(arg arm_name)_adapter.urdf.xacro" />
     </xacro:if>
 
 </robot>
