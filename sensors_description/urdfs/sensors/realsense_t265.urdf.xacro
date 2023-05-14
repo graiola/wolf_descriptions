@@ -35,7 +35,7 @@
 
   -->
 
-  <xacro:macro name="T265_fisheye" params="sensor_name reference_frame topic rate">
+  <xacro:macro name="T265_fisheye" params="name reference_frame topic rate">
     <gazebo reference="${reference_frame}">
       <sensor name="camera" type="wideanglecamera">
         <camera>
@@ -66,7 +66,7 @@
         <plugin name="camera_controller" filename="libRealsenseGazeboPlugin.so">
           <alwaysOn>true</alwaysOn>
           <updateRate>${rate}</updateRate>
-          <cameraName>${sensor_name}/${topic}</cameraName>
+          <cameraName>${name}/${topic}</cameraName>
           <imageTopicName>image_raw</imageTopicName>
           <cameraInfoTopicName>camera_info</cameraInfoTopicName>
           <frameName>${reference_frame}</frameName>
@@ -86,22 +86,22 @@
 
   <!-- INTEL REALSENSE T265 -->
 
-  <xacro:macro name="realsense_T265" params="sensor_name parent_link rate *origin disable_lumping:=true">
+  <xacro:macro name="realsense_T265" params="name topics_ns parent rate *origin disable_lumping:=true">
 
-    <joint name="${sensor_name}_odom_frame_joint" type="fixed">
-        <parent link="${parent_link}"/>
-        <child link="${sensor_name}_odom_frame"/>
+    <joint name="${name}_odom_frame_joint" type="fixed">
+        <parent link="${parent}"/>
+        <child link="${name}_odom_frame"/>
         <xacro:insert_block name="origin"/>
     </joint>
 
-    <joint name="${sensor_name}_pose_frame_joint" type="fixed">
-        <parent link="${sensor_name}_odom_frame"/>
-        <child link="${sensor_name}_pose_frame"/>
+    <joint name="${name}_pose_frame_joint" type="fixed">
+        <parent link="${name}_odom_frame"/>
+        <child link="${name}_pose_frame"/>
         <origin rpy="0 0 0" xyz="0 0 0"/> <!-- check on real hw -->
     </joint>
-    <link name="${sensor_name}_odom_frame"/>
+    <link name="${name}_odom_frame"/>
 
-    <link name="${sensor_name}_pose_frame">
+    <link name="${name}_pose_frame">
         <visual>
             <origin rpy="1.57 0 1.57" xyz="0 0 0"/>
             <geometry>
@@ -125,95 +125,95 @@
         </inertial>
     </link>
 
-    <joint name="${sensor_name}_joint" type="fixed">
-        <parent link="${sensor_name}_pose_frame"/>
-        <child link="${sensor_name}_link"/>
+    <joint name="${name}_joint" type="fixed">
+        <parent link="${name}_pose_frame"/>
+        <child link="${name}_link"/>
         <origin rpy="0 0 0" xyz="0 0 0"/> <!-- check on real hw -->
     </joint>
-    <link name="${sensor_name}_link"/>
+    <link name="${name}_link"/>
 
-    <joint name="${sensor_name}_fisheye1_joint" type="fixed">
-        <parent link="${sensor_name}_link"/>
-        <child link="${sensor_name}_fisheye1_frame"/>
+    <joint name="${name}_fisheye1_joint" type="fixed">
+        <parent link="${name}_link"/>
+        <child link="${name}_fisheye1_frame"/>
         <origin rpy="0 0 0" xyz="0 0.042 0"/>
     </joint>
-    <link name="${sensor_name}_fisheye1_frame"/>
+    <link name="${name}_fisheye1_frame"/>
 
-    <joint name="${sensor_name}_fisheye1_optical_joint" type="fixed">
-        <parent link="${sensor_name}_fisheye1_frame"/>
-        <child link="${sensor_name}_fisheye1_optical_frame"/>
+    <joint name="${name}_fisheye1_optical_joint" type="fixed">
+        <parent link="${name}_fisheye1_frame"/>
+        <child link="${name}_fisheye1_optical_frame"/>
         <origin rpy="0 0 0" xyz="0.01 0 0"/>
     </joint>
-    <link name="${sensor_name}_fisheye1_optical_frame"/>
+    <link name="${name}_fisheye1_optical_frame"/>
     <xacro:T265_fisheye
-      sensor_name="${sensor_name}"
-      reference_frame="${sensor_name}_fisheye1_optical_frame"
+      name="${name}"
+      reference_frame="${name}_fisheye1_optical_frame"
       topic="fisheye1"
       rate="${rate}">
     </xacro:T265_fisheye>
 
-    <joint name="${sensor_name}_fisheye2_joint" type="fixed">
-        <parent link="${sensor_name}_link"/>
-        <child link="${sensor_name}_fisheye2_frame"/>
+    <joint name="${name}_fisheye2_joint" type="fixed">
+        <parent link="${name}_link"/>
+        <child link="${name}_fisheye2_frame"/>
         <origin rpy="0 0 0" xyz="0 -0.022 0"/>
     </joint>
-    <link name="${sensor_name}_fisheye2_frame"/>
+    <link name="${name}_fisheye2_frame"/>
 
-    <joint name="${sensor_name}_fisheye2_optical_joint" type="fixed">
-        <parent link="${sensor_name}_fisheye2_frame"/>
-        <child link="${sensor_name}_fisheye2_optical_frame"/>
+    <joint name="${name}_fisheye2_optical_joint" type="fixed">
+        <parent link="${name}_fisheye2_frame"/>
+        <child link="${name}_fisheye2_optical_frame"/>
         <origin rpy="0 0 0" xyz="0.01 0 0"/>
     </joint>
-    <link name="${sensor_name}_fisheye2_optical_frame"/>
+    <link name="${name}_fisheye2_optical_frame"/>
     <xacro:T265_fisheye
-      sensor_name="${sensor_name}"
-      reference_frame="${sensor_name}_fisheye2_optical_frame"
+      name="${name}"
+      reference_frame="${name}_fisheye2_optical_frame"
       topic="fisheye2"
       rate="${rate}">
     </xacro:T265_fisheye>
 
-    <joint name="${sensor_name}_gyro_joint" type="fixed">
-        <parent link="${sensor_name}_link"/>
-        <child link="${sensor_name}_gyro_frame"/>
+    <joint name="${name}_gyro_joint" type="fixed">
+        <parent link="${name}_link"/>
+        <child link="${name}_gyro_frame"/>
         <origin rpy="0 0 0" xyz="0 0 0"/> <!-- check on real hw -->
     </joint>
-    <link name="${sensor_name}_gyro_frame"/>
+    <link name="${name}_gyro_frame"/>
 
-    <gazebo reference="${sensor_name}_gyro_frame">
+    <gazebo reference="${name}_gyro_frame">
         <gravity>true</gravity>
-        <sensor name="${sensor_name}_imu" type="imu">
+        <sensor name="${name}_imu" type="imu">
             <always_on>true</always_on>
             <update_rate>${rate}</update_rate>
             <visualize>false</visualize>
             <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-                <topicName>${sensor_name}/gyro/sample</topicName>
-                <bodyName>${sensor_name}_pose_frame</bodyName>
+                <topicName>${topics_ns}/gyro/sample</topicName>
+                <bodyName>${name}_pose_frame</bodyName>
                 <updateRateHZ>${rate}</updateRateHZ>
                 <gaussianNoise>0.000001</gaussianNoise>
                 <xyzOffset>0 0 0</xyzOffset>
                 <rpyOffset>0 0 0</rpyOffset>
-                <frameName>${sensor_name}_link</frameName>
+                <frameName>${name}_link</frameName>
             </plugin>
         </sensor>
     </gazebo>
 
-    <joint name="${sensor_name}_accel_joint" type="fixed">
-        <parent link="${sensor_name}_link"/>
-        <child link="${sensor_name}_accel_frame"/>
+    <joint name="${name}_accel_joint" type="fixed">
+        <parent link="${name}_link"/>
+        <child link="${name}_accel_frame"/>
         <origin rpy="0 0 0" xyz="0 0 0"/> <!-- check on real hw -->
     </joint>
-    <link name="${sensor_name}_accel_frame"/> <!-- dummy -->
+    <link name="${name}_accel_frame"/> <!-- dummy -->
 
 
-    <gazebo reference="${sensor_name}_odom_frame_joint">
+    <gazebo reference="${name}_odom_frame_joint">
         <disableFixedJointLumping>${disable_lumping}</disableFixedJointLumping>
     </gazebo>
     <gazebo> <!-- odometry -->
         <plugin name="t265_odom" filename="libgazebo_ros_p3d.so">
             <alwaysOn>true</alwaysOn>
             <updateRate>${rate}</updateRate>
-            <bodyName>${sensor_name}_odom_frame</bodyName>
-            <topicName>${sensor_name}/odom</topicName>
+            <bodyName>${name}_odom_frame</bodyName>
+            <topicName>${topics_ns}/odom</topicName>
             <gaussianNoise>0.001</gaussianNoise>
             <frameName>world</frameName>
             <xyzOffsets>0 0 0</xyzOffsets>
