@@ -4,8 +4,7 @@
 
   <arg name="gui"         default="true"/>
   <arg name="robot_model" default="spot"/>
-  <arg name="arm_enabled" default="false"/>
-  <arg name="arm_name"    default="kinova"/>
+  <arg name="arm_name"    default=""/>
 
   <param name="use_gui"   value="$(arg gui)"/>
 
@@ -13,7 +12,6 @@
   <include file="$(find wolf_description_utils)/launch/upload.launch">
           <arg name="robot_model" value="$(arg robot_model)" />
           <arg name="arm_name"    value="$(arg arm_name)" />
-          <arg name="arm_enabled" value="$(arg arm_enabled)" />
   </include>
 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
