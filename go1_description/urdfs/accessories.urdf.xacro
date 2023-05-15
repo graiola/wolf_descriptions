@@ -59,7 +59,7 @@
       <origin rpy="0 0 0" xyz="0.2747 0.0 -0.0088"/>
   </xacro:ultraSound>
 
-  <xacro:realsense_T265 sensor_name="/$(arg robot_name)/t265" parent_link="trunk" rate="30.0">
+  <xacro:realsense_T265 name="t265" topics_ns="/$(arg robot_name)/t265" parent="trunk" rate="30.0">
     <origin xyz="0.3 0 0.05" rpy="0 0.24 0" />
   </xacro:realsense_T265>
 
