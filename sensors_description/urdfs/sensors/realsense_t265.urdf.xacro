@@ -35,7 +35,7 @@
 
   -->
 
-  <xacro:macro name="T265_fisheye" params="name reference_frame topic rate">
+  <xacro:macro name="fisheye_t265" params="name topics_ns reference_frame rate">
     <gazebo reference="${reference_frame}">
       <sensor name="camera" type="wideanglecamera">
         <camera>
@@ -66,9 +66,9 @@
         <plugin name="camera_controller" filename="libRealsenseGazeboPlugin.so">
           <alwaysOn>true</alwaysOn>
           <updateRate>${rate}</updateRate>
-          <cameraName>${name}/${topic}</cameraName>
-          <imageTopicName>image_raw</imageTopicName>
-          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+          <cameraName>${name}</cameraName>
+          <imageTopicName>${topics_ns}/${name}_image_raw</imageTopicName>
+          <cameraInfoTopicName>${topics_ns}/${name}_camera_info</cameraInfoTopicName>
           <frameName>${reference_frame}</frameName>
           <hackBaseline>0.07</hackBaseline>
           <distortionK1>-0.007419134024530649</distortionK1>
@@ -145,12 +145,12 @@
         <origin rpy="0 0 0" xyz="0.01 0 0"/>
     </joint>
     <link name="${name}_fisheye1_optical_frame"/>
-    <xacro:T265_fisheye
-      name="${name}"
+    <xacro:fisheye_t265
+      name="${name}_fisheye1"
       reference_frame="${name}_fisheye1_optical_frame"
-      topic="fisheye1"
+      topics_ns="${topics_ns}"
       rate="${rate}">
-    </xacro:T265_fisheye>
+    </xacro:fisheye_t265>
 
     <joint name="${name}_fisheye2_joint" type="fixed">
         <parent link="${name}_link"/>
@@ -165,12 +165,12 @@
         <origin rpy="0 0 0" xyz="0.01 0 0"/>
     </joint>
     <link name="${name}_fisheye2_optical_frame"/>
-    <xacro:T265_fisheye
-      name="${name}"
+    <xacro:fisheye_t265
+      name="${name}_fisheye2"
       reference_frame="${name}_fisheye2_optical_frame"
-      topic="fisheye2"
+      topics_ns="${topics_ns}"
       rate="${rate}">
-    </xacro:T265_fisheye>
+    </xacro:fisheye_t265>
 
     <joint name="${name}_gyro_joint" type="fixed">
         <parent link="${name}_link"/>
@@ -186,6 +186,7 @@
             <update_rate>${rate}</update_rate>
             <visualize>false</visualize>
             <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+                <robotNamespace>${topics_ns}</robotNamespace>
                 <topicName>${topics_ns}/gyro/sample</topicName>
                 <bodyName>${name}_pose_frame</bodyName>
                 <updateRateHZ>${rate}</updateRateHZ>
@@ -208,12 +209,14 @@
     <gazebo reference="${name}_odom_frame_joint">
         <disableFixedJointLumping>${disable_lumping}</disableFixedJointLumping>
     </gazebo>
-    <gazebo> <!-- odometry -->
+    <gazebo>
+    <!-- odometry -->
         <plugin name="t265_odom" filename="libgazebo_ros_p3d.so">
             <alwaysOn>true</alwaysOn>
             <updateRate>${rate}</updateRate>
+            <robotNamespace>${topics_ns}</robotNamespace>
             <bodyName>${name}_odom_frame</bodyName>
-            <topicName>${topics_ns}/odom</topicName>
+            <topicName>${name}/odom</topicName>
             <gaussianNoise>0.001</gaussianNoise>
             <frameName>world</frameName>
             <xyzOffsets>0 0 0</xyzOffsets>
