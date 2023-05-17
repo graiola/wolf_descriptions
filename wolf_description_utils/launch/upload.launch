@@ -2,7 +2,7 @@
 <launch>
         <arg name="sensors"             default="false" />
         <arg name="robot_model"         default="spot"/>
-        <arg name="robot_name"          default="ras_1"/>
+        <arg name="robot_name"          default=""/>
         <arg name="period"              default="0.001"/>
         <arg name="arm_name"            default=""/>
         <arg name="urdf_file"           default="$(eval find(arg('robot_model') + '_description') + '/robots/' + arg('robot_model') + '.urdf.xacro')"/>
@@ -11,18 +11,18 @@
 
         <!-- send robot semantic description srdf to param server -->
         <group if="$(eval arm_name != '')">
-             <param name="robot_description_semantic" command="$(find xacro)/xacro --inorder '$(arg srdf_file_arm)'" />
+             <param name="$(arg robot_name)/robot_description_semantic" command="$(find xacro)/xacro --inorder '$(arg srdf_file_arm)'"/>
         </group>
         <group if="$(eval arm_name == '')">
-            <param name="robot_description_semantic" command="$(find xacro)/xacro --inorder '$(arg srdf_file)'" />
+            <param name="$(arg robot_name)/robot_description_semantic" command="$(find xacro)/xacro --inorder '$(arg srdf_file)'" />
         </group>
 
         <!-- send robot urdf to param server -->
-        <param name="robot_description" command="$(find xacro)/xacro --inorder '$(arg urdf_file)' robot_name:=$(arg robot_name)
-        arm_name:=$(arg arm_name) floating_base_link:=true sensors:=$(arg sensors) period:=$(arg period)"/>
+        <param name="$(arg robot_name)/robot_description" command="$(find xacro)/xacro --inorder '$(arg urdf_file)' robot_name:=$(arg robot_name)
+        robot_model:=$(arg robot_model) arm_name:=$(arg arm_name) floating_base_link:=true sensors:=$(arg sensors) period:=$(arg period)"/>
 
-        <param name="gazebo_robot_description" command="$(find xacro)/xacro --inorder '$(arg urdf_file)' robot_name:=$(arg robot_name)
-        arm_name:=$(arg arm_name) floating_base_link:=false sensors:=$(arg sensors) period:=$(arg period)"/>
+        <param name="$(arg robot_name)/gazebo_robot_description" command="$(find xacro)/xacro --inorder '$(arg urdf_file)' robot_name:=$(arg robot_name)
+        robot_model:=$(arg robot_model) arm_name:=$(arg arm_name) floating_base_link:=false sensors:=$(arg sensors) period:=$(arg period)"/>
 
 
 
