@@ -89,7 +89,7 @@
 
       <!-- IMU sensor -->
       <xacro:imu_sensor
-          imu_name="trunk_imu"
+          frame_name="trunk_imu"
           imu_topic="trunk_imu/data"
           namespace="$(arg robot_name)"
           update_rate="${1.0 / $(arg period)}"

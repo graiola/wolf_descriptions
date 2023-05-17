@@ -2,7 +2,7 @@
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-        <xacro:macro name="imu_sensor" params="imu_name imu_topic namespace update_rate rate_mean rate_stddev
+        <xacro:macro name="imu_sensor" params="frame_name imu_topic namespace update_rate rate_mean rate_stddev
 		rate_bias_mean rate_bias_stddev accel_mean accel_stddev accel_bias_mean accel_bias_stddev">
                 <!-- old plugin -->
                 <!--<gazebo>
@@ -44,15 +44,15 @@
                 <!-- recent plugin with gravity acceleration -->
 
                 <xacro:if value="${namespace == ''}">
-                    <xacro:property name="frame_name" value="${imu_name}"/>
+                    <xacro:property name="frame_name_ns" value="${frame_name}"/>
                 </xacro:if>
                 <xacro:if value="${namespace != ''}">
-                    <xacro:property name="frame_name" value="${namespace+'/'+imu_name}"/>
+                    <xacro:property name="frame_name_ns" value="${namespace+'/'+frame_name}"/>
                 </xacro:if>
 
-                <gazebo reference="${imu_name}">
+                <gazebo reference="${frame_name}">
                    <gravity>true</gravity>
-                   <sensor name="${imu_name}" type="imu">
+                   <sensor name="${frame_name}_sensor" type="imu">
                      <always_on>true</always_on>
                      <update_rate>${update_rate}</update_rate>
                      <visualize>true</visualize>
@@ -60,12 +60,12 @@
                      <plugin name="imu_sensor_plugin" filename="libgazebo_ros_imu_sensor.so">
                        <robotNamespace>${namespace}</robotNamespace>
                        <topicName>${imu_topic}</topicName>
-                       <bodyName>${imu_name}</bodyName>
+                       <bodyName>${frame_name_ns}</bodyName>
                        <updateRateHZ>${update_rate}</updateRateHZ>
                        <gaussianNoise>${rate_stddev*rate_stddev}</gaussianNoise>
                        <xyzOffset>0 0 0</xyzOffset>
                        <rpyOffset>0 0 0</rpyOffset>
-                       <frameName>${frame_name}</frameName>
+                       <frameName>${frame_name_ns}</frameName>
                        <initialOrientationAsReference>false</initialOrientationAsReference>
                      </plugin>
                      <pose>0 0 0 0 0 0</pose>
