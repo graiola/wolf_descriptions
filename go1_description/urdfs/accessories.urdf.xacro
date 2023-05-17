@@ -59,7 +59,7 @@
       <origin rpy="0 0 0" xyz="0.2747 0.0 -0.0088"/>
   </xacro:ultraSound>
 
-  <xacro:realsense_T265 name="t265" topics_ns="/$(arg robot_name)/t265" parent="trunk" rate="30.0">
+  <xacro:realsense_T265 name="t265" topics_ns="/$(arg robot_name)" parent="trunk" rate="30.0">
     <origin xyz="0.3 0 0.05" rpy="0 0.24 0" />
   </xacro:realsense_T265>
 
@@ -81,27 +81,26 @@
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:VLP-16>
 
-
   <!-- IMU sensor -->
   <xacro:imu_sensor
-      imu_name="trunk_imu"
-      imu_topic="/$(arg robot_name)/trunk_imu/data"
+      frame_name="trunk_imu"
+      imu_topic="trunk_imu/data"
+      namespace="$(arg robot_name)"
       update_rate="${1.0 / $(arg period)}"
       rate_mean="0"
-      rate_stddev="0"
+      rate_stddev="0.01"
       rate_bias_mean="0"
       rate_bias_stddev="0"
       accel_mean="0"
-      accel_stddev="0"
+      accel_stddev="0.001"
       accel_bias_mean="0"
       accel_bias_stddev="0">
   </xacro:imu_sensor>
   <!-- GPS sensor -->
   <xacro:gps_sensor
-      gps_name="novatel_gps_sim"
       gps_topic="fix"
       vel_topic="velocity_fix"
-      robot_name="$(arg robot_name)"
+      namespace="$(arg robot_name)"
       frame_name="trunk"
       update_rate="10.0">
   </xacro:gps_sensor>
