@@ -7,7 +7,8 @@
     <xacro:arg name="period"             default="0.004"/>
     <xacro:arg name="arm_name"           default=""/>
     <xacro:arg name="floating_base_link" default="true"/>
-    <xacro:arg name="robot_name"         default="spot"/>
+    <xacro:arg name="robot_model"        default="spot"/>
+    <xacro:arg name="robot_name"         default=""/>
     <xacro:arg name="base_name"          default="base_link"/>
 
     <!-- load generic materials -->
