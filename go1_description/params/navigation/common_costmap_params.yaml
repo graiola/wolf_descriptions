@@ -1,4 +1,4 @@
-robot_base_frame: $(arg base_frame)
+robot_base_frame: $(arg prefix)$(arg base_frame)
 footprint: [ [0.3, 0.2 ], [0.3, -0.2], [-0.3, -0.2], [-0.3, 0.2] ]
 robot_radius: 0.0
 footprint_padding: 0.0

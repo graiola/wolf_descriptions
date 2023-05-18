@@ -1,15 +1,23 @@
 <?xml version="1.0"?>
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-        <xacro:macro name="gps_sensor" params="gps_name gps_topic vel_topic robot_name frame_name update_rate">
+        <xacro:macro name="gps_sensor" params="gps_topic vel_topic namespace frame_name update_rate">
+
+            <xacro:if value="${namespace == ''}">
+                <xacro:property name="frame_name_ns" value="${frame_name}"/>
+            </xacro:if>
+            <xacro:if value="${namespace != ''}">
+                <xacro:property name="frame_name_ns" value="${namespace+'/'+frame_name}"/>
+            </xacro:if>
+
             <gazebo>
                 <!-- plugins are in hector_gazebo_plugins ros package -->
-                <plugin name="${gps_name}" filename="libhector_gazebo_ros_gps.so">
-                    <robotNamespace>${robot_name}/gps/</robotNamespace>
+                <plugin name="gps_sensor_plugin" filename="libhector_gazebo_ros_gps.so">
+                    <robotNamespace>${namespace}/gps/</robotNamespace>
                     <alwaysOn>1</alwaysOn>
                     <updateRate>10.0</updateRate>
                     <bodyName>${frame_name}</bodyName>
-                    <frameId>${frame_name}</frameId>
+                    <frameId>${frame_name_ns}</frameId>
                     <topicName>${gps_topic}</topicName>
                     <velocityTopicName>${vel_topic}</velocityTopicName>
                     <drift>5.0 5.0 5.0</drift>

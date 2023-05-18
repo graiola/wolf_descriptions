@@ -8,11 +8,11 @@ This is the URDF model for the Intel RealSense 430 camera, in it's
 aluminum peripherial evaluation case.
 -->
 
-<robot name="sensor_d435" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="realsense_d435" xmlns:xacro="http://ros.org/wiki/xacro">
   <!--File includes-->
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_d435.gazebo.xacro"/>
 
-  <xacro:macro name="sensor_d435" params="name:=camera topics_ns:=camera parent *origin">
+  <xacro:macro name="realsense_d435" params="name:=camera topics_ns:=camera parent *origin">
     <xacro:property name="M_PI" value="3.1415926535897931" />
 
     <!-- The following values are approximate, and the camera node

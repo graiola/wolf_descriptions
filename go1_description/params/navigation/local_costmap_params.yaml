@@ -1,5 +1,5 @@
 local_costmap:
-  global_frame: $(arg odom_frame)
+  global_frame: $(arg prefix)$(arg global_frame)
   rolling_window: true
   width: 7.0
   height: 7.0
@@ -25,7 +25,7 @@ local_costmap:
     track_unknown_space: false
     footprint_clearing_enabled: true
     observation_sources: laser_scan_sensor
-    laser_scan_sensor: {sensor_frame: rslidar, data_type: LaserScan, topic: $(arg scan_topic), marking: true, clearing: true}
+    laser_scan_sensor: {sensor_frame: $(arg prefix)$(arg base_frame), data_type: LaserScan, topic: $(arg prefix)$(arg scan_topic), marking: true, clearing: true}
 
   plugins:
     - name: obstacle_layer

@@ -74,24 +74,25 @@
         </collision>
       </link>
 
-      <xacro:VLP-16 parent="velodyne_mount" name="velodyne" topic="/velodyne_points"
+      <xacro:VLP-16 parent="velodyne_mount" name="velodyne" topic="/$(arg robot_name)/velodyne_points"
                     organize_cloud="true" hz="10" gpu="true">
         <origin xyz="0 0 0" rpy="0 0 0" />
       </xacro:VLP-16>
 
-      <xacro:sensor_d435 name="d435" topics_ns="d435" parent="front_rail">
+      <xacro:realsense_d435 name="d435" topics_ns="/$(arg robot_name)/d435" parent="front_rail">
         <origin xyz="0.13 0 0" rpy="0 0 0" />
-      </xacro:sensor_d435>
+      </xacro:realsense_d435>
 
-      <xacro:realsense_T265 sensor_name="t265" parent_link="front_rail" rate="30.0">
+      <xacro:realsense_T265 name="t265" topics_ns="/$(arg robot_name)" parent="front_rail" rate="30.0">
         <origin xyz="0.13 0 0.04" rpy="0 0 0" />
       </xacro:realsense_T265>
 
       <!-- IMU sensor -->
       <xacro:imu_sensor
-          imu_name="trunk_imu"
+          frame_name="trunk_imu"
           imu_topic="trunk_imu/data"
-          update_rate="${1.0 / $(arg task_period)}"
+          namespace="$(arg robot_name)"
+          update_rate="${1.0 / $(arg period)}"
           rate_mean="0"
           rate_stddev="0.01"
           rate_bias_mean="0"
@@ -103,10 +104,9 @@
       </xacro:imu_sensor>
       <!-- GPS sensor -->
       <xacro:gps_sensor
-          gps_name="novatel_gps_sim"
           gps_topic="fix"
           vel_topic="velocity_fix"
-          robot_name="$(arg robot_name)"
+          namespace="$(arg robot_name)"
           frame_name="base_link"
           update_rate="10.0">
       </xacro:gps_sensor>

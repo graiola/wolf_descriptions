@@ -55,7 +55,7 @@ TrajectoryPlannerROS:
 
 # ----- dwa_local_planner/DWAPlannerROS -----
 DWAPlannerROS:
-  global_frame_id: $(arg odom_frame)
+  global_frame_id: $(arg prefix)$(arg odom_frame)
 
   # Robot configuration parameters
   acc_lim_x: 2.5
@@ -99,8 +99,8 @@ DWAPlannerROS:
 
 # ----- teb_local_planner/TebLocalPlannerROS -----
 TebLocalPlannerROS:
-  odom_topic: $(arg odom_frame)
-  map_frame: $(arg global_frame)
+  odom_topic: $(arg prefix)$(arg odom_frame)
+  map_frame: $(arg prefix)$(arg global_frame)
 
   # Trajectory
   teb_autosize: true
