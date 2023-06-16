@@ -108,7 +108,7 @@
           vel_topic="velocity_fix"
           namespace="$(arg robot_name)"
           frame_name="base_link"
-          update_rate="10.0">
+          update_rate="40.0">
       </xacro:gps_sensor>
 
     </xacro:if>
