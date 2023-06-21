@@ -108,8 +108,8 @@ TebLocalPlannerROS:
   dt_hysteresis: 0.1
   min_samples: 3
   global_plan_viapoint_sep: -1 # negative, do not use viapoints. positive, use them. the actual value does not matter
-  global_plan_overwrite_orientation: false
   max_global_plan_lookahead_dist: 10.0
+  global_plan_overwrite_orientation: false # Overwrite orientation of local subgoals provided by the global planner.
   force_reinit_new_goal_dist: 1.0
   feasibility_check_no_poses: 5
   publish_feedback: false
@@ -148,7 +148,7 @@ TebLocalPlannerROS:
   obstacle_association_force_inclusion_factor: 1.5 # the obstacles that will be taken into account are those closer than min_obstacle_dist*factor, if legacy is false
   obstacle_association_cutoff_factor: 5.0 # the obstacles that are further than min_obstacle_dist * factor will not be taken into account, if legacy is false
   costmap_converter_plugin: "costmap_converter::CostmapToPolygonsDBSMCCH"
-  costmap_converter_spin_thread: True
+  costmap_converter_spin_thread: true
   costmap_converter_rate: 5
 
   # Optimization
