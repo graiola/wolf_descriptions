@@ -32,26 +32,26 @@ wolf_controller:
       Kd_leg: {haa: 1.0, hfe: 1.0, kfe: 0.1}
 
       lf_foot:
-          Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
-          Kd: {x: 15.0, y: 15.0, z: 15.0, roll: 0, pitch: 0, yaw: 0}
+          Kp: {x: 1000.0, y: 1000.0, z: 10000.0, roll: 0, pitch: 0, yaw: 0}
+          Kd: {x: 15.0, y: 15.0, z: 100.0, roll: 0, pitch: 0, yaw: 0}
           weight: 100.0
       rf_foot:
-          Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
-          Kd: {x: 15.0, y: 15.0, z: 15.0, roll: 0, pitch: 0, yaw: 0}
+          Kp: {x: 1000.0, y: 1000.0, z: 10000.0, roll: 0, pitch: 0, yaw: 0}
+          Kd: {x: 15.0, y: 15.0, z: 100.0, roll: 0, pitch: 0, yaw: 0}
           weight: 100.0
       rh_foot:
-          Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
-          Kd: {x: 15.0, y: 15.0, z: 15.0, roll: 0, pitch: 0, yaw: 0}
+          Kp: {x: 1000.0, y: 1000.0, z: 10000.0, roll: 0, pitch: 0, yaw: 0}
+          Kd: {x: 15.0, y: 15.0, z: 100.0, roll: 0, pitch: 0, yaw: 0}
           weight: 100.0
       lh_foot:
-          Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
-          Kd: {x: 15.0, y: 15.0, z: 15.0, roll: 0, pitch: 0, yaw: 0}
+          Kp: {x: 1000.0, y: 1000.0, z: 10000.0, roll: 0, pitch: 0, yaw: 0}
+          Kd: {x: 15.0, y: 15.0, z: 100.0, roll: 0, pitch: 0, yaw: 0}
           weight: 100.0
 
       waist:
-          Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 240.0, pitch: 140.0, yaw: 80.0}
-          Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 50.0, pitch: 30.0, yaw: 16.0}
-          weight: 1.0
+          Kp: {x: 100.0, y: 100.0, z: 100.0, roll: 240.0, pitch: 140.0, yaw: 80.0}
+          Kd: {x: 10.0, y: 10.0, z: 10.0, roll: 50.0, pitch: 30.0, yaw: 16.0}
+          weight: 100.0
 
       CoM:
           Kp: {x: 200.0, y: 200.0, z: 200.0}
