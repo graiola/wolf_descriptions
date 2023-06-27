@@ -132,7 +132,7 @@ TebLocalPlannerROS:
 
   # Homotopy Class Planner
   enable_homotopy_class_planning: true # currently not used
-  simple_exploration: true
+  simple_exploration: false
   enable_multithreading: true
   max_number_classes: 4
   selection_cost_hysteresis: 1.0
