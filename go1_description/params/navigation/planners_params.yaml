@@ -60,20 +60,20 @@ TebLocalPlannerROS:
   map_frame: $(arg prefix)$(arg global_frame)
 
   # Trajectory
-  teb_autosize: True
+  teb_autosize: true
   dt_ref: 0.3
   dt_hysteresis: 0.1
   min_samples: 3
-  global_plan_overwrite_orientation: true
-  global_plan_viapoint_sep: 0.5 # negative, do not use viapoints. positive, use them. the actual value does not matter
-  max_global_plan_lookahead_dist: 3.0
+  global_plan_viapoint_sep: -1 # negative, do not use viapoints. positive, use them. the actual value does not matter
+  max_global_plan_lookahead_dist: 10.0
+  global_plan_overwrite_orientation: false # Overwrite orientation of local subgoals provided by the global planner.
   force_reinit_new_goal_dist: 1.0
   feasibility_check_no_poses: 5
   publish_feedback: false
   shrink_horizon_backup: true
-  allow_init_with_backwards_motion: true
+  allow_init_with_backwards_motion: true # If true, the underlying trajectories might be initialized with backwards motions in case the goal is behind the start within the local costmap (this is only recommended if the robot is equipped with rear sensors)
   exact_arc_length: false
-  shrink_horizon_min_duration: 10
+  shrink_horizon_min_duration: 20
 
   # Robot
   max_vel_x: 0.5
@@ -96,7 +96,7 @@ TebLocalPlannerROS:
   free_goal_vel: false
 
   # Obstacles
-  min_obstacle_dist: 0.30 # minimum distance to obstacle: it depends on the footprint_model
+  min_obstacle_dist: 0.5 # minimum distance to obstacle: it depends on the footprint_model
   include_costmap_obstacles: true # use the local costmap
   costmap_obstacles_behind_robot_dist: 1.0 # distance at which obstacles behind the robot are taken into account
   obstacle_poses_affected: 30 # unused if legacy_obstacle_association is false
@@ -121,7 +121,7 @@ TebLocalPlannerROS:
   weight_acc_lim_y: 1
   weight_acc_lim_theta: 1
   weight_kinematics_nh: 10 # is a nonholonomic robot
-  weight_kinematics_forward_drive: 50 # prefer forward driving, for differential
+  weight_kinematics_forward_drive: 100 # prefer forward driving, for differential
   weight_kinematics_turning_radius: 1 # prefer turns that respect the min_turning_radius, not used if differential (min_turning_radius = 0)
   weight_optimaltime: 10 # prefer trajectories with less transition time
   weight_obstacle: 50 # prefer trajectories that respect the min_obstacle_dist
@@ -131,8 +131,8 @@ TebLocalPlannerROS:
   weight_adapt_factor: 2 # factor to multiply some weights (currently only weight_obstacle) at each iteration (gives better results than a huge value for the weight)
 
   # Homotopy Class Planner
-  enable_homotopy_class_planning: false # currently not used
-  simple_exploration: false
+  enable_homotopy_class_planning: true # currently not used
+  simple_exploration: true
   enable_multithreading: true
   max_number_classes: 4
   selection_cost_hysteresis: 1.0
