@@ -139,8 +139,9 @@ TebLocalPlannerROS:
   free_goal_vel: false
 
   # Obstacles
-  min_obstacle_dist: 0.5 # minimum distance to obstacle: it depends on the footprint_model
+  min_obstacle_dist: 0.25 # minimum distance to obstacle: it depends on the footprint_model
   include_costmap_obstacles: true # use the local costmap
+  include_dynamic_obstacles: true
   costmap_obstacles_behind_robot_dist: 1.0 # distance at which obstacles behind the robot are taken into account
   obstacle_poses_affected: 30 # unused if legacy_obstacle_association is false
   inflation_dist: 0.7 # greater than min_obstacle_dist to take effect
