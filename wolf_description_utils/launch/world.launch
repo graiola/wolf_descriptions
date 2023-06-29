@@ -49,10 +49,5 @@
             <arg name="robot_name"        value="$(arg robot_name)"/>
         </include>
 
-        <!-- Spawn and set the robot to the stand down position loaded from the SRDF file -->
-        <node name="goto0" pkg="wolf_description_utils" type="go0" output="screen">
-            <param name="robot_name"      value="$(arg robot_name)"/>
-            <param name="robot_model"     value="$(arg robot_model)"/>
-        </node>
 </launch>
 
