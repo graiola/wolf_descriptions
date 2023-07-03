@@ -9,57 +9,82 @@ from std_srvs.srv import Empty
 from std_msgs.msg import Float64
 from geometry_msgs.msg import Pose
 from srdfdom.srdf import SRDF
+from ast import literal_eval
 
 def unpause(gazebo_namespace):
-	rospy.loginfo("Waiting for service %s/unpause_physics"%gazebo_namespace)
 	rospy.wait_for_service(gazebo_namespace+'/unpause_physics')
-	rospy.loginfo("temporary hack to **fix** the -J joint position option (issue #93), sleeping for 1 second to avoid race condition.");
 	time.sleep(1)
 	unpause_physics = rospy.ServiceProxy(gazebo_namespace+'/unpause_physics', Empty)
-	rospy.loginfo("Calling service %s/unpause_physics"%gazebo_namespace)
 	resp = unpause_physics()
 	return
 
 if __name__ == "__main__":
+
 	rospy.init_node('goto0')
 	
-	# Define the variables
-	param_name              = ""
-	model_name              = ""
-	robot_name              = ""
-	gazebo_namespace        = "/gazebo"
-	joint_names             = []
-	joint_positions         = []
-	initial_pose            = Pose()
-	reference_frame         = "world"
-	model_xml               = ""
+	# Define the parameters
+	model_name                      = ""
+	robot_name                      = ""
+	gazebo_namespace                = "/gazebo"
+	joint_names                     = []
+	joint_positions                 = []
+	initial_xyz                     = [0,0,0]
+	initial_rpy                     = [0,0,0]
+	initial_pose                    = Pose()
+	reference_frame                 = "world"
+	model_xml                       = ""
+	srdf_data                       = ""
 
-
-	# Setting the parameters
-	model_name = rospy.get_param('~robot_model')
-	robot_name = rospy.get_param('~robot_name')
-	robot_description_name = '/%s/gazebo_robot_description'%(robot_name)
+	# Load the parameters
+	model_name  = rospy.get_param('~robot_model')
+	robot_name  = rospy.get_param('~robot_name')
+	
+	if rospy.has_param('~initial_xyz'):
+		initial_xyz = rospy.get_param('~initial_xyz')
+		initial_xyz = literal_eval(initial_xyz)
+	
+	if rospy.has_param('~initial_rpy'):
+		initial_rpy = rospy.get_param('~initial_rpy')
+		initial_rpy = literal_eval(initial_rpy)
+		
+	robot_description_name          = '/%s/gazebo_robot_description'%(robot_name)
 	robot_description_semantic_name = '/%s/robot_description_semantic'%(robot_name)
+	
+	if robot_name != '': 	# if the robot namespace is not empty use it as the model name as well 
+		model_name = robot_name
+
+	if not rospy.has_param(robot_description_name):
+		rospy.logerr("%s is not available", robot_description_name)
+		sys.exit(1)
+	else:
+		model_xml = rospy.get_param(robot_description_name)
+
+	if not rospy.has_param(robot_description_semantic_name):
+		rospy.logerr("%s is not available", robot_description_semantic_name)
+		sys.exit(1)
+	else:
+		srdf_data = rospy.get_param(robot_description_semantic_name)
+
 	# Wait for the spawn service
 	rospy.wait_for_service("/gazebo/spawn_urdf_model")
-	# Set the inital pose if available otherwise use an Identity
-	if rospy.has_param('/%s/wolf_controller/initial_pose_simulation'%(robot_name)):
-		initial_pose.position.x = rospy.get_param('/%s/wolf_controller/initial_pose_simulation/x'%(robot_name))
-		initial_pose.position.y = rospy.get_param('/%s/wolf_controller/initial_pose_simulation/y'%(robot_name))
-		initial_pose.position.z = rospy.get_param('/%s/wolf_controller/initial_pose_simulation/z'%(robot_name))
-		roll                    = rospy.get_param('/%s/wolf_controller/initial_pose_simulation/roll'%(robot_name))
-		pitch                   = rospy.get_param('/%s/wolf_controller/initial_pose_simulation/pitch'%(robot_name))
-		yaw                     = rospy.get_param('/%s/wolf_controller/initial_pose_simulation/yaw'%(robot_name))
-		quaternion = tf.transformations.quaternion_from_euler(roll, pitch, yaw)
-		initial_pose.orientation.x = quaternion[0]
-		initial_pose.orientation.y = quaternion[1]
-		initial_pose.orientation.z = quaternion[2]
-		initial_pose.orientation.w = quaternion[3]
-	# Spawn new model
-	model_xml = rospy.get_param(robot_description_name)
-	gazebo_interface.spawn_urdf_model_client(model_name, model_xml, robot_name, initial_pose, reference_frame, gazebo_namespace)
 
-	srdf_data = rospy.get_param(robot_description_semantic_name)
+	rospy.loginfo("spawning %s with pose [%s,%s,%s,%s,%s,%s]",model_name,initial_xyz[0],initial_xyz[1],initial_xyz[2],initial_rpy[0],initial_rpy[1],initial_rpy[2])
+	
+	# Retrieve initial pose
+	initial_pose.position.x = initial_xyz[0]
+	initial_pose.position.y = initial_xyz[1]
+	initial_pose.position.z = initial_xyz[2]
+	roll                    = initial_rpy[0]
+	pitch                   = initial_rpy[1]
+	yaw                     = initial_rpy[2]
+	quaternion = tf.transformations.quaternion_from_euler(roll, pitch, yaw)
+	initial_pose.orientation.x = quaternion[0]
+	initial_pose.orientation.y = quaternion[1]
+	initial_pose.orientation.z = quaternion[2]
+	initial_pose.orientation.w = quaternion[3]
+
+	# Spawn new model
+	gazebo_interface.spawn_urdf_model_client(model_name, model_xml, robot_name, initial_pose, reference_frame, gazebo_namespace)
 
 	robot = SRDF.from_xml_string(srdf_data)
 

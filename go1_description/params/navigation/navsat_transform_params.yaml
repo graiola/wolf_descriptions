@@ -7,5 +7,7 @@ publish_filtered_gps: true
 use_odometry_yaw: false
 transform_timeout: 0
 broadcast_cartesian_transform: true
+broadcast_cartesian_transform_as_parent_frame: true
+cartesian_frame_id: $(arg robot_name)/utm
 #wait_for_datum: true
 #datum: [57.0271186783, -115.427082692, 0.0]
