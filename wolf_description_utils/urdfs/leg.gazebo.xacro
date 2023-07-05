@@ -57,6 +57,7 @@
 			<mu2>1.5</mu2>
 			<fdir1>1 0 0</fdir1>
 			<maxVel>1.0</maxVel>
+                        <maxContacts>1</maxContacts>
 			<minDepth>0.00</minDepth>
 		</gazebo>
 
@@ -87,7 +88,7 @@
                         <mu1>1.0</mu1>
                         <mu2>1.0</mu2>
                         <maxVel>1.0</maxVel>
-			<maxContacts>1</maxContacts>
+                        <maxContacts>1</maxContacts>
                         <sensor name="${prefix}_foot_contact_sensor" type="contact">
 				<always_on>true</always_on>
 				<update_rate>250.0</update_rate>
