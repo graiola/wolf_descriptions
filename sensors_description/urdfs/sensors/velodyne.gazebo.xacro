@@ -38,7 +38,7 @@
 					<frameName>${frame_name}</frameName>
 					<hokuyoMinIntensity>101</hokuyoMinIntensity>
                                 </plugin>-->
-                                <plugin name="${link_name}_controller" filename="libgazebo_ros_velodyne_laser.so">
+                                <plugin name="${link_name}_controller" filename="libgazebo_ros_velodyne_gpu_laser.so">
                                     <gaussianNoise>0.005</gaussianNoise>
                                     <updateRate>${update_rate}</updateRate>
                                     <topicName>/${lidar_name}/velodyne_points</topicName>
