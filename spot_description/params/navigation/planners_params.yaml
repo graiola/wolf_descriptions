@@ -119,10 +119,10 @@ TebLocalPlannerROS:
   shrink_horizon_min_duration: 20
 
   # Robot
-  max_vel_x: 0.75
+  max_vel_x: $(arg max_vel_x)
   max_vel_x_backwards: 0.15
-  max_vel_theta: 0.785
-  max_vel_y: 0.5
+  max_vel_theta: $(arg max_vel_yaw)
+  max_vel_y: $(arg max_vel_y)
   acc_lim_y: 0.2
   acc_lim_x: 0.2
   acc_lim_theta: 0.2
