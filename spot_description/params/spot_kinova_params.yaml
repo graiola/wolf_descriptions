@@ -3,8 +3,10 @@ wolf_controller:
   default_duty_factor: 0.3
   default_swing_frequency: 4.5
   default_contact_threshold: 30.0
-  default_base_linear_velocity: 0.5
-  default_base_angular_velocity: 0.45
+  default_base_linear_velocity_x: $(arg max_vel_x)
+  default_base_linear_velocity_y: $(arg max_vel_y)
+  default_base_linear_velocity_z: $(arg max_vel_z)
+  default_base_angular_velocity:  $(arg max_vel_yaw)
   default_step_height: 0.08
   max_step_height: 0.15
   max_step_length: 0.5
@@ -17,11 +19,16 @@ wolf_controller:
   estimation_orientation_type: ground_truth
   activate_step_reflex: true
   activate_push_recovery: true
+  publish_odom_msg: $(arg publish_odom_msg)
+  publish_odom_tf: $(arg publish_odom_tf)
+  use_contact_sensors: false
+  min_forces_weight: 0.001
+  min_qddot_weight: 0.01
 
   gains:
 
       Kp_arm: {j0: 50.0, j1: 50.0, j2: 50.0, j3: 50.0}
-      Kd_arm: {j0: 1.0, j1: 1.0, j2: 1.0, j3: 1.0}
+      Kd_arm: {j0: 1.0,  j1: 1.0,  j2: 1.0,  j3: 1.0}
       Kp_leg: {haa: 1.0, hfe: 1.0, kfe: 1.0}
       Kd_leg: {haa: 0.1, hfe: 0.1, kfe: 0.01}
 

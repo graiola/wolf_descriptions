@@ -1,9 +1,18 @@
 <?xml version="1.0" ?>
 <robot name="spot" xmlns:xacro="http://ros.org/wiki/xacro">
 
-    <group name="base">
-      <link name="base_link"/>
-    </group>
+   <group name="base">
+     <link name="base_link"/>
+   </group>
+   <group name="imu"> <!-- where the imu sensor is mounted -->
+     <link name="trunk_imu"/>
+   </group>
+   <group name="contacts"> <!-- where the contact sensors are mounted -->
+     <link name="lf_foot"/>
+     <link name="rf_foot"/>
+     <link name="lh_foot"/>
+     <link name="rh_foot"/>
+   </group>
     <group name="kinova_arm">
       <chain base_link="kinova_link_base" tip_link="kinova_end_effector"/>
       <joint name="kinova_joint_1"/>
