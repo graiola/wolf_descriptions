@@ -122,8 +122,8 @@ TebLocalPlannerROS:
   max_vel_x: $(arg max_vel_x)
   max_vel_x_backwards: 0.15
   max_vel_theta: $(arg max_vel_yaw)
-  max_vel_y: $(arg max_vel_y)
-  acc_lim_y: 0.2
+  max_vel_y: 0.0
+  acc_lim_y: 0.0
   acc_lim_x: 0.2
   acc_lim_theta: 0.2
   min_turning_radius: 0.0
