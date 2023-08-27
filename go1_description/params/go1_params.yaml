@@ -2,14 +2,15 @@ wolf_controller:
   type: wolf_controller/Controller
   default_duty_factor: 0.2
   default_swing_frequency: 5.0
-  default_contact_threshold: 30.0
+  default_contact_threshold: 15.0
   default_base_linear_velocity_x: $(arg max_vel_x)
   default_base_linear_velocity_y: $(arg max_vel_y)
   default_base_linear_velocity_z: $(arg max_vel_z)
   default_base_angular_velocity:  $(arg max_vel_yaw)
-  default_step_height: 0.065
-  max_step_height: 0.15
-  max_step_length: 0.15
+  default_step_height: 0.07
+  default_push_recovery_sensibility: 0.5
+  max_step_height: 0.25
+  max_step_length: 0.5
   max_base_height: 0.35
   max_base_roll: 0.523
   min_base_roll: -0.523
