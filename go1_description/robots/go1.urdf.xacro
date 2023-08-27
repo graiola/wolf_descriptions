@@ -127,6 +127,19 @@
         </collision>
     </link>
 
+    <joint name="lidar_cage_to_lidar" type="fixed">
+        <parent link="trunk"/>
+        <child link="rslidar"/>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.05"/>
+    </joint>
+    <link name="rslidar">
+        <inertial>
+            <origin rpy="0.0 0.0 0.0" xyz="-0.012 0.001 -0.008"/>
+            <mass value="0.695"/>
+            <inertia ixx="0.000846765" ixy="6.9565e-05" ixz="0.00027111" iyy="0.001367583" iyz="5.8984e-05" izz="0.001363673"/>
+        </inertial>
+    </link>
+
     <xacro:leg name="rf" mirror="-1" mirror_dae= "False" front_hind="1" front_hind_dae="True">
         <origin rpy="0 0 0" xyz="${leg_offset_x} ${-leg_offset_y} 0"/>
     </xacro:leg>

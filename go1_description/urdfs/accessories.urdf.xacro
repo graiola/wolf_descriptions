@@ -66,19 +66,6 @@
     <origin xyz="0.3 0 0.05" rpy="0 0.24 0" />
   </xacro:realsense_T265>
 
-  <joint name="lidar_cage_to_lidar" type="fixed">
-      <parent link="trunk"/>
-      <child link="rslidar"/>
-      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.05"/>
-  </joint>
-  <link name="rslidar">
-      <inertial>
-          <origin rpy="0.0 0.0 0.0" xyz="-0.012 0.001 -0.008"/>
-          <mass value="0.695"/>
-          <inertia ixx="0.000846765" ixy="6.9565e-05" ixz="0.00027111" iyy="0.001367583" iyz="5.8984e-05" izz="0.001363673"/>
-      </inertial>
-  </link>
-
   <xacro:VLP-16 parent="rslidar" name="rslidar-16" topic="/$(arg robot_name)/rslidar_points"
                 organize_cloud="true" hz="10" gpu="true">
     <origin xyz="0 0 0" rpy="0 0 0" />
