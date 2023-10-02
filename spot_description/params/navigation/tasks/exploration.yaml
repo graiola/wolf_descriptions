@@ -10,3 +10,4 @@ exploration:
   gain_scale value: 1.0
   transform_tolerance: 2.0
   min_frontier_size: 0.75
+  save_path: "/tmp"
