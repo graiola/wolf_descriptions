@@ -1,0 +1,4 @@
+goto:
+  task_gui: $(arg task_gui)
+  tf_prefix: "$(arg robot_name)"
+  gps_topic: "/$(arg robot_name)/gps/filtered"
