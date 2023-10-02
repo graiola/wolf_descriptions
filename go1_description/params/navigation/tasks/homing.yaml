@@ -1,0 +1,11 @@
+homing:
+  task_gui: $(arg task_gui)
+  battery_control: true
+  battery_level_trigger: 10.0
+  battery_topic: "/$(arg robot_name)/battery_state"
+  home_topic: "/$(arg robot_name)/home"
+  robot_base_frame: $(arg base_frame)
+  costmap_topic: "/$(arg robot_name)/map"
+  costmap_updates_topic: "/$(arg robot_name)/map_updates"
+  transform_tolerance: 2.0
+  tf_prefix: "$(arg robot_name)"

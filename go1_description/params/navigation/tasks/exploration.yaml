@@ -1,0 +1,13 @@
+exploration:
+  task_gui: $(arg task_gui)
+  robot_base_frame: $(arg base_frame)
+  costmap_topic: "/$(arg robot_name)/map"
+  costmap_updates_topic: "/$(arg robot_name)/map_updates"
+  visualize: true
+  progress_timeout: 30.0
+  potential_scale: 3.0
+  orientation_scale: 0.0
+  gain_scale value: 1.0
+  transform_tolerance: 2.0
+  min_frontier_size: 0.75
+  save_path: "/tmp"
