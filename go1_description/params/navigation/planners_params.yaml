@@ -65,15 +65,15 @@ TebLocalPlannerROS:
   dt_hysteresis: 0.1
   min_samples: 3
   global_plan_viapoint_sep: -1 # negative, do not use viapoints. positive, use them. the actual value does not matter
-  max_global_plan_lookahead_dist: 10.0
+  max_global_plan_lookahead_dist: 3.0
   global_plan_overwrite_orientation: false # Overwrite orientation of local subgoals provided by the global planner.
   force_reinit_new_goal_dist: 1.0
-  feasibility_check_no_poses: 5
+  feasibility_check_no_poses: 4
   publish_feedback: false
   shrink_horizon_backup: true
   allow_init_with_backwards_motion: true # If true, the underlying trajectories might be initialized with backwards motions in case the goal is behind the start within the local costmap (this is only recommended if the robot is equipped with rear sensors)
   exact_arc_length: false
-  shrink_horizon_min_duration: 20
+  shrink_horizon_min_duration: 10
 
   # Robot
   max_vel_x: $(arg max_vel_x)
