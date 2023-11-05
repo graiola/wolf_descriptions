@@ -7,22 +7,21 @@
 
 	<gazebo>
 		<plugin name="gazebo_ros_controller_manager" filename="libgazebo_ros_control.so">
-                        <robotNamespace>$(arg robot_name)</robotNamespace>
-                        <robotSimType>wolf_gazebo_interface/WolfRobotHwSim</robotSimType>
-                        <controlPeriod>$(arg period)</controlPeriod>
+            <robotNamespace>$(arg robot_name)</robotNamespace>
+            <robotSimType>wolf_gazebo_interface/WolfRobotHwSim</robotSimType>
+            <controlPeriod>$(arg period)</controlPeriod>
 		</plugin>
-
-              <plugin filename="libgazebo_ros_p3d.so" name="ground_truth">
-                        <robotNamespace>$(arg robot_name)</robotNamespace>
-                        <bodyName>$(arg base_name)</bodyName>
+    	<plugin filename="libgazebo_ros_p3d.so" name="ground_truth">
+            <robotNamespace>$(arg robot_name)</robotNamespace>
+            <bodyName>$(arg base_name)</bodyName>
 			<topicName>ground_truth</topicName>
 			<frameName>world</frameName>
 			<xyzOffsets>0 0 0</xyzOffsets>
 			<rpyOffsets>0 0 0</rpyOffsets>
 			<gaussianNoise>0</gaussianNoise>
 			<alwaysOn>true</alwaysOn>
-                        <updateRate>${1/ $(arg period)}</updateRate>
-                </plugin>
+            <updateRate>${1/ $(arg period)}</updateRate>
+        </plugin>
 	</gazebo>
 
 </robot>
