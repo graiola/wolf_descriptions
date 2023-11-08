@@ -131,9 +131,11 @@ Some robots have been tuned better than others, please don't be sad if your favo
 At the moment, the robots we feel more confident with are:
 
 - Spot
-- Aliengo
+- Go1
 
 Feel free to tune and share your parameters with us if you feel they improve the control of a specific robot :)
+
+Extra robot descriptions are available [here](https://github.com/graiola/wolf_extra_descriptions).
 
 ## Legal notes
 
