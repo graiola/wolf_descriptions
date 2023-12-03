@@ -7,7 +7,7 @@ wolf_controller:
   default_base_linear_velocity_y: $(arg max_vel_y)
   default_base_linear_velocity_z: $(arg max_vel_z)
   default_base_angular_velocity:  $(arg max_vel_yaw)
-  default_step_height: 0.15
+  default_step_height: 0.2
   default_push_recovery_sensibility: 0.5
   max_step_height: 0.3
   max_step_length: 0.7
@@ -23,8 +23,8 @@ wolf_controller:
   publish_odom_msg: $(arg publish_odom_msg)
   publish_odom_tf: $(arg publish_odom_tf)
   use_contact_sensors: false
-  min_forces_weight: 0.001
-  min_qddot_weight: 0.01
+  min_forces_weight: 0.01
+  min_qddot_weight: 0.1
 
   gains:
 
@@ -33,29 +33,29 @@ wolf_controller:
 
       lf_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
-          Kd: {x: 15.0, y: 15.0, z: 15.0, roll: 0, pitch: 0, yaw: 0}
+          Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0, pitch: 0, yaw: 0}
           weight: 100.0
       rf_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
-          Kd: {x: 15.0, y: 15.0, z: 15.0, roll: 0, pitch: 0, yaw: 0}
+          Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0, pitch: 0, yaw: 0}
           weight: 100.0
       rh_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
-          Kd: {x: 15.0, y: 15.0, z: 15.0, roll: 0, pitch: 0, yaw: 0}
+          Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0, pitch: 0, yaw: 0}
           weight: 100.0
       lh_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
-          Kd: {x: 15.0, y: 15.0, z: 15.0, roll: 0, pitch: 0, yaw: 0}
+          Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0, pitch: 0, yaw: 0}
           weight: 100.0
 
       waist:
           Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 240.0, pitch: 140.0, yaw: 80.0}
-          Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 50.0, pitch: 30.0, yaw: 16.0}
+          Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 31.0, pitch: 23.0, yaw: 18.0}
           weight: 1.0
 
       CoM:
-          Kp: {x: 200.0, y: 200.0, z: 200.0}
-          Kd: {x: 50.0, y: 50.0, z: 50.0}
+          Kp: {x: 100.0, y: 100.0, z: 100.0}
+          Kd: {x: 20.0, y: 20.0, z: 20.0}
           weight: 1.0
 
       angular_momentum:
