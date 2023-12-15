@@ -23,8 +23,8 @@ wolf_controller:
   publish_odom_msg: $(arg publish_odom_msg)
   publish_odom_tf: $(arg publish_odom_tf)
   use_contact_sensors: false
-  min_forces_weight: 0.001
-  min_qddot_weight: 0.01
+  min_forces_weight: 0.01
+  min_qddot_weight: 0.1
 
   gains:
 
