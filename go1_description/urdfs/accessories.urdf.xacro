@@ -66,7 +66,7 @@
     <origin xyz="0.3 0 0.05" rpy="0 0.24 0" />
   </xacro:realsense_T265>
 
-  <xacro:VLP-16 parent="rslidar" name="rslidar-16" topic="/$(arg robot_name)/rslidar_points"
+  <xacro:VLP-16 parent="rslidar" name="rslidar-16" topic="/$(arg robot_name)/lidar_points"
                 organize_cloud="true" hz="10" gpu="true">
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:VLP-16>
