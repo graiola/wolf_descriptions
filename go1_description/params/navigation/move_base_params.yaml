@@ -32,3 +32,11 @@ recovery_behaviors:
     type: rotate_recovery/RotateRecovery
   - name: clear_costmap_recovery
     type: clear_costmap_recovery/ClearCostmapRecovery
+
+planners:
+  - name: NavfnROS
+    type: navfn/NavfnROS
+
+controllers:
+  - name: TebLocalPlannerROS
+    type: teb_local_planner/TebLocalPlannerROS
