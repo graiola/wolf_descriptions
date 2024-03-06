@@ -11,10 +11,10 @@
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/imu.gazebo.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/gps.gazebo.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_d435.urdf.xacro" />
-<!-- Comment out to save computational power -->
+  <!-- Comment out to save computational power -->
 
-  <xacro:realsense_d435 name="d435" topics_ns="/camera" parent="trunk">
-	<origin xyz="0.04 0 0.15" rpy="0 0.3 0" />
+  <xacro:realsense_d435 name="d435" topics_ns="/$(arg robot_name)/d435" parent="trunk">
+      <origin xyz="0.04 0 0.15" rpy="0 0.3 0" />
   </xacro:realsense_d435>
 
   <xacro:depthCamera camID="1" name="face">
@@ -68,10 +68,9 @@
       <origin rpy="0 0 0" xyz="0.2747 0.0 -0.0088"/>
   </xacro:ultraSound>
 
-
-  <!--xacro:realsense_T265 name="t265" topics_ns="/$(arg robot_name)" parent="trunk" rate="30.0">
+  <xacro:realsense_T265 name="t265" topics_ns="/$(arg robot_name)" parent="trunk" rate="30.0">
     <origin xyz="0.3 0 0.05" rpy="0 0.24 0" />
-  </xacro:realsense_T265-->
+  </xacro:realsense_T265>
 
   <xacro:VLP-16 parent="rslidar" name="rslidar-16" topic="/$(arg robot_name)/lidar_points"
                 organize_cloud="true" hz="10" gpu="true">
