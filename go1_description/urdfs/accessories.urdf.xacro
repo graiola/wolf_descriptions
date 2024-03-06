@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+
+
   <xacro:include filename="$(find sensors_description)/urdfs/common.xacro"/>
   <xacro:include filename="$(find go1_description)/urdfs/ultraSound.xacro"/>
   <xacro:include filename="$(find go1_description)/urdfs/depthCamera.xacro"/>
@@ -12,7 +14,7 @@
 <!-- Comment out to save computational power -->
 
   <xacro:realsense_d435 name="d435" topics_ns="/camera" parent="trunk">
-	<origin xyz="0.25 0 0.08" rpy="0 0.3 0" />
+	<origin xyz="0.04 0 0.15" rpy="0 0.3 0" />
   </xacro:realsense_d435>
 
   <xacro:depthCamera camID="1" name="face">
