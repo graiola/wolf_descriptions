@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-
-
   <xacro:include filename="$(find sensors_description)/urdfs/common.xacro"/>
   <xacro:include filename="$(find go1_description)/urdfs/ultraSound.xacro"/>
   <xacro:include filename="$(find go1_description)/urdfs/depthCamera.xacro"/>
@@ -11,12 +9,13 @@
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/imu.gazebo.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/gps.gazebo.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_d435.urdf.xacro" />
-  <!-- Comment out to save computational power -->
 
   <xacro:realsense_d435 name="d435" topics_ns="/$(arg robot_name)/d435" parent="trunk">
       <origin xyz="0.04 0 0.15" rpy="0 0.3 0" />
   </xacro:realsense_d435>
 
+ <!-- Comment out to save computational power -->
+ <!--
   <xacro:depthCamera camID="1" name="face">
       <origin rpy="${PI} 0 0" xyz="0.2785 0.0125 0.0167"/>
   </xacro:depthCamera>
@@ -36,7 +35,6 @@
   <xacro:depthCamera camID="5" name="rearDown">
       <origin rpy="${PI} ${PI/2} 0" xyz="-0.0825 0.0125 -0.04365"/>
   </xacro:depthCamera>
-
 
   <joint name="camera_laserscan_joint_left" type="fixed">
       <origin rpy="0 0.2618 0" xyz="0 0 0"/>
@@ -67,6 +65,7 @@
   <xacro:ultraSound name="face">
       <origin rpy="0 0 0" xyz="0.2747 0.0 -0.0088"/>
   </xacro:ultraSound>
+   -->
 
   <xacro:realsense_T265 name="t265" topics_ns="/$(arg robot_name)" parent="trunk" rate="30.0">
     <origin xyz="0.3 0 0.05" rpy="0 0.24 0" />
