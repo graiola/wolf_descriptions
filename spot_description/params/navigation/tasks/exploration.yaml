@@ -4,6 +4,7 @@ exploration:
   costmap_topic: "/$(arg robot_name)/map"
   costmap_updates_topic: "/$(arg robot_name)/map_updates"
   visualize: true
+  use_bfs: true
   progress_timeout: 30.0
   potential_scale: 3.0
   orientation_scale: 0.0
