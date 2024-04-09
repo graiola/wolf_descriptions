@@ -12,6 +12,27 @@ GlobalPlanner:
   allow_unknown: true # Specifies whether or not to allow navfn to create plans that traverse unknown space.
   default_tolerance: 0.1 # A tolerance on the goal point for the planner.
 
+# ----- wolf_astar_planner/WolfAstarPlanner -----
+WolfAstarPlanner:
+  fixed_frame: $(arg prefix)$(arg global_frame)
+  occupancy_map_resolution: 0.3
+  travelcost_map_resolution: 0.3
+  offground_threshold: 0.3
+  sta_threshold: 1
+  debug_output: false
+  truncation_distance: 1.5
+  min_height: 0.0
+  max_height: 100.0
+  step_height: 0.1
+  snowproj_radius: 0.4
+  snowproj_angle: 0.4
+  enable_snowproj: false
+  enable_griddrop_surfel: true
+  enable_ransac_surfel: false
+  enable_astar_expand: false
+  enable_zcost: true
+  globalcloud_topic: $(arg prefix)/map_3d
+
 # **************************** Local planners ****************************
 
 # ----- base_local_planner/TrajectoryPlannerROS -----
