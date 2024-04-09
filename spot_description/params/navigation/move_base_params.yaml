@@ -1,4 +1,4 @@
-controller_frequency: 20.0        # The rate in Hz at which to run the control loop and send velocity commands to the base.
+controller_frequency: 10.0        # The rate in Hz at which to run the control loop and send velocity commands to the base.
 
 controller_patience: 15.0         # How long the controller will wait in seconds
                                   # without receiving a valid control before space-clearing
