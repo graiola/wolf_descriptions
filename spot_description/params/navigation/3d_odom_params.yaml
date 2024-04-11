@@ -8,7 +8,7 @@ print_diagnostics: true
 # Imu
 imu0_config: [false, false, false, # x,   y,   z
               true,  true,  true,  # r,   p,   w (yaw)
-              true,  true,  true,  # dx,  dy,  dz
+              false, false, false,  # dx,  dy,  dz
               true,  true,  true,  # dr,  dp,  dw
               true,  true,  true]  # ddx, ddy, ddz
 imu0_differential: false
