@@ -19,15 +19,15 @@ WolfAstarPlanner:
   travelcost_map_resolution: 0.3
   offground_threshold: 0.3
   sta_threshold: 1
-  debug_output: false
+  debug_output: true
   truncation_distance: 1.5
   min_height: 0.0
   max_height: 100.0
   step_height: 0.1
   snowproj_radius: 0.4
-  snowproj_angle: 0.4
-  enable_snowproj: false
-  enable_griddrop_surfel: true
+  snowproj_angle: 0.5 # ~30degrees
+  enable_snowproj: true
+  enable_griddrop_surfel: false
   enable_ransac_surfel: false
   enable_astar_expand: false
   enable_zcost: true
@@ -160,7 +160,7 @@ TebLocalPlannerROS:
   free_goal_vel: false
 
   # Obstacles
-  min_obstacle_dist: 0.25 # minimum distance to obstacle: it depends on the footprint_model
+  min_obstacle_dist: 0.15 # minimum distance to obstacle: it depends on the footprint_model
   include_costmap_obstacles: true # use the local costmap
   include_dynamic_obstacles: true
   costmap_obstacles_behind_robot_dist: 1.0 # distance at which obstacles behind the robot are taken into account
@@ -189,7 +189,7 @@ TebLocalPlannerROS:
   weight_kinematics_forward_drive: 50 # prefer forward driving, for differential
   weight_kinematics_turning_radius: 1 # prefer turns that respect the min_turning_radius, not used if differential (min_turning_radius = 0)
   weight_optimaltime: 10 # prefer trajectories with less transition time
-  weight_obstacle: 50 # prefer trajectories that respect the min_obstacle_dist
+  weight_obstacle: 2 # prefer trajectories that respect the min_obstacle_dist
   weight_inflation: 1 # prefer trajectories that respect the inflation of the obstacles
   #weight_dynamic_obstacle: 10 # not in use yet
   weight_viapoint: 100 # prefer trajectories that respect the viapoints in the global path
