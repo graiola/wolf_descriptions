@@ -31,7 +31,7 @@ WolfAstarPlanner:
   enable_ransac_surfel: false
   enable_astar_expand: false
   enable_zcost: false
-  globalcloud_topic: $(arg prefix)/map_3d
+  globalcloud_topic: /$(arg prefix)map_3d
 
 # **************************** Local planners ****************************
 
