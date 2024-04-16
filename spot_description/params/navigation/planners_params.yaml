@@ -20,17 +20,15 @@ WolfAstarPlanner:
   offground_threshold: 0.3
   sta_threshold: 1
   debug_output: false
-  truncation_distance: 1.5
-  min_height: 0.0
-  max_height: 100.0
+  truncation_distance: 0.3
+  robot_height: 0.5
   step_height: 0.1
   snowproj_radius: 0.4
   snowproj_angle: $(arg max_slope)
   enable_snowproj: true
-  enable_griddrop_surfel: false
-  enable_ransac_surfel: false
+  enable_griddrop_surfel: true
   enable_astar_expand: false
-  enable_zcost: false
+  enable_zcost: true
   globalcloud_topic: /$(arg prefix)map_3d
 
 # **************************** Local planners ****************************
