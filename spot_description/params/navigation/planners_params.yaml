@@ -23,9 +23,9 @@ WolfAstarPlanner:
   truncation_distance: 0.3
   robot_height: 0.5
   step_height: 0.1
-  snowproj_radius: 0.4
-  snowproj_angle: $(arg max_slope)
-  enable_snowproj: true
+  slope_filter_radius: 0.4
+  slope_filter_angle: $(arg max_slope)
+  enable_slope_filter: true
   enable_griddrop_surfel: true
   enable_astar_expand: false
   enable_zcost: true
