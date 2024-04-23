@@ -11,7 +11,7 @@
     <xacro:arg name="floating_base_link" default="true"/>
     <xacro:arg name="robot_model"        default="go1"/>
     <xacro:arg name="robot_name"         default=""/>
-    <xacro:arg name="base_name"          default="trunk"/>
+    <xacro:arg name="base_name"          default="base_link"/>
 
     <!-- load generic materials -->
     <xacro:include filename="$(find wolf_description_utils)/urdfs/materials.xacro"/>
@@ -35,11 +35,11 @@
             <joint name="floating_base_joint" type="floating">
               <origin rpy="0 0 0" xyz="0 0 0"/>
               <parent link="world"/>
-              <child link="trunk"/>
+              <child link="base_link"/>
             </joint>
     </xacro:if>
 
-    <link name="trunk">
+    <link name="base_link">
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
@@ -71,7 +71,7 @@
 
     <xacro:if value="${(rolloverProtection == 'true')}">
         <joint name="stick_joint" type="fixed">
-            <parent link="trunk"/>
+            <parent link="base_link"/>
             <child link="stick_link"/>
             <origin rpy="0 0 0" xyz="${0.18} 0 ${stick_length/2.0+0.08}"/>
         </joint>
@@ -101,7 +101,7 @@
     </xacro:if>
 
     <joint name="imu_joint" type="fixed">
-        <parent link="trunk"/>
+        <parent link="base_link"/>
         <child link="trunk_imu"/>
         <origin rpy="0 0 0" xyz="-0.01592 -0.06659 -0.00617"/>
     </joint>
@@ -128,11 +128,11 @@
     </link>
 
     <joint name="lidar_cage_to_lidar" type="fixed">
-        <parent link="trunk"/>
-        <child link="rslidar"/>
+        <parent link="base_link"/>
+        <child link="lidar_mount"/>
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.05"/>
     </joint>
-    <link name="rslidar">
+    <link name="lidar_mount">
         <inertial>
             <origin rpy="0.0 0.0 0.0" xyz="-0.012 0.001 -0.008"/>
             <mass value="0.695"/>

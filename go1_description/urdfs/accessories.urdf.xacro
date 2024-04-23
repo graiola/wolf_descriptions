@@ -10,7 +10,7 @@
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/gps.gazebo.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_d435.urdf.xacro" />
 
-  <xacro:realsense_d435 name="d435" topics_ns="/$(arg robot_name)/d435" parent="trunk">
+  <xacro:realsense_d435 name="d435" topics_ns="/$(arg robot_name)/d435" parent="base_link">
       <origin xyz="0.14 0 0.15" rpy="0 0.3 0" />
   </xacro:realsense_d435>
 
@@ -67,11 +67,11 @@
   </xacro:ultraSound>
    -->
 
-  <xacro:realsense_T265 name="t265" topics_ns="/$(arg robot_name)" parent="trunk" rate="30.0">
+  <xacro:realsense_T265 name="t265" topics_ns="/$(arg robot_name)" parent="base_link" rate="30.0">
     <origin xyz="0.3 0 0.05" rpy="0 0.24 0" />
   </xacro:realsense_T265>
 
-  <xacro:VLP-16 parent="rslidar" name="rslidar-16" topic="/$(arg robot_name)/lidar_points"
+  <xacro:VLP-16 parent="lidar_mount" name="rslidar" topic="/$(arg robot_name)/lidar_points"
                 organize_cloud="true" hz="10" gpu="true">
     <origin xyz="0.1 0 0" rpy="0 0 0" />
   </xacro:VLP-16>
@@ -96,7 +96,7 @@
       gps_topic="fix"
       vel_topic="velocity_fix"
       namespace="$(arg robot_name)"
-      frame_name="trunk"
+      frame_name="base_link"
       update_rate="10.0">
   </xacro:gps_sensor>
 

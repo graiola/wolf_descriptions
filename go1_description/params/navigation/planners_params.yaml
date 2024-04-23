@@ -6,6 +6,25 @@ NavfnROS:
   allow_unknown: true # Specifies whether or not to allow navfn to create plans that traverse unknown space.
   default_tolerance: 0.1 # A tolerance on the goal point for the planner.
 
+# ----- wolf_astar_planner/WolfAstarPlanner -----
+WolfAstarPlanner:
+  fixed_frame: $(arg prefix)$(arg global_frame)
+  occupancy_map_resolution: 0.3
+  travelcost_map_resolution: 0.3
+  offground_threshold: 0.3
+  sta_threshold: 1
+  debug_output: false
+  truncation_distance: 0.1
+  robot_height: 0.35
+  step_height: 0.1
+  slope_filter_radius: 0.4
+  slope_filter_angle: $(arg max_slope)
+  enable_slope_filter: true
+  enable_griddrop_surfel: false
+  enable_astar_expand: false
+  enable_zcost: true
+  globalcloud_topic: /$(arg prefix)map_3d
+
 # **************************** Local planners ****************************
 
 # ----- dwa_local_planner/DWAPlannerROS -----
