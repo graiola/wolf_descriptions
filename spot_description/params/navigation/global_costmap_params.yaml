@@ -2,7 +2,6 @@ global_costmap:
   global_frame: $(arg prefix)$(arg global_frame)
   rolling_window: false
   resolution: 0.05
-  #lethal_cost_threshold: 75.0
 
   inflation_layer:
     inflation_radius: 0.75
@@ -11,15 +10,23 @@ global_costmap:
   static_layer:
     map_topic: $(arg prefix)$(arg global_frame)
     subscribe_to_updates: true
-    track_unknown_space: false
+    track_unknown_space: true
 
   obstacle_layer:
-    obstacle_range: 10.0
-    raytrace_range: 11.0
-    track_unknown_space: false # false needed for enabling global path planning through unknown space
-    footprint_clearing_enabled: false
+    obstacle_range: 12.0
+    raytrace_range: 15.0
+    track_unknown_space: true # true needed for disabling global path planning through unknown space
+    footprint_clearing_enabled: true
     observation_sources: laser_scan_sensor
-    laser_scan_sensor: {sensor_frame: $(arg prefix)$(arg base_frame), data_type: LaserScan, topic: $(arg prefix)$(arg scan_topic), marking: true, clearing: true, inf_is_valid: true}
+    laser_scan_sensor:
+      sensor_frame: $(arg prefix)$(arg stabilized_frame)
+      data_type: LaserScan
+      topic: $(arg prefix)$(arg scan_topic)
+      marking: true
+      clearing: true
+      inf_is_valid: true
+      min_obstacle_height: $(arg min_obs_height)
+      max_obstacle_height: $(arg max_obs_height)
 
   plugins:
     - name: obstacle_layer
