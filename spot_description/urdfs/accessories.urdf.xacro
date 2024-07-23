@@ -79,7 +79,7 @@
         <origin xyz="0 0 0" rpy="0 0 0" />
       </xacro:VLP-16>
 
-      <xacro:realsense_d435 name="d435" topics_ns="/$(arg robot_name)/d435" parent="front_rail">
+      <xacro:realsense_d435 name="camera" topics_ns="/$(arg robot_name)/camera" parent="front_rail">
         <origin xyz="0.13 0 0" rpy="0 0 0" />
       </xacro:realsense_d435>
 
