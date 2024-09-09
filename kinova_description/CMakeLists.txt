@@ -1,13 +1,23 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 project(kinova_description)
 
-find_package(catkin REQUIRED)
+# ROS
+find_package(catkin QUIET)
+find_package(ament_cmake QUIET)
 
-catkin_package()
+if(${catkin_FOUND})
+    catkin_package()
+elseif(${ament_cmake_FOUND})
+    ament_package()
+endif()
 
-install(DIRECTORY launch urdf DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
-install(DIRECTORY meshes
-   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+install(DIRECTORY urdf/
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/urdf)
+
+install(DIRECTORY launch/
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/launch)
+
+install(DIRECTORY meshes/
+   DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/meshes
    FILES_MATCHING PATTERN "*.dae"
  )
-#install(DIRECTORY config DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

@@ -1,21 +1,21 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.5)
 project(wolf_description_utils)
 
-find_package(catkin REQUIRED)
+# ROS
+find_package(catkin QUIET)
+find_package(ament_cmake QUIET)
 
-catkin_package()
+if(${catkin_FOUND})
+    catkin_package()
+elseif(${ament_cmake_FOUND})
+    ament_package()
+endif()
 
 install(DIRECTORY launch/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
-  PATTERN ".svn" EXCLUDE)
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/launch)
 
 install(DIRECTORY urdfs/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/urdfs
-  PATTERN ".svn" EXCLUDE)
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/urdfs)
 
-catkin_install_python(PROGRAMS scripts/go0
-   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
-install(PROGRAMS scripts/create_urdf_model.sh scripts/create_gazebo_model.sh
-        DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}/scripts
-        )
+install(PROGRAMS scripts/go0 scripts/create_urdf_model.sh scripts/create_gazebo_model.sh
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME})

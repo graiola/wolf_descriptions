@@ -1,70 +1,52 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.5)
 project(sensors_description)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_package(catkin REQUIRED COMPONENTS
-             roscpp
-             std_msgs
-             sensor_msgs
-             gazebo_ros
-             geometry_msgs
-             gazebo_plugins
-             image_transport
-             camera_info_manager
-             tf
-)
+# ROS
+find_package(catkin QUIET)
+find_package(ament_cmake QUIET)
 
+if(${catkin_FOUND})
+    catkin_package()
+    add_definitions(-DROS)
+    set(ROS_VERSION ros)
+elseif(${ament_cmake_FOUND})
+    ament_package()
+    add_definitions(-DROS2)
+    set(ROS_VERSION ros2)
+endif()
+
+find_package(camera_info_manager REQUIRED)
+find_package(sensor_msgs REQUIRED)
 find_package(gazebo REQUIRED)
 
-catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES drcsim_gazebo_ros_plugins
-  CATKIN_DEPENDS gazebo_plugins
-#  DEPENDS system_lib
-)
-
-find_package(PkgConfig)
-pkg_check_modules(OGRE OGRE)
-
 include_directories(
-  ${PROJECT_SOURCE_DIR}/include
-  ${catkin_INCLUDE_DIRS}
+  include/${ROS_VERSION}
+  ${camera_info_manager_INCLUDE_DIRS}
+  ${sensor_msgs_INCLUDE_DIRS}
   ${GAZEBO_INCLUDE_DIRS}
-  ${OGRE_INCLUDE_DIRS}/Paging
-  ${OGRE_INCLUDE_DIRS}/Terrain
-)
-
-link_directories(
-  ${GAZEBO_LIBRARY_DIRS}
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 
-## Declare a cpp library
-add_library(MultiSenseSLPlugin src/MultiSenseSLPlugin.cpp)
-#target_link_libraries(MultiSenseSLPlugin ${catkin_LIBRARIES})
 add_library(RealsenseGazeboPlugin
-    src/RealSensePlugin.cpp
-    src/gazebo_ros_realsense.cpp)
-target_link_libraries(RealsenseGazeboPlugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+    src/${ROS_VERSION}/RealSensePlugin.cpp
+    src/${ROS_VERSION}/gazebo_ros_realsense.cpp)
+target_link_libraries(RealsenseGazeboPlugin ${camera_info_manager_LIBRARIES} ${GAZEBO_LIBRARIES})
 
-install(TARGETS MultiSenseSLPlugin RealsenseGazeboPlugin
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-  )
+install(TARGETS RealsenseGazeboPlugin
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
 
 install(DIRECTORY meshes/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/meshes
-  PATTERN ".svn" EXCLUDE)
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/meshes)
 
 install(DIRECTORY urdfs/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/urdfs
-  PATTERN ".svn" EXCLUDE)
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/urdfs)
 
 install(DIRECTORY launch/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
-  PATTERN ".svn" EXCLUDE)
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/launch)

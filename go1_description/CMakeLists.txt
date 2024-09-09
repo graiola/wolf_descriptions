@@ -1,22 +1,24 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 project(go1_description)
 
-find_package(catkin REQUIRED)
+# ROS
+find_package(catkin QUIET)
+find_package(ament_cmake QUIET)
 
-catkin_package()
+if(${catkin_FOUND})
+    catkin_package()
+elseif(${ament_cmake_FOUND})
+    ament_package()
+endif()
 
 install(DIRECTORY meshes/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/meshes
-  PATTERN ".svn" EXCLUDE)
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/meshes)
 
 install(DIRECTORY robots/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/robots
-  PATTERN ".svn" EXCLUDE)
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/robots)
 
 install(DIRECTORY urdfs/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/urdfs
-  PATTERN ".svn" EXCLUDE)
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/urdfs)
 
 install(DIRECTORY params/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/params
-  PATTERN ".svn" EXCLUDE)
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/params)
