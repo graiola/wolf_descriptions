@@ -15,22 +15,21 @@
     xmlns:physics="http://playerstage.sourceforge.net/gazebo/xmlschema/#physics"
 	xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<!-- links      		mesh_no
-   base           		0
-   shoulder       		1
-   arm            		2
-   forearm        		3
-   wrist          		4
-   arm_mico       		5
-   arm_half1 (7dof)		6
-   arm_half2 (7dof)		7
-   wrist_spherical_1  8
-   wrist_spherical_2  9
-
-   hand 3 finger  		55
-   hand_2finger   		56
-   finger_proximal		57
-   finger_distal      58
+<!-- links mesh_no
+   base 0
+   shoulder 1
+   arm 2
+   forearm 3
+   wrist 4
+   arm_mico 5
+   arm_half1 (7dof) 6
+   arm_half2 (7dof) 7
+   wrist_spherical_1 8
+   wrist_spherical_2 9
+   hand 3 finger 55
+   hand_2finger 56
+   finger_proximal 57
+   finger_distal 58
 -->
 
 <xacro:macro name="inertia_cylinder" params="mass height radius axis:=0">
