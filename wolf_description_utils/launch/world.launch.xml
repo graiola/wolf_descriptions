@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- These are the arguments you can pass this launch file, for example paused:=true -->
+    <arg name="sensors" default="false"/>
+    <arg name="robot_model" default="spot"/>
+    <arg name="robot_name" default=""/>
+    <arg name="paused" default="true"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+    <arg name="world_name" default="empty"/>
+    <arg name="period" default="0.001"/>
+    <arg name="arm_name" default=""/>
+    <arg name="engine" default="ode"/>
+    <arg name="world_file" default="$(find-pkg-share wolf_gazebo_resources)/worlds/$(var world_name).world"/>
+
+    <include file="$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py">
+        <arg name="world"  value="$(var world_file)"/>
+        <arg name="paused" value="$(var paused)"/>
+        <arg name="use_sim_time" value="$(var use_sim_time)"/>
+        <arg name="gui" value="$(var gui)"/>
+        <arg name="headless" value="$(var headless)"/>
+        <arg name="debug" value="$(var debug)"/>
+        <arg name="engine" value="$(var engine)"/>
+    </include>
+
+    <!-- Send the robot urdf to parameter server -->
+    <include file="$(find-pkg-share wolf_description_utils)/launch/upload.launch.xml">
+        <arg name="sensors" value="$(var sensors)"/>
+        <arg name="period" value="$(var period)"/>
+        <arg name="robot_model" value="$(var robot_model)"/>
+        <arg name="arm_name" value="$(var arm_name)"/>
+        <arg name="robot_name" value="$(var robot_name)"/>
+    </include>
+
+</launch>

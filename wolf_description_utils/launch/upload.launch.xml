@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="sensors"       default="false"/>
+    <arg name="robot_model"   default="spot"/>
+    <arg name="robot_name"    default=""/>
+    <arg name="period"        default="0.001"/>
+    <arg name="arm_name"      default=""/>
+    <arg name="urdf_file"     default="$(find-pkg-share $(var robot_model)_description)/robots/$(var robot_model).urdf.xacro"/>
+    <arg name="srdf_file"     default="$(find-pkg-share $(var robot_model)_description)/robots/$(var robot_model).srdf.xacro"/>
+    <arg name="srdf_file_arm" default="$(find-pkg-share $(var robot_model)_description)/robots/$(var robot_model)_$(var arm_name).srdf.xacro"/>
+
+    <group if="$(eval '\'$(var arm_name)\' != \'\'')">
+        <node pkg="wolf_description_utils" exec="description_loader" name="robot_description_semantic" output="screen">
+            <param name="input_name"         value="$(var srdf_file_arm)"/>
+            <param name="output_name"        value="robot_description_semantic"/>
+        </node>
+    </group>
+    <group if="$(eval '\'$(var arm_name)\' == \'\'')">
+        <node pkg="wolf_description_utils" exec="description_loader" name="robot_description_semantic" output="screen">
+            <param name="input_name"         value="$(var srdf_file)"/>
+            <param name="output_name"        value="robot_description_semantic"/>
+        </node>
+    </group>
+
+    <node pkg="wolf_description_utils" exec="description_loader" name="robot_description" output="screen">
+        <param name="input_name"         value="$(var urdf_file)"/>
+        <param name="robot_name"         value="$(var robot_name)"/>
+        <param name="robot_model"        value="$(var robot_model)"/>
+        <param name="arm_name"           value="$(var arm_name)"/>
+        <param name="floating_base_link" value="true"/>
+        <param name="sensors"            value="$(var sensors)"/>
+        <param name="period"             value="$(var period)"/>
+        <param name="output_name"        value="robot_description"/>
+    </node>
+
+    <node pkg="wolf_description_utils" exec="description_loader" name="gazebo_robot_description" output="screen">
+        <param name="input_name"         value="$(var urdf_file)"/>
+        <param name="robot_name"         value="$(var robot_name)"/>
+        <param name="robot_model"        value="$(var robot_model)"/>
+        <param name="arm_name"           value="$(var arm_name)"/>
+        <param name="floating_base_link" value="false"/>
+        <param name="sensors"            value="$(var sensors)"/>
+        <param name="period"             value="$(var period)"/>
+        <param name="output_name"        value="gazebo_robot_description"/>
+    </node>
+
+</launch>

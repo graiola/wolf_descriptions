@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+
+  <arg name="gui"         default="true"/>
+  <arg name="robot_model" default="spot"/>
+  <arg name="arm_name"    default=""/>
+  <arg name="urdf_file"   default="$(find-pkg-share $(var robot_model)_description)/robots/$(var robot_model).urdf.xacro"/>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" exec="robot_state_publisher" output="screen">
+    <param name="robot_description" value="$(command 'xacro $(var urdf_file) floating_base_link:=false arm_name:=$(var arm_name)')" />
+  </node>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher_gui" exec="joint_state_publisher_gui" output="screen" />
+
+  <group if="$(var gui)">
+    <node
+      exec="rviz2"
+      name="rviz"
+      pkg="rviz2"/>
+  </group>
+
+</launch>

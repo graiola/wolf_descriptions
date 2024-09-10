@@ -1,0 +1,85 @@
+#!/usr/bin/env python
+
+import os
+import xacro
+import rclpy
+from rclpy.node import Node
+
+def process_xacro_file(xacro_file, mappings):
+    # Process the xacro file and return the generated URDF
+    try:
+        doc = xacro.process_file(xacro_file, mappings=mappings)
+        urdf_xml = doc.toprettyxml(indent='  ')
+        return urdf_xml
+    except Exception as e:
+        raise RuntimeError(f"Failed to process xacro file: {e}")
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    # Create the node with parameter handling capabilities
+    node = rclpy.create_node(
+        'description_loader',
+        allow_undeclared_parameters=True,
+        automatically_declare_parameters_from_overrides=True
+    )
+
+    # Declare parameters with default values
+    #node.declare_parameter('robot_name', '')
+    #node.declare_parameter('urdf_file', '/path/to/default.xacro')
+    #node.declare_parameter('robot_model', 'spot')
+    #node.declare_parameter('arm_name', '')
+    #node.declare_parameter('sensors', False)
+    #node.declare_parameter('period', 0.001)
+    #node.declare_parameter('floating_base_link', True)
+    #node.declare_parameter('output_name', 'robot_description')
+
+    # Get parameters or use default if not provided
+    robot_name = node.get_parameter('robot_name').get_parameter_value().string_value
+    xacro_file = node.get_parameter('input_name').get_parameter_value().string_value
+    robot_model = node.get_parameter('robot_model').get_parameter_value().string_value
+    arm_name = node.get_parameter('arm_name').get_parameter_value().string_value
+    sensors = node.get_parameter('sensors').get_parameter_value().bool_value
+    period = node.get_parameter('period').get_parameter_value().double_value
+    floating_base_link = node.get_parameter('floating_base_link').get_parameter_value().bool_value
+    output_name = node.get_parameter('output_name').get_parameter_value().string_value
+
+    # Ensure the xacro file exists
+    if not os.path.isfile(xacro_file):
+        node.get_logger().error(f"Xacro file {xacro_file} does not exist.")
+        rclpy.shutdown()
+        return
+
+    # Process the xacro file with all the provided mappings
+    mappings = {
+        "robot_name": robot_name,
+        "robot_model": robot_model,
+        "arm_name": arm_name,
+        "sensors": str(sensors).lower(),
+        "period": str(period),
+        "floating_base_link": str(floating_base_link)
+    }
+
+    try:
+        urdf_xml = process_xacro_file(xacro_file, mappings)
+        node.get_logger().info("Description successfully processed.")
+    except RuntimeError as e:
+        node.get_logger().error(str(e))
+        rclpy.shutdown()
+        return
+
+    # Set the processed URDF on the parameter server
+    node.declare_parameter(f'{output_name}', urdf_xml)
+
+    # Spin the node to keep it alive and allow the parameter to be queried
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        node.get_logger().info("Shutting down description loader node.")
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
