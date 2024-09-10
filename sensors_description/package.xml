@@ -34,7 +34,9 @@
       plugin_path="${prefix}/lib"
       gazebo_media_path="${prefix}"
       gazebo_model_path="${prefix}/models"
-      />
+    />
+    <build_type condition="$ROS_VERSION == 2">ament_cmake</build_type>
+    <build_type condition="$ROS_VERSION == 1">catkin</build_type>
   </export>
 
 </package>
