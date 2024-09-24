@@ -12,13 +12,13 @@
     <group if="$(eval '\'$(var arm_name)\' != \'\'')">
         <node pkg="wolf_description_utils" exec="description_loader" name="robot_description_semantic" output="screen">
             <param name="input_name"         value="$(var srdf_file_arm)"/>
-            <param name="output_name"        value="robot_description_semantic"/>
+            <param name="output_name"        value="description"/>
         </node>
     </group>
     <group if="$(eval '\'$(var arm_name)\' == \'\'')">
         <node pkg="wolf_description_utils" exec="description_loader" name="robot_description_semantic" output="screen">
             <param name="input_name"         value="$(var srdf_file)"/>
-            <param name="output_name"        value="robot_description_semantic"/>
+            <param name="output_name"        value="description"/>
         </node>
     </group>
 
@@ -30,7 +30,7 @@
         <param name="floating_base_link" value="true"/>
         <param name="sensors"            value="$(var sensors)"/>
         <param name="period"             value="$(var period)"/>
-        <param name="output_name"        value="robot_description"/>
+        <param name="output_name"        value="description"/>
     </node>
 
     <node pkg="wolf_description_utils" exec="description_loader" name="gazebo_robot_description" output="screen">
@@ -41,7 +41,7 @@
         <param name="floating_base_link" value="false"/>
         <param name="sensors"            value="$(var sensors)"/>
         <param name="period"             value="$(var period)"/>
-        <param name="output_name"        value="gazebo_robot_description"/>
+        <param name="output_name"        value="description"/>
     </node>
 
 </launch>
