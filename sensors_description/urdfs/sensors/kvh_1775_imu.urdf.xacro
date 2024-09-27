@@ -131,7 +131,7 @@
 			<visual>				
 				<origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
 				<geometry>
-					<mesh filename="package://sensors_description/meshes/sensors/kvh_1775.dae" scale="1 1 1" />
+					<mesh filename="file://$(find sensors_description)/meshes/sensors/kvh_1775.dae" scale="1 1 1" />
 				</geometry>
 				<material name="aluminium">
 					<color rgba="0.35 0.35 0.35 1" />

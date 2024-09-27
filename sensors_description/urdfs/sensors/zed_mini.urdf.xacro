@@ -75,13 +75,13 @@
       <visual>
         <origin xyz="${screw_offset_x} 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://sensors_description/meshes/sensors/zed_mini.stl" />
+          <mesh filename="file://$(find sensors_description)/meshes/sensors/zed_mini.stl" />
         </geometry>
         <!-- <material name="${model}_mat" /> -->
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://sensors_description/meshes/sensors/zed_mini.stl" />
+          <mesh filename="file://$(find sensors_description)/meshes/sensors/zed_mini.stl" />
         </geometry>
       </collision>
       <inertial>

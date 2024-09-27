@@ -105,7 +105,7 @@
         <visual>
             <origin rpy="1.57 0 1.57" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://sensors_description/meshes/sensors/realsense_t265.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="file://$(find sensors_description)/meshes/sensors/realsense_t265.stl" scale="0.001 0.001 0.001"/>
             </geometry>
         </visual>
         <collision>
@@ -215,7 +215,7 @@
             <alwaysOn>true</alwaysOn>
             <updateRate>${rate}</updateRate>
             <robotNamespace>${topics_ns}</robotNamespace>
-            <bodyName>${name}_odom_frame</bodyName>
+            <body_name>${name}_odom_frame</body_name>
             <topicName>${name}/odom</topicName>
             <gaussianNoise>0.001</gaussianNoise>
             <frameName>world</frameName>

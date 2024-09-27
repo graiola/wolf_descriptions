@@ -22,13 +22,13 @@
 			<visual>
 				<origin xyz="0.018 0 0" rpy="${PI/2} 0 ${-PI/2}"/>
 				<geometry>
-					<mesh filename="package://sensors_description/meshes/sensors/vislab_3dve.stl"/>
+					<mesh filename="file://$(find sensors_description)/meshes/sensors/vislab_3dve.stl"/>
 				</geometry>
 			</visual>
 			<collision>
 				<origin xyz="0.018 0 0" rpy="${PI/2} 0 ${-PI/2}"/>
 				<geometry>
-					<mesh filename="package://sensors_description/meshes/sensors/vislab_3dve.stl"/>
+					<mesh filename="file://$(find sensors_description)/meshes/sensors/vislab_3dve.stl"/>
 				</geometry>
 			</collision>
 			<inertial>
