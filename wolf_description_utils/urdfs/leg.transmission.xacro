@@ -3,6 +3,9 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
         <xacro:macro name="leg_transmission" params="prefix">
+
+        <!-- ROS1 -->
+
     	<!-- Hip assembly -->
                 <transmission name="${prefix}_haa_trans">
 			<type>transmission_interface/SimpleTransmission</type>
@@ -36,6 +39,46 @@
 				<mechanicalReduction>1</mechanicalReduction>
 			</actuator>
 		</transmission>
+
+                <!-- ROS2 -->
+
+                <ros2_control name="quadruped_system" type="system">
+                    <hardware>
+                      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+                    </hardware>
+                    <!-- Hip assembly -->
+                    <joint name="${prefix}_haa_joint">
+                      <command_interface name="effort">
+                        <param name="min">-6.28</param>
+                        <param name="max">6.28</param>
+                      </command_interface>
+                      <state_interface name="position"/>
+                      <state_interface name="velocity"/>
+                      <state_interface name="effort"/>
+                    </joint>
+                    <!-- Upper leg -->
+                    <joint name="${prefix}_hfe_joint">
+                      <command_interface name="effort">
+                        <param name="min">-6.28</param>
+                        <param name="max">6.28</param>
+                      </command_interface>
+                      <state_interface name="position"/>
+                      <state_interface name="velocity"/>
+                      <state_interface name="effort"/>
+                    </joint>
+                    <!-- Lower leg -->
+                    <joint name="${prefix}_kfe_joint">
+                      <command_interface name="effort">
+                        <param name="min">-6.28</param>
+                        <param name="max">6.28</param>
+                      </command_interface>
+                      <state_interface name="position"/>
+                      <state_interface name="velocity"/>
+                      <state_interface name="effort"/>
+                    </joint>
+            </ros2_control>
+
+
 	</xacro:macro>
 
 </robot>
