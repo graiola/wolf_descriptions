@@ -15,13 +15,12 @@
                 <controlPeriod>$(arg period)</controlPeriod>
         </plugin>
         <plugin name="gazebo_ros2_controller_manager" filename="libgazebo_ros2_control.so">
-                <robotNamespace>$(arg robot_name)</robotNamespace>
-                <robotSimType>wolf_gazebo_interface/WolfRobotHwSim</robotSimType>
-                <parameters>$(find ${model_name}_description)/params/${model_name}_params.yaml</parameters>
+                <parameters>$(find wolf_controller)/params/config.ros2.yaml</parameters>
+                <parameters>$(find ${model_name}_description)/params/${model_name}_params.ros2.yaml</parameters>
         </plugin>
     	<plugin filename="libgazebo_ros_p3d.so" name="ground_truth">
-            <robotNamespace>$(arg robot_name)</robotNamespace>
-                <body_name>$(arg base_name)</body_name>
+                <robotNamespace>$(arg robot_name)</robotNamespace>
+                <bodyName>$(arg base_name)</bodyName>
                 <topicName>ground_truth</topicName>
                 <frameName>world</frameName>
                 <xyzOffsets>0 0 0</xyzOffsets>

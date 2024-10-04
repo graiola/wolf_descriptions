@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!-- T265 Fisheye:
+<!-- T265 Fisheye:
 
   gazebo_ros_camera supports only plumb_bob
   D: [-0.007419134024530649, 0.041209351271390915, -0.03811917081475258, 0.006366158835589886, 0.0]
@@ -34,7 +34,6 @@
   <Cy>403.38909912109375</Cy>
 
   -->
-
   <xacro:macro name="fisheye_t265" params="name topics_ns reference_frame rate">
     <gazebo reference="${reference_frame}">
       <sensor name="camera" type="wideanglecamera">
@@ -215,7 +214,7 @@
             <alwaysOn>true</alwaysOn>
             <updateRate>${rate}</updateRate>
             <robotNamespace>${topics_ns}</robotNamespace>
-            <body_name>${name}_odom_frame</body_name>
+            <bodyName>${name}_odom_frame</bodyName>
             <topicName>${name}/odom</topicName>
             <gaussianNoise>0.001</gaussianNoise>
             <frameName>world</frameName>

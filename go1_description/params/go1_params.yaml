@@ -1,5 +1,5 @@
 wolf_controller:
-  type: wolf_controller/Controller
+  type: wolf_controller/WolfController
   default_duty_factor: 0.2
   default_swing_frequency: 5.0
   default_contact_threshold: 15.0

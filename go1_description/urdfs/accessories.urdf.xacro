@@ -6,7 +6,6 @@
   <xacro:include filename="$(find go1_description)/urdfs/depthCamera.xacro"/>
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_t265.urdf.xacro"/>
-  <xacro:include filename="$(find sensors_description)/urdfs/sensors/imu.gazebo.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/gps.gazebo.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_d435.urdf.xacro" />
 
@@ -76,21 +75,6 @@
     <origin xyz="0.1 0 0" rpy="0 0 0" />
   </xacro:VLP-16>
 
-  <!-- IMU sensor -->
-  <xacro:imu_sensor
-      frame_name="trunk_imu"
-      imu_topic="trunk_imu/data"
-      namespace="$(arg robot_name)"
-      update_rate="${1.0 / $(arg period)}"
-      rate_mean="0"
-      rate_stddev="0.01"
-      rate_bias_mean="0"
-      rate_bias_stddev="0"
-      accel_mean="0"
-      accel_stddev="0.001"
-      accel_bias_mean="0"
-      accel_bias_stddev="0">
-  </xacro:imu_sensor>
   <!-- GPS sensor -->
   <xacro:gps_sensor
       gps_topic="fix"

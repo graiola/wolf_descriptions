@@ -2,7 +2,7 @@
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-        <xacro:macro name="arm_transmission" params="name">
+        <xacro:macro name="arm_hardware" params="name">
                 <transmission name="${name}_trans">
                         <type>transmission_interface/SimpleTransmission</type>
                         <joint name="${name}">

@@ -20,8 +20,10 @@
     <xacro:include filename="$(find wolf_description_utils)/urdfs/gazebo.urdf.xacro"/>
 
     <!-- legs transmission and gazebo plugins -->
-    <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.transmission.xacro"/>
+    <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.hardware.xacro"/>
     <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.gazebo.xacro"/>
+    <xacro:include filename="$(find wolf_description_utils)/urdfs/imu.hardware.xacro"/>
+    <xacro:include filename="$(find sensors_description)/urdfs/sensors/imu.gazebo.xacro"/>
 
     <xacro:include filename="$(find go1_description)/urdfs/const.xacro"/>
     <xacro:include filename="$(find go1_description)/urdfs/leg.xacro"/>
@@ -161,14 +163,31 @@
         <xacro:include filename="$(find go1_description)/urdfs/accessories.urdf.xacro" />
     </xacro:if>
 
+    <!-- IMU sensor -->
+    <xacro:imu_sensor
+        frame_name="trunk_imu"
+        imu_topic="trunk_imu/data"
+        namespace="$(arg robot_name)"
+        update_rate="${1.0 / $(arg period)}"
+        rate_mean="0"
+        rate_stddev="0.01"
+        rate_bias_mean="0"
+        rate_bias_stddev="0"
+        accel_mean="0"
+        accel_stddev="0.001"
+        accel_bias_mean="0"
+        accel_bias_stddev="0">
+    </xacro:imu_sensor>
+
     <!-- Extensions -->
-    <xacro:leg_transmission prefix="rf"/>
+    <xacro:leg_hardware prefix="rf"/>
     <xacro:leg_gazebo prefix="rf" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:leg_transmission prefix="lf"/>
+    <xacro:leg_hardware prefix="lf"/>
     <xacro:leg_gazebo prefix="lf" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:leg_transmission prefix="rh"/>
+    <xacro:leg_hardware prefix="rh"/>
     <xacro:leg_gazebo prefix="rh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:leg_transmission prefix="lh"/>
+    <xacro:leg_hardware prefix="lh"/>
     <xacro:leg_gazebo prefix="lh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
+    <xacro:imu_hardware imu_name="trunk_imu" imu_frame="trunk_imu"/>
 
 </robot>

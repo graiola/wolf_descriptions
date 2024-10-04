@@ -2,7 +2,7 @@
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-        <xacro:macro name="leg_transmission" params="prefix">
+        <xacro:macro name="leg_hardware" params="prefix">
 
         <!-- ROS1 -->
 
@@ -49,8 +49,8 @@
                     <!-- Hip assembly -->
                     <joint name="${prefix}_haa_joint">
                       <command_interface name="effort">
-                        <param name="min">-6.28</param>
-                        <param name="max">6.28</param>
+                        <param name="min">-500.0</param>
+                        <param name="max">500.0</param>
                       </command_interface>
                       <state_interface name="position"/>
                       <state_interface name="velocity"/>
@@ -59,8 +59,8 @@
                     <!-- Upper leg -->
                     <joint name="${prefix}_hfe_joint">
                       <command_interface name="effort">
-                        <param name="min">-6.28</param>
-                        <param name="max">6.28</param>
+                        <param name="min">-500.0</param>
+                        <param name="max">500.0</param>
                       </command_interface>
                       <state_interface name="position"/>
                       <state_interface name="velocity"/>
@@ -69,8 +69,8 @@
                     <!-- Lower leg -->
                     <joint name="${prefix}_kfe_joint">
                       <command_interface name="effort">
-                        <param name="min">-6.28</param>
-                        <param name="max">6.28</param>
+                        <param name="min">-500.0</param>
+                        <param name="max">500.0</param>
                       </command_interface>
                       <state_interface name="position"/>
                       <state_interface name="velocity"/>
