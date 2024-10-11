@@ -22,12 +22,14 @@ endif()
 find_package(camera_info_manager REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(gazebo REQUIRED)
+find_package(image_transport REQUIRED)
 
 include_directories(
   include/${ROS_VERSION}
   ${camera_info_manager_INCLUDE_DIRS}
   ${sensor_msgs_INCLUDE_DIRS}
   ${GAZEBO_INCLUDE_DIRS}
+  ${image_transport_INCLUDE_DIRS}
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
@@ -35,7 +37,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 add_library(RealsenseGazeboPlugin
     src/${ROS_VERSION}/RealSensePlugin.cpp
     src/${ROS_VERSION}/gazebo_ros_realsense.cpp)
-target_link_libraries(RealsenseGazeboPlugin ${camera_info_manager_LIBRARIES} ${GAZEBO_LIBRARIES})
+target_link_libraries(RealsenseGazeboPlugin ${image_transport_LIBRARIES} ${camera_info_manager_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 install(TARGETS RealsenseGazeboPlugin
     ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
