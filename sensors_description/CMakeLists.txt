@@ -9,20 +9,21 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 find_package(catkin QUIET)
 find_package(ament_cmake QUIET)
 
+find_package(camera_info_manager REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(gazebo REQUIRED)
+find_package(image_transport REQUIRED)
+
 if(${catkin_FOUND})
     catkin_package()
     add_definitions(-DROS)
     set(ROS_VERSION ros)
 elseif(${ament_cmake_FOUND})
+    ament_export_dependencies(camera_info_manager)
     ament_package()
     add_definitions(-DROS2)
     set(ROS_VERSION ros2)
 endif()
-
-find_package(camera_info_manager REQUIRED)
-find_package(sensor_msgs REQUIRED)
-find_package(gazebo REQUIRED)
-find_package(image_transport REQUIRED)
 
 include_directories(
   include/${ROS_VERSION}
