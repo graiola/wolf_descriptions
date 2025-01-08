@@ -7,7 +7,7 @@
 #include <sensor_msgs/msg/camera_info.hpp>
 #include <sensor_msgs/msg/image.hpp>
 #include <sensor_msgs/msg/point_cloud2.hpp>
-#include <camera_info_manager/camera_info_manager.hpp>
+#include <camera_info_manager/camera_info_manager.h>
 #include <image_transport/image_transport.hpp>
 
 #include <memory>
