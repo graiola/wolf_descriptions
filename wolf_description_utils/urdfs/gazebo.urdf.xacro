@@ -9,11 +9,6 @@
 <xacro:property name="model_name" value="$(arg robot_model)"/>
 
 	<gazebo>
-        <plugin name="gazebo_ros_controller_manager" filename="libgazebo_ros_control.so">
-                <robotNamespace>$(arg robot_name)</robotNamespace>
-                <robotSimType>wolf_gazebo_interface/WolfRobotHwSim</robotSimType>
-                <controlPeriod>$(arg period)</controlPeriod>
-        </plugin>
         <plugin name="gazebo_ros2_controller_manager" filename="libgazebo_ros2_control.so">
                 <parameters>$(find wolf_controller)/params/config.ros2.yaml</parameters>
                 <parameters>$(find ${model_name}_description)/params/${model_name}_params.ros2.yaml</parameters>
@@ -28,6 +23,10 @@
                 <gaussianNoise>0</gaussianNoise>
                 <alwaysOn>true</alwaysOn>
                 <updateRate>${1/ $(arg period)}</updateRate>
+        </plugin>
+        <plugin name="set_joint_positions_plugin" filename="libgazebo_set_joint_positions_plugin.so">
+            <robot_namespace>$(arg robot_name)</robot_namespace>
+            <topic_name>$(arg robot_name)/set_joint_states</topic_name>
         </plugin>
 	</gazebo>
 
