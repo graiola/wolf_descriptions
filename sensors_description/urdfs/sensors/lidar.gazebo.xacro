@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+<xacro:macro name="velodyne_laser_gazebo_sensor" params="sensor_name topic_name update_rate frame_id namespace min_range max_range number_of_beams horizontal_samples horizontal_fov vertical_fov noise_stddev">
+  
+  <gazebo reference="${frame_id}">
+        <sensor type="ray" name="${sensor_name}">
+          <pose>0 0 0 0 0 0</pose>
+          <visualize>false</visualize>
+          <update_rate>${update_rate}</update_rate>
+          <ray>
+                <scan>
+                    <horizontal>
+                        <samples>${horizontal_samples}</samples>
+                        <resolution>1</resolution>
+                        <min_angle>${-0.5 * horizontal_fov}</min_angle>
+                        <max_angle>${0.5 * horizontal_fov}</max_angle>
+                    </horizontal>
+                    <vertical>
+                        <samples>${number_of_beams}</samples>
+                        <resolution>1</resolution>
+                        <min_angle>${-0.5 * vertical_fov}</min_angle>
+                        <max_angle>${0.5 * vertical_fov}</max_angle>
+                    </vertical>
+                </scan>
+
+                <range>
+                    <min>${min_range}</min>
+                    <max>${max_range}</max>
+                    <resolution>0.001</resolution>
+                </range>
+
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.0</stddev>
+                </noise>
+          </ray>
+
+          <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
+            <ros>
+              <namespace>/${namespace}</namespace>
+              <remapping>gazebo_ros_laser_controller/out:=${topic_name}</remapping>
+            </ros>
+            <frame_name>${frame_id}</frame_name>
+            <organize_cloud>true</organize_cloud>
+            <min_range>${min_range}</min_range>
+            <max_range>${max_range}</max_range>
+            <gaussian_noise>${noise_stddev}</gaussian_noise>
+          </plugin>
+        </sensor>
+    </gazebo>
+
+</xacro:macro>
+
+</robot>
