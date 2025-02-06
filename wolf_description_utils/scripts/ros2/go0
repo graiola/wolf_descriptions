@@ -6,12 +6,14 @@ from ast import literal_eval
 
 import rclpy
 from rclpy.node import Node
+from rclpy.qos import QoSProfile, DurabilityPolicy, HistoryPolicy
 from std_srvs.srv import Empty
 from geometry_msgs.msg import Pose
 from gazebo_msgs.srv import SpawnEntity, SetModelConfiguration
 from rcl_interfaces.srv import GetParameters
 import xml.sax.saxutils as xml_utils
 from srdfdom.srdf import SRDF
+from sensor_msgs.msg import JointState
 
 def initialize_node(args):
     """Initialize ROS2 node."""
@@ -84,22 +86,40 @@ def spawn_model(node, model_name, model_xml, initial_pose, reference_frame, gaze
     else:
         node.get_logger().error(f"Failed to spawn: {model_name}")
 
-def set_model_configuration(node, model_name, joint_names, joint_positions, gazebo_namespace):
-    """Set model configuration in Gazebo."""
-    client = node.create_client(SetModelConfiguration, '/set_model_configuration')
-    client.wait_for_service()
-    request = SetModelConfiguration.Request()
-    request.model_name = model_name
-    #request.urdf_param_name = robot_description_name
-    request.joint_names = joint_names
-    request.joint_positions = joint_positions
+def set_joint_positions_with_plugin(node, model_name, joint_names, joint_positions, robot_name):
+    """Set joint positions using the gazebo_set_joint_positions_plugin, 
+    waiting until a subscriber is discovered before publishing."""
+    
+    topic_name = f"{robot_name}/set_joint_states"
 
-    future = client.call_async(request)
-    rclpy.spin_until_future_complete(node, future)
-    if future.result() is not None:
-        node.get_logger().info(f"Model configuration set for {model_name}")
-    else:
-        node.get_logger().error(f"Failed to set model configuration for {model_name}")
+    qos_profile = QoSProfile(
+        depth=10,
+        durability=DurabilityPolicy.TRANSIENT_LOCAL,
+        history=HistoryPolicy.KEEP_LAST
+    )
+    
+    publisher = node.create_publisher(JointState, topic_name, qos_profile)
+    node.get_logger().info(f"Created publisher on {topic_name}")
+    
+    # Wait until at least one subscriber is discovered
+    while publisher.get_subscription_count() == 0:
+        node.get_logger().info("Waiting for a subscriber to connect...")
+        rclpy.spin_once(node, timeout_sec=0.5)
+    
+    node.get_logger().info("Subscriber detected. Publishing joint positions...")
+
+    # Create and populate the JointState message
+    joint_state_msg = JointState()
+    joint_state_msg.header.stamp = node.get_clock().now().to_msg()
+    joint_state_msg.header.frame_id = 'world'
+    joint_state_msg.name = joint_names
+    joint_state_msg.position = joint_positions
+    joint_state_msg.velocity = [0.0] * len(joint_positions) 
+    joint_state_msg.effort = [0.0] * len(joint_positions) 
+
+    # Publish the message
+    publisher.publish(joint_state_msg)
+    node.get_logger().info(f"Published joint positions for {len(joint_names)} joints.")
 
 def get_parameter_from_remote_node(node, param_path, timeout=None):
     # Split the param_path into node_name and param_name
@@ -194,12 +214,11 @@ def main(args=None):
     joint_names = [joint.name for joint in robot.group_state_map['standdown'].joints]
     joint_positions = [joint.value[0] for joint in robot.group_state_map['standdown'].joints]
 
-    # ToDo not ported yet in ROS2?????
-    #set_model_configuration(node, model_name, joint_names, joint_positions, gazebo_namespace)
+    set_joint_positions_with_plugin(node, model_name, joint_names, joint_positions, robot_name)
 
     # ToDo not ported yet in ROS2?????
     # Unpause Gazebo physics
-    # unpause_physics(node, gazebo_namespace)
+    unpause_physics(node, gazebo_namespace)
 
     # Shutdown ROS2
     rclpy.shutdown()
