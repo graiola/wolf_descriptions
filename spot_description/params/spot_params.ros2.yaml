@@ -1,4 +1,4 @@
-wolf_controller:
+/**/wolf_controller:
   ros__parameters:
     input_device: keyboard
     imu_sensor_name: trunk_imu

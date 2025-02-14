@@ -69,6 +69,7 @@
 
    <xacro:depth_camera 
      name="camera"
+     namespace="$(arg robot_name)" 
      update_rate="30"
      image_width="640"
      image_height="480"
@@ -76,10 +77,10 @@
      near="0.1"
      far="10.0"
      parent_link="front_rail"
-     image_topic="/camera/rgb/image_raw"
-     depth_topic="/camera/depth/image_raw"
-     pointcloud_topic="/camera/points"
-     camera_info_topic="/camera/camera_info"
+     image_topic="camera/rgb/image_raw"
+     depth_topic="camera/depth/image_raw"
+     pointcloud_topic="camera/points"
+     camera_info_topic="camera/camera_info"
      origin_xyz="0.13 0 0" 
      origin_rpy="0 0 0"/>
 
@@ -103,7 +104,7 @@
     namespace="$(arg robot_name)"
     gps_topic="fix" 
     velocity_topic="velocity_fix"
-    update_rate="40.0" 
+    update_rate="10.0" 
     frame_id="base_link" />
 
 </robot>

@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:macro name="depth_camera" params="
-    name update_rate image_width image_height fov near far parent_link
+    name namespace update_rate image_width image_height fov near far parent_link
     image_topic camera_info_topic depth_topic pointcloud_topic origin_xyz origin_rpy
   ">
     
@@ -59,11 +59,11 @@
         <!-- Plugin for RGB Camera -->
         <plugin name="gazebo_ros_camera_plugin" filename="libgazebo_ros_camera.so">
           <ros>
-            <namespace>/${name}</namespace>
+            <namespace>${namespace}</namespace>
             <remapping>~/image_raw:=${image_topic}</remapping>
             <remapping>~/camera_info:=${camera_info_topic}</remapping>
           </ros>
-          <camera_name>${name}_camera</camera_name>
+          <camera_name>${name}</camera_name>
           <frame_name>${name}_link</frame_name>
           <update_rate>${update_rate}</update_rate>
         </plugin>

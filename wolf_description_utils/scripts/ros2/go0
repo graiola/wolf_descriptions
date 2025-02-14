@@ -98,7 +98,10 @@ def set_joint_positions_with_plugin(node, model_name, joint_names, joint_positio
     """Set joint positions using the gazebo_set_joint_positions_plugin, 
     waiting until a subscriber is discovered before publishing."""
     
-    topic_name = f"{robot_name}/set_joint_states"
+    if robot_name == '':
+        topic_name = f"/set_joint_states"
+    else:
+        topic_name = f"/{robot_name}/set_joint_states"
 
     qos_profile = QoSProfile(
         depth=10,
@@ -145,18 +148,24 @@ def set_joint_positions_with_plugin(node, model_name, joint_names, joint_positio
 
 def get_parameter_from_remote_node(node, param_path, timeout=None):
     split_path = param_path.strip('/').split('/')
-    if len(split_path) != 2:
-        node.get_logger().error(f"Invalid parameter path format: {param_path}. Expected format: '/node_name/param_name'")
+    
+    if len(split_path) < 2:
+        node.get_logger().error(f"Invalid parameter path format: {param_path}. Expected format: '/namespace/node_name/param' or '/node_name/param'")
         return None
-
-    remote_node_name, param_name = split_path
-    client = node.create_client(GetParameters, f'/{remote_node_name}/get_parameters')
+    
+    param_name = split_path[-1]  # Last element is the parameter name
+    remote_node_name = split_path[-2]  # Second to last is the node name
+    namespace = '/'.join(split_path[:-2]) if len(split_path) > 2 else ''  # Remaining is the namespace
+    
+    full_node_path = f"/{namespace}/{remote_node_name}" if namespace else f"/{remote_node_name}"
+    
+    client = node.create_client(GetParameters, f'{full_node_path}/get_parameters')
     ready = client.wait_for_service(timeout_sec=timeout)
-
+    
     if not ready:
-        node.get_logger().error(f"Service {remote_node_name}/get_parameters not available!")
+        node.get_logger().error(f"Service {full_node_path}/get_parameters not available!")
         return None
-
+    
     request = GetParameters.Request()
     request.names = [param_name]
     return client.call_async(request)
@@ -173,7 +182,7 @@ def main(args=None):
     initial_rpy = get_param(node, 'initial_rpy')
 
     node.get_logger().info(f"robot_model: {model_name}")
-    node.get_logger().info(f"robot_name: {robot_name}")
+    node.get_logger().info(f"robot_name:  {robot_name}")
     node.get_logger().info(f"initial_xyz: {initial_xyz}")
     node.get_logger().info(f"initial_rpy: {initial_rpy}")
 
