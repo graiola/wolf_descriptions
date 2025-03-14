@@ -102,8 +102,8 @@
 <xacro:gazebo_gps_sensor 
     sensor_name="gps_sensor"
     namespace="$(arg robot_name)"
-    gps_topic="fix" 
-    velocity_topic="velocity_fix"
+    gps_topic="gps/fix" 
+    velocity_topic="gps/velocity_fix"
     update_rate="10.0" 
     frame_id="base_link" />
 
