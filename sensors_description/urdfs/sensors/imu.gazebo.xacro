@@ -5,6 +5,14 @@
     <xacro:macro name="imu_sensor" params="frame_name imu_topic namespace update_rate rate_mean rate_stddev
         rate_bias_mean rate_bias_stddev accel_mean accel_stddev accel_bias_mean accel_bias_stddev">
 
+      <xacro:if value="${namespace == ''}">
+                    <xacro:property name="frame_name_ns" value="${frame_name}"/>
+      </xacro:if>
+      <xacro:if value="${namespace != ''}">
+                    <xacro:property name="frame_name_ns" value="${namespace+'/'+frame_name}"/>
+      </xacro:if>
+
+
         <gazebo reference="trunk_imu">
             <gravity>true</gravity>
             <sensor name="trunk_imu" type="imu">
@@ -21,7 +29,7 @@
                     <gaussian_noise>${rate_stddev*rate_stddev}</gaussian_noise>
                     <xyz_offset>0 0 0</xyz_offset>
                     <rpy_offset>0 0 0</rpy_offset>
-                    <frame_name>${frame_name}</frame_name>
+                    <frame_name>${frame_name_ns}</frame_name>
                     <initial_orientation_as_reference>false</initial_orientation_as_reference>
                 </plugin>
                 <pose>0 0 0 0 0 0</pose>

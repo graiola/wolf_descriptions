@@ -3,6 +3,14 @@
 
 <xacro:macro name="velodyne_laser_gazebo_sensor" params="sensor_name topic_name update_rate frame_id namespace min_range max_range number_of_beams horizontal_samples horizontal_fov vertical_fov noise_stddev">
   
+      
+      <xacro:if value="${namespace == ''}">
+                    <xacro:property name="frame_name_ns" value="${frame_id}"/>
+      </xacro:if>
+      <xacro:if value="${namespace != ''}">
+                    <xacro:property name="frame_name_ns" value="${namespace+'/'+frame_id}"/>
+      </xacro:if>
+  
   <gazebo reference="${frame_id}">
         <sensor type="ray" name="${sensor_name}">
           <pose>0 0 0 0 0 0</pose>
@@ -42,7 +50,7 @@
               <namespace>/${namespace}</namespace>
               <remapping>gazebo_ros_laser_controller/out:=${topic_name}</remapping>
             </ros>
-            <frame_name>${frame_id}</frame_name>
+            <frame_name>${frame_name_ns}</frame_name>
             <organize_cloud>true</organize_cloud>
             <min_range>${min_range}</min_range>
             <max_range>${max_range}</max_range>

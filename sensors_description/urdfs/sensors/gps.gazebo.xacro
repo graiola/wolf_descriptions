@@ -13,6 +13,15 @@
       frame_id       - Frame ID to be used by the sensor.
   -->
   <xacro:macro name="gazebo_gps_sensor" params="sensor_name namespace gps_topic velocity_topic update_rate frame_id">
+  
+    
+      <xacro:if value="${namespace == ''}">
+                    <xacro:property name="frame_name_ns" value="${frame_id}"/>
+      </xacro:if>
+      <xacro:if value="${namespace != ''}">
+                    <xacro:property name="frame_name_ns" value="${namespace+'/'+frame_id}"/>
+      </xacro:if>
+  
     <gazebo reference="${frame_id}">
       <sensor type="gps" name="${sensor_name}">
         <always_on>1</always_on>
@@ -27,7 +36,7 @@
             <remapping>gps_plugin/out:=${gps_topic}</remapping>
             <remapping>gps_plugin/vel:=${velocity_topic}</remapping>
           </ros>
-          <frameId>${frame_id}</frameId>
+          <frame_name>${frame_name_ns}</frame_name>
         </plugin>
       </sensor>
     </gazebo>
