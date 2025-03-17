@@ -10,16 +10,18 @@
     <xacro:arg name="robot_model"        default="spot"/>
     <xacro:arg name="robot_name"         default=""/>
     <xacro:arg name="base_name"          default="base_link"/>
+    <xacro:arg name="gazebo"             default="true"/>
 
     <!-- load generic materials -->
     <xacro:include filename="$(find wolf_description_utils)/urdfs/materials.xacro"/>
 
-    <!-- generic simulator_gazebo plugins for starting mechanism control, ros time -->
-    <xacro:include filename="$(find wolf_description_utils)/urdfs/gazebo.urdf.xacro"/>
-
-    <!-- legs transmission and gazebo plugins -->
-    <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.transmission.xacro"/>
-    <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.gazebo.xacro"/>
+    <xacro:if value="$(arg gazebo)">
+    	<!-- generic simulator_gazebo plugins for starting mechanism control, ros time -->
+    	<xacro:include filename="$(find wolf_description_utils)/urdfs/gazebo.urdf.xacro"/>
+    	<!-- legs transmission and gazebo plugins -->
+	<xacro:include filename="$(find wolf_description_utils)/urdfs/leg.transmission.xacro"/>
+	<xacro:include filename="$(find wolf_description_utils)/urdfs/leg.gazebo.xacro"/>
+    </xacro:if>
 
     <!-- dynamics inertial value -->
     <!-- Constants for robot dimensions -->

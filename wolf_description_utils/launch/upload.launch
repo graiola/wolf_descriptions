@@ -8,6 +8,7 @@
         <arg name="urdf_file"           default="$(eval find(arg('robot_model') + '_description') + '/robots/' + arg('robot_model') + '.urdf.xacro')"/>
         <arg name="srdf_file"           default="$(eval find(arg('robot_model') + '_description') + '/robots/' + arg('robot_model') + '.srdf.xacro')"/>
         <arg name="srdf_file_arm"       default="$(eval find(arg('robot_model') + '_description') + '/robots/' + arg('robot_model') + '_' + arg('arm_name') + '.srdf.xacro')"/>
+        <arg name="gazebo"              default="true" />
 
         <!-- send robot semantic description srdf to param server -->
         <group if="$(eval arm_name != '')">
@@ -19,10 +20,10 @@
 
         <!-- send robot urdf to param server -->
         <param name="$(arg robot_name)/robot_description" command="$(find xacro)/xacro --inorder '$(arg urdf_file)' robot_name:=$(arg robot_name)
-        robot_model:=$(arg robot_model) arm_name:=$(arg arm_name) floating_base_link:=true sensors:=$(arg sensors) period:=$(arg period)"/>
+        robot_model:=$(arg robot_model) arm_name:=$(arg arm_name) floating_base_link:=true sensors:=$(arg sensors) period:=$(arg period) gazebo:=$(arg gazebo)"/>
 
         <param name="$(arg robot_name)/gazebo_robot_description" command="$(find xacro)/xacro --inorder '$(arg urdf_file)' robot_name:=$(arg robot_name)
-        robot_model:=$(arg robot_model) arm_name:=$(arg arm_name) floating_base_link:=false sensors:=$(arg sensors) period:=$(arg period)"/>
+        robot_model:=$(arg robot_model) arm_name:=$(arg arm_name) floating_base_link:=false sensors:=$(arg sensors) period:=$(arg period) gazebo:=$(arg gazebo)"/>
 
 
 
