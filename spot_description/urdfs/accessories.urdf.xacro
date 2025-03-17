@@ -77,10 +77,10 @@
      near="0.1"
      far="10.0"
      parent_link="front_rail"
-     image_topic="camera/rgb/image_raw"
-     depth_topic="camera/depth/image_raw"
-     pointcloud_topic="camera/points"
-     camera_info_topic="camera/camera_info"
+     image_topic="$(arg robot_name)/camera/rgb/image_raw"
+     depth_topic="$(arg robot_name)/camera/depth/image_raw"
+     pointcloud_topic="$(arg robot_name)/camera/points"
+     camera_info_topic="$(arg robot_name)/camera/camera_info"
      origin_xyz="0.13 0 0" 
      origin_rpy="0 0 0"/>
 
