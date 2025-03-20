@@ -19,8 +19,8 @@
     	<!-- generic simulator_gazebo plugins for starting mechanism control, ros time -->
     	<xacro:include filename="$(find wolf_description_utils)/urdfs/gazebo.urdf.xacro"/>
     	<!-- legs transmission and gazebo plugins -->
-	<xacro:include filename="$(find wolf_description_utils)/urdfs/leg.transmission.xacro"/>
-	<xacro:include filename="$(find wolf_description_utils)/urdfs/leg.gazebo.xacro"/>
+        <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.transmission.xacro"/>
+        <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.gazebo.xacro"/>
     </xacro:if>
 
     <!-- dynamics inertial value -->
