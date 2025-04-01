@@ -1,15 +1,15 @@
 /**/wolf_controller:
   ros__parameters:
-    input_device: keyboard
+    input_device: ${INPUT_DEVICE}
     imu_sensor_name: trunk_imu
-    period: 0.001
+    period: ${PERIOD}
     default_duty_factor: 0.3
     default_swing_frequency: 4.5
     default_contact_threshold: 25.0
-    default_base_linear_velocity_x: 0.8
-    default_base_linear_velocity_y: 0.5
-    default_base_linear_velocity_z: 0.5
-    default_base_angular_velocity:  0.5
+    default_base_linear_velocity_x: ${MAX_VEL_X}
+    default_base_linear_velocity_y: ${MAX_VEL_Y}
+    default_base_linear_velocity_z: ${MAX_VEL_Z}
+    default_base_angular_velocity:  ${MAX_VEL_YAW}
     default_step_height: 0.2
     default_push_recovery_sensibility: 0.5
     max_step_height: 0.3
@@ -23,9 +23,10 @@
     estimation_orientation_type: imu_magnetometer
     activate_step_reflex: true
     activate_push_recovery: true
-    publish_odom_msg: true
-    publish_odom_tf: false
+    publish_odom_msg: ${PUBLISH_ODOM_MSG}
+    publish_odom_tf: ${PUBLISH_ODOM_TF}
     odom_topic: odometry/robot
+    tf_prefix: ${TF_PREFIX}
     use_contact_sensors: false
     min_forces_weight: 0.01
     min_qddot_weight: 0.1
