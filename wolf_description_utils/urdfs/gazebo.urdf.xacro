@@ -5,30 +5,43 @@
 <xacro:arg name="robot_name"  default=""/>
 <xacro:arg name="robot_model" default=""/>
 <xacro:arg name="base_name"   default="base_link"/>
+<xacro:arg name="sim_engine"  default="ignition"/>
 
 <xacro:property name="model_name" value="$(arg robot_model)"/>
 
 	<gazebo>
-        <plugin name="gazebo_ros_controller_manager" filename="libgazebo_ros_control.so">
-                <robotNamespace>$(arg robot_name)</robotNamespace>
-                <robotSimType>wolf_gazebo_interface/WolfRobotHwSim</robotSimType>
-                <controlPeriod>$(arg period)</controlPeriod>
-        </plugin>
-        <plugin name="gazebo_ros2_controller_manager" filename="libgazebo_ros2_control.so">
-                <parameters>$(find wolf_controller)/params/config.ros2.yaml</parameters>
-                <parameters>$(find ${model_name}_description)/params/${model_name}_params.ros2.yaml</parameters>
-        </plugin>
-    	<plugin filename="libgazebo_ros_p3d.so" name="ground_truth">
-                <robotNamespace>$(arg robot_name)</robotNamespace>
-                <bodyName>$(arg base_name)</bodyName>
-                <topicName>ground_truth</topicName>
-                <frameName>world</frameName>
-                <xyzOffsets>0 0 0</xyzOffsets>
-                <rpyOffsets>0 0 0</rpyOffsets>
-                <gaussianNoise>0</gaussianNoise>
-                <alwaysOn>true</alwaysOn>
-                <updateRate>${1/ $(arg period)}</updateRate>
-        </plugin>
+        <xacro:if value="$(eval sim_engine == 'classic')">
+                <!-- ROS1 -->
+                <plugin name="gazebo_ros_controller_manager" filename="libgazebo_ros_control.so">
+                        <robotNamespace>$(arg robot_name)</robotNamespace>
+                        <robotSimType>wolf_gazebo_interface/WolfRobotHwSim</robotSimType>
+                        <controlPeriod>$(arg period)</controlPeriod>
+                </plugin>
+                <plugin filename="libgazebo_ros_p3d.so" name="ground_truth">
+                        <robotNamespace>$(arg robot_name)</robotNamespace>
+                        <bodyName>$(arg base_name)</bodyName>
+                        <topicName>ground_truth</topicName>
+                        <frameName>world</frameName>
+                        <xyzOffsets>0 0 0</xyzOffsets>
+                        <rpyOffsets>0 0 0</rpyOffsets>
+                        <gaussianNoise>0</gaussianNoise>
+                        <alwaysOn>true</alwaysOn>
+                        <updateRate>${1/ $(arg period)}</updateRate>
+                </plugin>
+                <!-- ROS2 -->
+                <plugin name="gazebo_ros2_controller_manager" filename="libgazebo_ros2_control.so">
+                        <parameters>$(find wolf_controller)/params/config.ros2.yaml</parameters>
+                        <parameters>$(find ${model_name}_description)/params/${model_name}_params.ros2.yaml</parameters>
+                </plugin>
+        </xacro:if>
+        <xacro:if value="$(eval sim_engine == 'ignition')">
+                <!-- ROS1 -->
+                <plugin filename="ign_ros_control_plugin" name="ign_ros_control::IgnitionROSControlPlugin">
+                        <updateRate>${1/ $(arg period)}</updateRate>
+                        <robotSimType>wolf_ign_interface/WolfRobotHwIgn</robotSimType>
+                        <robotNamespace>$(arg robot_name)</robotNamespace>
+                </plugin>
+        </xacro:if>
 	</gazebo>
 
 </robot>

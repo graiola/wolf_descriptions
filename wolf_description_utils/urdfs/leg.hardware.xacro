@@ -42,11 +42,11 @@
 
                 <!-- ROS2 -->
 
-                <ros2_control name="quadruped_system" type="system">
+                <!--<ros2_control name="quadruped_system" type="system">
                     <hardware>
                       <plugin>gazebo_ros2_control/GazeboSystem</plugin>
                     </hardware>
-                    <!-- Hip assembly -->
+
                     <joint name="${prefix}_haa_joint">
                       <command_interface name="effort">
                         <param name="min">-500.0</param>
@@ -56,7 +56,7 @@
                       <state_interface name="velocity"/>
                       <state_interface name="effort"/>
                     </joint>
-                    <!-- Upper leg -->
+        
                     <joint name="${prefix}_hfe_joint">
                       <command_interface name="effort">
                         <param name="min">-500.0</param>
@@ -66,7 +66,7 @@
                       <state_interface name="velocity"/>
                       <state_interface name="effort"/>
                     </joint>
-                    <!-- Lower leg -->
+            
                     <joint name="${prefix}_kfe_joint">
                       <command_interface name="effort">
                         <param name="min">-500.0</param>
@@ -76,7 +76,7 @@
                       <state_interface name="velocity"/>
                       <state_interface name="effort"/>
                     </joint>
-            </ros2_control>
+            </ros2_control>-->
 
 
 	</xacro:macro>

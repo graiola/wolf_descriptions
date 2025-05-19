@@ -20,7 +20,7 @@
     <!-- legs transmission and gazebo plugins -->
     <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.hardware.xacro"/>
     <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.gazebo.xacro"/>
-    <xacro:include filename="$(find wolf_description_utils)/urdfs/imu.hardware.xacro"/>
+    <!--<xacro:include filename="$(find wolf_description_utils)/urdfs/imu.hardware.xacro"/> -->
     <xacro:include filename="$(find sensors_description)/urdfs/sensors/imu.gazebo.xacro"/>
 
     <!-- dynamics inertial value -->
@@ -673,7 +673,7 @@
     <xacro:leg_gazebo prefix="rh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
     <xacro:leg_hardware prefix="lh"/>
     <xacro:leg_gazebo prefix="lh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:imu_hardware imu_name="trunk_imu" imu_frame="trunk_imu"/>
+    <!--<xacro:imu_hardware imu_name="trunk_imu" imu_frame="trunk_imu"/>-->
 
     <xacro:if value="$(eval arm_name != '')">
            <xacro:include filename="$(find spot_description)/urdfs/arm/$(arg arm_name)_adapter.urdf.xacro" />

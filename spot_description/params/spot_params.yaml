@@ -16,8 +16,8 @@ wolf_controller:
   min_base_roll: -0.523
   max_base_pitch: 0.523
   min_base_pitch: -0.523
-  estimation_position_type: ground_truth
-  estimation_orientation_type: ground_truth
+  estimation_position_type: kalman_filter 
+  estimation_orientation_type: imu_magnetometer
   activate_step_reflex: true
   activate_push_recovery: true
   publish_odom_msg: $(arg publish_odom_msg)

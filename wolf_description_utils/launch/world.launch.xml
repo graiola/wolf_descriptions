@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <launch>
 
-    <!-- These are the arguments you can pass this launch file, for example paused:=true -->
+    <!-- Simulation engine selection: 'classic' or 'ignition' -->
+    <arg name="sim_engine" default="classic"/>
+    
+    <!-- Common arguments -->
     <arg name="sensors" default="false"/>
     <arg name="robot_model" default="spot"/>
     <arg name="robot_name" default=""/>
@@ -16,17 +19,28 @@
     <arg name="engine" default="ode"/>
     <arg name="world_file" default="$(find-pkg-share wolf_gazebo_resources)/worlds/$(var world_name).world"/>
 
-    <include file="$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py">
-        <arg name="world"  value="$(var world_file)"/>
-        <arg name="paused" value="$(var paused)"/>
-        <arg name="use_sim_time" value="$(var use_sim_time)"/>
-        <arg name="gui" value="$(var gui)"/>
-        <arg name="headless" value="$(var headless)"/>
-        <arg name="debug" value="$(var debug)"/>
-        <arg name="engine" value="$(var engine)"/>
-    </include>
+    <!-- Launch Gazebo Classic -->
+    <group if="$(eval sim_engine == 'classic')">
+        <include file="$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py">
+            <arg name="world"  value="$(var world_file)"/>
+            <arg name="paused" value="$(var paused)"/>
+            <arg name="use_sim_time" value="$(var use_sim_time)"/>
+            <arg name="gui" value="$(var gui)"/>
+            <arg name="headless" value="$(var headless)"/>
+            <arg name="debug" value="$(var debug)"/>
+            <arg name="engine" value="$(var engine)"/>
+        </include>
+    </group>
 
-    <!-- Send the robot urdf to parameter server -->
+    <!-- Launch Gazebo Ignition -->
+    <group if="$(eval sim_engine == 'ignition')">
+        <include file="$(find-pkg-share ros_ign_gazebo)/launch/ign_gazebo.launch.py">
+            <arg name="ign_args" value="-r $(var world_file)"/>
+            <arg name="gui" value="$(var gui)"/>
+        </include>
+    </group>
+
+    <!-- Upload the robot description -->
     <include file="$(find-pkg-share wolf_description_utils)/launch/upload.launch.xml">
         <arg name="sensors" value="$(var sensors)"/>
         <arg name="period" value="$(var period)"/>

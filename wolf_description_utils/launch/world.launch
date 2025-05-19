@@ -1,25 +1,33 @@
 <?xml version="1.0" ?>
 <launch>
 
-        <!-- These are the arguments you can pass this launch file, for example paused:=true -->
-        <arg name="sensors"            default="false" />
-        <arg name="robot_model"        default="spot"/>
-        <arg name="robot_name"         default=""/>
-        <arg name="paused"             default="true"/>
-        <arg name="use_sim_time"       default="true"/>
-        <arg name="gui"                default="true"/>
-        <arg name="headless"           default="false"/>
-        <arg name="debug"              default="false"/>
-        <arg name="world_name"         default="empty"/>
-        <arg name="period"             default="0.001"/>
-        <arg name="arm_name"           default=""/>
-        <arg name="engine"             default="ode"/>
-        <arg name="world_file"         default="$(eval find('wolf_gazebo_resources') + '/worlds/' + arg('world_name') + '.world')" />
+    <!-- Simulation engine selection: 'classic' or 'ignition' -->
+    <arg name="sim_engine"         default="classic"/>
 
-        <!-- Set use_sim_time flag -->
-        <group if="$(arg use_sim_time)">
-            <param name="/use_sim_time" value="true" />
-        </group>
+    <!-- Common arguments -->
+    <arg name="sensors"            default="false"/>
+    <arg name="robot_model"        default="spot"/>
+    <arg name="robot_name"         default=""/>
+    <arg name="paused"             default="true"/>
+    <arg name="use_sim_time"       default="true"/>
+    <arg name="gui"                default="true"/>
+    <arg name="headless"           default="false"/>
+    <arg name="debug"              default="false"/>
+    <arg name="world_name"         default="empty"/>
+    <arg name="period"             default="0.001"/>
+    <arg name="arm_name"           default=""/>
+    <arg name="engine"             default="ode"/>
+
+    <!-- World file path -->
+    <arg name="world_file" default="$(eval find('wolf_gazebo_resources') + '/worlds/' + arg('world_name') + '.world')" />
+
+    <!-- Set use_sim_time flag -->
+    <group if="$(arg use_sim_time)">
+        <param name="/use_sim_time" value="true" />
+    </group>
+
+    <!-- GAZEBO CLASSIC -->
+    <group if="$(eval arg('sim_engine') == 'classic')">
 
         <!-- Set command arguments -->
         <arg unless="$(arg paused)"   name="command_arg1" value=""/>
@@ -28,26 +36,66 @@
         <arg if="$(arg headless)"     name="command_arg2" value="-r"/>
         <arg unless="$(arg debug)"    name="script_type"  value="gzserver"/>
         <arg if="$(arg debug)"        name="script_type"  value="debug"/>
-
-        <!-- Set the dynamic engine for gazebo -->
         <arg name="dynamic_engine"    default="-e $(arg engine)"/>
 
         <!-- Start gazebo server-->
         <node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="false" output="screen"
-                args="$(arg command_arg1) $(arg command_arg2) $(arg world_file) $(arg dynamic_engine)" />
+              args="$(arg command_arg1) $(arg command_arg2) $(arg world_file) $(arg dynamic_engine)" />
+
         <!-- Start gazebo client -->
         <group if="$(arg gui)">
             <node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" respawn="false" output="screen"/>
         </group>
 
-        <!-- Send the robot urdf to parameter server -->
-        <include file="$(find wolf_description_utils)/launch/upload.launch">
-            <arg name="sensors"           value="$(arg sensors)" />
-            <arg name="period"            value="$(arg period)" />
-            <arg name="robot_model"       value="$(arg robot_model)" />
-            <arg name="arm_name"          value="$(arg arm_name)" />
-            <arg name="robot_name"        value="$(arg robot_name)"/>
+    </group>
+
+    <!-- GAZEBO IGNITION -->
+    <group if="$(eval arg('sim_engine') == 'ignition')">
+
+        <!-- Define default (empty) values -->
+        <arg name="ign_arg_paused"  value=""/>
+        <arg name="ign_arg_headless" value=""/>
+
+        <!-- Build conditional arguments -->
+        <arg if="$(eval arg('paused') == 'false')" name="ign_arg_paused" value="-r"/>
+        <arg if="$(eval arg('paused') == 'true')"  name="ign_arg_paused" value=""/>
+
+        <arg if="$(eval arg('headless') == 'false')"     name="ign_arg_headless" value="--headless-rendering"/>
+        <arg if="$(eval arg('headless') == 'false')"     name="ign_arg_headless" value=""/>
+
+        <arg name="ign_args_final" value="--verbose 10 $(arg world_file) $(arg ign_arg_headless) $(arg ign_arg_paused)"/>
+
+        <include file="$(find ros_ign_gazebo)/launch/ign_gazebo.launch">
+            <arg name="ign_args" value="$(arg ign_args_final)" />
         </include>
 
-</launch>
+        <node
+            pkg="ros_ign_bridge"
+            type="parameter_bridge"
+            name="$(anon ros_ign_bridge)"
+            output="screen"
+            args="/clock@rosgraph_msgs/Clock[ignition.msgs.Clock ">
+        </node>
 
+        <node
+            pkg="ros_ign_bridge"
+            type="parameter_bridge"
+            name="$(anon ros_ign_bridge_control)"
+            output="screen"
+            args="/world/default/control@ros_ign_interfaces/msg/WorldControl@ignition.msgs.WorldControl">
+        </node>
+
+    </group>
+
+    
+
+    <!-- Upload robot model -->
+    <include file="$(find wolf_description_utils)/launch/upload.launch">
+        <arg name="sensors"      value="$(arg sensors)" />
+        <arg name="period"       value="$(arg period)" />
+        <arg name="robot_model"  value="$(arg robot_model)" />
+        <arg name="arm_name"     value="$(arg arm_name)" />
+        <arg name="robot_name"   value="$(arg robot_name)"/>
+    </include>
+
+</launch>

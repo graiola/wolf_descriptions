@@ -1,107 +1,163 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-import rospy, sys, os, time, tf
-import string
-import warnings
-
-from gazebo_ros import gazebo_interface
-from std_srvs.srv import Empty
-from std_msgs.msg import Float64
-from geometry_msgs.msg import Pose
-from srdfdom.srdf import SRDF
+import os
+import subprocess
+import sys
+import tempfile
+import time
 from ast import literal_eval
 
+import rospy
+import tf
+from geometry_msgs.msg import Pose
+from srdfdom.srdf import SRDF
+from std_srvs.srv import Empty
+
+# Gazebo Classic interface (optional)
+try:
+    from gazebo_ros import gazebo_interface
+except ImportError:
+    pass
+
 def unpause(gazebo_namespace):
-        rospy.wait_for_service(gazebo_namespace+'/unpause_physics')
-        time.sleep(1)
-        unpause_physics = rospy.ServiceProxy(gazebo_namespace+'/unpause_physics', Empty)
-        resp = unpause_physics()
-        return
+    rospy.wait_for_service(gazebo_namespace + '/unpause_physics')
+    time.sleep(1)
+    unpause_physics = rospy.ServiceProxy(gazebo_namespace + '/unpause_physics', Empty)
+    unpause_physics()
+
+def convert_urdf_to_sdf(urdf_string):
+    try:
+        with tempfile.NamedTemporaryFile(delete=False, mode='w', suffix=".urdf") as tmp:
+            tmp.write(urdf_string)
+            tmp_path = tmp.name
+
+        result = subprocess.run(
+            ['gz', 'sdf', '-p', tmp_path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+
+        os.unlink(tmp_path)
+
+        if result.returncode != 0 or "<sdf" not in result.stdout:
+            rospy.logerr("URDF to SDF conversion failed:\n%s", result.stderr)
+            return None
+
+        return result.stdout
+    except Exception as e:
+        rospy.logerr("Conversion command failed: %s", e)
+        return None
+
+def spawn_in_ignition(model_name, sdf_string, initial_pose, reference_frame):
+    quat = initial_pose.orientation
+    position = initial_pose.position
+
+    sdf_inline = sdf_string.replace('\n', ' ').replace('"', '\\"')
+
+    req_str = (
+        f'sdf: "{sdf_inline}" '
+        f'name: "{model_name}" '
+        f'pose: {{ position: {{ x: {position.x}, y: {position.y}, z: {position.z} }}, '
+        f'orientation: {{ x: {quat.x}, y: {quat.y}, z: {quat.z}, w: {quat.w} }} }} '
+        f'relative_to: "{reference_frame}"'
+    )
+
+    cmd = [
+        "ign", "service", "-s", "/world/default/create",
+        "--reqtype", "ignition.msgs.EntityFactory",
+        "--reptype", "ignition.msgs.Boolean",
+        "--timeout", "300",
+        "--req", req_str
+    ]
+
+    try:
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        if result.returncode != 0:
+            rospy.logerr("Ignition spawn failed:\n%s", result.stderr)
+        else:
+            rospy.loginfo("Ignition spawn succeeded:\n%s", result.stdout)
+    except Exception as e:
+        rospy.logerr("Failed to run Ignition spawn command: %s", e)
+
+def set_ign_joint_position(model_name, joint_name, value):
+    topic = f"/model/{model_name}/joint/{joint_name}/0/cmd_pos"
+    msg_type = "ignition.msgs.Double"
+    msg_data = f'"data: {value}"'
+
+    cmd = f"ign topic -t {topic} -m {msg_type} -p {msg_data}"
+    rospy.loginfo(f"[Ignition] Setting joint {joint_name} to {value}")
+    subprocess.run(cmd, shell=True)
 
 if __name__ == "__main__":
+    rospy.init_node('goto0')
 
-        rospy.init_node('goto0')
+    # Parameters
+    model_name = rospy.get_param('~robot_model')
+    robot_name = rospy.get_param('~robot_name')
+    sim_engine = rospy.get_param('~sim_engine')
+    use_ignition = sim_engine == 'ignition'
 
-        # Define the parameters
-        model_name                      = ""
-        robot_name                      = ""
-        gazebo_namespace                = "/gazebo"
-        joint_names                     = []
-        joint_positions                 = []
-        initial_xyz                     = [0,0,0]
-        initial_rpy                     = [0,0,0]
-        initial_pose                    = Pose()
-        reference_frame                 = "world"
-        model_xml                       = ""
-        srdf_data                       = ""
+    gazebo_namespace = "/gazebo"
+    joint_names = []
+    joint_positions = []
+    initial_xyz = literal_eval(rospy.get_param('~initial_xyz', '[0, 0, 0]'))
+    initial_rpy = literal_eval(rospy.get_param('~initial_rpy', '[0, 0, 0]'))
+    reference_frame = "world"
 
-        # Load the parameters
-        model_name  = rospy.get_param('~robot_model')
-        robot_name  = rospy.get_param('~robot_name')
+    robot_description_name = f"/{robot_name}/gazebo_robot_description"
+    robot_description_semantic_name = f"/{robot_name}/robot_description_semantic"
 
-        if rospy.has_param('~initial_xyz'):
-                initial_xyz = rospy.get_param('~initial_xyz')
-                initial_xyz = literal_eval(initial_xyz)
+    if robot_name:
+        model_name = robot_name
 
-        if rospy.has_param('~initial_rpy'):
-                initial_rpy = rospy.get_param('~initial_rpy')
-                initial_rpy = literal_eval(initial_rpy)
+    if not rospy.has_param(robot_description_name) or not rospy.has_param(robot_description_semantic_name):
+        rospy.logerr("Missing robot description or semantic SRDF")
+        sys.exit(1)
 
-        robot_description_name          = '/%s/gazebo_robot_description'%(robot_name)
-        robot_description_semantic_name = '/%s/robot_description_semantic'%(robot_name)
+    model_xml = rospy.get_param(robot_description_name)
+    srdf_data = rospy.get_param(robot_description_semantic_name)
 
-        if robot_name != '': 	# if the robot namespace is not empty use it as the model name as well
-                model_name = robot_name
+    # Pose setup
+    initial_pose = Pose()
+    initial_pose.position.x, initial_pose.position.y, initial_pose.position.z = initial_xyz
+    quat = tf.transformations.quaternion_from_euler(*initial_rpy)
+    initial_pose.orientation.x, initial_pose.orientation.y, initial_pose.orientation.z, initial_pose.orientation.w = quat
 
-        if not rospy.has_param(robot_description_name):
-                rospy.logerr("%s is not available", robot_description_name)
-                sys.exit(1)
-        else:
-                model_xml = rospy.get_param(robot_description_name)
-
-        if not rospy.has_param(robot_description_semantic_name):
-                rospy.logerr("%s is not available", robot_description_semantic_name)
-                sys.exit(1)
-        else:
-                srdf_data = rospy.get_param(robot_description_semantic_name)
-
-        # Wait for the spawn service
+    # Spawn
+    if use_ignition:
+        rospy.loginfo("Spawning %s in Ignition Gazebo", model_name)
+        spawn_in_ignition(model_name, model_xml, initial_pose, reference_frame)
+    else:
         rospy.wait_for_service("/gazebo/spawn_urdf_model")
-
-        rospy.loginfo("spawning %s with pose [%s,%s,%s,%s,%s,%s]",model_name,initial_xyz[0],initial_xyz[1],initial_xyz[2],initial_rpy[0],initial_rpy[1],initial_rpy[2])
-
-        # Retrieve initial pose
-        initial_pose.position.x = initial_xyz[0]
-        initial_pose.position.y = initial_xyz[1]
-        initial_pose.position.z = initial_xyz[2]
-        roll                    = initial_rpy[0]
-        pitch                   = initial_rpy[1]
-        yaw                     = initial_rpy[2]
-        quaternion = tf.transformations.quaternion_from_euler(roll, pitch, yaw)
-        initial_pose.orientation.x = quaternion[0]
-        initial_pose.orientation.y = quaternion[1]
-        initial_pose.orientation.z = quaternion[2]
-        initial_pose.orientation.w = quaternion[3]
-
-        # Spawn new model
+        rospy.loginfo("Spawning %s in Gazebo Classic", model_name)
         gazebo_interface.spawn_urdf_model_client(model_name, model_xml, robot_name, initial_pose, reference_frame, gazebo_namespace)
 
-        robot = SRDF.from_xml_string(srdf_data)
+    # Extract joint configuration
+    robot = SRDF.from_xml_string(srdf_data)
+    for joint in robot.group_state_map['standdown'].joints:
+        joint_names.append(joint.name)
+        joint_positions.append(joint.value[0])
 
-        for joint in robot.group_state_map['standdown'].joints:
-                joint_names.append(joint.name)
-                joint_positions.append(joint.value[0])
-
-        rospy.wait_for_service('%s/set_model_configuration'%(gazebo_namespace))
+    # Apply joint positions
+    if use_ignition:
+        rospy.loginfo("Publishing joint positions in Ignition")
+        #time.sleep(2)  # Wait a bit for model to settle
+#
+        ##pause_ignition()
+        #rospy.sleep(1)
+#
+        #for name, pos in zip(joint_names, joint_positions):
+        #    set_ign_joint_position(model_name, name, pos)
+#
+        #rospy.sleep(1)
+        ##unpause_ignition()
+    else:
         try:
-                success = gazebo_interface.set_model_configuration_client(model_name, robot_description_name, joint_names, joint_positions, gazebo_namespace)
+            rospy.wait_for_service('%s/set_model_configuration' % gazebo_namespace)
+            gazebo_interface.set_model_configuration_client(model_name, robot_description_name, joint_names, joint_positions, gazebo_namespace)
+            unpause(gazebo_namespace)
         except rospy.ServiceException as e:
-                rospy.logerr("set model configuration service call failed")
+            rospy.logerr("Gazebo Classic service call failed: %s", e)
 
-        rospy.wait_for_service('%s/unpause_physics'%(gazebo_namespace))
-        try:
-                success = unpause(gazebo_namespace)
-        except rospy.ServiceException as e:
-                rospy.logerr("unpause physics service call failed")
-
-        rospy.sleep(1)
+    rospy.sleep(1)
