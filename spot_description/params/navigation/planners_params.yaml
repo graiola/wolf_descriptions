@@ -131,7 +131,7 @@ TebLocalPlannerROS:
   feasibility_check_no_poses: 4
   publish_feedback: false
   shrink_horizon_backup: true
-  allow_init_with_backwards_motion: true # If true, the underlying trajectories might be initialized with backwards motions in case the goal is behind the start within the local costmap (this is only recommended if the robot is equipped with rear sensors)
+  allow_init_with_backwards_motion: false # If true, the underlying trajectories might be initialized with backwards motions in case the goal is behind the start within the local costmap (this is only recommended if the robot is equipped with rear sensors)
   exact_arc_length: false
   shrink_horizon_min_duration: 10
 
@@ -176,13 +176,13 @@ TebLocalPlannerROS:
   optimization_verbose: false
   penalty_epsilon: 0.1
   weight_max_vel_x: 20
-  weight_max_vel_y: 20
+  weight_max_vel_y: 100
   weight_max_vel_theta: 20
   weight_acc_lim_x: 1
-  weight_acc_lim_y: 1
+  weight_acc_lim_y: 10
   weight_acc_lim_theta: 1
   weight_kinematics_nh: 10 # is a nonholonomic robot
-  weight_kinematics_forward_drive: 50 # prefer forward driving, for differential
+  weight_kinematics_forward_drive: 150 # prefer forward driving, for differential
   weight_kinematics_turning_radius: 1 # prefer turns that respect the min_turning_radius, not used if differential (min_turning_radius = 0)
   weight_optimaltime: 10 # prefer trajectories with less transition time
   weight_obstacle: 50 # prefer trajectories that respect the min_obstacle_dist
