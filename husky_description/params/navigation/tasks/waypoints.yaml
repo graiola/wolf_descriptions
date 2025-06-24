@@ -1,0 +1,8 @@
+waypoints:
+  task_gui: $(arg task_gui)
+  robot_base_frame: $(arg base_frame)
+  patrol_mode: false
+  waypoints_topic: "/$(arg robot_name)/waypoints"
+  waypoints_file: "/tmp/waypoints.yaml"
+  gps_topic: "/$(arg robot_name)/gps/filtered"
+  tf_prefix: "$(arg robot_name)"
