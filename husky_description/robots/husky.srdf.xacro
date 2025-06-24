@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<robot name="husky" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <group name="base">
+      <link name="base_link"/>
+    </group>
+    <group name="imu"> <!-- where the imu sensor is mounted -->
+      <link name="trunk_imu"/>
+    </group>
+    <group_state group="chains" name="standdown"> <!-- NOTE: this name is needed by go0 to set the joint positions -->
+        <joint name="front_left_wheel_joint"  value="0.0"/>
+        <joint name="rear_left_wheel_joint"   value="0.0"/>
+        <joint name="front_right_wheel_joint" value="0.0"/>
+        <joint name="rear_right_wheel_joint"  value="0.0"/>
+    </group_state>
+
+</robot>

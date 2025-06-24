@@ -1,0 +1,5 @@
+trackingcamera_topics: ["/$(arg robot_name)/t265/odom"]
+base_frame_id: $(arg base_frame)
+basefoot_frame_id: $(arg base_frame)
+odom_frame_id: $(arg odom_frame)
+twist_in_local_frame: false

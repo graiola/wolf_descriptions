@@ -1,0 +1,3 @@
+plugins: ["task_exploration::TaskExploration","task_waypoints::TaskWaypoints","task_goto::TaskGoto","task_homing::TaskHoming"]
+priorities: [0,1,2,3]
+names: ["exploration","waypoints","goto","homing"]
