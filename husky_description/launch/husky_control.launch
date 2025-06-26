@@ -1,0 +1,121 @@
+<?xml version="1.0" ?>
+<launch>
+
+    <!-- Robot related arguments -->
+    <arg name="robot_model"        default="husky"/>
+    <arg name="robot_name"         default=""      description="robot namespace"/>
+    <arg name="sensors"            default="false" description="activate robot's sensors"/>
+    <arg name="period"             default="0.001" description="controller period"/>
+    <arg name="arm_name"           default=""      description="[kinova]"/>
+    <arg name="max_vel_x"          default="1.0"   description="maximum linear velocity x m/s" />
+    <arg name="max_vel_y"          default="0.5"   description="maximum linear velocity y m/s" />
+    <arg name="max_vel_z"          default="0.5"   description="maximum linear velocity z m/s"/>
+    <arg name="max_vel_yaw"        default="1.7"   description="maximum angular velocity yaw rad/s"/>
+
+    <!-- Gazebo related arguments -->
+    <arg name="gazebo"        default="true"     description="start gazebo"/>
+    <arg name="gazebo_debug"  default="false"    description="activate gazebo debug"/>
+    <arg name="engine"        default="ode"      description="[ode/bullet/dart/simbody]"/>
+    <arg name="spawn_robot"   default="true"     description="spawn the robot in gazebo"/>
+    <arg name="initial_xyz"   default="[0,0,0]"  description="initial robot xyz position in the world"/>
+    <arg name="initial_rpy"   default="[0,0,0]"  description="initial robot rpy position in the world"/>
+    <arg name="world_name"    default="empty"    description="load a specific world from wolf_gazebo_resources"/>
+    <arg name="world_file"    default="$(find-pkg-share wolf_gazebo_resources)/worlds/$(var world_name).world" description="load a specific world file"/>
+
+    <!-- GUI related arguments -->
+    <arg name="gazebo_gui"      default="true"  description="start gzclient"/>
+    <arg name="plotjuggler_gui" default="false" description="start plotjuggler"/>
+    <arg name="rviz_gui"        default="false" description="start rviz"/>
+
+    <!-- Odometry arguments -->
+    <arg name="publish_odom_msg" default="true" description="publish nav_msgs/Odometry message from the controller"/>
+    <arg name="publish_odom_tf"  default="true" description="publish the odom tf frame from the controller"/>
+
+    <!-- Controller params file -->
+    <arg name="controller_params"  default="$(find-pkg-share $(var robot_model)_description)/params/$(var robot_model)_params.ros2.yaml" description="ros2 controller params file"/>
+
+    <group>
+    <push-ros-namespace namespace="$(var robot_name)"/>
+
+        <!-- Load the robot description and Gazebo -->
+        <group if="$(var gazebo)">
+            <include file="$(find-pkg-share wolf_description_utils)/launch/world.launch.xml">
+                <arg name="sensors"           value="$(var sensors)" />
+                <arg name="robot_model"       value="$(var robot_model)" />
+                <arg name="robot_name"        value="$(var robot_name)" />
+                <arg name="world_name"        value="$(var world_name)" />
+                <arg name="world_file"        value="$(var world_file)" />
+                <arg name="period"            value="$(var period)" />
+                <arg name="gui"               value="$(var gazebo_gui)"/>
+                <arg name="arm_name"          value="$(var arm_name)"/>
+                <arg name="debug"             value="$(var gazebo_debug)"/>
+                <arg name="engine"            value="$(var engine)"/>
+            </include>
+        </group>
+        <group unless="$(var gazebo)">
+            <include file="$(find-pkg-share wolf_description_utils)/launch/upload.launch.xml">
+            <arg name="sensors"      value="$(var sensors)" />
+            <arg name="robot_model"  value="$(var robot_model)" />
+            <arg name="robot_name"   value="$(var robot_name)" />
+            <arg name="arm_name"     value="$(var arm_name)"/>
+            <arg name="period"       value="$(var period)" />
+            </include>
+        </group>
+
+        <!-- Spawn the robot in Gazebo -->
+        <node pkg="wolf_description_utils" exec="go0" name="spawn_robot" output="screen" if="$(var spawn_robot)">
+            <param name="robot_model"              value="$(var robot_model)"/>
+            <param name="robot_name"               value="$(var robot_name)"/>
+            <param name="description"              value="$(var robot_name)/gazebo_robot_description/description"/>
+            <param name="semantic_description"     value="$(var robot_name)/robot_description_semantic/description"/>
+            <param name="initial_xyz"              value="$(var initial_xyz)"/>
+            <param name="initial_rpy"              value="$(var initial_rpy)"/>
+        </node>
+
+        <!-- Convert joint states to TF transforms for rviz, etc -->
+        <node name="robot_state_publisher" pkg="robot_state_publisher" exec="robot_state_publisher" respawn="false" output="log">
+            <remap from="/joint_states"     to="$(var robot_name)/joint_states"/>
+            <param name="frame_prefix"      value="$(var robot_name)/"/>
+            <param name="robot_description" value="$(command 'xacro $(find-pkg-share $(var robot_model)_description)/robots/$(var robot_model).urdf.xacro 
+            sensors:=$(var sensors) period:=$(var period) arm_name:=$(var arm_name) robot_name:=$(var robot_name)')"/>
+        </node>
+
+        <!-- Spawn the controller and joint state broadcaster -->
+        <executable cmd="python3 $(find-pkg-share wolf_controller_utils)/replace_yaml_placeholders.py 
+                $(var controller_params)
+                $(var controller_params)
+                PERIOD=$(var period)
+                MAX_VEL_X=$(var max_vel_x)
+                MAX_VEL_Y=$(var max_vel_y)
+                MAX_VEL_Z=$(var max_vel_z)
+                MAX_VEL_YAW=$(var max_vel_yaw)
+                PUBLISH_ODOM_MSG=$(var publish_odom_msg)
+                PUBLISH_ODOM_TF=$(var publish_odom_tf)
+                TF_PREFIX=$(var robot_name)"/>
+        <node name="diffdrive_controller_spawner"
+            pkg="controller_manager" exec="spawner" output="screen"
+            args="diffdrive_controller"
+            launch-prefix="bash -c 'sleep 5; $0 $@' ">
+        </node>
+
+        <!-- Spawn joint state broadcaster after a longer delay -->
+        <node name="joint_state_broadcaster_spawner"
+            pkg="controller_manager" exec="spawner" output="screen"
+            args="joint_state_broadcaster"
+            launch-prefix="bash -c 'sleep 1; $0 $@' "/>
+
+        <!-- Keyboard node -->
+        <node name="keyboard_node" pkg="wolf_controller" exec="keyboard_node" respawn="true" output="screen">
+            <param name="robot_name" value="$(var robot_name)"/>
+        </node>
+
+        <!-- GUI nodes -->
+        <!-- rviz -->
+        <group if="$(eval ' \'$(var rviz_gui)\' ')">
+            <node name="wolf_rviz" pkg="rviz2" exec="rviz2"
+                args="-d $(find-pkg-share wolf_controller)/rviz/controller.rviz2.rviz"/>
+        </group>
+    
+    </group>
+
+</launch>
