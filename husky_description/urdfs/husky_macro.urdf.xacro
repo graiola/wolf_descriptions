@@ -14,16 +14,15 @@
   <xacro:property name="husky_rear_bumper_extend" value="$(optenv HUSKY_REAR_BUMPER_EXTEND 0)" />
 
   <xacro:arg name="robot_namespace" default="/" />
-  <xacro:arg name="is_sim" default="false" />
   <xacro:arg name="urdf_extras" default="$(optenv CPR_URDF_EXTRAS empty.urdf)" />
 
   <!-- Included URDF/XACRO Files -->
   <xacro:include filename="$(find husky_description)/urdfs/decorations.urdf.xacro" />
   <xacro:include filename="$(find husky_description)/urdfs/wheel.urdf.xacro" />
 
-  <xacro:include filename="$(find husky_description)/urdfs/accessories/intel_realsense.urdf.xacro"/>
-  <!-- <xacro:include filename="$(find husky_description)/urdf/accessories/sick_lms1xx_mount.urdf.xacro"/> -->
-  <xacro:include filename="$(find husky_description)/urdfs/accessories/sensor_arch.urdf.xacro"/>
+  <!--<xacro:include filename="$(find husky_description)/urdfs/accessories/intel_realsense.urdf.xacro"/>-->
+  <!--<xacro:include filename="$(find husky_description)/urdf/accessories/sick_lms1xx_mount.urdf.xacro"/>-->
+  <!--<xacro:include filename="$(find husky_description)/urdfs/accessories/sensor_arch.urdf.xacro"/>-->
 
   <xacro:property name="M_PI" value="3.14159"/>
 
@@ -58,7 +57,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://husky_description/meshes/base_link.dae" />
+          <mesh filename="file://$(find husky_description)/meshes/base_link.dae" />
         </geometry>
       </visual>
       <collision>
