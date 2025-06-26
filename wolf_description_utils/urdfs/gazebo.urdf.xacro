@@ -15,7 +15,7 @@
                         <!--<remapping>tf:=$(arg robot_name)/tf</remapping>-->
                 </ros>
                 <parameters>$(find wolf_controller)/params/config.ros2.yaml</parameters>
-                <!--<parameters>$(find ${model_name}_description)/params/${model_name}_params.ros2.yaml</parameters>-->
+                <parameters>$(find ${model_name}_description)/params/${model_name}_params.ros2.yaml</parameters>
         </plugin>
     	<plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
                 <ros>
