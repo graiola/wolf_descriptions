@@ -27,7 +27,7 @@
 
   <xacro:property name="M_PI" value="3.14159"/>
 
-  <xacro:macro name="husky" params="prefix">
+  <xacro:macro name="husky" params="prefix floating_base_link">
 
     <!-- Base Size -->
     <xacro:property name="base_x_size" value="0.98740000" />
@@ -42,6 +42,16 @@
     <!-- Wheel Properties -->
     <xacro:property name="wheel_length" value="0.1143" />
     <xacro:property name="wheel_radius" value="0.1651" />
+
+    <!-- Floating-base Joint -->
+    <xacro:if value="$(arg floating_base_link)">
+        <link name="world"/>
+        <joint name="${prefix}floating_base_joint" type="floating">
+          <origin rpy="0 0 0" xyz="0 0 0"/>
+          <parent link="world"/>
+          <child link="${prefix}base_link"/>
+        </joint>
+    </xacro:if>
 
     <!-- Base link is the center of the robot's bottom plate -->
     <link name="${prefix}base_link">
