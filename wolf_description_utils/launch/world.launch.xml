@@ -5,7 +5,7 @@
     <arg name="sensors" default="false"/>
     <arg name="robot_model" default="spot"/>
     <arg name="robot_name" default=""/>
-    <arg name="paused" default="true"/>
+    <arg name="paused" default="false"/>
     <arg name="use_sim_time" default="true"/>
     <arg name="gui" default="true"/>
     <arg name="headless" default="false"/>

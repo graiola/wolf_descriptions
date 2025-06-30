@@ -6,7 +6,7 @@
 
                 <!-- ROS2 -->
 
-                <ros2_control name="quadruped_system" type="system">
+                <ros2_control name="sim_hardware_system" type="system">
                     <hardware>
                       <plugin>gazebo_ros2_control/GazeboSystem</plugin>
                     </hardware>

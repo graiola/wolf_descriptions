@@ -23,4 +23,5 @@ install(DIRECTORY urdfs/
 install(DIRECTORY params/
   DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/params)
 
-
+install(DIRECTORY launch/
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/launch)
