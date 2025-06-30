@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <!-- Robot related arguments -->
+  <arg name="robot_name"         default=""      description="robot namespace" />
+  <arg name="sensors"            default="false" description="activate robot's sensors" />
+  <arg name="period"             default="0.001" description="controller period" />
+  <arg name="arm_name"           default=""      description="[kinova]" />
+  <arg name="max_vel_x"          default="0.8"   description="maximum linear velocity x" />
+  <arg name="max_vel_y"          default="0.5"   description="maximum linear velocity y" />
+  <arg name="max_vel_z"          default="0.5"   description="maximum linear velocity z" />
+  <arg name="max_vel_yaw"        default="0.5"   description="maximum angular velocity yaw" />
+
+  <!-- Input device argument -->
+  <arg name="input_device"       default="keyboard" description="[ps3/xbox/keyboard/spacemouse]" />
+
+  <!-- Gazebo related arguments -->
+  <arg name="gazebo"             default="true"  description="start gazebo" />
+  <arg name="gazebo_debug"       default="false" description="activate gazebo debug" />
+  <arg name="engine"            default="ode"    description="[ode/bullet/dart/simbody]" />
+  <arg name="spawn_robot"        default="true"  description="spawn the robot in gazebo" />
+  <arg name="initial_xyz"        default="[0,0,0]" description="initial robot xyz position" />
+  <arg name="initial_rpy"        default="[0,0,0]" description="initial robot rpy position" />
+  <arg name="world_name"         default="empty" description="load a specific world" />
+  <arg name="world_file" default="$(find-pkg-share wolf_gazebo_resources)/worlds/$(var world_name).world"
+       description="load a specific world file" />
+
+  <!-- GUI related arguments -->
+  <arg name="gazebo_gui"         default="true"  description="start gzclient" />
+  <arg name="plotjuggler_gui"    default="false" description="start plotjuggler" />
+  <arg name="rviz_gui"           default="false" description="start rviz" />
+  <arg name="rqt_gui"            default="true"  description="start rqt_reconfigure" />
+  <arg name="plot_node_gui"      default="false" description="start controller's visualization node" />
+  <arg name="full_gui"           default="false" description="start all GUIs" />
+
+  <!-- Odometry arguments -->
+  <arg name="publish_odom_msg"   default="true" description="publish nav_msgs/Odometry" />
+  <arg name="publish_odom_tf"    default="true" description="publish odom tf frame" />
+
+  <!-- Planner arguments -->
+  <arg name="launch_planner"     default="false" description="launch the MPC planner" />
+
+  <!-- Include bringup launch with all args -->
+  <include file="$(find-pkg-share wolf_controller)/launch/wolf_controller_bringup.launch.xml">
+    <arg name="robot_model"         value="spot" />
+    <arg name="robot_name"          value="$(var robot_name)" />
+    <arg name="sensors"             value="$(var sensors)" />
+    <arg name="period"              value="$(var period)" />
+    <arg name="arm_name"            value="$(var arm_name)" />
+    <arg name="max_vel_x"           value="$(var max_vel_x)" />
+    <arg name="max_vel_y"           value="$(var max_vel_y)" />
+    <arg name="max_vel_z"           value="$(var max_vel_z)" />
+    <arg name="max_vel_yaw"         value="$(var max_vel_yaw)" />
+    <arg name="input_device"        value="$(var input_device)" />
+    <arg name="gazebo"              value="$(var gazebo)" />
+    <arg name="gazebo_debug"        value="$(var gazebo_debug)" />
+    <arg name="engine"              value="$(var engine)" />
+    <arg name="spawn_robot"         value="$(var spawn_robot)" />
+    <arg name="initial_xyz"         value="$(var initial_xyz)" />
+    <arg name="initial_rpy"         value="$(var initial_rpy)" />
+    <arg name="world_name"          value="$(var world_name)" />
+    <arg name="world_file"          value="$(var world_file)" />
+    <arg name="gazebo_gui"          value="$(var gazebo_gui)" />
+    <arg name="plotjuggler_gui"     value="$(var plotjuggler_gui)" />
+    <arg name="rviz_gui"            value="$(var rviz_gui)" />
+    <arg name="rqt_gui"             value="$(var rqt_gui)" />
+    <arg name="plot_node_gui"       value="$(var plot_node_gui)" />
+    <arg name="full_gui"            value="$(var full_gui)" />
+    <arg name="publish_odom_msg"    value="$(var publish_odom_msg)" />
+    <arg name="publish_odom_tf"     value="$(var publish_odom_tf)" />
+    <arg name="launch_planner"      value="$(var launch_planner)" />
+  </include>
+
+</launch>

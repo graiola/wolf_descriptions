@@ -13,9 +13,8 @@
                 <ros>
                         <namespace>/$(arg robot_name)</namespace>
                         <!--<remapping>tf:=$(arg robot_name)/tf</remapping>-->
-                        <remapping>diffdrive_controller/cmd_vel_unstamped:=wolf_controller/keyboard</remapping>
+                        <remapping>wolf_controller/odom:=odometry/robot</remapping>
                         <remapping>diffdrive_controller/odom:=odometry/robot</remapping>
-                        <remapping>diffdrive_controller/transition_event:=wolf_controller/transition_event</remapping>
                 </ros>
                 <parameters>$(find wolf_controller)/params/config.ros2.yaml</parameters>
                 <parameters>$(find ${model_name}_description)/params/${model_name}_params.ros2.yaml</parameters>
