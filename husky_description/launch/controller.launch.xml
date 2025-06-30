@@ -104,9 +104,18 @@
             args="joint_state_broadcaster"
             launch-prefix="bash -c 'sleep 1; $0 $@' "/>
 
+
+        <!-- Twist Mux Node -->
+        <node name="twist_mux" pkg="twist_mux" exec="twist_mux" output="screen">
+            <!-- Correct syntax: use <param from="..."/> to load YAML -->
+            <param from="$(find-pkg-share husky_description)/params/twist_mux.yaml" />
+            <remap from="cmd_vel_out" to="diffdrive_controller/cmd_vel_unstamped"/>
+        </node>
+
         <!-- Keyboard node -->
         <node name="keyboard_node" pkg="wolf_controller" exec="keyboard_node" respawn="true" output="screen">
-            <param name="robot_name" value="$(var robot_name)"/>
+            <param name="robot_name"      value="$(var robot_name)"/>
+            <param name="controller_type" value="diffdrive"/>
         </node>
 
         <!-- GUI nodes -->

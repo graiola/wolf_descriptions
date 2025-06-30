@@ -1,59 +1,43 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:arg name="laser_enabled" default="$(optenv CPR_LASER_ENABLED 0)" />
-  <xacro:arg name="laser_xyz" default="$(optenv CPR_LASER_XYZ 0.2206 0.0 0.00635)" />
-  <xacro:arg name="laser_rpy" default="$(optenv CPR_LASER_RPY 0.0 0.0 0.0)" />
-
-  <xacro:arg name="realsense_enabled" default="$(optenv CPR_REALSENSE 0)" />
-  <xacro:arg name="realsense_xyz" default="$(optenv CPR_REALSENSE_XYZ 0 0 0)" />
-  <xacro:arg name="realsense_rpy" default="$(optenv CPR_REALSENSE_RPY 0 0 0)" />
-  <xacro:arg name="realsense_mount" default="$(optenv CPR_REALSENSE_MOUNT_FRAME sensor_arch_mount_link)" />
-
   <xacro:property name="husky_front_bumper_extend" value="$(optenv HUSKY_FRONT_BUMPER_EXTEND 0)" />
   <xacro:property name="husky_rear_bumper_extend" value="$(optenv HUSKY_REAR_BUMPER_EXTEND 0)" />
 
   <xacro:arg name="robot_namespace" default="/" />
-  <xacro:arg name="urdf_extras" default="$(optenv CPR_URDF_EXTRAS empty.urdf)" />
 
   <!-- Included URDF/XACRO Files -->
   <xacro:include filename="$(find husky_description)/urdfs/decorations.urdf.xacro" />
   <xacro:include filename="$(find husky_description)/urdfs/wheel.urdf.xacro" />
 
-  <!--<xacro:include filename="$(find husky_description)/urdfs/accessories/intel_realsense.urdf.xacro"/>-->
-  <!--<xacro:include filename="$(find husky_description)/urdf/accessories/sick_lms1xx_mount.urdf.xacro"/>-->
-  <!--<xacro:include filename="$(find husky_description)/urdfs/accessories/sensor_arch.urdf.xacro"/>-->
-
   <xacro:property name="M_PI" value="3.14159"/>
 
-  <xacro:macro name="husky" params="prefix floating_base_link">
+  <xacro:macro name="husky" params="floating_base_link">
 
-    <!-- Base Size -->
-    <xacro:property name="base_x_size" value="0.98740000" />
-    <xacro:property name="base_y_size" value="0.57090000" />
-    <xacro:property name="base_z_size" value="0.24750000" />
+    <!-- Base Dimensions -->
+    <xacro:property name="base_x_size" value="0.9874" />
+    <xacro:property name="base_y_size" value="0.5709" />
+    <xacro:property name="base_z_size" value="0.2475" />
 
-    <!-- Wheel Mounting Positions -->
+    <!-- Wheel Configuration -->
     <xacro:property name="wheelbase" value="0.5120" />
     <xacro:property name="track" value="0.5708" />
     <xacro:property name="wheel_vertical_offset" value="0.03282" />
-
-    <!-- Wheel Properties -->
     <xacro:property name="wheel_length" value="0.1143" />
     <xacro:property name="wheel_radius" value="0.1651" />
 
-    <!-- Floating-base Joint -->
+    <!-- Floating base (optional) -->
     <xacro:if value="$(arg floating_base_link)">
-        <link name="world"/>
-        <joint name="${prefix}floating_base_joint" type="floating">
-          <origin rpy="0 0 0" xyz="0 0 0"/>
-          <parent link="world"/>
-          <child link="${prefix}base_link"/>
-        </joint>
+      <link name="world"/>
+      <joint name="floating_base_joint" type="floating">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="world"/>
+        <child link="base_link"/>
+      </joint>
     </xacro:if>
 
-    <!-- Base link is the center of the robot's bottom plate -->
-    <link name="${prefix}base_link">
+    <!-- Base Link -->
+    <link name="base_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
@@ -61,114 +45,145 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="${( husky_front_bumper_extend - husky_rear_bumper_extend ) / 2.0} 0 ${base_z_size/4}" rpy="0 0 0" />
+        <origin xyz="${(husky_front_bumper_extend - husky_rear_bumper_extend) / 2.0} 0 ${base_z_size/4}" rpy="0 0 0" />
         <geometry>
-          <box size="${ base_x_size + husky_front_bumper_extend + husky_rear_bumper_extend } ${base_y_size} ${base_z_size/2}"/>
+          <box size="${base_x_size + husky_front_bumper_extend + husky_rear_bumper_extend} ${base_y_size} ${base_z_size/2}" />
         </geometry>
       </collision>
       <collision>
         <origin xyz="0 0 ${base_z_size*3/4-0.01}" rpy="0 0 0" />
         <geometry>
-          <box size="${base_x_size*4/5} ${base_y_size} ${base_z_size/2-0.02}"/>
+          <box size="${base_x_size*4/5} ${base_y_size} ${base_z_size/2-0.02}" />
         </geometry>
       </collision>
     </link>
 
-    <!-- Base footprint is on the ground under the robot -->
-    <link name="${prefix}base_footprint"/>
-
-    <joint name="${prefix}base_footprint_joint" type="fixed">
+    <link name="base_footprint" />
+    <joint name="base_footprint_joint" type="fixed">
       <origin xyz="0 0 ${wheel_vertical_offset - wheel_radius}" rpy="0 0 0" />
-      <parent link="${prefix}base_link" />
-      <child link="${prefix}base_footprint" />
+      <parent link="base_link" />
+      <child link="base_footprint" />
     </joint>
 
-    <!-- Inertial link stores the robot's inertial information -->
-    <link name="${prefix}inertial_link">
+    <!-- Inertial -->
+    <link name="inertial_link">
       <inertial>
         <mass value="46.034" />
         <origin xyz="-0.00065 -0.085 0.062" />
         <inertia ixx="0.6022" ixy="-0.02364" ixz="-0.1197" iyy="1.7386" iyz="-0.001544" izz="2.0296" />
       </inertial>
     </link>
-
-    <joint name="${prefix}inertial_joint" type="fixed">
+    <joint name="inertial_joint" type="fixed">
       <origin xyz="0 0 0" rpy="0 0 0" />
-      <parent link="${prefix}base_link" />
-      <child link="${prefix}inertial_link" />
+      <parent link="base_link" />
+      <child link="inertial_link" />
     </joint>
 
-    <!-- IMU Link-->
-    <!-- Can be modified with environment variables in /etc/ros/setup.bash -->
-    <link name="${prefix}trunk_imu"/>
-    <joint name="${prefix}imu_joint" type="fixed">
+    <!-- IMU -->
+    <link name="trunk_imu" />
+    <joint name="imu_joint" type="fixed">
       <origin xyz="$(optenv CPR_IMU_XYZ 0 0 0)" rpy="$(optenv CPR_IMU_RPY 0 0 0)" />
-      <parent link="${prefix}base_link" />
-      <child link="${prefix}trunk_imu" />
+      <parent link="base_link" />
+      <child link="trunk_imu" />
     </joint>
 
-    <!-- GPS Link-->
-    <!-- Can be modified with environment variables in /etc/ros/setup.bash -->
-    <link name="${prefix}gps_link"/>
-    <joint name="${prefix}gps_joint" type="fixed">
+    <!-- GPS -->
+    <link name="gps_link" />
+    <joint name="gps_joint" type="fixed">
       <origin xyz="$(optenv CPR_GPS_XYZ 0 0 0)" rpy="$(optenv CPR_GPS_RPY 0 0 0)" />
-      <parent link="${prefix}base_link" />
-      <child link="${prefix}gps_link" />
+      <parent link="base_link" />
+      <child link="gps_link" />
     </joint>
 
-
-    <!-- Husky wheel macros -->
-    <xacro:husky_wheel wheel_prefix="${prefix}front_left">
+    <!-- Wheels -->
+    <xacro:husky_wheel wheel_prefix="front_left">
       <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:husky_wheel>
-    <xacro:husky_wheel wheel_prefix="${prefix}front_right">
+    <xacro:husky_wheel wheel_prefix="front_right">
       <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:husky_wheel>
-    <xacro:husky_wheel wheel_prefix="${prefix}rear_left">
+    <xacro:husky_wheel wheel_prefix="rear_left">
       <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:husky_wheel>
-    <xacro:husky_wheel wheel_prefix="${prefix}rear_right">
+    <xacro:husky_wheel wheel_prefix="rear_right">
       <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:husky_wheel>
 
+    <!-- Decorations -->
     <xacro:husky_decorate />
 
-    <!-- <xacro:if value="$(arg laser_enabled)">
+    <!-- Laser Mount -->
+    <link name="base_laser_mount">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 ${-M_PI/2}" />
+        <geometry>
+          <mesh filename="file://$(find husky_description)/meshes/accessories/lms1xx_mount.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 .0585" rpy="0 0 0" />
+        <geometry>
+          <box size=".1 .108 .117" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="laser_mount_joint" type="fixed">
+      <origin xyz="0.2206 0.0 0.00635" rpy="0.0 0.0 0.0" />
+      <parent link="top_plate_link" />
+      <child link="base_laser_mount" />
+    </joint>
 
-      <xacro:sick_lms1xx_mount prefix="base"/>
+    <!-- Sensor Arch -->
+    <link name="sensor_arch_mount_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find husky_description)/meshes/accessories/300_mm_sensor_arch.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="file://$(find husky_description)/meshes/accessories/300_mm_sensor_arch.dae" />
+        </geometry>
+      </collision>
+    </link>
 
-      <xacro:sick_lms1xx frame="base_laser" topic="scan" robot_namespace="$(arg robot_namespace)"/>
+    <joint name="realsense_mountpoint" type="fixed">
+      <origin xyz="0.05 0.0 0.1" rpy="0.0 0.0 0.0" />
+      <parent link="base_laser_mount" />
+      <child link="realsense_mountpoint_link" />
+    </joint>
+    <link name="realsense_mountpoint_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find husky_description)/meshes/accessories/depth_camera.dae"/>
+        </geometry>
+      </visual>
+    </link>
 
-      <joint name="laser_mount_joint" type="fixed">
-        <origin xyz="$(arg laser_xyz)" rpy="$(arg laser_rpy)" />
-        <parent link="top_plate_link" />
-        <child link="base_laser_mount" />
-      </joint>
+    <joint name="sensor_arch_mount" type="fixed">
+      <origin xyz="-0.35 0 0.3" rpy="0 0 -3.14" /> <!-- with 510mm use 0.51 on z-->
+      <parent link="top_plate_link" />
+      <child link="sensor_arch_mount_link" />
+    </joint>
 
-    </xacro:if> -->
-
-    <!--
-      top sensor arch; include this if we have realsense enabled
-      keep this as a property to make it easier to add multiple conditions, should we need
-      the top bar for any additional sensors in the future
-    -->
-    <!-- <xacro:property name="topbar_needed_realsense" value="$(arg realsense_enabled)" />
-    <xacro:if value="${topbar_needed_realsense}">
-      <xacro:sensor_arch prefix="" parent="top_plate_link">
-        <origin xyz="-0.35 0 0.51" rpy="0 0 -3.14"/>
-      </xacro:sensor_arch>
-    </xacro:if> -->
-
-    <!-- add the intel realsense to the topbar if needed -->
-    <xacro:if value="$(arg realsense_enabled)">
-      <link name="realsense_mountpoint"/>
-      <joint name="realsense_mountpoint_joint" type="fixed">
-        <origin xyz="$(arg realsense_xyz)" rpy="$(arg realsense_rpy)" />
-        <parent link="$(arg realsense_mount)"/>
-        <child link="realsense_mountpoint" />
-      </joint>
-      <xacro:intel_realsense_mount prefix="camera" topic="realsense" parent_link="realsense_mountpoint"/>
-    </xacro:if>
+    <joint name="lidar_arch_mount" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="sensor_arch_mount_link" />
+      <child link="lidar_arch_mount_link" />
+    </joint>
+    <link name="lidar_arch_mount_link">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find husky_description)/meshes/accessories/lidar.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find husky_description)/meshes/accessories/lidar_collision.stl"/>
+        </geometry>
+      </collision>
+    </link>
 
   </xacro:macro>
 

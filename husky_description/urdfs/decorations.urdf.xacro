@@ -14,6 +14,8 @@
 
     <xacro:property name="husky_front_bumper_extend" value="$(optenv HUSKY_FRONT_BUMPER_EXTEND 0)" />
     <xacro:property name="husky_rear_bumper_extend" value="$(optenv HUSKY_REAR_BUMPER_EXTEND 0)" />
+    <xacro:property name="husky_top_plate" value="$(optenv HUSKY_TOP_PLATE_ENABLED 1)" />
+    <xacro:property name="husky_large_top_plate" value="$(optenv HUSKY_LARGE_TOP_PLATE 1)" />
 
     <!-- Spawn Husky chassis -->
     <link name="top_chassis_link">
@@ -113,9 +115,9 @@
       </joint>
     </xacro:if>
 
-    <xacro:if value="$(optenv HUSKY_TOP_PLATE_ENABLED true)">
+    <xacro:if value="${husky_top_plate}">
       <!-- Spawn the top plate -->
-      <xacro:if value="$(optenv HUSKY_LARGE_TOP_PLATE false)">
+      <xacro:unless value="${husky_large_top_plate}">
         <link name="top_plate_link">
           <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
@@ -148,9 +150,9 @@
           <child link="top_plate_rear_link"/>
           <origin xyz="-0.4125 0 0.00672" rpy="0 0 0"/>
         </joint>
-      </xacro:if>
+      </xacro:unless>
 
-      <xacro:unless value="$(optenv HUSKY_LARGE_TOP_PLATE false)">
+      <xacro:if value="${husky_large_top_plate}">
         <link name="top_plate_link">
           <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
@@ -183,7 +185,7 @@
           <child link="top_plate_rear_link"/>
           <origin xyz="-0.36633 0 0.00639" rpy="0 0 0"/>
         </joint>
-      </xacro:unless>
+      </xacro:if>
       <link name="top_plate_front_link"/>
       <link name="top_plate_rear_link"/>
     </xacro:if>
