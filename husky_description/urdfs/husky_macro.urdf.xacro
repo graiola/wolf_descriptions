@@ -32,9 +32,16 @@
       <joint name="floating_base_joint" type="floating">
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <parent link="world"/>
-        <child link="base_link"/>
+        <child link="base_footprint"/>
       </joint>
     </xacro:if>
+
+    <link name="base_footprint" />
+    <joint name="base_footprint_joint" type="fixed">
+      <origin xyz="0 0 ${wheel_radius - wheel_vertical_offset}" rpy="0 0 0" />
+      <parent link="base_footprint" />
+      <child link="base_link" />
+    </joint>
 
     <!-- Base Link -->
     <link name="base_link">
@@ -57,13 +64,6 @@
         </geometry>
       </collision>
     </link>
-
-    <link name="base_footprint" />
-    <joint name="base_footprint_joint" type="fixed">
-      <origin xyz="0 0 ${wheel_vertical_offset - wheel_radius}" rpy="0 0 0" />
-      <parent link="base_link" />
-      <child link="base_footprint" />
-    </joint>
 
     <!-- Inertial -->
     <link name="inertial_link">
