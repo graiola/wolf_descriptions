@@ -8,8 +8,6 @@
     <arg name="period"             default="0.001" description="controller period"/>
     <arg name="arm_name"           default=""      description="[kinova]"/>
     <arg name="max_vel_x"          default="1.0"   description="maximum linear velocity x m/s" />
-    <arg name="max_vel_y"          default="0.5"   description="maximum linear velocity y m/s" />
-    <arg name="max_vel_z"          default="0.5"   description="maximum linear velocity z m/s"/>
     <arg name="max_vel_yaw"        default="1.7"   description="maximum angular velocity yaw rad/s"/>
 
     <!-- Gazebo related arguments -->
@@ -33,6 +31,9 @@
 
     <!-- Controller params file -->
     <arg name="controller_params"  default="$(find-pkg-share $(var robot_model)_description)/params/$(var robot_model)_params.ros2.yaml" description="ros2 controller params file"/>
+
+    <!-- 'use_sim_time' will be set on all nodes following the line below -->
+    <set_parameter name="use_sim_time" value="true"/> <!-- FIXME it should be conditional! -->
 
     <group>
     <push-ros-namespace namespace="$(var robot_name)"/>
@@ -86,8 +87,6 @@
                 $(var controller_params)
                 PERIOD=$(var period)
                 MAX_VEL_X=$(var max_vel_x)
-                MAX_VEL_Y=$(var max_vel_y)
-                MAX_VEL_Z=$(var max_vel_z)
                 MAX_VEL_YAW=$(var max_vel_yaw)
                 PUBLISH_ODOM_MSG=$(var publish_odom_msg)
                 PUBLISH_ODOM_TF=$(var publish_odom_tf)
@@ -104,18 +103,28 @@
             args="joint_state_broadcaster"
             launch-prefix="bash -c 'sleep 1; $0 $@' "/>
 
-
         <!-- Twist Mux Node -->
         <node name="twist_mux" pkg="twist_mux" exec="twist_mux" output="screen">
-            <!-- Correct syntax: use <param from="..."/> to load YAML -->
             <param from="$(find-pkg-share husky_description)/params/twist_mux.yaml" />
             <remap from="cmd_vel_out" to="diffdrive_controller/cmd_vel_unstamped"/>
         </node>
 
         <!-- Keyboard node -->
         <node name="keyboard_node" pkg="wolf_controller" exec="keyboard_node" respawn="true" output="screen">
-            <param name="robot_name"      value="$(var robot_name)"/>
-            <param name="controller_type" value="diffdrive"/>
+            <param name="robot_name"           value="$(var robot_name)"/>
+            <param name="controller_type"      value="diffdrive"/>
+            <param name="max_linear_x"         value="$(var max_vel_x)"/>
+            <param name="max_angular_z"        value="$(var max_vel_yaw)"/>
+            <param name="stop_without_input"   value="true"/>
+        </node>
+
+        <!-- Base stabilizer node -->
+        <node name="base_stabilizer" pkg="wolf_controller_utils" exec="base_stabilizer" respawn="true" output="screen">
+            <param name="robot_name"         value="$(var robot_name)"/>
+            <param name="imu_topic"          value="trunk_imu/data"/>
+            <param name="base_frame"         value="base_link"/>
+            <param name="parent_frame"       value="odom"/>
+            <param name="stabilized_frame"   value="base_stabilized"/>
         </node>
 
         <!-- GUI nodes -->
