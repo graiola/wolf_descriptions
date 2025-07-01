@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:macro name="depth_camera" params="
+  <xacro:macro name="camera" params="
     name namespace update_rate image_width image_height fov near far parent_link
     image_topic camera_info_topic depth_topic pointcloud_topic origin_xyz origin_rpy
   ">
@@ -29,26 +29,26 @@
       </inertial>
     </link>
 
-    <!-- Fixed Joint to Parent -->
+    <!-- Fixed Joint to Attach the Camera to Parent Link -->
     <joint name="${name}_joint" type="fixed">
       <parent link="${parent_link}"/>
       <child link="${name}_link"/>
       <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
     </joint>
 
-    <!-- Depth Camera Sensor -->
+    <!-- Gazebo Sensor Plugin using libgazebo_ros_camera.so -->
     <gazebo reference="${name}_link">
-      <sensor type="depth" name="${name}">
+      <sensor type="camera" name="${name}">
         <update_rate>${update_rate}</update_rate>
         <always_on>true</always_on>
         <pose>${origin_xyz} ${origin_rpy}</pose>
 
-        <camera name="${name}_depth_camera">
+        <camera name="${name}_camera">
           <horizontal_fov>${fov}</horizontal_fov>
           <image>
             <width>${image_width}</width>
             <height>${image_height}</height>
-            <format>R8G8B8</format> <!-- RGB format -->
+            <format>R8G8B8</format>
           </image>
           <clip>
             <near>${near}</near>
@@ -56,19 +56,16 @@
           </clip>
         </camera>
 
-        <!-- Plugin for Depth Camera -->
-        <plugin name="gazebo_ros_depth_camera_plugin" filename="libgazebo_ros_camera.so">
+        <!-- Plugin for RGB Camera -->
+        <plugin name="gazebo_ros_camera_plugin" filename="libgazebo_ros_camera.so">
           <ros>
             <namespace>${namespace}</namespace>
             <remapping>~/image_raw:=${image_topic}</remapping>
             <remapping>~/camera_info:=${camera_info_topic}</remapping>
-            <remapping>~/depth/image_raw:=${depth_topic}</remapping>
-            <remapping>~/points:=${pointcloud_topic}</remapping>
           </ros>
           <camera_name>${name}</camera_name>
           <frame_name>${name}_link</frame_name>
           <update_rate>${update_rate}</update_rate>
-          <point_cloud>true</point_cloud> <!-- Optional -->
         </plugin>
       </sensor>
     </gazebo>
@@ -76,4 +73,3 @@
   </xacro:macro>
 
 </robot>
-
