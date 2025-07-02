@@ -40,9 +40,6 @@
   <!-- Planner arguments -->
   <arg name="launch_planner"     default="false" description="launch the MPC planner" />
 
-  <!-- Controller params file -->
-  <arg name="controller_params" default="$(find-pkg-share $(var robot_model)_description)/params/$(var robot_model)_params.ros2.yaml"
-       description="ros2 controller params file" />
 
   <!-- Include bringup launch with all args -->
   <include file="$(find-pkg-share wolf_controller)/launch/wolf_controller_bringup.launch.xml">
@@ -73,7 +70,6 @@
     <arg name="publish_odom_msg"    value="$(var publish_odom_msg)" />
     <arg name="publish_odom_tf"     value="$(var publish_odom_tf)" />
     <arg name="launch_planner"      value="$(var launch_planner)" />
-    <arg name="controller_params"   value="$(var controller_params)" />
   </include>
 
 </launch>

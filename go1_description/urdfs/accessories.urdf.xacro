@@ -2,86 +2,50 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <xacro:include filename="$(find sensors_description)/urdfs/common.xacro"/>
-  <xacro:include filename="$(find go1_description)/urdfs/ultraSound.xacro"/>
-  <xacro:include filename="$(find go1_description)/urdfs/depthCamera.xacro"/>
-  <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
-  <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_t265.urdf.xacro"/>
+  <xacro:include filename="$(find sensors_description)/urdfs/sensors/depth_camera.gazebo.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/gps.gazebo.xacro"/>
-  <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_d435.urdf.xacro" />
+  <xacro:include filename="$(find sensors_description)/urdfs/sensors/lidar.gazebo.xacro"/>
 
-  <xacro:realsense_d435 name="camera" topics_ns="/$(arg robot_name)/camera" parent="base_link">
-      <origin xyz="0.14 0 0.15" rpy="0 0.3 0" />
-  </xacro:realsense_d435>
 
- <!-- Comment out to save computational power -->
- <!--
-  <xacro:depthCamera camID="1" name="face">
-      <origin rpy="${PI} 0 0" xyz="0.2785 0.0125 0.0167"/>
-  </xacro:depthCamera>
+   <xacro:depth_camera 
+     name="camera"
+     namespace="$(arg robot_name)" 
+     update_rate="30"
+     image_width="640"
+     image_height="480"
+     fov="1.047"
+     near="0.1"
+     far="10.0"
+     parent_link="base_link"
+     image_topic="$(arg robot_name)/camera/rgb/image_raw"
+     depth_topic="$(arg robot_name)/camera/depth/image_raw"
+     pointcloud_topic="$(arg robot_name)/camera/points"
+     camera_info_topic="$(arg robot_name)/camera/camera_info"
+     origin_xyz="0.14 0 0.15" 
+     origin_rpy="0 0.3 0"/>
 
-  <xacro:depthCamera camID="2" name="chin">
-      <origin rpy="${PI} ${PI/2} 0" xyz="0.2522 0.0125 -0.0436"/>
-  </xacro:depthCamera>
-
-  <xacro:depthCamera camID="3" name="left">
-      <origin rpy="${PI} 0.2618 ${PI/2}" xyz="-0.066 0.082 -0.0176"/>
-  </xacro:depthCamera>
-
-  <xacro:depthCamera camID="4" name="right">
-      <origin rpy="${PI} 0.2618 ${-PI/2}" xyz="-0.041 -0.082 -0.0176"/>
-  </xacro:depthCamera>
-
-  <xacro:depthCamera camID="5" name="rearDown">
-      <origin rpy="${PI} ${PI/2} 0" xyz="-0.0825 0.0125 -0.04365"/>
-  </xacro:depthCamera>
-
-  <joint name="camera_laserscan_joint_left" type="fixed">
-      <origin rpy="0 0.2618 0" xyz="0 0 0"/>
-      <parent link="camera_left"/>
-      <child link="camera_laserscan_link_left"/>
-  </joint>
-
-  <link name="camera_laserscan_link_left">
-  </link>
-
-  <joint name="camera_laserscan_joint_right" type="fixed">
-      <origin rpy="0 0.2618 0" xyz="0 0 0"/>
-      <parent link="camera_right"/>
-      <child link="camera_laserscan_link_right"/>
-  </joint>
-
-  <link name="camera_laserscan_link_right">
-  </link>
-
-  <xacro:ultraSound name="left">
-      <origin rpy="0 0.2618 ${PI/2}" xyz="-0.0535  0.0826 0.00868"/>
-  </xacro:ultraSound>
-
-  <xacro:ultraSound name="right">
-      <origin rpy="0 0.2618 ${-PI/2}" xyz="-0.0535 -0.0826 0.00868"/>
-  </xacro:ultraSound>
-
-  <xacro:ultraSound name="face">
-      <origin rpy="0 0 0" xyz="0.2747 0.0 -0.0088"/>
-  </xacro:ultraSound>
-   -->
-
-  <xacro:realsense_T265 name="t265" topics_ns="/$(arg robot_name)" parent="base_link" rate="30.0">
-    <origin xyz="0.3 0 0.05" rpy="0 0.24 0" />
-  </xacro:realsense_T265>
-
-  <xacro:VLP-16 parent="lidar_mount" name="rslidar" topic="/$(arg robot_name)/lidar_points"
-                organize_cloud="true" hz="10" gpu="true">
-    <origin xyz="0.1 0 0" rpy="0 0 0" />
-  </xacro:VLP-16>
+  <xacro:velodyne_laser_gazebo_sensor 
+    sensor_name="lidar" 
+    topic_name="lidar_points" 
+    update_rate="10.0" 
+    frame_id="lidar_mount" 
+    namespace="$(arg robot_name)" 
+    min_range="0.9" 
+    max_range="130.0" 
+    number_of_beams="32" 
+    horizontal_samples="220" 
+    horizontal_fov="6.28319"      
+    vertical_fov="0.2618"    
+    noise_stddev="0.01"/>
+    <!--<origin xyz="0.1 0 0" rpy="0 0 0" />-->
 
   <!-- GPS sensor -->
-  <xacro:gps_sensor
-      gps_topic="fix"
-      vel_topic="velocity_fix"
-      namespace="$(arg robot_name)"
-      frame_name="base_link"
-      update_rate="10.0">
-  </xacro:gps_sensor>
+  <xacro:gazebo_gps_sensor 
+    sensor_name="gps_sensor"
+    namespace="$(arg robot_name)"
+    gps_topic="gps/fix" 
+    velocity_topic="gps/velocity_fix"
+    update_rate="10.0" 
+    frame_id="base_link" />
 
 </robot>
