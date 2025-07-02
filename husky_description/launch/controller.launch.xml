@@ -111,11 +111,12 @@
 
         <!-- Keyboard node -->
         <node name="keyboard_node" pkg="wolf_controller" exec="keyboard_node" respawn="true" output="screen">
-            <param name="robot_name"           value="$(var robot_name)"/>
-            <param name="controller_type"      value="diffdrive"/>
-            <param name="max_linear_x"         value="$(var max_vel_x)"/>
-            <param name="max_angular_z"        value="$(var max_vel_yaw)"/>
-            <param name="stop_without_input"   value="true"/>
+            <param name="robot_name"               value="$(var robot_name)"/>
+            <param name="controller_type"          value="diffdrive"/>
+            <param name="max_linear_x"             value="$(var max_vel_x)"/>
+            <param name="max_angular_z"            value="$(var max_vel_yaw)"/>
+            <param name="stop_without_input"       value="true"/>
+            <param name="emergency_stop_topic"     value="e_stop"/>
         </node>
 
         <!-- Base stabilizer node -->
