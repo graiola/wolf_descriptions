@@ -16,7 +16,6 @@ from srdfdom.srdf import SRDF
 from sensor_msgs.msg import JointState
 
 def initialize_node(args):
-    """Initialize ROS2 node."""
     rclpy.init(args=args)
     return rclpy.create_node('goto0',
                               allow_undeclared_parameters=False,
@@ -26,7 +25,6 @@ def get_param(node, param_name):
     return node.get_parameter(param_name).value
 
 def wait_for_param(node, param_name, timeout=None):
-    """Wait for a parameter to become available."""
     start_time = node.get_clock().now().seconds_nanoseconds()[0]
     while not node.has_parameter(param_name):
         if timeout is not None and (node.get_clock().now().seconds_nanoseconds()[0]) - start_time > timeout:
@@ -34,18 +32,15 @@ def wait_for_param(node, param_name, timeout=None):
             sys.exit(1)
         node.get_logger().info(f"Waiting for parameter {param_name}...")
         rclpy.spin_once(node, timeout_sec=1)
-
     return get_param(node, param_name)
 
 def wait_for_service(node, service_name):
-    """Wait for a service to become available."""
     client = node.create_client(Empty, service_name)
     while not client.wait_for_service(timeout_sec=1.0):
         node.get_logger().info(f'Waiting for {service_name} service...')
     return client
 
 def call_service(client, node):
-    """Call a service."""
     request = Empty.Request()
     future = client.call_async(request)
     rclpy.spin_until_future_complete(node, future)
@@ -55,7 +50,6 @@ def call_service(client, node):
         node.get_logger().error(f'Service call to {client.srv_name} failed.')
 
 def calculate_quaternion(roll, pitch, yaw):
-    """Calculate quaternion from Euler angles (roll, pitch, yaw)."""
     qx = math.sin(roll / 2.0) * math.cos(pitch / 2.0) * math.cos(yaw / 2.0) - math.cos(roll / 2.0) * math.sin(pitch / 2.0) * math.sin(yaw / 2.0)
     qy = math.cos(roll / 2.0) * math.sin(pitch / 2.0) * math.cos(yaw / 2.0) + math.sin(roll / 2.0) * math.cos(pitch / 2.0) * math.sin(yaw / 2.0)
     qz = math.cos(roll / 2.0) * math.cos(pitch / 2.0) * math.sin(yaw / 2.0) - math.sin(roll / 2.0) * math.sin(pitch / 2.0) * math.cos(yaw / 2.0)
@@ -63,22 +57,19 @@ def calculate_quaternion(roll, pitch, yaw):
     return qx, qy, qz, qw
 
 def pause_physics(node, gazebo_namespace):
-    """Pause Gazebo physics."""
     service_name = f"{gazebo_namespace}/pause_physics"
     client = wait_for_service(node, service_name)
     call_service(client, node)
     node.get_logger().info("Paused Gazebo physics.")
 
 def unpause_physics(node, gazebo_namespace):
-    """Unpause Gazebo physics."""
     service_name = f"{gazebo_namespace}/unpause_physics"
     client = wait_for_service(node, service_name)
     call_service(client, node)
     node.get_logger().info("Unpaused Gazebo physics.")
 
 def spawn_model(node, model_name, model_xml, initial_pose, reference_frame, gazebo_namespace):
-    """Spawn model in Gazebo."""
-    client = node.create_client(SpawnEntity, gazebo_namespace+'/spawn_entity')
+    client = node.create_client(SpawnEntity, gazebo_namespace + '/spawn_entity')
     client.wait_for_service()
     request = SpawnEntity.Request()
     request.name = model_name
@@ -95,9 +86,6 @@ def spawn_model(node, model_name, model_xml, initial_pose, reference_frame, gaze
         node.get_logger().error(f"Failed to spawn: {model_name}")
 
 def set_joint_positions_with_plugin(node, model_name, joint_names, joint_positions, robot_name):
-    """Set joint positions using the gazebo_set_joint_positions_plugin, 
-    waiting until a subscriber is discovered before publishing."""
-    
     if robot_name == '':
         topic_name = f"/set_joint_states"
     else:
@@ -112,53 +100,34 @@ def set_joint_positions_with_plugin(node, model_name, joint_names, joint_positio
     publisher = node.create_publisher(JointState, topic_name, qos_profile)
     node.get_logger().info(f"Created publisher on {topic_name}")
     
-    # Wait until at least one subscriber is discovered
     while publisher.get_subscription_count() == 0:
         node.get_logger().info("Waiting for a subscriber to connect...")
         rclpy.spin_once(node, timeout_sec=0.5)
     
     node.get_logger().info("Subscriber detected. Publishing joint positions...")
 
-    # Create and populate the JointState message
     joint_state_msg = JointState()
     joint_state_msg.header.stamp = node.get_clock().now().to_msg()
     joint_state_msg.header.frame_id = 'world'
     joint_state_msg.name = joint_names
     joint_state_msg.position = joint_positions
-    joint_state_msg.velocity = [0.0] * len(joint_positions) 
-    joint_state_msg.effort = [0.0] * len(joint_positions) 
+    joint_state_msg.velocity = [0.0] * len(joint_positions)
+    joint_state_msg.effort = [0.0] * len(joint_positions)
 
-    # Publish the message
-    publisher.publish(joint_state_msg)
-    node.get_logger().info(f"Published joint positions for {len(joint_names)} joints.")
-
-
-    # Create and populate the JointState message
-    joint_state_msg = JointState()
-    joint_state_msg.header.stamp = node.get_clock().now().to_msg()
-    joint_state_msg.header.frame_id = 'world'
-    joint_state_msg.name = joint_names
-    joint_state_msg.position = joint_positions
-    joint_state_msg.velocity = [0.0] * len(joint_positions) 
-    joint_state_msg.effort = [0.0] * len(joint_positions) 
-
-    # Publish the message
     publisher.publish(joint_state_msg)
     node.get_logger().info(f"Published joint positions for {len(joint_names)} joints.")
 
 def get_parameter_from_remote_node(node, param_path, timeout=None):
     split_path = param_path.strip('/').split('/')
-    
     if len(split_path) < 2:
         node.get_logger().error(f"Invalid parameter path format: {param_path}. Expected format: '/namespace/node_name/param' or '/node_name/param'")
         return None
     
-    param_name = split_path[-1]  # Last element is the parameter name
-    remote_node_name = split_path[-2]  # Second to last is the node name
-    namespace = '/'.join(split_path[:-2]) if len(split_path) > 2 else ''  # Remaining is the namespace
-    
+    param_name = split_path[-1]
+    remote_node_name = split_path[-2]
+    namespace = '/'.join(split_path[:-2]) if len(split_path) > 2 else ''
     full_node_path = f"/{namespace}/{remote_node_name}" if namespace else f"/{remote_node_name}"
-    
+
     client = node.create_client(GetParameters, f'{full_node_path}/get_parameters')
     ready = client.wait_for_service(timeout_sec=timeout)
     
@@ -180,6 +149,11 @@ def main(args=None):
     robot_description_semantic_name = get_param(node, 'semantic_description')
     initial_xyz = get_param(node, 'initial_xyz')
     initial_rpy = get_param(node, 'initial_rpy')
+
+    # Fallback if robot_name is empty
+    if not robot_name:
+        node.get_logger().warn("robot_name is empty. Falling back to model_name.")
+        robot_name = model_name
 
     node.get_logger().info(f"robot_model: {model_name}")
     node.get_logger().info(f"robot_name:  {robot_name}")
@@ -210,14 +184,13 @@ def main(args=None):
     initial_pose.orientation.w = quaternion[3]
 
     pause_physics(node, gazebo_namespace)
-    spawn_model(node, model_name, model_xml, initial_pose, "world", gazebo_namespace)
+    spawn_model(node, robot_name, model_xml, initial_pose, "world", gazebo_namespace)
 
     robot = SRDF.from_xml_string(srdf_data)
     joint_names = [joint.name for joint in robot.group_state_map['standdown'].joints]
     joint_positions = [joint.value[0] for joint in robot.group_state_map['standdown'].joints]
 
-    set_joint_positions_with_plugin(node, model_name, joint_names, joint_positions, robot_name)
-    # Unpause Gazebo physics
+    set_joint_positions_with_plugin(node, robot_name, joint_names, joint_positions, robot_name)
     unpause_physics(node, gazebo_namespace)
 
     rclpy.shutdown()

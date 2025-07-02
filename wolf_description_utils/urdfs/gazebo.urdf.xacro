@@ -28,7 +28,7 @@
                 <body_name>$(arg base_name)</body_name>
                 <update_rate>${1/ $(arg period)}</update_rate>
         </plugin>
-        <plugin name="set_joint_positions_plugin" filename="libgazebo_set_joint_positions_plugin.so">
+        <plugin name="$(arg robot_name)_set_joint_positions_plugin" filename="libgazebo_set_joint_positions_plugin.so">
             <robot_namespace>$(arg robot_name)</robot_namespace>
             <topic_name>set_joint_states</topic_name>
         </plugin>
