@@ -1,3 +1,21 @@
+/**/controller_manager:
+  ros__parameters:
+    update_rate: 1000  # Hz
+    
+    wolf_controller:
+      type: wolf_controller/WolfController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    imu_sensor_broadcaster:
+      type: imu_sensor_broadcaster/IMUSensorBroadcaster
+
+/**/imu_sensor_broadcaster:
+  ros__parameters:
+    sensor_name: trunk_imu
+    frame_id: trunk_imu
+
 /**/wolf_controller:
   ros__parameters:
     input_device: ${INPUT_DEVICE}

@@ -1,3 +1,21 @@
+/**/controller_manager:
+  ros__parameters:
+    update_rate: 1000  # Hz
+
+    diffdrive_controller:
+      type: diff_drive_controller/DiffDriveController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    imu_sensor_broadcaster:
+      type: imu_sensor_broadcaster/IMUSensorBroadcaster
+
+/**/imu_sensor_broadcaster:
+  ros__parameters:
+    sensor_name: trunk_imu
+    frame_id: trunk_imu
+
 /**/diffdrive_controller:
   ros__parameters:
     left_wheel_names: ["front_left_wheel_joint", "rear_left_wheel_joint"]
