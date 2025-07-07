@@ -2,6 +2,7 @@
 
 import sys
 import math
+import time
 from ast import literal_eval
 
 import rclpy
@@ -184,6 +185,9 @@ def main(args=None):
     initial_pose.orientation.w = quaternion[3]
 
     pause_physics(node, gazebo_namespace)
+
+    time.sleep(5) 
+
     spawn_model(node, robot_name, model_xml, initial_pose, "world", gazebo_namespace)
 
     robot = SRDF.from_xml_string(srdf_data)
@@ -191,6 +195,9 @@ def main(args=None):
     joint_positions = [joint.value[0] for joint in robot.group_state_map['standdown'].joints]
 
     set_joint_positions_with_plugin(node, robot_name, joint_names, joint_positions, robot_name)
+    
+    time.sleep(5)
+
     unpause_physics(node, gazebo_namespace)
 
     rclpy.shutdown()
