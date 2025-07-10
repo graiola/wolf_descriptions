@@ -194,6 +194,8 @@ def main(args=None):
     joint_names = [joint.name for joint in robot.group_state_map['standdown'].joints]
     joint_positions = [joint.value[0] for joint in robot.group_state_map['standdown'].joints]
 
+    time.sleep(5)
+
     set_joint_positions_with_plugin(node, robot_name, joint_names, joint_positions, robot_name)
     
     time.sleep(5)
