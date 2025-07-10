@@ -17,10 +17,8 @@
     <!-- generic simulator_gazebo plugins for starting mechanism control, ros time -->
     <xacro:include filename="$(find wolf_description_utils)/urdfs/gazebo.urdf.xacro"/>
 
-    <!-- legs transmission and gazebo plugins -->
-    <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.hardware.xacro"/>
+    <!-- gazebo plugins -->
     <xacro:include filename="$(find wolf_description_utils)/urdfs/leg.gazebo.xacro"/>
-    <xacro:include filename="$(find wolf_description_utils)/urdfs/imu.hardware.xacro"/>
     <xacro:include filename="$(find sensors_description)/urdfs/sensors/imu.gazebo.xacro"/>
 
     <!-- dynamics inertial value -->
@@ -665,15 +663,140 @@
     </xacro:imu_sensor>
 
     <!-- Extensions -->
-    <xacro:leg_hardware prefix="rf"/>
-    <xacro:leg_gazebo prefix="rf" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:leg_hardware prefix="lf"/>
-    <xacro:leg_gazebo prefix="lf" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:leg_hardware prefix="rh"/>
-    <xacro:leg_gazebo prefix="rh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:leg_hardware prefix="lh"/>
-    <xacro:leg_gazebo prefix="lh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:imu_hardware imu_name="trunk_imu" imu_frame="trunk_imu"/>
+<ros2_control name="leg_system" type="system">
+ <hardware>
+   <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+ </hardware>
+  <!-- Front Left Leg -->
+  <joint name="lf_haa_joint">
+    <command_interface name="effort">
+      <param name="min">-500.0</param>
+      <param name="max">500.0</param>
+    </command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="lf_hfe_joint">
+    <command_interface name="effort">
+      <param name="min">-500.0</param>
+      <param name="max">500.0</param>
+    </command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="lf_kfe_joint">
+    <command_interface name="effort">
+      <param name="min">-500.0</param>
+      <param name="max">500.0</param>
+    </command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+
+  <!-- Front Right Leg -->
+  <joint name="rf_haa_joint">
+    <command_interface name="effort">
+      <param name="min">-500.0</param>
+      <param name="max">500.0</param>
+    </command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="rf_hfe_joint">
+    <command_interface name="effort">
+      <param name="min">-500.0</param>
+      <param name="max">500.0</param>
+    </command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="rf_kfe_joint">
+    <command_interface name="effort">
+      <param name="min">-500.0</param>
+      <param name="max">500.0</param>
+    </command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+
+  <!-- Rear Left Leg -->
+  <joint name="lh_haa_joint">
+    <command_interface name="effort">
+      <param name="min">-500.0</param>
+      <param name="max">500.0</param>
+    </command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="lh_hfe_joint">
+    <command_interface name="effort">
+      <param name="min">-500.0</param>
+      <param name="max">500.0</param>
+    </command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="lh_kfe_joint">
+    <command_interface name="effort">
+      <param name="min">-500.0</param>
+      <param name="max">500.0</param>
+    </command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+
+  <!-- Rear Right Leg -->
+  <joint name="rh_haa_joint">
+    <command_interface name="effort">
+      <param name="min">-500.0</param>
+      <param name="max">500.0</param>
+    </command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="rh_hfe_joint">
+    <command_interface name="effort">
+      <param name="min">-500.0</param>
+      <param name="max">500.0</param>
+    </command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="rh_kfe_joint">
+    <command_interface name="effort">
+      <param name="min">-500.0</param>
+      <param name="max">500.0</param>
+    </command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+   <sensor name="trunk_imu">
+<param name="frame_id">trunk_imu</param>
+<state_interface name="orientation.x"/>
+<state_interface name="orientation.y"/>
+<state_interface name="orientation.z"/>
+<state_interface name="orientation.w"/>
+<state_interface name="angular_velocity.x"/>
+<state_interface name="angular_velocity.y"/>
+<state_interface name="angular_velocity.z"/>
+<state_interface name="linear_acceleration.x"/>
+<state_interface name="linear_acceleration.y"/>
+<state_interface name="linear_acceleration.z"/>
+</sensor>
+</ros2_control>
+
 
     <xacro:if value="$(eval arm_name != '')">
         <xacro:include filename="$(find spot_description)/urdfs/arm/$(arg arm_name)_adapter.urdf.xacro" />
