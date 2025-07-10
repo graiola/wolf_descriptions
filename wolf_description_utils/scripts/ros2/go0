@@ -59,13 +59,21 @@ def calculate_quaternion(roll, pitch, yaw):
 
 def pause_physics(node, gazebo_namespace):
     service_name = f"{gazebo_namespace}/pause_physics"
-    client = wait_for_service(node, service_name)
+    client = node.create_client(Empty, service_name)
+    node.get_logger().info(f'Waiting for {service_name} service...')
+    if not client.wait_for_service(timeout_sec=10.0):
+        node.get_logger().error(f"{service_name} not available!")
+        return
     call_service(client, node)
     node.get_logger().info("Paused Gazebo physics.")
 
 def unpause_physics(node, gazebo_namespace):
     service_name = f"{gazebo_namespace}/unpause_physics"
-    client = wait_for_service(node, service_name)
+    client = node.create_client(Empty, service_name)
+    node.get_logger().info(f'Waiting for {service_name} service...')
+    if not client.wait_for_service(timeout_sec=10.0):
+        node.get_logger().error(f"{service_name} not available!")
+        return
     call_service(client, node)
     node.get_logger().info("Unpaused Gazebo physics.")
 
@@ -186,19 +194,13 @@ def main(args=None):
 
     pause_physics(node, gazebo_namespace)
 
-    time.sleep(5) 
-
     spawn_model(node, robot_name, model_xml, initial_pose, "world", gazebo_namespace)
 
     robot = SRDF.from_xml_string(srdf_data)
     joint_names = [joint.name for joint in robot.group_state_map['standdown'].joints]
     joint_positions = [joint.value[0] for joint in robot.group_state_map['standdown'].joints]
 
-    time.sleep(5)
-
     set_joint_positions_with_plugin(node, robot_name, joint_names, joint_positions, robot_name)
-    
-    time.sleep(5)
 
     unpause_physics(node, gazebo_namespace)
 

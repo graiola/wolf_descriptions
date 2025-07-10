@@ -91,17 +91,28 @@
                 PUBLISH_ODOM_MSG=$(var publish_odom_msg)
                 PUBLISH_ODOM_TF=$(var publish_odom_tf)
                 TF_PREFIX=$(var robot_name)"/>
-        <node name="diffdrive_controller_spawner"
-            pkg="controller_manager" exec="spawner" output="screen"
-            args="diffdrive_controller"
-            launch-prefix="bash -c 'sleep 5; $0 $@' ">
-        </node>
 
-        <!-- Spawn joint state broadcaster after a longer delay -->
-        <node name="joint_state_broadcaster_spawner"
-            pkg="controller_manager" exec="spawner" output="screen"
-            args="joint_state_broadcaster"
-            launch-prefix="bash -c 'sleep 1; $0 $@' "/>
+        <timer period="5.0">
+        <node pkg="controller_manager" exec="spawner"
+                name="joint_state_broadcaster_spawner"
+                output="screen"
+                args="joint_state_broadcaster \
+                    --namespace $(var robot_name) \
+                    --controller-manager controller_manager \
+                    --controller-manager-timeout 20.0 \
+                    --switch-timeout 20.0"/>
+        </timer>
+
+        <timer period="6.0">
+        <node pkg="controller_manager" exec="spawner"
+                name="diffdrive_controller_spawner"
+                output="screen"
+                args="diffdrive_controller \
+                    --namespace $(var robot_name) \
+                    --controller-manager controller_manager \
+                    --controller-manager-timeout 20.0 \
+                    --switch-timeout 20.0"/>
+        </timer>
 
         <!-- Twist Mux Node -->
         <node name="twist_mux" pkg="twist_mux" exec="twist_mux" output="screen">
