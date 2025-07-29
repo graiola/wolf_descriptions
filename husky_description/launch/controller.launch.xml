@@ -29,12 +29,25 @@
     <arg name="publish_odom_msg" default="true" description="publish nav_msgs/Odometry message from the controller"/>
     <arg name="publish_odom_tf"  default="true" description="publish the odom tf frame from the controller"/>
 
-    <!-- Controller params file -->
-    <arg name="controller_params"  default="$(find-pkg-share $(var robot_model)_description)/params/$(var robot_model)_params.ros2.yaml" description="ros2 controller params file"/>
-
     <!-- 'use_sim_time' will be set on all nodes following the line below -->
     <set_parameter name="use_sim_time" value="true"/> <!-- FIXME it should be conditional! -->
 
+    <executable cmd="python3 $(find-pkg-share wolf_controller_utils)/replace_yaml_placeholders.py 
+        $(find-pkg-share $(var robot_model)_description)/params/$(var robot_model)_params.ros2.yaml
+        $(find-pkg-share $(var robot_model)_description)/params/$(var robot_model)_params_$(var robot_name).ros2.yaml
+        PERIOD=$(var period)
+        MAX_VEL_X=$(var max_vel_x)
+        MAX_VEL_YAW=$(var max_vel_yaw)
+        PUBLISH_ODOM_MSG=$(var publish_odom_msg)
+        PUBLISH_ODOM_TF=$(var publish_odom_tf)
+        TF_PREFIX=$(var robot_name)"/>
+
+    <executable cmd="python3 $(find-pkg-share wolf_controller_utils)/replace_yaml_placeholders.py 
+        $(find-pkg-share husky_description)/params/twist_mux.yaml
+        $(find-pkg-share husky_description)/params/twist_mux_$(var robot_name).yaml
+        TF_PREFIX=$(var robot_name)"/>
+
+    <timer period="20.0">
     <group>
     <push-ros-namespace namespace="$(var robot_name)"/>
 
@@ -82,48 +95,34 @@
         </node>
 
         <!-- Spawn the controller and joint state broadcaster -->
-        <executable cmd="python3 $(find-pkg-share wolf_controller_utils)/replace_yaml_placeholders.py 
-                $(var controller_params)
-                $(var controller_params)
-                PERIOD=$(var period)
-                MAX_VEL_X=$(var max_vel_x)
-                MAX_VEL_YAW=$(var max_vel_yaw)
-                PUBLISH_ODOM_MSG=$(var publish_odom_msg)
-                PUBLISH_ODOM_TF=$(var publish_odom_tf)
-                TF_PREFIX=$(var robot_name)"/>
-
-        <timer period="5.0">
         <node pkg="controller_manager" exec="spawner"
                 name="joint_state_broadcaster_spawner"
                 output="screen"
                 args="joint_state_broadcaster \
-                    --namespace $(var robot_name) \
-                    --controller-manager controller_manager \
-                    --controller-manager-timeout 20.0 \
-                    --switch-timeout 20.0"/>
-        </timer>
+                    --controller-manager-timeout 120.0
+                    --switch-timeout 120.0
+                    --service-call-timeout 30.0"/>
 
-        <timer period="6.0">
         <node pkg="controller_manager" exec="spawner"
                 name="diffdrive_controller_spawner"
                 output="screen"
                 args="diffdrive_controller \
-                    --namespace $(var robot_name) \
-                    --controller-manager controller_manager \
-                    --controller-manager-timeout 20.0 \
-                    --switch-timeout 20.0"/>
-        </timer>
+                    --controller-manager-timeout 120.0
+                    --switch-timeout 120.0
+                    --service-call-timeout 30.0"/>
 
         <!-- Twist Mux Node -->
         <node name="twist_mux" pkg="twist_mux" exec="twist_mux" output="screen">
-            <param from="$(find-pkg-share husky_description)/params/twist_mux.yaml" />
+            <param from="$(find-pkg-share husky_description)/params/twist_mux_$(var robot_name).yaml" />
+            <remap from="keyboard"    to="wolf_controller/keyboard"/>
+            <remap from="twist"       to="wolf_controller/twist"/>
+            <remap from="e_stop"      to="e_stop"/>
             <remap from="cmd_vel_out" to="diffdrive_controller/cmd_vel_unstamped"/>
         </node>
 
         <!-- Keyboard node -->
         <node name="keyboard_node" pkg="wolf_controller" exec="keyboard_node" respawn="true" output="screen">
             <param name="robot_name"               value="$(var robot_name)"/>
-            <param name="controller_type"          value="diffdrive"/>
             <param name="max_linear_x"             value="$(var max_vel_x)"/>
             <param name="max_angular_z"            value="$(var max_vel_yaw)"/>
             <param name="stop_without_input"       value="true"/>
@@ -147,5 +146,6 @@
         </group>
     
     </group>
+    </timer>
 
 </launch>

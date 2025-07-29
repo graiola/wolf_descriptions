@@ -1,4 +1,4 @@
-/**/controller_manager:
+/${TF_PREFIX}/controller_manager:
   ros__parameters:
     update_rate: 1000  # Hz
 
@@ -8,7 +8,7 @@
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-/**/diffdrive_controller:
+/${TF_PREFIX}/diffdrive_controller:
   ros__parameters:
     left_wheel_names: ["front_left_wheel_joint", "rear_left_wheel_joint"]
     right_wheel_names: ["front_right_wheel_joint", "rear_right_wheel_joint"]

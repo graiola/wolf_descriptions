@@ -77,15 +77,11 @@
      near="0.1"
      far="10.0"
      parent_link="front_rail"
-     image_topic="$(arg robot_name)/camera/rgb/image_raw"
-     depth_topic="$(arg robot_name)/camera/depth/image_raw"
-     pointcloud_topic="$(arg robot_name)/camera/points"
-     camera_info_topic="$(arg robot_name)/camera/camera_info"
      origin_xyz="0.13 0 0" 
      origin_rpy="0 0 0"/>
 
   <xacro:velodyne_laser_gazebo_sensor 
-    sensor_name="lidar" 
+    sensor_name="$(arg robot_name)_lidar"
     topic_name="lidar_points" 
     update_rate="10.0" 
     frame_id="velodyne_mount" 
@@ -100,7 +96,7 @@
 
 
 <xacro:gazebo_gps_sensor 
-    sensor_name="gps_sensor"
+    sensor_name="$(arg robot_name)_gps"
     namespace="$(arg robot_name)"
     gps_topic="gps/fix" 
     velocity_topic="gps/velocity_fix"

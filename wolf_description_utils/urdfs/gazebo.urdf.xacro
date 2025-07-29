@@ -10,13 +10,14 @@
 
 	<gazebo>
         <plugin name="controller_manager" filename="libgazebo_ros2_control.so">
+                <robot_param_node>/$(arg robot_name)/robot_state_publisher</robot_param_node>
                 <ros>
                         <namespace>/$(arg robot_name)</namespace>
                         <!--<remapping>tf:=$(arg robot_name)/tf</remapping>-->
                         <remapping>wolf_controller/odom:=odometry/robot</remapping>
                         <remapping>diffdrive_controller/odom:=odometry/robot</remapping>
                 </ros>
-                <parameters>$(find ${model_name}_description)/params/${model_name}_params.ros2.yaml</parameters>
+                <parameters>$(find ${model_name}_description)/params/${model_name}_params_$(arg robot_name).ros2.yaml</parameters>
         </plugin>
     	<plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
                 <ros>

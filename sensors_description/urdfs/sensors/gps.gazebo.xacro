@@ -23,18 +23,19 @@
       </xacro:if>
   
     <gazebo reference="${frame_id}">
-      <sensor type="gps" name="${sensor_name}">
+      <sensor name="${sensor_name}" type="gps" >
         <always_on>1</always_on>
         <update_rate>${update_rate}</update_rate>
         <gps>
           <!-- Optionally, include additional sensor-specific parameters here -->
         </gps>
-        <plugin name="gps_plugin" filename="libgazebo_ros_gps_sensor.so">
+        <plugin name="${sensor_name}_plugin" filename="libgazebo_ros_gps_sensor.so">
+          <robotNamespace>/${namespace}</robotNamespace>
           <ros>
             <namespace>/${namespace}</namespace>
             <!-- Additional ROS plugin configuration can be added here -->
-            <remapping>gps_plugin/out:=${gps_topic}</remapping>
-            <remapping>gps_plugin/vel:=${velocity_topic}</remapping>
+            <remapping>${sensor_name}_plugin/out:=/${namespace}/${gps_topic}</remapping>
+            <remapping>${sensor_name}_plugin/vel:=/${namespace}/${velocity_topic}</remapping>
           </ros>
           <frame_name>${frame_name_ns}</frame_name>
         </plugin>

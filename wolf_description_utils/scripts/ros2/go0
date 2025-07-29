@@ -2,8 +2,9 @@
 
 import sys
 import math
-import time
-from ast import literal_eval
+import subprocess
+import tempfile
+import os
 
 import rclpy
 from rclpy.node import Node
@@ -12,9 +13,10 @@ from std_srvs.srv import Empty
 from geometry_msgs.msg import Pose
 from gazebo_msgs.srv import SpawnEntity
 from rcl_interfaces.srv import GetParameters
-import xml.sax.saxutils as xml_utils
 from srdfdom.srdf import SRDF
 from sensor_msgs.msg import JointState
+import xml.sax.saxutils as xml_utils
+
 
 def initialize_node(args):
     rclpy.init(args=args)
@@ -22,24 +24,17 @@ def initialize_node(args):
                               allow_undeclared_parameters=False,
                               automatically_declare_parameters_from_overrides=True)
 
+
 def get_param(node, param_name):
     return node.get_parameter(param_name).value
 
-def wait_for_param(node, param_name, timeout=None):
-    start_time = node.get_clock().now().seconds_nanoseconds()[0]
-    while not node.has_parameter(param_name):
-        if timeout is not None and (node.get_clock().now().seconds_nanoseconds()[0]) - start_time > timeout:
-            node.get_logger().error(f"Timeout waiting for parameter {param_name}")
-            sys.exit(1)
-        node.get_logger().info(f"Waiting for parameter {param_name}...")
-        rclpy.spin_once(node, timeout_sec=1)
-    return get_param(node, param_name)
 
 def wait_for_service(node, service_name):
     client = node.create_client(Empty, service_name)
     while not client.wait_for_service(timeout_sec=1.0):
         node.get_logger().info(f'Waiting for {service_name} service...')
     return client
+
 
 def call_service(client, node):
     request = Empty.Request()
@@ -50,6 +45,7 @@ def call_service(client, node):
     else:
         node.get_logger().error(f'Service call to {client.srv_name} failed.')
 
+
 def calculate_quaternion(roll, pitch, yaw):
     qx = math.sin(roll / 2.0) * math.cos(pitch / 2.0) * math.cos(yaw / 2.0) - math.cos(roll / 2.0) * math.sin(pitch / 2.0) * math.sin(yaw / 2.0)
     qy = math.cos(roll / 2.0) * math.sin(pitch / 2.0) * math.cos(yaw / 2.0) + math.sin(roll / 2.0) * math.cos(pitch / 2.0) * math.sin(yaw / 2.0)
@@ -57,48 +53,140 @@ def calculate_quaternion(roll, pitch, yaw):
     qw = math.cos(roll / 2.0) * math.cos(pitch / 2.0) * math.cos(yaw / 2.0) + math.sin(roll / 2.0) * math.sin(pitch / 2.0) * math.sin(yaw / 2.0)
     return qx, qy, qz, qw
 
+
 def pause_physics(node, gazebo_namespace):
     service_name = f"{gazebo_namespace}/pause_physics"
-    client = node.create_client(Empty, service_name)
-    node.get_logger().info(f'Waiting for {service_name} service...')
-    if not client.wait_for_service(timeout_sec=10.0):
-        node.get_logger().error(f"{service_name} not available!")
-        return
+    client = wait_for_service(node, service_name)
     call_service(client, node)
     node.get_logger().info("Paused Gazebo physics.")
 
+
 def unpause_physics(node, gazebo_namespace):
     service_name = f"{gazebo_namespace}/unpause_physics"
-    client = node.create_client(Empty, service_name)
-    node.get_logger().info(f'Waiting for {service_name} service...')
-    if not client.wait_for_service(timeout_sec=10.0):
-        node.get_logger().error(f"{service_name} not available!")
-        return
+    client = wait_for_service(node, service_name)
     call_service(client, node)
     node.get_logger().info("Unpaused Gazebo physics.")
 
-def spawn_model(node, model_name, model_xml, initial_pose, reference_frame, gazebo_namespace):
+
+def get_parameter_from_remote_node(node, param_path, timeout=10.0):
+    split_path = param_path.strip('/').split('/')
+    if len(split_path) < 2:
+        node.get_logger().error(f"Invalid parameter path format: {param_path}. Expected format: '/namespace/node/param'")
+        return None
+    
+    param_name = split_path[-1]
+    remote_node_name = split_path[-2]
+    namespace = '/'.join(split_path[:-2]) if len(split_path) > 2 else ''
+    full_node_path = f"/{namespace}/{remote_node_name}" if namespace else f"/{remote_node_name}"
+
+    client = node.create_client(GetParameters, f'{full_node_path}/get_parameters')
+    if not client.wait_for_service(timeout_sec=timeout):
+        node.get_logger().error(f"Service {full_node_path}/get_parameters not available!")
+        return None
+
+    request = GetParameters.Request()
+    request.names = [param_name]
+    return client.call_async(request)
+
+
+def convert_urdf_to_sdf(urdf_str):
+    try:
+        proc = subprocess.run(['gz', 'sdf', '-p'], input=urdf_str.encode(), capture_output=True)
+        if proc.returncode == 0:
+            return proc.stdout.decode()
+        else:
+            print("[ERROR] gz sdf stderr:", proc.stderr.decode())  # <--- ADD THIS
+            raise RuntimeError(f"URDF to SDF conversion failed:\n{proc.stderr.decode()}")
+    except FileNotFoundError:
+        raise RuntimeError("The `gz` command is not found. Make sure Gazebo is installed and `gz` is in your PATH.")
+
+
+def spawn_model(node, robot_name, model_xml, initial_pose, reference_frame, gazebo_namespace):
     client = node.create_client(SpawnEntity, gazebo_namespace + '/spawn_entity')
     client.wait_for_service()
     request = SpawnEntity.Request()
-    request.name = model_name
+    request.name = robot_name
     request.xml = xml_utils.unescape(model_xml)
-    request.robot_namespace = ""
+    request.robot_namespace = robot_name
     request.initial_pose = initial_pose
     request.reference_frame = reference_frame
 
     future = client.call_async(request)
     rclpy.spin_until_future_complete(node, future)
     if future.result() is not None:
-        node.get_logger().info(f"Successfully spawned: {model_name}")
+        node.get_logger().info(f"Successfully spawned: {robot_name}")
     else:
-        node.get_logger().error(f"Failed to spawn: {model_name}")
+        node.get_logger().error(f"Failed to spawn: {robot_name}")
 
-def set_joint_positions_with_plugin(node, model_name, joint_names, joint_positions, robot_name):
-    if robot_name == '':
-        topic_name = f"/set_joint_states"
-    else:
-        topic_name = f"/{robot_name}/set_joint_states"
+
+def spawn_model_cli_from_xml(robot_name, model_xml, initial_pose, robot_namespace):
+    if not robot_name:
+        raise ValueError("robot_name is empty!")
+
+    if not model_xml.strip():
+        raise ValueError("model_xml is empty!")
+
+    suffix = '.sdf' if model_xml.strip().startswith('<sdf') else '.urdf'
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix=suffix) as f:
+        f.write(model_xml)
+        tmpfile = f.name
+
+    format_flag = '-sdf' if suffix == '.sdf' else ''
+
+    cmd = [
+        'ros2', 'run', 'gazebo_ros', 'spawn_entity.py',
+        '-file', tmpfile,
+        '-entity', robot_name,
+        '-robot_namespace', robot_namespace,
+        '-reference_frame', 'world',
+        '-x', str(initial_pose.position.x),
+        '-y', str(initial_pose.position.y),
+        '-z', str(initial_pose.position.z),
+        '-R', '0',
+        '-P', '0',
+        '-Y', '0'
+    ]
+
+    if format_flag:
+        cmd.append(format_flag)
+
+    print("[DEBUG] Running command:")
+    print(" ".join(cmd))
+
+    try:
+        subprocess.run(cmd, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"[ERROR] Failed to spawn with spawn_entity.py: {e}")
+    finally:
+        os.remove(tmpfile)
+
+
+def spawn_model_with_gz_model(robot_name, model_sdf, initial_pose):
+    tmpfile_path = f"/tmp/{robot_name}.sdf"
+    with open(tmpfile_path, 'w') as f:
+        f.write(model_sdf)
+
+    cmd = [
+        'gz', 'model',
+        '--spawn-file', tmpfile_path,
+        '--model-name', robot_name,
+        '-x', str(initial_pose.position.x),
+        '-y', str(initial_pose.position.y),
+        '-z', str(initial_pose.position.z),
+        '-Y', str(initial_pose.orientation.z)  # Yaw approximation
+    ]
+
+    print("[DEBUG] Running command:")
+    print(" ".join(cmd))
+
+    try:
+        subprocess.run(cmd, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"[ERROR] Failed to spawn model using gz model: {e}")
+
+
+def set_joint_positions_with_plugin(node, joint_names, joint_positions, robot_name):
+    topic_name = f"/{robot_name}/set_joint_states" if robot_name else "/set_joint_states"
 
     qos_profile = QoSProfile(
         depth=10,
@@ -113,8 +201,6 @@ def set_joint_positions_with_plugin(node, model_name, joint_names, joint_positio
         node.get_logger().info("Waiting for a subscriber to connect...")
         rclpy.spin_once(node, timeout_sec=0.5)
     
-    node.get_logger().info("Subscriber detected. Publishing joint positions...")
-
     joint_state_msg = JointState()
     joint_state_msg.header.stamp = node.get_clock().now().to_msg()
     joint_state_msg.header.frame_id = 'world'
@@ -126,27 +212,6 @@ def set_joint_positions_with_plugin(node, model_name, joint_names, joint_positio
     publisher.publish(joint_state_msg)
     node.get_logger().info(f"Published joint positions for {len(joint_names)} joints.")
 
-def get_parameter_from_remote_node(node, param_path, timeout=None):
-    split_path = param_path.strip('/').split('/')
-    if len(split_path) < 2:
-        node.get_logger().error(f"Invalid parameter path format: {param_path}. Expected format: '/namespace/node_name/param' or '/node_name/param'")
-        return None
-    
-    param_name = split_path[-1]
-    remote_node_name = split_path[-2]
-    namespace = '/'.join(split_path[:-2]) if len(split_path) > 2 else ''
-    full_node_path = f"/{namespace}/{remote_node_name}" if namespace else f"/{remote_node_name}"
-
-    client = node.create_client(GetParameters, f'{full_node_path}/get_parameters')
-    ready = client.wait_for_service(timeout_sec=timeout)
-    
-    if not ready:
-        node.get_logger().error(f"Service {full_node_path}/get_parameters not available!")
-        return None
-    
-    request = GetParameters.Request()
-    request.names = [param_name]
-    return client.call_async(request)
 
 def main(args=None):
     node = initialize_node(args)
@@ -159,15 +224,9 @@ def main(args=None):
     initial_xyz = get_param(node, 'initial_xyz')
     initial_rpy = get_param(node, 'initial_rpy')
 
-    # Fallback if robot_name is empty
     if not robot_name:
         node.get_logger().warn("robot_name is empty. Falling back to model_name.")
         robot_name = model_name
-
-    node.get_logger().info(f"robot_model: {model_name}")
-    node.get_logger().info(f"robot_name:  {robot_name}")
-    node.get_logger().info(f"initial_xyz: {initial_xyz}")
-    node.get_logger().info(f"initial_rpy: {initial_rpy}")
 
     model_xml_future = get_parameter_from_remote_node(node, f'/{robot_description_name}')
     rclpy.spin_until_future_complete(node, model_xml_future)
@@ -186,25 +245,44 @@ def main(args=None):
     initial_pose.position.x = float(initial_xyz[0])
     initial_pose.position.y = float(initial_xyz[1])
     initial_pose.position.z = float(initial_xyz[2])
-    quaternion = calculate_quaternion(float(initial_rpy[0]), float(initial_rpy[1]), float(initial_rpy[2]))
-    initial_pose.orientation.x = quaternion[0]
-    initial_pose.orientation.y = quaternion[1]
-    initial_pose.orientation.z = quaternion[2]
-    initial_pose.orientation.w = quaternion[3]
+    qx, qy, qz, qw = calculate_quaternion(*[float(x) for x in initial_rpy])
+    initial_pose.orientation.x = qx
+    initial_pose.orientation.y = qy
+    initial_pose.orientation.z = qz
+    initial_pose.orientation.w = qw
 
     pause_physics(node, gazebo_namespace)
 
+    ### --- Choose one method below ---
+
     spawn_model(node, robot_name, model_xml, initial_pose, "world", gazebo_namespace)
+
+    # spawn_model_cli_from_xml(robot_name, model_xml, initial_pose, robot_name)
+
+    #try:
+    #    if model_xml.strip().startswith("<sdf"):
+    #        model_sdf = model_xml
+    #    else:
+    #        try:
+    #            model_sdf = convert_urdf_to_sdf(model_xml)
+    #        except RuntimeError as e:
+    #            node.get_logger().error(str(e))
+    #            sys.exit(1)
+    #    spawn_model_with_gz_model(robot_name, model_sdf, initial_pose)
+    #except RuntimeError as e:
+    #    node.get_logger().error(str(e))
+    #    sys.exit(1)
 
     robot = SRDF.from_xml_string(srdf_data)
     joint_names = [joint.name for joint in robot.group_state_map['standdown'].joints]
     joint_positions = [joint.value[0] for joint in robot.group_state_map['standdown'].joints]
 
-    set_joint_positions_with_plugin(node, robot_name, joint_names, joint_positions, robot_name)
+    set_joint_positions_with_plugin(node, joint_names, joint_positions, robot_name)
 
     unpause_physics(node, gazebo_namespace)
 
     rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()

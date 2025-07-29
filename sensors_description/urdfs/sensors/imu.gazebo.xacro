@@ -2,28 +2,28 @@
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-    <xacro:macro name="imu_sensor" params="frame_name imu_topic namespace update_rate rate_mean rate_stddev
+    <xacro:macro name="imu_sensor" params="sensor_name frame_name imu_topic namespace update_rate rate_mean rate_stddev
         rate_bias_mean rate_bias_stddev accel_mean accel_stddev accel_bias_mean accel_bias_stddev">
 
       <xacro:if value="${namespace == ''}">
-                    <xacro:property name="frame_name_ns" value="${frame_name}"/>
+                <xacro:property name="frame_name_ns" value="${frame_name}"/>
       </xacro:if>
       <xacro:if value="${namespace != ''}">
-                    <xacro:property name="frame_name_ns" value="${namespace+'/'+frame_name}"/>
+                <xacro:property name="frame_name_ns" value="${namespace+'/'+frame_name}"/>
       </xacro:if>
 
-
-        <gazebo reference="trunk_imu">
+        <gazebo reference="${frame_name}">
             <gravity>true</gravity>
-            <sensor name="trunk_imu" type="imu">
+            <sensor name="${sensor_name}" type="imu">
                 <always_on>true</always_on>
                 <update_rate>${update_rate}</update_rate>
                 <visualize>true</visualize>
                 <topic>${imu_topic}</topic>
-                <plugin name="imu_sensor_plugin" filename="libgazebo_ros_imu_sensor.so">
+                <plugin name="${sensor_name}_plugin" filename="libgazebo_ros_imu_sensor.so">
+                    <robotNamespace>/${namespace}</robotNamespace>
                     <ros>
-                        <namespace>${namespace}</namespace>
-                        <remapping>imu_sensor_plugin/out:=${imu_topic}</remapping>
+                        <namespace>/${namespace}</namespace>
+                        <remapping>${sensor_name}_plugin/out:=/${namespace}/${imu_topic}</remapping>
                     </ros>
                     <update_rate>${update_rate}</update_rate>
                     <gaussian_noise>${rate_stddev*rate_stddev}</gaussian_noise>

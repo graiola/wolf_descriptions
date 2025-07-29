@@ -2,8 +2,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:macro name="depth_camera" params="
-    name namespace update_rate image_width image_height fov near far parent_link
-    image_topic camera_info_topic depth_topic pointcloud_topic origin_xyz origin_rpy
+    name namespace update_rate image_width image_height fov near far parent_link origin_xyz origin_rpy
   ">
     
     <!-- Camera Link -->
@@ -43,7 +42,7 @@
         <always_on>true</always_on>
         <pose>${origin_xyz} ${origin_rpy}</pose>
 
-        <camera name="${name}_depth_camera">
+        <camera name="${name}">
           <horizontal_fov>${fov}</horizontal_fov>
           <image>
             <width>${image_width}</width>
@@ -57,13 +56,25 @@
         </camera>
 
         <!-- Plugin for Depth Camera -->
-        <plugin name="gazebo_ros_depth_camera_plugin" filename="libgazebo_ros_camera.so">
+        <plugin name="${namespace}_${name}_plugin" filename="libgazebo_ros_camera.so">
+          <robotNamespace>/${namespace}</robotNamespace>
           <ros>
-            <namespace>${namespace}</namespace>
-            <remapping>~/image_raw:=${image_topic}</remapping>
-            <remapping>~/camera_info:=${camera_info_topic}</remapping>
-            <remapping>~/depth/image_raw:=${depth_topic}</remapping>
-            <remapping>~/points:=${pointcloud_topic}</remapping>
+            <namespace>/${namespace}</namespace>
+
+            <remapping>${name}/image_raw:=/${namespace}/${name}/image_raw</remapping>
+            <remapping>${name}/image_raw/compressed:=/${namespace}/${name}/image_raw/compressed</remapping>
+            <remapping>${name}/image_raw/compressedDepth:=/${namespace}/${name}/image_raw/compressedDepth</remapping>
+            <remapping>${name}/image_raw/theora:=/${namespace}/${name}/image_raw/theora</remapping>
+
+            <remapping>${name}/depth/image_raw:=/${namespace}/${name}/depth/image_raw</remapping>
+            <remapping>${name}/depth/camera_info:=/${namespace}/${name}/depth/camera_info</remapping>
+            <remapping>${name}/depth/image_raw/compressed:=/${namespace}/${name}/depth/image_raw/compressed</remapping>
+            <remapping>${name}/depth/image_raw/compressedDepth:=/${namespace}/${name}/depth/image_raw/compressedDepth</remapping>
+            <remapping>${name}/depth/image_raw/theora:=/${namespace}/${name}/depth/image_raw/theora</remapping>
+
+            <remapping>${name}/camera_info:=/${namespace}/${name}/camera_info</remapping>
+            <remapping>${name}/points:=/${namespace}/${name}/points</remapping>
+
           </ros>
           <camera_name>${name}</camera_name>
           <frame_name>${name}_link</frame_name>

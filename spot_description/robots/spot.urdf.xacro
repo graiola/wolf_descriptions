@@ -650,6 +650,7 @@
 
     <!-- IMU sensor -->
     <xacro:imu_sensor
+        sensor_name="$(arg robot_name)_imu"
         frame_name="trunk_imu"
         imu_topic="trunk_imu/data"
         namespace="$(arg robot_name)"
@@ -673,7 +674,7 @@
     <xacro:leg_gazebo prefix="rh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
     <xacro:leg_hardware prefix="lh"/>
     <xacro:leg_gazebo prefix="lh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:imu_hardware imu_name="trunk_imu" imu_frame="trunk_imu"/>
+    <xacro:imu_hardware imu_name="$(arg robot_name)_imu" imu_frame="trunk_imu"/>
 
     <xacro:if value="$(eval arm_name != '')">
         <xacro:include filename="$(find spot_description)/urdfs/arm/$(arg arm_name)_adapter.urdf.xacro" />

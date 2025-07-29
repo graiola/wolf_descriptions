@@ -1,4 +1,4 @@
-/**/controller_manager:
+/${TF_PREFIX}/controller_manager:
   ros__parameters:
     update_rate: 1000  # Hz
     
@@ -8,10 +8,10 @@
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-/**/wolf_controller:
+/${TF_PREFIX}/wolf_controller:
   ros__parameters:
     input_device: ${INPUT_DEVICE}
-    imu_sensor_name: trunk_imu
+    imu_sensor_name: ${TF_PREFIX}_imu
     period: ${PERIOD}
     default_duty_factor: 0.3
     default_swing_frequency: 4.5

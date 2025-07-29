@@ -28,6 +28,7 @@
 
     <!-- IMU sensor -->
     <xacro:imu_sensor
+        sensor_name="$(arg robot_name)_imu"
         frame_name="trunk_imu"
         imu_topic="trunk_imu/data"
         namespace="$(arg robot_name)"
@@ -42,11 +43,11 @@
         accel_bias_stddev="0">
     </xacro:imu_sensor>
 
-    <xacro:imu_hardware imu_name="trunk_imu" imu_frame="trunk_imu"/>
+    <xacro:imu_hardware imu_name="$(arg robot_name)_imu" imu_frame="trunk_imu"/>
 
     <!-- Standard accessories. -->
     <xacro:if value="$(arg sensors)">
-        <xacro:depth_camera 
+      <xacro:depth_camera 
           name="camera"
           namespace="$(arg robot_name)" 
           update_rate="30"
@@ -56,30 +57,25 @@
           near="0.1"
           far="10.0"
           parent_link="realsense_mountpoint_link"
-          image_topic="$(arg robot_name)/camera/rgb/image_raw"
-          depth_topic="$(arg robot_name)/camera/depth/image_raw"
-          pointcloud_topic="$(arg robot_name)/camera/points"
-          camera_info_topic="$(arg robot_name)/camera/camera_info"
           origin_xyz="0.13 0 0" 
           origin_rpy="0 0 0"/>
 
-        <xacro:velodyne_laser_gazebo_sensor 
-          sensor_name="lidar" 
-          topic_name="lidar_points" 
-          update_rate="10.0" 
-          frame_id="lidar_arch_mount_link" 
-          namespace="$(arg robot_name)" 
-          min_range="0.9" 
-          max_range="130.0" 
-          number_of_beams="32" 
-          horizontal_samples="220" 
-          horizontal_fov="6.28319"      
-          vertical_fov="0.2618"    
-          noise_stddev="0.01" />
-
+      <xacro:velodyne_laser_gazebo_sensor 
+        sensor_name="$(arg robot_name)_lidar"
+        topic_name="lidar_points"
+        update_rate="10.0"
+        frame_id="lidar_arch_mount_link"
+        namespace="$(arg robot_name)"
+        min_range="0.9"
+        max_range="130.0"
+        number_of_beams="32"
+        horizontal_samples="220"
+        horizontal_fov="6.28319"
+        vertical_fov="0.2618"
+        noise_stddev="0.01" />
 
       <xacro:gazebo_gps_sensor 
-          sensor_name="gps_sensor"
+          sensor_name="$(arg robot_name)_gps"
           namespace="$(arg robot_name)"
           gps_topic="gps/fix" 
           velocity_topic="gps/velocity_fix"
