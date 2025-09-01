@@ -6,7 +6,6 @@
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/gps.gazebo.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/lidar.gazebo.xacro"/>
 
-
    <xacro:depth_camera 
      name="camera"
      namespace="$(arg robot_name)" 
@@ -17,15 +16,11 @@
      near="0.1"
      far="10.0"
      parent_link="base_link"
-     image_topic="$(arg robot_name)/camera/rgb/image_raw"
-     depth_topic="$(arg robot_name)/camera/depth/image_raw"
-     pointcloud_topic="$(arg robot_name)/camera/points"
-     camera_info_topic="$(arg robot_name)/camera/camera_info"
      origin_xyz="0.14 0 0.15" 
      origin_rpy="0 0.3 0"/>
 
   <xacro:velodyne_laser_gazebo_sensor 
-    sensor_name="lidar" 
+    sensor_name="$(arg robot_name)_lidar"
     topic_name="lidar_points" 
     update_rate="10.0" 
     frame_id="lidar_mount" 
@@ -41,7 +36,7 @@
 
   <!-- GPS sensor -->
   <xacro:gazebo_gps_sensor 
-    sensor_name="gps_sensor"
+    sensor_name="$(arg robot_name)_gps"
     namespace="$(arg robot_name)"
     gps_topic="gps/fix" 
     velocity_topic="gps/velocity_fix"

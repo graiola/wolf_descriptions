@@ -40,7 +40,6 @@
   <!-- Planner arguments -->
   <arg name="launch_planner"     default="false" description="launch the MPC planner" />
 
-
   <!-- Include bringup launch with all args -->
   <include file="$(find-pkg-share wolf_controller)/launch/wolf_controller_bringup.launch.xml">
     <arg name="robot_model"         value="go1" />
