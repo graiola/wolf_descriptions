@@ -17,7 +17,7 @@
   <!-- Gazebo related arguments -->
   <arg name="gazebo"             default="true"  description="start gazebo" />
   <arg name="gazebo_debug"       default="false" description="activate gazebo debug" />
-  <arg name="engine"            default="ode"    description="[ode/bullet/dart/simbody]" />
+  <arg name="engine"             default="ode"    description="[ode/bullet/dart/simbody]" />
   <arg name="spawn_robot"        default="true"  description="spawn the robot in gazebo" />
   <arg name="initial_xyz"        default="[0,0,0]" description="initial robot xyz position" />
   <arg name="initial_rpy"        default="[0,0,0]" description="initial robot rpy position" />

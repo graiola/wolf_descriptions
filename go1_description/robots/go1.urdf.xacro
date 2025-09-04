@@ -6,7 +6,6 @@
     <xacro:arg name="load_force_sensors" default="false"/>
     <xacro:arg name="sensors"            default="false"/>
     <xacro:arg name="period"             default="0.004"/>
-    <xacro:arg name="arm_enabled"        default="false"/>
     <xacro:arg name="arm_name"           default=""/>
     <xacro:arg name="floating_base_link" default="true"/>
     <xacro:arg name="robot_model"        default="go1"/>
@@ -105,42 +104,9 @@
     <joint name="imu_joint" type="fixed">
         <parent link="base_link"/>
         <child link="trunk_imu"/>
-        <origin rpy="0 0 0" xyz="-0.01592 -0.06659 -0.00617"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
     </joint>
-
-    <link name="trunk_imu">
-        <inertial>
-            <mass value="0.001"/>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
-        </inertial>
-        <visual>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <geometry>
-                <box size="0.001 0.001 0.001"/>
-            </geometry>
-            <!-- <material name="red"/> -->
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <geometry>
-                <box size=".001 .001 .001"/>
-            </geometry>
-        </collision>
-    </link>
-
-    <joint name="lidar_cage_to_lidar" type="fixed">
-        <parent link="base_link"/>
-        <child link="lidar_mount"/>
-        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.05"/>
-    </joint>
-    <link name="lidar_mount">
-        <inertial>
-            <origin rpy="0.0 0.0 0.0" xyz="-0.012 0.001 -0.008"/>
-            <mass value="0.695"/>
-            <inertia ixx="0.000846765" ixy="6.9565e-05" ixz="0.00027111" iyy="0.001367583" iyz="5.8984e-05" izz="0.001363673"/>
-        </inertial>
-    </link>
+    <link name="trunk_imu"/>
 
     <xacro:leg name="rf" mirror="-1" mirror_dae= "False" front_hind="1" front_hind_dae="True">
         <origin rpy="0 0 0" xyz="${leg_offset_x} ${-leg_offset_y} 0"/>

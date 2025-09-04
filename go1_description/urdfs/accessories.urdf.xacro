@@ -6,6 +6,43 @@
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/gps.gazebo.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/lidar.gazebo.xacro"/>
 
+
+    <joint name="lidar_cage_to_lidar" type="fixed">
+        <parent link="base_link"/>
+        <child link="lidar_mount"/>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.05"/>
+    </joint>
+    <link name="lidar_mount">
+        <inertial>
+            <origin rpy="0.0 0.0 0.0" xyz="-0.012 0.001 -0.008"/>
+            <mass value="0.695"/>
+            <inertia ixx="0.000846765" ixy="6.9565e-05" ixz="0.00027111" iyy="0.001367583" iyz="5.8984e-05" izz="0.001363673"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find go1_description)/meshes/lidar.dae"/>
+          </geometry>
+        </visual>
+    </link>
+
+    <joint name="base_link_to_camera" type="fixed">
+        <parent link="base_link"/>
+        <child link="camera_mount"/>
+        <origin rpy="0 0.3 0" xyz="0.3 0 0.05"/>
+    </joint>
+    <link name="camera_mount">
+        <inertial>
+            <origin rpy="0 0.0 0" xyz="0.0 0 0.0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.000846765" ixy="6.9565e-05" ixz="0.00027111" iyy="0.001367583" iyz="5.8984e-05" izz="0.001363673"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find go1_description)/meshes/depth_camera.dae"/>
+          </geometry>
+        </visual>
+    </link>
+
    <xacro:depth_camera 
      name="camera"
      namespace="$(arg robot_name)" 
@@ -15,9 +52,9 @@
      fov="1.047"
      near="0.1"
      far="10.0"
-     parent_link="base_link"
-     origin_xyz="0.14 0 0.15" 
-     origin_rpy="0 0.3 0"/>
+     parent_link="camera_mount"
+     origin_xyz="0.0 0 0.0" 
+     origin_rpy="0 0.0 0"/>
 
   <xacro:velodyne_laser_gazebo_sensor 
     sensor_name="$(arg robot_name)_lidar"
