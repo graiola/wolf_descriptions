@@ -96,20 +96,22 @@
 
         <!-- Spawn the controller and joint state broadcaster -->
         <node pkg="controller_manager" exec="spawner"
-                name="joint_state_broadcaster_spawner"
-                output="screen"
-                args="joint_state_broadcaster \
+            name="joint_state_broadcaster_spawner" output="screen"
+            args="joint_state_broadcaster
+                    -c /$(var robot_name)/controller_manager
                     --controller-manager-timeout 120.0
                     --switch-timeout 120.0
                     --service-call-timeout 30.0"/>
 
+        <timer period="4.0">
         <node pkg="controller_manager" exec="spawner"
-                name="diffdrive_controller_spawner"
-                output="screen"
-                args="diffdrive_controller \
+                name="diffdrive_controller_spawner" output="screen"
+                args="diffdrive_controller 
+                    -c /$(var robot_name)/controller_manager
                     --controller-manager-timeout 120.0
                     --switch-timeout 120.0
                     --service-call-timeout 30.0"/>
+        </timer>
 
         <!-- Twist Mux Node -->
         <node name="twist_mux" pkg="twist_mux" exec="twist_mux" output="screen">

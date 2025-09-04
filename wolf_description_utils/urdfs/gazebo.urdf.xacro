@@ -9,7 +9,7 @@
 <xacro:property name="model_name" value="$(arg robot_model)"/>
 
 	<gazebo>
-        <plugin name="controller_manager" filename="libgazebo_ros2_control.so">
+        <plugin name="$(arg robot_name)_controller_manager" filename="libgazebo_ros2_control.so">
                 <robot_param_node>/$(arg robot_name)/robot_state_publisher</robot_param_node>
                 <ros>
                         <namespace>/$(arg robot_name)</namespace>
@@ -19,7 +19,7 @@
                 </ros>
                 <parameters>$(find ${model_name}_description)/params/${model_name}_params_$(arg robot_name).ros2.yaml</parameters>
         </plugin>
-    	<plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
+    	<plugin name="$(arg robot_name)_ground_truth" filename="libgazebo_ros_p3d.so">
                 <ros>
                     <namespace>/$(arg robot_name)</namespace>
                     <remapping>odom:=ground_truth</remapping>
