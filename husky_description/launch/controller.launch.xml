@@ -122,6 +122,9 @@
             <remap from="cmd_vel_out" to="diffdrive_controller/cmd_vel_unstamped"/>
         </node>
 
+        <node pkg="topic_tools" exec="relay" name="$(var robot_name)_cmdvel_to_wolf" output="screen"
+            args="/$(var robot_name)/diffdrive_controller/cmd_vel_unstamped /$(var robot_name)/wolf_controller/twist" />
+
         <!-- Keyboard node -->
         <node name="keyboard_node" pkg="wolf_controller" exec="keyboard_node" respawn="true" output="screen">
             <param name="robot_name"               value="$(var robot_name)"/>
