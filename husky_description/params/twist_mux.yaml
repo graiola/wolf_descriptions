@@ -4,6 +4,10 @@
       keyboard:
         topic: keyboard
         timeout: 2.0
+        priority: 3
+      priority_twist:
+        topic: priority_twist
+        timeout: 2.0
         priority: 2
       twist:
         topic: twist

@@ -116,10 +116,11 @@
         <!-- Twist Mux Node -->
         <node name="twist_mux" pkg="twist_mux" exec="twist_mux" output="screen">
             <param from="$(find-pkg-share husky_description)/params/twist_mux_$(var robot_name).yaml" />
-            <remap from="keyboard"    to="wolf_controller/keyboard"/>
-            <remap from="twist"       to="wolf_controller/twist"/>
-            <remap from="e_stop"      to="e_stop"/>
-            <remap from="cmd_vel_out" to="diffdrive_controller/cmd_vel_unstamped"/>
+            <remap from="keyboard"             to="wolf_controller/keyboard"/>
+            <remap from="priority_twist"       to="wolf_controller/priority_twist"/>
+            <remap from="twist"                to="wolf_controller/twist"/>
+            <remap from="e_stop"               to="e_stop"/>
+            <remap from="cmd_vel_out"          to="diffdrive_controller/cmd_vel_unstamped"/>
         </node>
 
         <node pkg="topic_tools" exec="relay" name="$(var robot_name)_cmdvel_to_wolf" output="screen"
