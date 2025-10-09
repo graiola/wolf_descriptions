@@ -1,117 +1,105 @@
-# **************************** Global planners ****************************
+# ===========================
+# Global & Local Planners
+# ===========================
 
 # ----- navfn/NavfnROS -----
 NavfnROS:
   visualize_potential: false
-  allow_unknown: true # Specifies whether or not to allow navfn to create plans that traverse unknown space.
-  default_tolerance: 0.1 # A tolerance on the goal point for the planner.
+  allow_unknown: true
+  default_tolerance: 0.1
+  prune_plan: true
 
 # ----- global_planner/GlobalPlanner -----
 GlobalPlanner:
   visualize_potential: false
-  allow_unknown: true # Specifies whether or not to allow navfn to create plans that traverse unknown space.
-  default_tolerance: 0.1 # A tolerance on the goal point for the planner.
-
-# ----- wolf_3dnav_planner/Wolf3DNavPlanner -----
-Wolf3DNavPlanner:
-  fixed_frame: $(arg prefix)$(arg global_frame)
-  occupancy_map_resolution: 0.3
-  sta_threshold: 1
-  debug_output: false
-  truncation_distance: 0.5
-  robot_height: 0.3
-  step_height: 0.3
-  slope_filter_angle: $(arg max_slope)
-  footprint_radius: 0.3
-  enable_slope_filter: false
-  enable_esdf: false
-  enable_zcost: false
-  enable_roughness: false
-  globalcloud_topic: /$(arg prefix)map_3d
-
-# **************************** Local planners ****************************
+  allow_unknown: true
+  default_tolerance: 0.1
+  use_dijkstra: true
+  use_grid_path: false
+  old_navfn_behavior: false
+  prune_plan: true
 
 # ----- teb_local_planner/TebLocalPlannerROS -----
 TebLocalPlannerROS:
-  odom_topic: $(arg prefix)$(arg odom_frame)
-  map_frame: $(arg prefix)$(arg global_frame)
+  # Frames / topics
+  odom_topic: $(arg prefix)odom            # use the ODOM TOPIC, not the frame
+  map_frame:  $(arg prefix)$(arg global_frame)
 
-  # Trajectory
+  # Trajectory density / horizon
   teb_autosize: true
-  dt_ref: 0.3
-  dt_hysteresis: 0.1
-  min_samples: 3
-  global_plan_viapoint_sep: -1
-  max_global_plan_lookahead_dist: 7.0
-  global_plan_overwrite_orientation: false
+  dt_ref: 0.12
+  dt_hysteresis: 0.03
+  min_samples: 12
+  max_global_plan_lookahead_dist: 2.0
+  global_plan_overwrite_orientation: true
+  global_plan_viapoint_sep: 0.6
   force_reinit_new_goal_dist: 1.0
   feasibility_check_no_poses: 4
   publish_feedback: false
   shrink_horizon_backup: true
-  allow_init_with_backwards_motion: false
-  exact_arc_length: false
-  shrink_horizon_min_duration: 10
+  shrink_horizon_min_duration: 3.0
+  exact_arc_length: true
+  allow_init_with_backwards_motion: true
 
-  # Robot (Adjusted for Husky)
-  max_vel_x: 1.0              # Max forward velocity in m/s (Husky default ~1.0 m/s)
-  max_vel_x_backwards: 0.8    # Husky is not intended to drive fast backwards
-  max_vel_theta: 1.7          # Max angular velocity in rad/s
-  max_vel_y: 0.0              # Differential drive cannot strafe
-  acc_lim_x: 1.0              # Husky's linear acceleration limit
-  acc_lim_y: 0.0              # No lateral acceleration
-  acc_lim_theta: 3.0          # Angular acceleration
-
-  min_turning_radius: 0.0     # 0 for differential drive
-  wheelbase: 0.0              # Also 0 for differential drive
+  # Robot (Husky diffdrive)
+  max_vel_x: 0.5
+  max_vel_x_backwards: 0.3
+  max_vel_theta: 1.2
+  max_vel_y: 0.0
+  acc_lim_x: 0.5
+  acc_lim_y: 0.0
+  acc_lim_theta: 1.5
+  min_turning_radius: 0.0
+  wheelbase: 0.0
   cmd_angle_instead_rotvel: false
 
-  # Footprint (Husky dimensions ~0.98m x 0.67m; use conservative safety margin)
+  # Footprint (Husky + safety margin)
   footprint_model:
     type: "polygon"
-    vertices: [ [0.55, 0.4], [0.55, -0.4], [-0.55, -0.4], [-0.55, 0.4] ]
+    vertices: [[0.55, 0.40], [0.55, -0.40], [-0.55, -0.40], [-0.55, 0.40]]
 
-  # GoalTolerance
-  xy_goal_tolerance: 0.2
-  yaw_goal_tolerance: 0.1
-  free_goal_vel: false
+  # Goal tolerance / behavior near goal
+  xy_goal_tolerance: 0.30
+  yaw_goal_tolerance: 0.25
+  free_goal_vel: true
+  weight_kinematics_forward_drive: 30   # strong bias to forward motion
 
-  # Obstacles
-  min_obstacle_dist: 0.35
+  # Obstacles & clearance
   include_costmap_obstacles: true
   include_dynamic_obstacles: true
   costmap_obstacles_behind_robot_dist: 1.0
-  obstacle_poses_affected: 30
-  inflation_dist: 0.6
-  legacy_obstacle_association: false
-  obstacle_association_force_inclusion_factor: 1.5
-  obstacle_association_cutoff_factor: 5.0
+  obstacle_poses_affected: 20
+  min_obstacle_dist: 0.60               # keep <= (inflation_radius - footprint_padding)
+  inflation_dist: 0.90
+  legacy_obstacle_association: true
+  obstacle_association_force_inclusion_factor: 2.5
+  obstacle_association_cutoff_factor: 3.0
   costmap_converter_plugin: "costmap_converter::CostmapToPolygonsDBSMCCH"
   costmap_converter_spin_thread: true
   costmap_converter_rate: 5
 
   # Optimization
-  no_inner_iterations: 5
-  no_outer_iterations: 4
+  no_inner_iterations: 6
+  no_outer_iterations: 5
   optimization_activate: true
   optimization_verbose: false
   penalty_epsilon: 0.1
-  weight_max_vel_x: 20
-  weight_max_vel_y: 0       # no lateral movement
-  weight_max_vel_theta: 20
+  weight_max_vel_x: 10
+  weight_max_vel_y: 0
+  weight_max_vel_theta: 8
   weight_acc_lim_x: 1
   weight_acc_lim_y: 0
   weight_acc_lim_theta: 1
-  weight_kinematics_nh: 10
-  weight_kinematics_forward_drive: 1
+  weight_kinematics_nh: 30
   weight_kinematics_turning_radius: 1
-  weight_optimaltime: 20
-  weight_obstacle: 50
+  weight_optimaltime: 10
+  weight_obstacle: 70
   weight_inflation: 1
-  weight_viapoint: 100
+  weight_viapoint: 30
   weight_adapt_factor: 2
 
-  # Homotopy Class Planner
-  enable_homotopy_class_planning: false  # usually not needed for Husky
+  # Homotopy (off for corridor-like nav)
+  enable_homotopy_class_planning: false
   simple_exploration: false
   enable_multithreading: true
   max_number_classes: 1

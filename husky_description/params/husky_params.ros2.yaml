@@ -1,3 +1,7 @@
+# ===========================
+# Controller Manager & DiffDrive
+# ===========================
+
 /${TF_PREFIX}/controller_manager:
   ros__parameters:
     update_rate: 1000  # Hz
@@ -10,56 +14,52 @@
 
 /${TF_PREFIX}/diffdrive_controller:
   ros__parameters:
-    left_wheel_names: ["front_left_wheel_joint", "rear_left_wheel_joint"]
+    # Wheel geometry
+    left_wheel_names:  ["front_left_wheel_joint",  "rear_left_wheel_joint"]
     right_wheel_names: ["front_right_wheel_joint", "rear_right_wheel_joint"]
-
-    wheel_separation: 0.512 #0.1  # 0.256  # 0.512
-    wheels_per_side: 2 # actually 2, but both are controlled by 1 signal
-    wheel_radius: 0.1651 # 0.015
+    wheels_per_side: 2
+    wheel_separation: 0.512
+    wheel_radius: 0.1651
 
     wheel_separation_multiplier: 1.0
     left_wheel_radius_multiplier: 1.0
     right_wheel_radius_multiplier: 1.0
 
-    publish_rate: 50.0
+    # Frames / odom
     odom_frame_id: odom
     base_frame_id: base_footprint
-    pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
+    enable_odom_tf: ${PUBLISH_ODOM_TF}
+    open_loop: false
+
+    # Rates / timeouts
+    publish_rate: 50.0
+    cmd_vel_timeout: 0.2
+    use_stamped_vel: false
+    publish_cmd: true
+    publish_wheel_data: true
+    velocity_rolling_window_size: 5
+
+    # Covariances
+    pose_covariance_diagonal:  [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
     twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
 
-    open_loop: false
-    enable_odom_tf: ${PUBLISH_ODOM_TF}
+    # Preserve turning radius when limiting
+    preserve_turning_radius: false
 
-    cmd_vel_timeout: 0.5
-    #publish_limited_velocity: true
-    use_stamped_vel: false
-    #velocity_rolling_window_size: 10
-
-    # Preserve turning radius when limiting speed/acceleration/jerk
-    preserve_turning_radius: true
-
-    # Publish limited velocity
-    publish_cmd: true
-
-    # Publish wheel data
-    publish_wheel_data: true
-
-    # Velocity and acceleration limits
-    # Whenever a min_* is unspecified, default to -max_*
+    # Limits — keep these aligned with TEB above
     linear.x.has_velocity_limits: true
+    linear.x.max_velocity: 0.6
     linear.x.has_acceleration_limits: true
+    linear.x.max_acceleration: 0.6
     linear.x.has_jerk_limits: false
-    linear.x.max_velocity: ${MAX_VEL_X}
-    linear.x.max_acceleration: 1.0
     linear.x.max_jerk: 0.0
     linear.x.min_jerk: 0.0
 
     angular.z.has_velocity_limits: true
+    angular.z.max_velocity: 1.2
     angular.z.has_acceleration_limits: true
+    angular.z.max_acceleration: 1.5
+    angular.z.min_acceleration: -1.5
     angular.z.has_jerk_limits: false
-    angular.z.max_velocity: ${MAX_VEL_YAW}
-    angular.z.max_acceleration: 1.0
-    angular.z.min_acceleration: -1.0
     angular.z.max_jerk: 0.0
     angular.z.min_jerk: 0.0
-
