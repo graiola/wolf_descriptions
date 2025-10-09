@@ -116,7 +116,7 @@ DWAPlannerROS:
 
 # ----- teb_local_planner/TebLocalPlannerROS -----
 TebLocalPlannerROS:
-  odom_topic: $(arg prefix)$(arg odom_frame)
+  odom_topic: $(arg prefix)odom
   map_frame: $(arg prefix)$(arg global_frame)
 
   # Trajectory
