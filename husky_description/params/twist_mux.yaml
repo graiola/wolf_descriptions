@@ -1,16 +1,18 @@
-/**/twist_mux:
-  ros__parameters:
-    topics:
-      keyboard:
-        topic   : wolf_controller/keyboard
-        timeout : 2.0
-        priority: 2
-      twist:
-        topic   : wolf_controller/twist
-        timeout : 2.0
-        priority: 1
-    locks:
-      e_stop:
-        topic   : e_stop
-        timeout : 0.0
-        priority: 255
+topics:
+- name    : keyboard
+  topic   : wolf_controller/keyboard
+  timeout : 2.0
+  priority: 3
+- name    : priority_twist
+  topic   : wolf_controller/priority_twist
+  timeout : 2.0
+  priority: 2
+- name    : twist
+  topic   : wolf_controller/twist
+  timeout : 2.0
+  priority: 1
+locks:
+  e_stop:
+    topic   : e_stop
+    timeout : 0.0
+    priority: 255

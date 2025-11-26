@@ -105,17 +105,17 @@
 
         <!-- Twist Mux Node -->
         <node name="twist_mux" pkg="twist_mux" exec="twist_mux" output="screen">
-            <param from="$(find-pkg-share husky_description)/params/twist_mux.yaml" />
+            <param from="$(find-pkg-share husky_description)/params/twist_mux.ros2.yaml" />
             <remap from="cmd_vel_out" to="diffdrive_controller/cmd_vel_unstamped"/>
         </node>
 
         <!-- Keyboard node -->
         <node name="keyboard_node" pkg="wolf_controller" exec="keyboard_node" respawn="true" output="screen">
             <param name="robot_name"           value="$(var robot_name)"/>
-            <param name="controller_type"      value="diffdrive"/>
             <param name="max_linear_x"         value="$(var max_vel_x)"/>
             <param name="max_angular_z"        value="$(var max_vel_yaw)"/>
             <param name="stop_without_input"   value="true"/>
+            <param name="service_timeout"      value="1.0"/>
         </node>
 
         <!-- Base stabilizer node -->
@@ -123,7 +123,6 @@
             <param name="robot_name"         value="$(var robot_name)"/>
             <param name="imu_topic"          value="trunk_imu/data"/>
             <param name="base_frame"         value="base_link"/>
-            <param name="parent_frame"       value="odom"/>
             <param name="stabilized_frame"   value="base_stabilized"/>
         </node>
 
