@@ -1,12 +1,17 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="spot_sensors">
 
+  <!-- Common + sensors includes -->
   <xacro:include filename="$(find sensors_description)/urdfs/common.xacro"/>
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
-  <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_d435.urdf.xacro" />
+  <xacro:include filename="$(find sensors_description)/urdfs/sensors/kinect.gazebo.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/realsense_t265.urdf.xacro" />
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/gps.gazebo.xacro"/>
 
+  <!-- PI (only needed if not already defined in included xacros) -->
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
+  <!-- Pack mount on Spot -->
   <xacro:if value="$(optenv SPOT_PACK 1)">
     <joint name="pack_mount_joint" type="fixed">
       <parent link="base_link"/>
@@ -33,6 +38,7 @@
     </link>
   </xacro:if>
 
+  <!-- Lidar mount on pack -->
   <xacro:if value="$(optenv SPOT_LIDAR_MOUNT 1)">
     <joint name="lidar_mount_joint" type="fixed">
       <parent link="pack_mount"/>
@@ -53,12 +59,14 @@
       </collision>
     </link>
 
+    <!-- Velodyne + front sensors -->
     <xacro:if value="$(optenv SPOT_VELODYNE 1)">
       <joint name="velodyne_mount_joint" type="fixed">
         <parent link="lidar_mount"/>
         <child link="velodyne_mount"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
       </joint>
+
       <link name="velodyne_mount">
         <visual>
           <geometry>
@@ -72,16 +80,56 @@
         </collision>
       </link>
 
-      <xacro:VLP-16 parent="velodyne_mount" name="velodyne" topic="/$(arg robot_name)/lidar_points"
+      <!-- Velodyne VLP-16 -->
+      <xacro:VLP-16 parent="velodyne_mount" name="velodyne"
+                    topic="/$(arg robot_name)/lidar_points"
                     organize_cloud="true" hz="10" gpu="true">
         <origin xyz="0 0 0" rpy="0 0 0" />
       </xacro:VLP-16>
 
-      <xacro:realsense_d435 name="camera" topics_ns="/$(arg robot_name)/camera" parent="front_rail">
-        <origin xyz="0.13 0 0" rpy="0 0 0" />
-      </xacro:realsense_d435>
+      <!-- FRONT RAIL is assumed to be defined in the base Spot model -->
+      <!-- Camera base link on front_rail -->
+      <link name="camera_link"/>
 
-      <xacro:realsense_T265 name="t265" topics_ns="/$(arg robot_name)" parent="front_rail" rate="30.0">
+      <joint name="camera_mount_joint" type="fixed">
+        <parent link="front_rail"/>
+        <child link="camera_link"/>
+        <!-- Physical pose of the RGBD camera wrt front_rail -->
+        <!-- tune xyz/rpy if needed to match your model -->
+        <origin xyz="0.13 0 0.0" rpy="0 0 0"/>
+      </joint>
+
+      <!-- Optical frame (REP-103: z forward, x right, y down) -->
+      <link name="camera_optical_frame"/>
+
+      <joint name="camera_optical_joint" type="fixed">
+        <parent link="camera_link"/>
+        <child link="camera_optical_frame"/>
+        <!-- rotation from x-forward,z-up to z-forward,x-right,y-down -->
+        <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}"/>
+      </joint>
+
+      <!-- Kinect RGB (depth) sensor using the optical frame for the point cloud -->
+      <xacro:kinect_rgb_sensor 
+        link_name="camera_link" 
+        frame_name="camera_optical_frame" 
+        camera_name="camera">
+      </xacro:kinect_rgb_sensor>
+
+      <!-- Optional: IR depth sensor variant, if you want it too -->
+      <!--
+      <xacro:kinect_ir_sensor
+        link_name="camera_link"
+        frame_name="camera_optical_frame"
+        camera_name="camera_ir">
+      </xacro:kinect_ir_sensor>
+      -->
+
+      <!-- T265 tracking camera -->
+      <xacro:realsense_T265 name="t265"
+                            topics_ns="/$(arg robot_name)"
+                            parent="front_rail"
+                            rate="30.0">
         <origin xyz="0.13 0 0.04" rpy="0 0 0" />
       </xacro:realsense_T265>
 

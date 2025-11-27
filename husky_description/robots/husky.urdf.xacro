@@ -19,36 +19,71 @@
   <xacro:include filename="$(find wolf_description_utils)/urdfs/wheels.hardware.xacro"/>
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/gps.gazebo.xacro"/>
+  <xacro:include filename="$(find sensors_description)/urdfs/sensors/kinect.gazebo.xacro"/>
 
   <xacro:include filename="$(find husky_description)/urdfs/husky_macro.urdf.xacro" />
 
   <xacro:husky floating_base_link="$(arg floating_base_link)" />
 
-    <!-- IMU sensor -->
-    <xacro:imu_sensor
-        frame_name="trunk_imu"
-        imu_topic="trunk_imu/data"
-        namespace="$(arg robot_name)"
-        update_rate="${1.0 / $(arg period)}"
-        rate_mean="0"
-        rate_stddev="0.01"
-        rate_bias_mean="0"
-        rate_bias_stddev="0"
-        accel_mean="0"
-        accel_stddev="0.001"
-        accel_bias_mean="0"
-        accel_bias_stddev="0">
-    </xacro:imu_sensor>
+  <!-- IMU sensor -->
+  <xacro:imu_sensor
+      frame_name="trunk_imu"
+      imu_topic="trunk_imu/data"
+      namespace="$(arg robot_name)"
+      update_rate="${1.0 / $(arg period)}"
+      rate_mean="0"
+      rate_stddev="0.01"
+      rate_bias_mean="0"
+      rate_bias_stddev="0"
+      accel_mean="0"
+      accel_stddev="0.001"
+      accel_bias_mean="0"
+      accel_bias_stddev="0">
+  </xacro:imu_sensor>
 
-    <xacro:imu_hardware imu_name="trunk_imu" imu_frame="trunk_imu"/>
+  <xacro:imu_hardware imu_name="trunk_imu" imu_frame="trunk_imu"/>
 
   <!-- Standard accessories. -->
   <xacro:if value="$(arg sensors)">
 
+    <!-- LIDAR sensor -->
     <xacro:VLP-16 parent="lidar_arch_mount_link" name="lidar" topic="/$(arg robot_name)/lidar_points"
                   organize_cloud="true" hz="10" gpu="true">
       <origin xyz="0 0 0" rpy="0 0 0" />
     </xacro:VLP-16>
+
+    <!-- RGBD camera mount + optical frame for Kinect plugin -->
+    <link name="camera_link"/>
+    <joint name="camera_mount_joint" type="fixed">
+      <!-- Pose of the simulated RGBD camera relative to the Husky mount -->
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="realsense_mountpoint_link"/>
+      <child link="camera_link"/>
+    </joint>
+
+    <!-- Optical frame (camera convention: z forward, x right, y down) -->
+    <link name="camera_optical_frame"/>
+    <joint name="camera_optical_joint" type="fixed">
+      <!-- rotation from x-forward, z-up to z-forward, x-right, y-down -->
+      <origin xyz="0 0 0" rpy="-1.5707963 0 -1.5707963"/>
+      <parent link="camera_link"/>
+      <child link="camera_optical_frame"/>
+    </joint>
+
+    <!-- Kinect RGB(+depth) sensor using the optical frame -->
+    <xacro:kinect_rgb_sensor 
+      link_name="camera_link" 
+      frame_name="camera_optical_frame" 
+      camera_name="camera">
+    </xacro:kinect_rgb_sensor>
+
+    <!-- (optional) IR variant, if you want it:
+    <xacro:kinect_ir_sensor 
+      link_name="camera_link" 
+      frame_name="camera_optical_frame" 
+      camera_name="camera">
+    </xacro:kinect_ir_sensor>
+    -->
 
     <!-- GPS sensor -->
     <xacro:gps_sensor
@@ -59,6 +94,6 @@
         update_rate="10.0">
     </xacro:gps_sensor>
 
-    </xacro:if>
+  </xacro:if>
 
 </robot>
