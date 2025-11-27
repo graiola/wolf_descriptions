@@ -36,17 +36,6 @@
     <arg name="launch_planner"   default="" doc="just here for compatibility with navigation launch file"/>
     <arg name="planner_type"     default="" doc="just here for compatibility with navigation launch file"/>
 
-    <!-- Controller params file -->
-    <arg name="controller_params"  default="$(eval find(arg('robot_model') + '_description') + '/params/' + arg('robot_model') + '_params.yaml')"/>
-
-    <!-- Export the tf_prefix -->
-    <group if="$(eval robot_name != '/')">
-        <param name="tf_prefix" value="$(arg robot_name)"/>
-    </group>
-    <group if="$(eval robot_name == '/')">
-        <param name="tf_prefix" value=""/>
-    </group>
-
     <remap from="$(arg robot_name)/diff_drive_controller/odom" to="$(arg robot_name)/odometry/robot"/>
 
     <group if="$(arg gazebo)">
@@ -81,69 +70,36 @@
         <param name="initial_rpy"              value="$(arg initial_rpy)"/>
     </node>
 
-    <group ns="$(arg robot_name)">
+   <group if="$(eval robot_name != '')">
+         <include file="$(find husky_description)/launch/include/controller_ns.xml" ns="$(arg robot_name)">
+             <arg name="robot_model"      value="$(arg robot_model)"/>
+             <arg name="robot_name"       value="$(arg robot_name)"/>
+             <arg name="sensors"          value="$(arg sensors)" />
+             <arg name="period"           value="$(arg period)" />
+             <arg name="plotjuggler_gui"  value="$(arg plotjuggler_gui)" />
+             <arg name="rviz_gui"         value="$(arg rviz_gui)" />
+             <arg name="rqt_gui"          value="$(arg rqt_gui)" />
+             <arg name="publish_odom_msg" value="$(arg publish_odom_msg)"/>
+             <arg name="publish_odom_tf"  value="$(arg publish_odom_tf)"/>
+             <arg name="max_vel_x"        value="$(arg max_vel_x)"  />
+             <arg name="max_vel_yaw"      value="$(arg max_vel_yaw)"/>
+         </include>
+    </group>
 
-        <!-- Loading some ros_control configurations from YAML file to parameter server -->
-        <rosparam file="$(find wolf_controller)/params/config.ros.yaml" command="load"/>
-
-        <!-- Load controller config -->
-        <group if="$(eval arm_name != '')">
-            <rosparam command="load" file="$(eval find(arg('robot_model')+'_description')+'/params/'+arg('robot_model')+'_'+arg('arm_name')+'_params.yaml')" subst_value="true"/>
-        </group>
-        <group if="$(eval arm_name == '')">
-            <rosparam command="load" file="$(eval find(arg('robot_model')+'_description')+'/params/'+arg('robot_model')+'_params.yaml')" subst_value="true"/>
-        </group>
-
-        <!-- Convert joint states to TF transforms for rviz, etc -->
-        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="log">
-            <remap from="/joint_states" to="/$(arg robot_name)/joint_states"/>
-        </node>
-
-        <!-- Spawn the controller and joint state broadcaster -->
-        <node name="diff_drive_controller_spawner"
-            pkg="controller_manager" type="spawner" output="screen"
-            args="diff_drive_controller"
-            launch-prefix="bash -c 'sleep 5; $0 $@' ">
-        </node>
-
-        <!-- Spawn joint state broadcaster after a longer delay -->
-         <node name="joint_state_publisher_spawner"
-            pkg="controller_manager" type="spawner" output="screen"
-            args="joint_state_publisher"
-            launch-prefix="bash -c 'sleep 1; $0 $@' ">
-        </node>
-
-        <!-- Twist mux -->
-        <node pkg="twist_mux" type="twist_mux" name="twist_mux">
-            <rosparam command="load" file="$(find husky_description)/params/twist_mux.yaml" />
-            <remap from="cmd_vel_out" to="diff_drive_controller/cmd_vel"/>
-        </node>
-
-        <!-- Keyboard node -->
-        <node name="keyboard_node" pkg="wolf_controller" type="keyboard_node" respawn="true" output="screen">
-            <param name="robot_name"           value="$(arg robot_name)"/>
-            <param name="max_linear_x"         value="$(arg max_vel_x)"/>
-            <param name="max_angular_z"        value="$(arg max_vel_yaw)"/>
-            <param name="stop_without_input"   value="true"/>
-            <param name="service_timeout"      value="1.0"/>
-        </node> 
-
-        <!-- Base stabilizer node -->
-        <node name="base_stabilizer" pkg="wolf_controller_utils" type="base_stabilizer" respawn="true" output="screen">
-            <param name="robot_name"         value="$(arg robot_name)"/>
-            <param name="imu_topic"          value="trunk_imu/data"/>
-            <param name="base_frame"         value="base_link"/>
-            <param name="stabilized_frame"   value="base_stabilized"/>
-        </node>
-
-        <!-- GUI nodes -->
-        <!-- rviz -->
-        <node name="wolf_rviz" pkg="rviz" type="rviz"
-                args="-d $(find wolf_controller)/rviz/controller.rviz"
-                if="$(eval arg('rviz_gui'))"/>
-        <node name="wolf_gui" pkg="rqt_reconfigure" type="rqt_reconfigure"
-                if="$(eval arg('rqt_gui'))"/>
-    
+    <group if="$(eval robot_name == '')">
+        <include file="$(find husky_description)/launch/include/controller_ns.xml">
+             <arg name="robot_model"      value="$(arg robot_model)"/>
+             <arg name="robot_name"       value="$(arg robot_name)"/>
+             <arg name="sensors"          value="$(arg sensors)" />
+             <arg name="period"           value="$(arg period)" />
+             <arg name="plotjuggler_gui"  value="$(arg plotjuggler_gui)" />
+             <arg name="rviz_gui"         value="$(arg rviz_gui)" />
+             <arg name="rqt_gui"          value="$(arg rqt_gui)" />
+             <arg name="publish_odom_msg" value="$(arg publish_odom_msg)"/>
+             <arg name="publish_odom_tf"  value="$(arg publish_odom_tf)"/>
+             <arg name="max_vel_x"        value="$(arg max_vel_x)"  />
+             <arg name="max_vel_yaw"      value="$(arg max_vel_yaw)"/>
+        </include>
     </group>
 
 </launch>
