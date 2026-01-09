@@ -1,0 +1,16 @@
+wolf_pack:
+  # Geometry / safety
+  robot_radius: 0.35                 # [m]
+  world_margin: 0.20                 # [m] extra margin around robot_radius
+
+  # Unicycle velocity limits
+  v_max: 0.60                        # [m/s]
+  v_min: -0.20                       # [m/s]
+  w_rate: 1.20                       # [rad/s]
+
+  # Obstacle filtering / cone
+  obstacle_filter_alpha: 0.30        # EMA alpha in [0,1]
+  obstacle_cone_deg: 180.0           # [deg] half-cone, clamped [0..180] (180 => no restriction)
+
+  # Frames (optional override; SRDF may overwrite it if a "base*" group exists)
+  base_link_name: base_link

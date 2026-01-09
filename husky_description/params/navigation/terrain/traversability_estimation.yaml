@@ -1,0 +1,70 @@
+# traversability_estimation.yaml (leggedrobotics)
+
+use_raw_map: false
+update_rate: 4.0
+
+map_center_x: 0.0
+map_center_y: 0.0
+map_length_x: 60.0
+map_length_y: 60.0
+
+max_gap_width: 0.3
+footprint_yaw: 1.5708
+
+footprint:
+  footprint_polygon: [[0.5, 0.32], [0.5, -0.32], [-0.5, -0.32], [-0.5, 0.32]]
+
+  # questi 3 il codice li cerca sotto footprint/
+  traversability_default: 0.5
+  verify_roughness_footprint: false
+  check_robot_inclination: false
+
+# filter chain: deve essere una LISTA (array). Vuota va bene.
+traversability_map_filters: []
+
+# --- Filter chain ---
+#traversability_map_filters:
+#  - name: surface_normals
+#    type: traversability_estimation_filters/SurfaceNormalsFilter
+#    params:
+#      input_layer: elevation
+#      output_layers_prefix: surface_normal_
+#      radius: 0.3
+#
+#  - name: slope
+#    type: traversability_estimation_filters/SlopeFilter
+#    params:
+#      input_layer: elevation
+#      output_layer: slope
+#      max_slope: 0.52   # rad (~30 deg)
+#
+#  - name: roughness
+#    type: traversability_estimation_filters/RoughnessFilter
+#    params:
+#      input_layer: elevation
+#      output_layer: roughness
+#      radius: 0.3
+#      max_roughness: 0.08
+#
+#  - name: step
+#    type: traversability_estimation_filters/StepFilter
+#    params:
+#      input_layer: elevation
+#      output_layer: step
+#      max_step: 0.20
+#
+#  - name: traversability
+#    type: traversability_estimation_filters/TraversabilityFilter
+#    params:
+#      # combina slope/roughness/step → traversability
+#      slope_layer: slope
+#      roughness_layer: roughness
+#      step_layer: step
+#      output_layer: traversability
+#
+#      # pesi (baseline)
+#      w_slope: 1.0
+#      w_roughness: 1.0
+#      w_step: 1.0
+#
+#
