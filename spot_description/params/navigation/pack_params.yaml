@@ -1,0 +1,39 @@
+# -------------------------------------------------------------
+# Robot geometry & safety
+# -------------------------------------------------------------
+robot_radius: 0.2           # [m] physical radius or bounding circle
+world_margin: 1.3           # [m] extra clearance added to safety distance
+
+# -------------------------------------------------------------
+# Kinematics model (used to build Jpos / Jyaw)
+# Options: unicycle, omni, omni_no_yaw, ackermann
+# -------------------------------------------------------------
+kinematics_type: "unicycle"
+
+# Velocity limits (depend on kinematics_type)
+# For unicycle the state is: [v, w_rate]
+v_max: $(arg max_vel_x)                 # [m/s] max forward speed
+v_min: -$(arg max_vel_x) #-0.05         # [m/s] max backward speed
+w_rate: $(arg max_vel_yaw)              # [rad/s] yaw rate
+
+obstacle_filter_alpha: 0.3 # [0..1]
+obstacle_cone_deg: 45 # [deg]
+
+# If using omni:
+# vx_max: 1.2
+# vy_max: 1.2
+# w_max:  1.0
+
+# -------------------------------------------------------------
+# Navigation frame / TF names
+# -------------------------------------------------------------
+base_link_name: "base_link"   # may be overridden by SRDF
+
+# -------------------------------------------------------------
+# Topics
+# -------------------------------------------------------------
+#planner_twist_topic:    "/robot_name/wolf_controller/twist"
+#controller_twist_topic: "/robot_name/wolf_controller/priority_twist"
+#scan_topic:             "/robot_name/scan"
+#goto_pose_topic:        "/robot_name/wolf_navigation/goto/pose"
+#goto_gps_topic:         "/robot_name/wolf_navigation/goto/gps"
