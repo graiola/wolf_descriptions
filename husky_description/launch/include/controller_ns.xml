@@ -89,6 +89,12 @@
         <param name="imu_topic"          value="trunk_imu/data"/>
         <param name="base_frame"         value="base_link"/>
         <param name="stabilized_frame"   value="base_stabilized"/>
+        <param name="publish_footprint"  value="false"/>
+        <param name="footprint_frame"    value="base_footprint"/>
+        <param name="publish_inclined"   value="true"/>
+        <param name="inclined_frame"     value="base_inclined"/>
+        <param name="use_imu_stamp"      value="false"/>
+        <param name="publish_rate"       value="100.0"/>
     </node>
 
     <!-- GUI nodes -->
