@@ -1,0 +1,11 @@
+min_update_rate: 0.2
+map_center_x: 0.0
+map_center_y: 0.0
+map_length_x: 20.0
+map_length_y: 20.0
+footprint_yaw: 0.0
+max_gap_width: 0.3
+grid_map_to_initialize_traversability_map:
+  enable: false
+  grid_map_topic_name: initial_elevation_map
+

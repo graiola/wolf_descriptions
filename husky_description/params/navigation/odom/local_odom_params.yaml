@@ -1,83 +1,118 @@
-frequency: 100.0
-sensor_timeout: 0.2
+# ------------------------------
+# LOCAL UKF (robot_localization)
+# Stable 2D planar odom -> base_link
+# ------------------------------
+
+frequency: 50.0                # 100Hz spesso è inutile e può amplificare instabilità numeriche
+sensor_timeout: 0.5            # più tollerante a piccoli buchi (Gazebo/VO)
 two_d_mode: true
 publish_tf: true
 transform_time_offset: 0.05
 print_diagnostics: true
 
-# Imu
-imu0_config: [false, false, false, # x,   y,   z
-              true,  true,  true,  # r,   p,   w (yaw)
-              false, false, false, # dx,  dy,  dz
-              true,  true,  true,  # dr,  dp,  dw
-              true,  true,  true]  # ddx, ddy, ddz
+# Frame handling (se non già settati nel launch)
+# map_frame: map
+# odom_frame: odom
+# base_link_frame: base_link
+# world_frame: odom
+
+# UKF settings (più robusti)
+filter_type: ukf
+predict_to_current_time: true
+reset_on_time_jump: true        # IMPORTANT in /use_sim_time
+history_length: 1.0            # buffer interno per misure asincrone
+smooth_lagged_data: true
+dynamic_process_noise_covariance: true
+
+# ------------------------------
+# IMU
+# ------------------------------
+# Usa SOLO orientazione + velocità angolari. NIENTE accelerazioni lineari (spesso causa #1 dei NaN).
+imu0_config: [false, false, false,   # x, y, z
+              true,  true,  true,    # roll, pitch, yaw
+              false, false, false,   # vx, vy, vz
+              true,  true,  true,    # vroll, vpitch, vyaw
+              false, false, false]   # ax, ay, az  <-- OFF
 imu0_differential: false
+imu0_relative: false
 imu0_nodelay: true
-imu0_queue_size: 10
+imu0_queue_size: 50
 imu0_remove_gravitational_acceleration: true
 
-# Robot odometry
-odom0_config: [true,  true,  false, # x,   y,   z
-               false, false, true,  # r,   p,   w (yaw)
-               false, false, false, # dx,  dy,  dz
-               false, false, false, # dr,  dp,  dw
-               false, false, false] # ddx, ddy, ddz
-odom0_differential: true
+# Se il tuo IMU orientation è già filtrato bene, ok.
+# Se invece “salta”, prova a mettere imu0_differential: true e disabilitare l'orientazione (solo gyro),
+# ma come baseline questo è più semplice.
+
+# ------------------------------
+# ROBOT ODOMETRY (wheel / robot odom)
+# ------------------------------
+# Consiglio: in 2D usa yaw e (meglio) velocità, non solo posa differenziale.
+# Se la tua /odometry/robot ha twist affidabile, abilita vx/vy/vyaw invece della posa in differential.
+odom0_config: [true,  true,  false,  # x, y, z
+               false, false, true,   # roll, pitch, yaw
+               true,  true,  false,  # vx, vy, vz     <-- ON (se disponibile)
+               false, false, true,   # vroll, vpitch, vyaw  <-- ON (vyaw)
+               false, false, false]  # ax, ay, az
+odom0_differential: false            # IMPORTANT: togliamo differential per evitare "salti" -> NaN
+odom0_relative: false
 odom0_nodelay: true
-odom0_queue_size: 10
+odom0_queue_size: 20
 
-# Visual odometry
-odom1_config: [true,  true,  false, # x,   y,   z
-               false, false, true,  # r,   p,   w (yaw)
-               false, false, false, # dx,  dy,  dz
-               false, false, false, # dr,  dp,  dw
-               false, false, false] # ddx, ddy, ddz
-odom1_differential: true
+# Se il tuo odom0 NON pubblica twist buono, torna a:
+# odom0_config: [true,true,false,  false,false,true,  false,false,false,  false,false,false,  false,false,false]
+# odom0_differential: true
+# ma questa è più fragile se l'odom resetta o ha glitch.
+
+# ------------------------------
+# VISUAL ODOMETRY (VO)
+# ------------------------------
+# Stessa filosofia: usa twist se disponibile, altrimenti posa.
+odom1_config: [true,  true,  false,
+               false, false, true,
+               true,  true,  false,
+               false, false, true,
+               false, false, false]
+odom1_differential: false
+odom1_relative: false
 odom1_nodelay: true
-odom1_queue_size: 10
+odom1_queue_size: 20
 
-# [ADVANCED] The process noise covariance matrix can be difficult to tune, and can vary for each application, so it is exposed as a configuration parameter. This matrix represents the noise we add to the total error after each prediction step. 
-
-# The better the omnidirectional motion model matches your system, the smaller these values can be. However, if users find that a given variable is slow to converge, one approach is to increase the process_noise_covariance diagonal value for the variable in question, which will cause the filter's predicted error to be larger, which will cause the filter to trust the incoming measurement more during correction. 
-
-# The values are ordered as x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az. 
-# Defaults to the matrix below if unspecified. 
-
-process_noise_covariance:
-    [0.05, 0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
-    0,    0.05, 0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0.06, 0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0.03, 0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0.03, 0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0.06, 0,     0,     0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0.025, 0,     0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,     0.025, 0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,     0,     0.04, 0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,     0,     0,    0.01, 0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0.01, 0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0.02, 0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0.01, 0,    0,
-    0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0.01, 0,
-    0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0.015]
-
-# [ADVANCED] This represents the initial value for the state estimate error covariance matrix. Setting a diagonal value (variance) to a large value will result in rapid convergence for initial measurements of the variable in question. Users should take care not to use large values for variables that will not be measured directly. 
-
-# The values are ordered as x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az.
-# Defaults to the matrix below if unspecified. 
-
+# ------------------------------
+# Covarianze (più “condizionate”)
+# ------------------------------
+# 1) iniziale: NON troppo vicino a zero (1e-9 è aggressivo e può rendere il filtro numericamente fragile)
 initial_estimate_covariance:
-    [1e-9, 0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
-    0,    1e-9, 0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
-    0,    0,    1e-9, 0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
-    0,    0,    0,    1e-9, 0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
-    0,    0,    0,    0,    1e-9, 0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
-    0,    0,    0,    0,    0,    1e-9, 0,    0,    0,    0,     0,     0,     0,    0,    0,
-    0,    0,    0,    0,    0,    0,    1e-9, 0,    0,    0,     0,     0,     0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    1e-9, 0,    0,     0,     0,     0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    1e-9, 0,     0,     0,     0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    1e-9,  0,     0,     0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     1e-9,  0,     0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     1e-9,  0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     1e-9, 0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    1e-9, 0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    1e-9]
+  [1e-3, 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+   0,    1e-3, 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+   0,    0,    1e-1, 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+   0,    0,    0,    1e-2, 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+   0,    0,    0,    0,    1e-2, 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+   0,    0,    0,    0,    0,    1e-2, 0,    0,    0,    0,    0,    0,    0,    0,    0,
+   0,    0,    0,    0,    0,    0,    1e-2, 0,    0,    0,    0,    0,    0,    0,    0,
+   0,    0,    0,    0,    0,    0,    0,    1e-2, 0,    0,    0,    0,    0,    0,    0,
+   0,    0,    0,    0,    0,    0,    0,    0,    1e-1, 0,    0,    0,    0,    0,    0,
+   0,    0,    0,    0,    0,    0,    0,    0,    0,    1e-2, 0,    0,    0,    0,    0,
+   0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    1e-2, 0,    0,    0,    0,
+   0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    1e-2, 0,    0,    0,
+   0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    1e-1, 0,    0,
+   0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    1e-1, 0,
+   0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    1e-1]
+
+# 2) process noise: lascia il tuo oppure rendilo un filo più “morbido” su yaw e velocità
+# (qui lascio il tuo per non stravolgere; dynamic_process_noise_covariance aiuta).
+process_noise_covariance:  # (puoi tenere il tuo identico, ok)
+  [0.05, 0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+   0,    0.05, 0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+   0,    0,    0.06, 0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+   0,    0,    0,    0.03, 0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+   0,    0,    0,    0,    0.03, 0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+   0,    0,    0,    0,    0,    0.06, 0,     0,     0,    0,    0,    0,    0,    0,    0,
+   0,    0,    0,    0,    0,    0,    0.025, 0,     0,    0,    0,    0,    0,    0,    0,
+   0,    0,    0,    0,    0,    0,    0,     0.025, 0,    0,    0,    0,    0,    0,    0,
+   0,    0,    0,    0,    0,    0,    0,     0,     0.04, 0,    0,    0,    0,    0,    0,
+   0,    0,    0,    0,    0,    0,    0,     0,     0,    0.01, 0,    0,    0,    0,    0,
+   0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0.01, 0,    0,    0,    0,
+   0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0.02, 0,    0,    0,
+   0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0.01, 0,    0,
+   0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0.01, 0,
+   0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0.015]

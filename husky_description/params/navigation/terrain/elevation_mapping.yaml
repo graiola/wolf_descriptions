@@ -1,49 +1,66 @@
-# ANYbotics elevation_mapping - baseline outdoor (robot-centric, local map)
-# Param names: see ANYbotics elevation_mapping docs/issues. :contentReference[oaicite:2]{index=2}
+# -------------------------------
+# Elevation Mapping (outdoor, robot-centric)
+# Obiettivo: aumentare copertura vicino al robot + stabilità TF
+# -------------------------------
 
-# --- Frames ---
-# In outdoor ti consiglio ODOM per stabilità (no salti GPS).
-map_frame_id: "$(arg prefix)$(arg odom_frame)"
-robot_base_frame_id: "$(arg prefix)$(arg base_frame)"
-sensor_frame_id: "$(arg prefix)lidar"   # meglio: il frame reale del lidar se ce l'hai
-track_point_frame_id: "$(arg prefix)$(arg base_frame)"
+# Frames
+map_frame_id: "$(arg prefix)$(arg global_frame)"          
+robot_base_frame_id: "$(arg prefix)base_inclined"       # usa roll/pitch (perpendenza al terreno)
+track_point_frame_id: "$(arg prefix)base_inclined"
+sensor_frame_id: "$(arg prefix)lidar"
+
 track_point_x: 0.0
 track_point_y: 0.0
 track_point_z: 0.0
 
-
+# Pose
 robot_pose_with_covariance_topic: "/$(arg prefix)pose_with_covariance"
+robot_pose_cache_size: 500          # aumenta cache (bag / sim può avere jitter)
 
-# --- Map geometry (coerente con la tua local_costmap outdoor: 60x60 @ 0.10) ---
-length_in_x: 15.0
-length_in_y: 15.0
-resolution: 0.2
+# Map geometry
+# Passo a 0.1m: aiuta tantissimo a riempire "buchi" (a costo di CPU)
+length_in_x: 20.0
+length_in_y: 20.0
+resolution: 0.1
 
-# Input sources
-input_sources:
-  lidar:
-    type: pointcloud                # type supported: pointcloud
-    topic: /$(arg prefix)$(arg lidar_topic)   # point cloud topic
-    queue_size: 1
-    publish_on_update: true
-    sensor_processor:
-      type: perfect          # oppure laser, depth_image, ecc.
-      ignore_points_above: 5.0
-      ignore_points_below: -1.0
+# Rates
+min_update_rate: 5.0               # era 2.0 (più reattivo)
+fused_map_publishing_rate: 5.0      # era 1.0 (per debug meglio più alto)
+relocate_rate: 2.0
 
-# Pose cache (pose topic at ~10Hz in your bag)
-robot_pose_cache_size: 200
-
-# Update & publish rates
-min_update_rate: 2.0
-fused_map_publishing_rate: 1.0
-relocate_rate: 3.0
-
-# Visibility cleanup
+# Visibility cleanup (tienilo, ma meno aggressivo come frequenza)
 enable_visibility_cleanup: true
-visibility_cleanup_rate: 1.0
+visibility_cleanup_rate: 0.5
 enable_continuous_cleanup: false
 
-# Variance filtering (optional)
-min_variance: 1e-5
-max_variance: 0.01
+# Variance filtering
+min_variance: 1e-6
+max_variance: 0.05                 # più permissivo (0.01 a volte ammazza celle in sim)
+
+# -------------------------------
+# Input sources
+# -------------------------------
+input_sources:
+  lidar:
+    type: pointcloud
+    topic: /$(arg prefix)$(arg lidar_topic)     # pointcloud raw (meglio non filtrato)
+    queue_size: 5
+    publish_on_update: true
+
+    # Sensor processor:
+    # "perfect" va bene in sim, ma spesso è "troppo ingenuo".
+    # Se hai supporto per laser, mettilo: gestisce meglio range/min/max.
+    sensor_processor:
+      type: laser
+      # Queste soglie evitano di buttare via il terreno:
+      ignore_points_above: 3.0
+      ignore_points_below: -2.0
+
+      # Se disponibili nella tua build di elevation_mapping (alcune versioni li supportano):
+      # min_range: 0.25
+      # max_range: 30.0
+
+# (Opzionale, se hai parametri di map update / fusion nella tua versione:
+# enable_drift_compensation: false
+# enable_normal_alignment: true
+# )
