@@ -11,20 +11,20 @@ traversability_map_filters:
     type: traversabilityFilters/SlopeFilter
     params:
       map_type: traversability_slope
-      critical_value: 1.0
+      critical_value: 0.3
   - name: stepFilter
     type: traversabilityFilters/StepFilter
     params:
       map_type: traversability_step
-      critical_value: 0.12
-      first_window_radius: 0.06
-      second_window_radius: 0.06
-      critical_cell_number: 4
+      critical_value: 0.15
+      first_window_radius: 0.15
+      second_window_radius: 0.3
+      critical_cell_number: 1
   - name: roughnessFilter
     type: traversabilityFilters/RoughnessFilter
     params:
       map_type: traversability_roughness
-      critical_value: 0.06
+      critical_value: 0.05
       estimation_radius: 0.06
   - name: weightedSumFilter
     type: gridMapFilters/MathExpressionFilter
