@@ -20,7 +20,7 @@ local_costmap:
     map_topic: "/$(arg prefix)traversability_costmap"
     subscribe_to_updates: false
     track_unknown_space: false
-    use_maximum: false
+    use_maximum: true
     lethal_cost_threshold: 95   # above 95 => lethal (100)
     trinary_costmap: false    # better for the local planner
 
@@ -67,5 +67,5 @@ local_costmap:
       #observation_persistence: 1.0
 
   inflation_layer:
-    inflation_radius: 0.05
+    inflation_radius: 0.75
     #cost_scaling_factor: 2.58

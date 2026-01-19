@@ -105,9 +105,9 @@ TebLocalPlannerROS:
   weight_kinematics_forward_drive: 1
   weight_kinematics_turning_radius: 1
   weight_optimaltime: 20
-  weight_obstacle: 50
-  weight_inflation: 1
-  weight_viapoint: 100
+  weight_obstacle: 20
+  weight_inflation: 10
+  weight_viapoint: 10
   weight_adapt_factor: 2
 
   # Homotopy Class Planner
