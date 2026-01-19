@@ -21,8 +21,8 @@ local_costmap:
     subscribe_to_updates: false
     track_unknown_space: false
     use_maximum: false
-    lethal_cost_threshold: 95   # sopra 95 => lethal (100)
-    trinary_costmap: false      # lascia costi intermedi (meglio per TEB)
+    lethal_cost_threshold: 95   # above 95 => lethal (100)
+    trinary_costmap: false    # better for the local planner
 
   voxel_layer:
     enabled: $(arg enable_voxel_layer)
