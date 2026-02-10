@@ -35,7 +35,7 @@ wolf_controller:
       kinova_end_effector:
           Kp: {x: 300.0, y: 300.0, z: 300.0, roll: 200.0, pitch: 200.0, yaw: 200.0}
           Kd: {x: 30.0, y: 30.0, z: 30.0, roll: 20.0, pitch: 20.0, yaw: 20.0}
-          weight: 0.5
+          weight: 40.0
 
       lf_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
@@ -57,12 +57,12 @@ wolf_controller:
       waist:
           Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 240.0, pitch: 140.0, yaw: 80.0}
           Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 50.0, pitch: 30.0, yaw: 16.0}
-          weight: 1.0
+          weight: 50.0
 
-      CoM:
+      com:
           Kp: {x: 200.0, y: 200.0, z: 200.0}
           Kd: {x: 50.0, y: 50.0, z: 50.0}
-          weight: 1.0
+          weight: 100.0
 
       angular_momentum:
           weight: 0.1
