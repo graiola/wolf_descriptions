@@ -34,15 +34,15 @@ wolf_controller:
       lf_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 10.0
+          weight: 100.0
       rf_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 10.0
+          weight: 100.0
       rh_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 10.0
+          weight: 100.0
       lh_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0, pitch: 0, yaw: 0}
@@ -60,12 +60,12 @@ wolf_controller:
       waist:
           Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 240.0, pitch: 140.0, yaw: 80.0}
           Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 31.0, pitch: 23.0, yaw: 18.0}
-          weight: 10.0
+          weight: 50.0
 
       com:
           Kp: {x: 100.0, y: 100.0, z: 100.0}
           Kd: {x: 20.0, y: 20.0, z: 20.0}
-          weight: 10.0
+          weight: 100.0
 
       angular_momentum:
           weight: 0.01
