@@ -46,7 +46,7 @@ wolf_controller:
       lh_foot:
           Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
           Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 10.0
+          weight: 100.0
 
       lf_foot_wrench:
           weight: 2.0
