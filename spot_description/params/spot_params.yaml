@@ -28,25 +28,25 @@ wolf_controller:
 
   gains:
 
-      Kp_leg: {haa: 100.0, hfe: 100.0, kfe: 1}
+      Kp_leg: {haa: 100.0, hfe: 100.0, kfe: 1.0}
       Kd_leg: {haa: 1.0, hfe: 1.0, kfe: 0.1}
 
       lf_foot:
-          Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
-          Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 10.0
+          Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
+          Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
+          weight: 100.0
       rf_foot:
-          Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
-          Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 10.0
+          Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
+          Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
+          weight: 100.0
       rh_foot:
-          Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
-          Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 10.0
+          Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
+          Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
+          weight: 100.0
       lh_foot:
-          Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0, pitch: 0, yaw: 0}
-          Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0, pitch: 0, yaw: 0}
-          weight: 10.0
+          Kp: {x: 1000.0, y: 1000.0, z: 1000.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
+          Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0.0, pitch: 0.0, yaw: 0.0}
+          weight: 100.0
 
       lf_foot_wrench:
           weight: 2.0

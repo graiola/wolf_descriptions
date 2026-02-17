@@ -251,7 +251,7 @@ def main(args=None):
     initial_pose.orientation.z = qz
     initial_pose.orientation.w = qw
 
-    pause_physics(node, gazebo_namespace)
+    #pause_physics(node, gazebo_namespace)
 
     ### --- Choose one method below ---
 
@@ -279,7 +279,7 @@ def main(args=None):
 
     set_joint_positions_with_plugin(node, joint_names, joint_positions, robot_name)
 
-    unpause_physics(node, gazebo_namespace)
+    #unpause_physics(node, gazebo_namespace)
 
     rclpy.shutdown()
 
