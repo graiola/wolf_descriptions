@@ -113,10 +113,17 @@ def spawn_model(node, robot_name, model_xml, initial_pose, reference_frame, gaze
 
     future = client.call_async(request)
     rclpy.spin_until_future_complete(node, future)
-    if future.result() is not None:
-        node.get_logger().info(f"Successfully spawned: {robot_name}")
-    else:
+    response = future.result()
+    if response is None:
         node.get_logger().error(f"Failed to spawn: {robot_name}")
+        return False
+
+    if response.success:
+        node.get_logger().info(f"Successfully spawned: {robot_name} ({response.status_message})")
+        return True
+
+    node.get_logger().error(f"Failed to spawn: {robot_name} ({response.status_message})")
+    return False
 
 
 def spawn_model_cli_from_xml(robot_name, model_xml, initial_pose, robot_namespace):
@@ -251,11 +258,15 @@ def main(args=None):
     initial_pose.orientation.z = qz
     initial_pose.orientation.w = qw
 
-    #pause_physics(node, gazebo_namespace)
+    pause_physics(node, gazebo_namespace)
 
     ### --- Choose one method below ---
 
-    spawn_model(node, robot_name, model_xml, initial_pose, "world", gazebo_namespace)
+    spawn_ok = spawn_model(node, robot_name, model_xml, initial_pose, "world", gazebo_namespace)
+    if not spawn_ok:
+        unpause_physics(node, gazebo_namespace)
+        rclpy.shutdown()
+        sys.exit(1)
 
     # spawn_model_cli_from_xml(robot_name, model_xml, initial_pose, robot_name)
 
@@ -279,7 +290,7 @@ def main(args=None):
 
     set_joint_positions_with_plugin(node, joint_names, joint_positions, robot_name)
 
-    #unpause_physics(node, gazebo_namespace)
+    unpause_physics(node, gazebo_namespace)
 
     rclpy.shutdown()
 
