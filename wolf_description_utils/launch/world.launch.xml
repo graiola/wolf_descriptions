@@ -14,17 +14,18 @@
     <arg name="period" default="0.001"/>
     <arg name="arm_name" default=""/>
     <arg name="engine" default="ode"/>
+    <arg name="simulator" default="ignition"/>
     <arg name="world_file" default="$(find-pkg-share wolf_gazebo_resources)/worlds/$(var world_name).world"/>
-
-    <include file="$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py">
-        <arg name="world"  value="$(var world_file)"/>
-        <arg name="paused" value="$(var paused)"/>
-        <arg name="use_sim_time" value="$(var use_sim_time)"/>
-        <arg name="gui" value="$(var gui)"/>
-        <arg name="headless" value="$(var headless)"/>
-        <arg name="debug" value="$(var debug)"/>
-        <arg name="engine" value="$(var engine)"/>
-    </include>
+    
+    <node pkg="wolf_description_utils" exec="ignition_world" name="ignition_world" output="screen">
+        <param name="world_file" value="$(var world_file)"/>
+        <param name="paused" value="$(var paused)"/>
+        <param name="use_sim_time" value="$(var use_sim_time)"/>
+        <param name="gui" value="$(var gui)"/>
+        <param name="headless" value="$(var headless)"/>
+        <param name="debug" value="$(var debug)"/>
+        <param name="engine" value="$(var engine)"/>
+    </node>
 
     <!-- Send the robot urdf to parameter server -->
     <include file="$(find-pkg-share wolf_description_utils)/launch/upload.launch.xml">
@@ -33,6 +34,7 @@
         <arg name="robot_model" value="$(var robot_model)"/>
         <arg name="arm_name" value="$(var arm_name)"/>
         <arg name="robot_name" value="$(var robot_name)"/>
+        <arg name="simulator" value="$(var simulator)"/>
     </include>
 
 </launch>

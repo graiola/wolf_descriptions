@@ -42,6 +42,7 @@ def main(args=None):
     sensors = node.get_parameter('sensors').get_parameter_value().bool_value
     period = node.get_parameter('period').get_parameter_value().double_value
     floating_base_link = node.get_parameter('floating_base_link').get_parameter_value().bool_value
+    simulator = node.get_parameter('simulator').get_parameter_value().string_value
     output_name = node.get_parameter('output_name').get_parameter_value().string_value
 
     # Ensure the xacro file exists
@@ -57,7 +58,8 @@ def main(args=None):
         "arm_name": arm_name,
         "sensors": str(sensors).lower(),
         "period": str(period),
-        "floating_base_link": str(floating_base_link)
+        "floating_base_link": str(floating_base_link),
+        "simulator": simulator or "ignition"
     }
 
     try:

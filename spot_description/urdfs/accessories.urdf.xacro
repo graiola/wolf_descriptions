@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="simulator" default="ignition"/>
 
   <xacro:include filename="$(find sensors_description)/urdfs/common.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/depth_camera.gazebo.xacro"/>
@@ -67,18 +68,18 @@
     </collision>
   </link>
 
-   <xacro:depth_camera 
-     name="camera"
-     namespace="$(arg robot_name)" 
-     update_rate="30"
-     image_width="640"
-     image_height="480"
-     fov="1.047"
-     near="0.1"
-     far="10.0"
-     parent_link="front_rail"
-     origin_xyz="0.13 0 0" 
-     origin_rpy="0 0 0"/>
+  <xacro:depth_camera 
+    name="camera"
+    namespace="$(arg robot_name)" 
+    update_rate="30"
+    image_width="640"
+    image_height="480"
+    fov="1.047"
+    near="0.1"
+    far="10.0"
+    parent_link="front_rail"
+    origin_xyz="0.13 0 0" 
+    origin_rpy="0 0 0"/>
 
   <xacro:velodyne_laser_gazebo_sensor 
     sensor_name="$(arg robot_name)_lidar"
@@ -94,8 +95,7 @@
     vertical_fov="0.2618"    
     noise_stddev="0.01" />
 
-
-<xacro:gazebo_gps_sensor 
+  <xacro:gazebo_gps_sensor 
     sensor_name="$(arg robot_name)_gps"
     namespace="$(arg robot_name)"
     gps_topic="gps/fix" 

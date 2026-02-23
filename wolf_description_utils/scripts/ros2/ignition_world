@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+
+import rclpy
+from ament_index_python.packages import get_package_share_directory, get_package_prefix, PackageNotFoundError
+
+
+def _prepend_env_path(var_name, path):
+    if not path or not os.path.exists(path):
+        return
+    current = os.environ.get(var_name, "")
+    if current:
+        os.environ[var_name] = f"{path}:{current}"
+    else:
+        os.environ[var_name] = path
+
+
+def _maybe_prepend_pkg_lib(var_names, pkg_name):
+    try:
+        prefix = get_package_prefix(pkg_name)
+    except PackageNotFoundError:
+        return
+
+    lib_path = os.path.join(prefix, "lib")
+    for var_name in var_names:
+        _prepend_env_path(var_name, lib_path)
+
+
+def _parse_bool(value, default=False):
+    if isinstance(value, bool):
+        return value
+    if value is None:
+        return default
+    if isinstance(value, str):
+        return value.strip().lower() in ("1", "true", "yes", "on")
+    return bool(value)
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = rclpy.create_node(
+        "ignition_world",
+        allow_undeclared_parameters=False,
+        automatically_declare_parameters_from_overrides=True,
+    )
+
+    world_file = node.get_parameter("world_file").value
+    paused = _parse_bool(node.get_parameter("paused").value, default=False)
+    gui = _parse_bool(node.get_parameter("gui").value, default=True)
+    headless = _parse_bool(node.get_parameter("headless").value, default=False)
+    debug = _parse_bool(node.get_parameter("debug").value, default=False)
+    _engine = node.get_parameter("engine").value
+
+    if not world_file:
+        node.get_logger().error("Missing 'world_file' parameter")
+        rclpy.shutdown()
+        sys.exit(1)
+
+    if not os.path.exists(world_file):
+        node.get_logger().error(f"World file does not exist: {world_file}")
+        rclpy.shutdown()
+        sys.exit(1)
+
+    resources_share = get_package_share_directory("wolf_gazebo_resources")
+    worlds_path = os.path.join(resources_share, "worlds")
+    models_path = os.path.join(resources_share, "models")
+    _prepend_env_path("IGN_GAZEBO_RESOURCE_PATH", worlds_path)
+    _prepend_env_path("IGN_GAZEBO_RESOURCE_PATH", models_path)
+    _prepend_env_path("GZ_SIM_RESOURCE_PATH", worlds_path)
+    _prepend_env_path("GZ_SIM_RESOURCE_PATH", models_path)
+    _maybe_prepend_pkg_lib(("IGN_GAZEBO_SYSTEM_PLUGIN_PATH", "GZ_SIM_SYSTEM_PLUGIN_PATH"), "ign_ros2_control")
+    _maybe_prepend_pkg_lib(("IGN_GAZEBO_SYSTEM_PLUGIN_PATH", "GZ_SIM_SYSTEM_PLUGIN_PATH"), "gz_ros2_control")
+
+    cmd = ["ign", "gazebo"]
+    if headless or not gui:
+        cmd.append("-s")
+    if not paused:
+        cmd.append("-r")
+    if debug:
+        cmd.extend(["-v", "4"])
+    cmd.append(world_file)
+
+    node.get_logger().info("Launching Gazebo Sim (Ignition/Fortress): %s" % " ".join(cmd))
+    node.destroy_node()
+    rclpy.shutdown()
+    os.execvpe(cmd[0], cmd, os.environ.copy())
+
+
+if __name__ == "__main__":
+    main()

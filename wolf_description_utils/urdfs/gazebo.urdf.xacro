@@ -9,8 +9,8 @@
 <xacro:property name="model_name" value="$(arg robot_model)"/>
 
 	<gazebo>
-        <plugin name="$(arg robot_name)_controller_manager" filename="libgazebo_ros2_control.so">
-                <robot_param_node>/$(arg robot_name)/robot_state_publisher</robot_param_node>
+        <plugin name="ign_ros2_control::IgnitionROS2ControlPlugin" filename="libign_ros2_control-system.so">
+                <robot_param_node>robot_state_publisher</robot_param_node>
                 <ros>
                         <namespace>/$(arg robot_name)</namespace>
                         <!--<remapping>tf:=$(arg robot_name)/tf</remapping>-->
@@ -19,20 +19,6 @@
                 </ros>
                 <parameters>$(find ${model_name}_description)/params/${model_name}_params_$(arg robot_name).ros2.yaml</parameters>
         </plugin>
-    	<plugin name="$(arg robot_name)_ground_truth" filename="libgazebo_ros_p3d.so">
-                <ros>
-                    <namespace>/$(arg robot_name)</namespace>
-                    <remapping>odom:=ground_truth</remapping>
-                </ros>
-                <frame_name>world</frame_name>
-                <body_name>$(arg base_name)</body_name>
-                <update_rate>${1/ $(arg period)}</update_rate>
-        </plugin>
-        <plugin name="$(arg robot_name)_set_joint_positions_plugin" filename="libgazebo_set_joint_positions_plugin.so">
-            <robot_namespace>$(arg robot_name)</robot_namespace>
-            <topic_name>set_joint_states</topic_name>
-        </plugin>
 	</gazebo>
 
 </robot>
-

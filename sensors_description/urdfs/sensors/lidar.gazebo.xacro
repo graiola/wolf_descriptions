@@ -3,12 +3,11 @@
 
   <xacro:macro name="velodyne_laser_gazebo_sensor" params="sensor_name topic_name update_rate frame_id namespace min_range max_range number_of_beams horizontal_samples horizontal_fov vertical_fov noise_stddev">
 
-    <!-- Construct full frame name -->
     <xacro:if value="${namespace == ''}">
-      <xacro:property name="frame_name_ns" value="${frame_id}"/>
+      <xacro:property name="lidar_topic_ns" value="${topic_name}"/>
     </xacro:if>
     <xacro:if value="${namespace != ''}">
-      <xacro:property name="frame_name_ns" value="${namespace + '/' + frame_id}"/>
+      <xacro:property name="lidar_topic_ns" value="${namespace + '/' + topic_name}"/>
     </xacro:if>
 
     <!-- Sensor definition -->
@@ -17,6 +16,7 @@
         <pose>0 0 0 0 0 0</pose>
         <visualize>false</visualize>
         <update_rate>${update_rate}</update_rate>
+        <topic>${lidar_topic_ns}</topic>
         <ray>
           <scan>
             <horizontal>
@@ -45,19 +45,6 @@
             <stddev>0.0</stddev>
           </noise>
         </ray>
-
-        <plugin name="${sensor_name}_plugin" filename="libgazebo_ros_velodyne_laser.so">
-          <robotNamespace>/${namespace}</robotNamespace>
-          <ros>
-            <namespace>/${namespace}</namespace>
-            <remapping>${sensor_name}_plugin/out:=/${namespace}/${topic_name}</remapping>
-          </ros>
-          <frame_name>${frame_name_ns}</frame_name>
-          <organize_cloud>true</organize_cloud>
-          <min_range>${min_range}</min_range>
-          <max_range>${max_range}</max_range>
-          <gaussian_noise>${noise_stddev}</gaussian_noise>
-        </plugin>
       </sensor>
     </gazebo>
 

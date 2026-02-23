@@ -10,6 +10,7 @@
   <xacro:arg name="robot_model"        default="husky"/>
   <xacro:arg name="robot_name"         default=""/>
   <xacro:arg name="base_name"          default="base_link"/>
+  <xacro:arg name="simulator"          default="ignition"/>
 
   <!-- generic simulator_gazebo plugins for starting mechanism control, ros time -->
   <xacro:include filename="$(find wolf_description_utils)/urdfs/gazebo.urdf.xacro"/>
@@ -42,8 +43,6 @@
         accel_bias_mean="0"
         accel_bias_stddev="0">
     </xacro:imu_sensor>
-
-    <xacro:imu_hardware imu_name="$(arg robot_name)_imu" imu_frame="trunk_imu"/>
 
     <!-- Standard accessories. -->
     <xacro:if value="$(arg sensors)">

@@ -35,12 +35,20 @@
       <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
     </joint>
 
-    <!-- Depth Camera Sensor -->
+    <xacro:if value="${namespace == ''}">
+      <xacro:property name="camera_topic_ns" value="${name}"/>
+    </xacro:if>
+    <xacro:if value="${namespace != ''}">
+      <xacro:property name="camera_topic_ns" value="${namespace + '/' + name}"/>
+    </xacro:if>
+
+    <!-- Gazebo Sim depth camera sensor -->
     <gazebo reference="${name}_link">
-      <sensor type="depth" name="${name}">
+      <sensor type="depth_camera" name="${name}">
         <update_rate>${update_rate}</update_rate>
         <always_on>true</always_on>
         <pose>${origin_xyz} ${origin_rpy}</pose>
+        <topic>${camera_topic_ns}</topic>
 
         <camera name="${name}">
           <horizontal_fov>${fov}</horizontal_fov>
@@ -55,36 +63,9 @@
           </clip>
         </camera>
 
-        <!-- Plugin for Depth Camera -->
-        <plugin name="${namespace}_${name}_plugin" filename="libgazebo_ros_camera.so">
-          <robotNamespace>/${namespace}</robotNamespace>
-          <ros>
-            <namespace>/${namespace}</namespace>
-
-            <remapping>${name}/image_raw:=/${namespace}/${name}/image_raw</remapping>
-            <remapping>${name}/image_raw/compressed:=/${namespace}/${name}/image_raw/compressed</remapping>
-            <remapping>${name}/image_raw/compressedDepth:=/${namespace}/${name}/image_raw/compressedDepth</remapping>
-            <remapping>${name}/image_raw/theora:=/${namespace}/${name}/image_raw/theora</remapping>
-
-            <remapping>${name}/depth/image_raw:=/${namespace}/${name}/depth/image_raw</remapping>
-            <remapping>${name}/depth/camera_info:=/${namespace}/${name}/depth/camera_info</remapping>
-            <remapping>${name}/depth/image_raw/compressed:=/${namespace}/${name}/depth/image_raw/compressed</remapping>
-            <remapping>${name}/depth/image_raw/compressedDepth:=/${namespace}/${name}/depth/image_raw/compressedDepth</remapping>
-            <remapping>${name}/depth/image_raw/theora:=/${namespace}/${name}/depth/image_raw/theora</remapping>
-
-            <remapping>${name}/camera_info:=/${namespace}/${name}/camera_info</remapping>
-            <remapping>${name}/points:=/${namespace}/${name}/points</remapping>
-
-          </ros>
-          <camera_name>${name}</camera_name>
-          <frame_name>${name}_link</frame_name>
-          <update_rate>${update_rate}</update_rate>
-          <point_cloud>true</point_cloud> <!-- Optional -->
-        </plugin>
       </sensor>
     </gazebo>
 
   </xacro:macro>
 
 </robot>
-

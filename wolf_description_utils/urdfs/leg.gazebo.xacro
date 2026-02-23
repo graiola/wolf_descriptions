@@ -2,119 +2,69 @@
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-	<xacro:macro name="leg_gazebo" params="prefix robot_name load_force_sensors">
+  <xacro:macro name="leg_gazebo" params="prefix robot_name load_force_sensors">
 
-		<gazebo reference="${prefix}_haa_joint">
-			<provideFeedback>true</provideFeedback>
-		</gazebo>
+    <gazebo reference="${prefix}_haa_joint">
+      <provideFeedback>true</provideFeedback>
+    </gazebo>
 
+    <gazebo reference="${prefix}_hfe_joint">
+      <provideFeedback>true</provideFeedback>
+    </gazebo>
 
-		<xacro:if value="${load_force_sensors}">
-			<gazebo>
-				<plugin name="${prefix}_haa_sensor" filename="libgazebo_ros_ft_sensor.so">
-					<ros>
-                        <namespace>${robot_name}</namespace>
-                    </ros>
-					<update_rate>100.0</update_rate>
-					<joint_name>${prefix}_haa_joint</joint_name>
-				</plugin>
-			</gazebo>
-		</xacro:if>
+    <gazebo reference="${prefix}_kfe_joint">
+      <provideFeedback>true</provideFeedback>
+    </gazebo>
 
-		<gazebo reference="${prefix}_hfe_joint">
-			<provideFeedback>true</provideFeedback>
-		</gazebo>
+    <gazebo reference="${prefix}_foot_joint">
+      <disableFixedJointLumping>true</disableFixedJointLumping>
+    </gazebo>
 
-		<xacro:if value="${load_force_sensors}">
-			<gazebo>
-				<plugin name="${prefix}_hfe_sensor" filename="libgazebo_ros_ft_sensor.so">
-					<ros>
-                        <namespace>${robot_name}</namespace>
-                    </ros>
-					<update_rate>100.0</update_rate>
-					<joint_name>${prefix}_hfe_joint</joint_name>
-				</plugin>
-			</gazebo>
-		</xacro:if>
+    <gazebo reference="${prefix}_upperleg">
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>1.5</mu1>
+      <mu2>1.5</mu2>
+      <fdir1>1 0 0</fdir1>
+      <maxVel>1.0</maxVel>
+      <maxContacts>1</maxContacts>
+      <minDepth>0.00</minDepth>
+    </gazebo>
 
-		<gazebo reference="${prefix}_kfe_joint">
-				<provideFeedback>true</provideFeedback>
-		</gazebo>
+    <gazebo reference="${prefix}_lowerleg">
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+      <maxVel>1.0</maxVel>
+      <maxContacts>1</maxContacts>
+      <sensor name="${prefix}_shin_contact_sensor" type="contact">
+        <always_on>true</always_on>
+        <update_rate>250.0</update_rate>
+        <topic>${robot_name}/${prefix}_shin_bumper</topic>
+        <contact>
+          <collision>${prefix}_lowerleg_collision</collision>
+        </contact>
+      </sensor>
+    </gazebo>
 
+    <gazebo reference="${prefix}_foot">
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+      <maxVel>1.0</maxVel>
+      <maxContacts>1</maxContacts>
+      <sensor name="${prefix}_foot_contact_sensor" type="contact">
+        <always_on>true</always_on>
+        <update_rate>250.0</update_rate>
+        <topic>${robot_name}/${prefix}_foot_bumper</topic>
+        <contact>
+          <collision>${prefix}_foot_collision</collision>
+        </contact>
+      </sensor>
+    </gazebo>
 
-		<xacro:if value="${load_force_sensors}">
-				<gazebo>
-						<plugin name="${prefix}_kfe_sensor" filename="libgazebo_ros_ft_sensor.so">
-								<ros>
-									<namespace>${robot_name}</namespace>
-								</ros>
-								<update_rate>100.0</update_rate>
-								<joint_name>${prefix}_kfe_joint</joint_name>
-						</plugin>
-				</gazebo>
-		</xacro:if>
-
-		<gazebo reference="${prefix}_foot_joint">
-			<disableFixedJointLumping>true</disableFixedJointLumping>
-		</gazebo>
-
-		<gazebo reference="${prefix}_upperleg">
-			<kp>1000000.0</kp>
-			<kd>100.0</kd>
-			<mu1>1.5</mu1>
-			<mu2>1.5</mu2>
-			<fdir1>1 0 0</fdir1>
-			<maxVel>1.0</maxVel>
-			<maxContacts>1</maxContacts>
-			<minDepth>0.00</minDepth>
-		</gazebo>
-
-		<gazebo reference="${prefix}_lowerleg">
-			<kp>1000000.0</kp>
-			<kd>100.0</kd>
-			<mu1>1.0</mu1>
-			<mu2>1.0</mu2>
-			<maxVel>1.0</maxVel>
-			<maxContacts>1</maxContacts>
-			<sensor name="${prefix}_shin_contact_sensor" type="contact">
-					<always_on>true</always_on>
-					<update_rate>250.0</update_rate>
-					<contact>
-						<collision>${prefix}_lowerleg_collision</collision>
-					</contact>
-					<plugin name="${prefix}_shin_bumper" filename="libgazebo_ros_bumper.so">
-						<frame_name>${prefix}_lowerleg</frame_name>
-						   <ros>
-							<namespace>${robot_name}</namespace>
-							<remapping>bumper_states:=${prefix}_shin_bumper</remapping>
-						  </ros>
-
-					</plugin>
-			</sensor>
-		</gazebo>
-
-                <gazebo reference="${prefix}_foot">
-                        <kp>1000000.0</kp>
-                        <kd>100.0</kd>
-                        <mu1>1.0</mu1>
-                        <mu2>1.0</mu2>
-                        <maxVel>1.0</maxVel>
-                        <maxContacts>1</maxContacts>
-                        <sensor name="${prefix}_foot_contact_sensor" type="contact">
-				<always_on>true</always_on>
-				<update_rate>250.0</update_rate>
-				<contact>
-						<collision>${prefix}_foot_collision</collision>
-				</contact>
-				<plugin name="${prefix}_foot_bumper" filename="libgazebo_ros_bumper.so">
-						<frame_name>${prefix}_foot</frame_name>
-						  <ros>
-							<namespace>${robot_name}</namespace>
-							<remapping>bumper_states:=${prefix}_foot_bumper</remapping>
-						  </ros>
-				</plugin>
-			</sensor>
-		</gazebo>
-	</xacro:macro>
+  </xacro:macro>
 
 </robot>

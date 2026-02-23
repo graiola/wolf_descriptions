@@ -11,6 +11,7 @@
     <xacro:arg name="robot_model"        default="go1"/>
     <xacro:arg name="robot_name"         default=""/>
     <xacro:arg name="base_name"          default="base_link"/>
+    <xacro:arg name="simulator"          default="ignition"/>
 
     <!-- load generic materials -->
     <xacro:include filename="$(find wolf_description_utils)/urdfs/materials.xacro"/>
@@ -147,14 +148,12 @@
     </xacro:imu_sensor>
 
     <!-- Extensions -->
-    <xacro:leg_hardware prefix="rf"/>
+    <xacro:leg_hardware prefix="rf" imu_name="$(arg robot_name)_imu" imu_frame="trunk_imu"/>
     <xacro:leg_gazebo prefix="rf" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:leg_hardware prefix="lf"/>
+    <xacro:leg_hardware prefix="lf" imu_name="" imu_frame=""/>
     <xacro:leg_gazebo prefix="lf" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:leg_hardware prefix="rh"/>
+    <xacro:leg_hardware prefix="rh" imu_name="" imu_frame=""/>
     <xacro:leg_gazebo prefix="rh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:leg_hardware prefix="lh"/>
+    <xacro:leg_hardware prefix="lh" imu_name="" imu_frame=""/>
     <xacro:leg_gazebo prefix="lh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:imu_hardware imu_name="$(arg robot_name)_imu" imu_frame="trunk_imu"/>
-
 </robot>

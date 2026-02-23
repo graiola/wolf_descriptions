@@ -3,7 +3,7 @@
 
   <!--
     Macro: gazebo_gps_sensor
-    Description: Inserts a GPS sensor with the gazebo_ros_gps_sensor plugin.
+    Description: Inserts a Gazebo Sim GPS sensor (bridge to ROS with ros_gz_bridge).
     Parameters:
       sensor_name    - Name for the sensor element.
       namespace      - ROS namespace
@@ -16,32 +16,22 @@
   
     
       <xacro:if value="${namespace == ''}">
-                    <xacro:property name="frame_name_ns" value="${frame_id}"/>
+                    <xacro:property name="gps_topic_ns" value="${gps_topic}"/>
       </xacro:if>
       <xacro:if value="${namespace != ''}">
-                    <xacro:property name="frame_name_ns" value="${namespace+'/'+frame_id}"/>
+                    <xacro:property name="gps_topic_ns" value="${namespace+'/'+gps_topic}"/>
       </xacro:if>
   
     <gazebo reference="${frame_id}">
       <sensor name="${sensor_name}" type="gps" >
         <always_on>1</always_on>
         <update_rate>${update_rate}</update_rate>
+        <topic>${gps_topic_ns}</topic>
         <gps>
           <!-- Optionally, include additional sensor-specific parameters here -->
         </gps>
-        <plugin name="${sensor_name}_plugin" filename="libgazebo_ros_gps_sensor.so">
-          <robotNamespace>/${namespace}</robotNamespace>
-          <ros>
-            <namespace>/${namespace}</namespace>
-            <!-- Additional ROS plugin configuration can be added here -->
-            <remapping>${sensor_name}_plugin/out:=/${namespace}/${gps_topic}</remapping>
-            <remapping>${sensor_name}_plugin/vel:=/${namespace}/${velocity_topic}</remapping>
-          </ros>
-          <frame_name>${frame_name_ns}</frame_name>
-        </plugin>
       </sensor>
     </gazebo>
   </xacro:macro>
 
 </robot>
-

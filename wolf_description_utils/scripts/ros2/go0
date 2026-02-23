@@ -1,49 +1,44 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-import sys
 import math
-import subprocess
-import tempfile
 import os
+import subprocess
+import sys
+import tempfile
+import time
+import xml.etree.ElementTree as ET
+from ast import literal_eval
 
 import rclpy
-from rclpy.node import Node
-from rclpy.qos import QoSProfile, DurabilityPolicy, HistoryPolicy
-from std_srvs.srv import Empty
 from geometry_msgs.msg import Pose
-from gazebo_msgs.srv import SpawnEntity
 from rcl_interfaces.srv import GetParameters
-from srdfdom.srdf import SRDF
-from sensor_msgs.msg import JointState
-import xml.sax.saxutils as xml_utils
 
 
 def initialize_node(args):
     rclpy.init(args=args)
-    return rclpy.create_node('goto0',
-                              allow_undeclared_parameters=False,
-                              automatically_declare_parameters_from_overrides=True)
+    return rclpy.create_node(
+        "goto0",
+        allow_undeclared_parameters=False,
+        automatically_declare_parameters_from_overrides=True,
+    )
 
 
-def get_param(node, param_name):
-    return node.get_parameter(param_name).value
+def get_param(node, param_name, default=None):
+    param = node.get_parameter(param_name)
+    value = param.value
+    if value is None and default is not None:
+        return default
+    return value
 
 
-def wait_for_service(node, service_name):
-    client = node.create_client(Empty, service_name)
-    while not client.wait_for_service(timeout_sec=1.0):
-        node.get_logger().info(f'Waiting for {service_name} service...')
-    return client
-
-
-def call_service(client, node):
-    request = Empty.Request()
-    future = client.call_async(request)
-    rclpy.spin_until_future_complete(node, future)
-    if future.result() is not None:
-        node.get_logger().info(f'Service call to {client.srv_name} succeeded.')
-    else:
-        node.get_logger().error(f'Service call to {client.srv_name} failed.')
+def parse_vector_param(value, default):
+    if value is None:
+        return list(default)
+    if isinstance(value, (list, tuple)):
+        return list(value)
+    if isinstance(value, str):
+        return list(literal_eval(value))
+    return list(default)
 
 
 def calculate_quaternion(roll, pitch, yaw):
@@ -54,246 +49,195 @@ def calculate_quaternion(roll, pitch, yaw):
     return qx, qy, qz, qw
 
 
-def pause_physics(node, gazebo_namespace):
-    service_name = f"{gazebo_namespace}/pause_physics"
-    client = wait_for_service(node, service_name)
-    call_service(client, node)
-    node.get_logger().info("Paused Gazebo physics.")
-
-
-def unpause_physics(node, gazebo_namespace):
-    service_name = f"{gazebo_namespace}/unpause_physics"
-    client = wait_for_service(node, service_name)
-    call_service(client, node)
-    node.get_logger().info("Unpaused Gazebo physics.")
-
-
 def get_parameter_from_remote_node(node, param_path, timeout=10.0):
     split_path = param_path.strip('/').split('/')
     if len(split_path) < 2:
-        node.get_logger().error(f"Invalid parameter path format: {param_path}. Expected format: '/namespace/node/param'")
+        node.get_logger().error(f"Invalid parameter path format: {param_path}. Expected '/ns/node/param'")
         return None
-    
+
     param_name = split_path[-1]
     remote_node_name = split_path[-2]
     namespace = '/'.join(split_path[:-2]) if len(split_path) > 2 else ''
     full_node_path = f"/{namespace}/{remote_node_name}" if namespace else f"/{remote_node_name}"
 
-    client = node.create_client(GetParameters, f'{full_node_path}/get_parameters')
+    client = node.create_client(GetParameters, f"{full_node_path}/get_parameters")
     if not client.wait_for_service(timeout_sec=timeout):
-        node.get_logger().error(f"Service {full_node_path}/get_parameters not available!")
+        node.get_logger().error(f"Service {full_node_path}/get_parameters not available")
         return None
 
     request = GetParameters.Request()
     request.names = [param_name]
-    return client.call_async(request)
-
-
-def convert_urdf_to_sdf(urdf_str):
-    try:
-        proc = subprocess.run(['gz', 'sdf', '-p'], input=urdf_str.encode(), capture_output=True)
-        if proc.returncode == 0:
-            return proc.stdout.decode()
-        else:
-            print("[ERROR] gz sdf stderr:", proc.stderr.decode())  # <--- ADD THIS
-            raise RuntimeError(f"URDF to SDF conversion failed:\n{proc.stderr.decode()}")
-    except FileNotFoundError:
-        raise RuntimeError("The `gz` command is not found. Make sure Gazebo is installed and `gz` is in your PATH.")
-
-
-def spawn_model(node, robot_name, model_xml, initial_pose, reference_frame, gazebo_namespace):
-    client = node.create_client(SpawnEntity, gazebo_namespace + '/spawn_entity')
-    client.wait_for_service()
-    request = SpawnEntity.Request()
-    request.name = robot_name
-    request.xml = xml_utils.unescape(model_xml)
-    request.robot_namespace = robot_name
-    request.initial_pose = initial_pose
-    request.reference_frame = reference_frame
-
     future = client.call_async(request)
     rclpy.spin_until_future_complete(node, future)
-    response = future.result()
-    if response is None:
-        node.get_logger().error(f"Failed to spawn: {robot_name}")
-        return False
-
-    if response.success:
-        node.get_logger().info(f"Successfully spawned: {robot_name} ({response.status_message})")
-        return True
-
-    node.get_logger().error(f"Failed to spawn: {robot_name} ({response.status_message})")
-    return False
+    return future.result()
 
 
-def spawn_model_cli_from_xml(robot_name, model_xml, initial_pose, robot_namespace):
-    if not robot_name:
-        raise ValueError("robot_name is empty!")
-
-    if not model_xml.strip():
-        raise ValueError("model_xml is empty!")
-
-    suffix = '.sdf' if model_xml.strip().startswith('<sdf') else '.urdf'
-    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix=suffix) as f:
-        f.write(model_xml)
-        tmpfile = f.name
-
-    format_flag = '-sdf' if suffix == '.sdf' else ''
-
-    cmd = [
-        'ros2', 'run', 'gazebo_ros', 'spawn_entity.py',
-        '-file', tmpfile,
-        '-entity', robot_name,
-        '-robot_namespace', robot_namespace,
-        '-reference_frame', 'world',
-        '-x', str(initial_pose.position.x),
-        '-y', str(initial_pose.position.y),
-        '-z', str(initial_pose.position.z),
-        '-R', '0',
-        '-P', '0',
-        '-Y', '0'
-    ]
-
-    if format_flag:
-        cmd.append(format_flag)
-
-    print("[DEBUG] Running command:")
-    print(" ".join(cmd))
-
+def convert_urdf_to_sdf(node, urdf_xml):
+    tmp_urdf = None
     try:
-        subprocess.run(cmd, check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"[ERROR] Failed to spawn with spawn_entity.py: {e}")
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".urdf", delete=False) as fp:
+            fp.write(urdf_xml)
+            tmp_urdf = fp.name
+
+        proc = subprocess.run(
+            ["ign", "sdf", "-p", tmp_urdf],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if proc.returncode != 0:
+            raise RuntimeError(proc.stderr.strip() or "ign sdf -p failed")
+        return proc.stdout
     finally:
-        os.remove(tmpfile)
+        if tmp_urdf and os.path.exists(tmp_urdf):
+            os.remove(tmp_urdf)
 
 
-def spawn_model_with_gz_model(robot_name, model_sdf, initial_pose):
-    tmpfile_path = f"/tmp/{robot_name}.sdf"
-    with open(tmpfile_path, 'w') as f:
-        f.write(model_sdf)
+def resolve_ignition_world_name(node):
+    world_file = get_param(node, "world_file")
+    if isinstance(world_file, str) and world_file:
+        try:
+            root = ET.parse(world_file).getroot()
+            for elem in root.iter():
+                if elem.tag.split("}")[-1] != "world":
+                    continue
+                world_name = elem.attrib.get("name")
+                if world_name:
+                    node.get_logger().info(
+                        f"Using Gazebo Sim world '{world_name}' from {world_file}"
+                    )
+                    return world_name
+                break
+            node.get_logger().warn(
+                f"No <world name=\"...\"> found in {world_file}. Falling back to ignition_world_name/default."
+            )
+        except (OSError, ET.ParseError) as exc:
+            node.get_logger().warn(
+                f"Failed to parse world_file '{world_file}': {exc}. Falling back to ignition_world_name/default."
+            )
 
-    cmd = [
-        'gz', 'model',
-        '--spawn-file', tmpfile_path,
-        '--model-name', robot_name,
-        '-x', str(initial_pose.position.x),
-        '-y', str(initial_pose.position.y),
-        '-z', str(initial_pose.position.z),
-        '-Y', str(initial_pose.orientation.z)  # Yaw approximation
-    ]
+    return get_param(node, "ignition_world_name", "default") or "default"
 
-    print("[DEBUG] Running command:")
-    print(" ".join(cmd))
 
+def spawn_model_ignition(node, world_name, model_name, model_sdf, pose):
+    tmp_sdf = None
     try:
-        subprocess.run(cmd, check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"[ERROR] Failed to spawn model using gz model: {e}")
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".sdf", delete=False) as fp:
+            fp.write(model_sdf)
+            tmp_sdf = fp.name
 
+        req = (
+            'sdf_filename: "{sdf}" '
+            'name: "{name}" '
+            'pose: {{ position: {{ x: {x} y: {y} z: {z} }} '
+            'orientation: {{ x: {qx} y: {qy} z: {qz} w: {qw} }} }}'
+        ).format(
+            sdf=tmp_sdf.replace("\\", "\\\\").replace('"', '\\"'),
+            name=model_name.replace("\\", "\\\\").replace('"', '\\"'),
+            x=pose.position.x,
+            y=pose.position.y,
+            z=pose.position.z,
+            qx=pose.orientation.x,
+            qy=pose.orientation.y,
+            qz=pose.orientation.z,
+            qw=pose.orientation.w,
+        )
 
-def set_joint_positions_with_plugin(node, joint_names, joint_positions, robot_name):
-    topic_name = f"/{robot_name}/set_joint_states" if robot_name else "/set_joint_states"
+        service = f"/world/{world_name}/create"
+        cmd = [
+            "ign", "service",
+            "-s", service,
+            "--reqtype", "ignition.msgs.EntityFactory",
+            "--reptype", "ignition.msgs.Boolean",
+            "--timeout", "10000",
+            "--req", req,
+        ]
 
-    qos_profile = QoSProfile(
-        depth=10,
-        durability=DurabilityPolicy.TRANSIENT_LOCAL,
-        history=HistoryPolicy.KEEP_LAST
-    )
-    
-    publisher = node.create_publisher(JointState, topic_name, qos_profile)
-    node.get_logger().info(f"Created publisher on {topic_name}")
-    
-    while publisher.get_subscription_count() == 0:
-        node.get_logger().info("Waiting for a subscriber to connect...")
-        rclpy.spin_once(node, timeout_sec=0.5)
-    
-    joint_state_msg = JointState()
-    joint_state_msg.header.stamp = node.get_clock().now().to_msg()
-    joint_state_msg.header.frame_id = 'world'
-    joint_state_msg.name = joint_names
-    joint_state_msg.position = joint_positions
-    joint_state_msg.velocity = [0.0] * len(joint_positions)
-    joint_state_msg.effort = [0.0] * len(joint_positions)
+        # Gazebo Sim startup can lag behind launch by a few seconds.
+        for attempt in range(1, 11):
+            proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
+            if proc.returncode == 0 and "data: true" in proc.stdout:
+                node.get_logger().info(f"Spawned '{model_name}' in world '{world_name}'")
+                node.get_logger().debug(
+                    f"Keeping temporary SDF file for Gazebo Sim async load: {tmp_sdf}"
+                )
+                return True
 
-    publisher.publish(joint_state_msg)
-    node.get_logger().info(f"Published joint positions for {len(joint_names)} joints.")
+            if proc.returncode == 0 and "data: false" in proc.stdout:
+                node.get_logger().error(proc.stdout.strip())
+                return False
+
+            node.get_logger().info(
+                f"Waiting for Gazebo Sim create service {service} (attempt {attempt}/10)"
+            )
+            time.sleep(1.0)
+
+        node.get_logger().error(
+            f"Failed to spawn '{model_name}' via {service}: {(proc.stderr or proc.stdout).strip()}"
+        )
+        return False
+    finally:
+        # Gazebo Sim resolves sdf_filename asynchronously after the create service
+        # returns, so deleting the file here can race the actual model insertion.
+        # Intentionally leave the file in /tmp (small leak) until we move to an
+        # inline `sdf:` EntityFactory request.
+        pass
 
 
 def main(args=None):
     node = initialize_node(args)
-    gazebo_namespace = ""
 
-    model_name = get_param(node, 'robot_model')
-    robot_name = get_param(node, 'robot_name')
-    robot_description_name = get_param(node, 'description')
-    robot_description_semantic_name = get_param(node, 'semantic_description')
-    initial_xyz = get_param(node, 'initial_xyz')
-    initial_rpy = get_param(node, 'initial_rpy')
+    model_name = get_param(node, "robot_model")
+    robot_name = get_param(node, "robot_name")
+    robot_description_name = get_param(node, "description")
+    initial_xyz = parse_vector_param(get_param(node, "initial_xyz", [0.0, 0.0, 0.0]), [0.0, 0.0, 0.0])
+    initial_rpy = parse_vector_param(get_param(node, "initial_rpy", [0.0, 0.0, 0.0]), [0.0, 0.0, 0.0])
+    ignition_world_name = resolve_ignition_world_name(node)
+
+    spawn_entity_name = robot_name or model_name
 
     if not robot_name:
         node.get_logger().warn("robot_name is empty. Falling back to model_name.")
-        robot_name = model_name
 
-    model_xml_future = get_parameter_from_remote_node(node, f'/{robot_description_name}')
-    rclpy.spin_until_future_complete(node, model_xml_future)
-
-    srdf_data_future = get_parameter_from_remote_node(node, f'/{robot_description_semantic_name}')
-    rclpy.spin_until_future_complete(node, srdf_data_future)
-
-    model_xml = model_xml_future.result().values[0].string_value if model_xml_future.result() else None
-    srdf_data = srdf_data_future.result().values[0].string_value if srdf_data_future.result() else None
-
-    if not model_xml or not srdf_data:
-        node.get_logger().error(f"Model or SRDF data unavailable for {robot_name}")
-        sys.exit(1)
-
-    initial_pose = Pose()
-    initial_pose.position.x = float(initial_xyz[0])
-    initial_pose.position.y = float(initial_xyz[1])
-    initial_pose.position.z = float(initial_xyz[2])
-    qx, qy, qz, qw = calculate_quaternion(*[float(x) for x in initial_rpy])
-    initial_pose.orientation.x = qx
-    initial_pose.orientation.y = qy
-    initial_pose.orientation.z = qz
-    initial_pose.orientation.w = qw
-
-    pause_physics(node, gazebo_namespace)
-
-    ### --- Choose one method below ---
-
-    spawn_ok = spawn_model(node, robot_name, model_xml, initial_pose, "world", gazebo_namespace)
-    if not spawn_ok:
-        unpause_physics(node, gazebo_namespace)
+    model_result = get_parameter_from_remote_node(node, f"/{robot_description_name}")
+    if model_result is None:
+        node.get_logger().error("Failed to retrieve robot description parameter.")
         rclpy.shutdown()
         sys.exit(1)
 
-    # spawn_model_cli_from_xml(robot_name, model_xml, initial_pose, robot_name)
+    model_xml = model_result.values[0].string_value if model_result.values else None
+    if not model_xml:
+        node.get_logger().error(f"Robot description unavailable for {spawn_entity_name}")
+        rclpy.shutdown()
+        sys.exit(1)
 
-    #try:
-    #    if model_xml.strip().startswith("<sdf"):
-    #        model_sdf = model_xml
-    #    else:
-    #        try:
-    #            model_sdf = convert_urdf_to_sdf(model_xml)
-    #        except RuntimeError as e:
-    #            node.get_logger().error(str(e))
-    #            sys.exit(1)
-    #    spawn_model_with_gz_model(robot_name, model_sdf, initial_pose)
-    #except RuntimeError as e:
-    #    node.get_logger().error(str(e))
-    #    sys.exit(1)
+    pose = Pose()
+    pose.position.x = float(initial_xyz[0])
+    pose.position.y = float(initial_xyz[1])
+    pose.position.z = float(initial_xyz[2])
+    qx, qy, qz, qw = calculate_quaternion(*[float(x) for x in initial_rpy])
+    pose.orientation.x = qx
+    pose.orientation.y = qy
+    pose.orientation.z = qz
+    pose.orientation.w = qw
 
-    robot = SRDF.from_xml_string(srdf_data)
-    joint_names = [joint.name for joint in robot.group_state_map['standdown'].joints]
-    joint_positions = [joint.value[0] for joint in robot.group_state_map['standdown'].joints]
+    try:
+        model_sdf = convert_urdf_to_sdf(node, model_xml)
+    except RuntimeError as exc:
+        node.get_logger().error(str(exc))
+        rclpy.shutdown()
+        sys.exit(1)
 
-    set_joint_positions_with_plugin(node, joint_names, joint_positions, robot_name)
+    if not spawn_model_ignition(node, ignition_world_name, spawn_entity_name, model_sdf, pose):
+        rclpy.shutdown()
+        sys.exit(1)
 
-    unpause_physics(node, gazebo_namespace)
+    node.get_logger().warn(
+        "Gazebo Sim path does not apply the SRDF 'standdown' joint initialization yet."
+    )
 
     rclpy.shutdown()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

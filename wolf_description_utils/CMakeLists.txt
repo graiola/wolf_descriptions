@@ -21,3 +21,8 @@ install(DIRECTORY urdfs/
 
 install(PROGRAMS scripts/${ROS_VERSION}/go0 scripts/ros2/description_loader scripts/create_urdf_model.sh scripts/create_gazebo_model.sh
   DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME})
+
+if(${ament_cmake_FOUND})
+  install(PROGRAMS scripts/ros2/ignition_world
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME})
+endif()
