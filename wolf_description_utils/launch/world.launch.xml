@@ -16,6 +16,7 @@
     <arg name="engine" default="ode"/>
     <arg name="simulator" default="ignition"/>
     <arg name="world_file" default="$(find-pkg-share wolf_gazebo_resources)/worlds/$(var world_name).world"/>
+    <arg name="bridge_imu" default="true" description="bridge Gazebo IMU topic to ROS 2"/>
     
     <node pkg="wolf_description_utils" exec="ignition_world" name="ignition_world" output="screen">
         <param name="world_file" value="$(var world_file)"/>
@@ -36,5 +37,16 @@
         <arg name="robot_name" value="$(var robot_name)"/>
         <arg name="simulator" value="$(var simulator)"/>
     </include>
+
+    <group if="$(var bridge_imu)">
+        <group if="$(eval '\'$(var robot_name)\' == \'\'')">
+            <node pkg="ros_gz_bridge" exec="parameter_bridge" name="imu_bridge" output="screen"
+                  args="/trunk_imu/data@sensor_msgs/msg/Imu[ignition.msgs.IMU"/>
+        </group>
+        <group if="$(eval '\'$(var robot_name)\' != \'\'')">
+            <node pkg="ros_gz_bridge" exec="parameter_bridge" name="imu_bridge" output="screen"
+                  args="/$(var robot_name)/trunk_imu/data@sensor_msgs/msg/Imu[ignition.msgs.IMU"/>
+        </group>
+    </group>
 
 </launch>

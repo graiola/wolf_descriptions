@@ -38,6 +38,7 @@
     odom_topic: odometry/robot
     tf_prefix: ${TF_PREFIX}
     use_contact_sensors: false
+    use_effort_command_for_estimation: true
     min_forces_weight: 0.0
     min_qddot_weight: 0.0
 
