@@ -8,7 +8,7 @@
 
                 <ros2_control name="sim_hardware_system" type="system">
                     <hardware>
-                      <plugin>ign_ros2_control/IgnitionSystem</plugin>
+                      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
                     </hardware>
                     <sensor name="${imu_name}">
                       <param name="frame_id">${imu_frame}</param>

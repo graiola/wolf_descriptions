@@ -132,7 +132,7 @@
 
     <!-- IMU sensor -->
     <xacro:imu_sensor
-        sensor_name="$(arg robot_name)_imu"
+        sensor_name="imu"
         frame_name="trunk_imu"
         imu_topic="trunk_imu/data"
         namespace="$(arg robot_name)"
@@ -147,13 +147,16 @@
         accel_bias_stddev="0">
     </xacro:imu_sensor>
 
+    <!-- ROS2 control -->
+    <xacro:quadruped_ros2_control imu_name="imu" imu_frame="trunk_imu"/>
+
     <!-- Extensions -->
-    <xacro:leg_hardware prefix="rf" imu_name="$(arg robot_name)_imu" imu_frame="trunk_imu"/>
+    <xacro:leg_hardware prefix="rf" with_ros2_control="false"/>
     <xacro:leg_gazebo prefix="rf" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:leg_hardware prefix="lf" imu_name="" imu_frame=""/>
+    <xacro:leg_hardware prefix="lf" with_ros2_control="false"/>
     <xacro:leg_gazebo prefix="lf" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:leg_hardware prefix="rh" imu_name="" imu_frame=""/>
+    <xacro:leg_hardware prefix="rh" with_ros2_control="false"/>
     <xacro:leg_gazebo prefix="rh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
-    <xacro:leg_hardware prefix="lh" imu_name="" imu_frame=""/>
+    <xacro:leg_hardware prefix="lh" with_ros2_control="false"/>
     <xacro:leg_gazebo prefix="lh" robot_name="$(arg robot_name)" load_force_sensors="$(arg load_force_sensors)"/>
 </robot>

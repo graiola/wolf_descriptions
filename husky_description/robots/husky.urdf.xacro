@@ -29,7 +29,7 @@
 
     <!-- IMU sensor -->
     <xacro:imu_sensor
-        sensor_name="$(arg robot_name)_imu"
+        sensor_name="imu"
         frame_name="trunk_imu"
         imu_topic="trunk_imu/data"
         namespace="$(arg robot_name)"

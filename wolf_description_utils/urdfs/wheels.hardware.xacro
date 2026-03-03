@@ -4,10 +4,10 @@
   <!-- ros2_control system definition -->
   <ros2_control name="wheels_system" type="system">
     <hardware>
-      <plugin>ign_ros2_control/IgnitionSystem</plugin>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
     </hardware>
 
-    <sensor name="$(arg robot_name)_imu">
+    <sensor name="imu">
       <param name="frame_id">trunk_imu</param>
       <state_interface name="orientation.x"/>
       <state_interface name="orientation.y"/>

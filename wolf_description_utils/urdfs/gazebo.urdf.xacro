@@ -8,17 +8,24 @@
 
 <xacro:property name="model_name" value="$(arg robot_model)"/>
 
-	<gazebo>
-        <plugin name="ign_ros2_control::IgnitionROS2ControlPlugin" filename="libign_ros2_control-system.so">
-                <robot_param_node>robot_state_publisher</robot_param_node>
-                <ros>
-                        <namespace>/$(arg robot_name)</namespace>
-                        <!--<remapping>tf:=$(arg robot_name)/tf</remapping>-->
-                        <remapping>wolf_controller/odom:=odometry/robot</remapping>
-                        <remapping>diffdrive_controller/odom:=odometry/robot</remapping>
-                </ros>
+		<gazebo>
+		        <plugin name="gz_ros2_control::GazeboSimROS2ControlPlugin" filename="gz_ros2_control-system">
+		                <!-- Keep ros2_control URDF source consistent with the model actually spawned by go0 -->
+		                <robot_param>description</robot_param>
+		                <robot_param_node>gazebo_robot_description</robot_param_node>
+		                <ros>
+	                        <xacro:if value="$(eval robot_name != '')">
+	                                <namespace>/$(arg robot_name)</namespace>
+	                        </xacro:if>
+	                        <!--<remapping>tf:=$(arg robot_name)/tf</remapping>-->
+	                        <remapping>wolf_controller/odom:=odometry/robot</remapping>
+	                        <remapping>diffdrive_controller/odom:=odometry/robot</remapping>
+	                </ros>
                 <parameters>$(find ${model_name}_description)/params/${model_name}_params_$(arg robot_name).ros2.yaml</parameters>
         </plugin>
+        <!-- Gazebo Sim IMU system is required so IMU sensors expose topics/components
+             that gz_ros2_control can subscribe to and populate ros2_control IMU interfaces. -->
+        <plugin filename="ignition-gazebo-imu-system" name="gz::sim::systems::Imu"/>
 	</gazebo>
 
 </robot>

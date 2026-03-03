@@ -23,6 +23,7 @@ wolf_controller:
   publish_odom_msg: $(arg publish_odom_msg)
   publish_odom_tf: $(arg publish_odom_tf)
   use_contact_sensors: false
+  use_effort_command_for_estimation: false
   min_forces_weight: 0.0
   min_qddot_weight: 0.0
 
@@ -71,4 +72,3 @@ wolf_controller:
 
       postural:
           weight: 0.00001
-

@@ -6,10 +6,10 @@
         rate_bias_mean rate_bias_stddev accel_mean accel_stddev accel_bias_mean accel_bias_stddev">
 
       <xacro:if value="${namespace == ''}">
-                <xacro:property name="imu_topic_ns" value="${imu_topic}"/>
+                <xacro:property name="imu_topic_ns" value="${'/' + imu_topic}"/>
       </xacro:if>
       <xacro:if value="${namespace != ''}">
-                <xacro:property name="imu_topic_ns" value="${namespace+'/'+imu_topic}"/>
+                <xacro:property name="imu_topic_ns" value="${'/' + namespace + '/' + imu_topic}"/>
       </xacro:if>
 
         <gazebo reference="${frame_name}">

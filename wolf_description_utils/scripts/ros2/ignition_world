@@ -70,8 +70,12 @@ def main(args=None):
     _prepend_env_path("IGN_GAZEBO_RESOURCE_PATH", models_path)
     _prepend_env_path("GZ_SIM_RESOURCE_PATH", worlds_path)
     _prepend_env_path("GZ_SIM_RESOURCE_PATH", models_path)
-    _maybe_prepend_pkg_lib(("IGN_GAZEBO_SYSTEM_PLUGIN_PATH", "GZ_SIM_SYSTEM_PLUGIN_PATH"), "ign_ros2_control")
-    _maybe_prepend_pkg_lib(("IGN_GAZEBO_SYSTEM_PLUGIN_PATH", "GZ_SIM_SYSTEM_PLUGIN_PATH"), "gz_ros2_control")
+    # Prefer gz_ros2_control on Humble; fallback to ign_ros2_control only if needed.
+    try:
+        get_package_prefix("gz_ros2_control")
+        _maybe_prepend_pkg_lib(("IGN_GAZEBO_SYSTEM_PLUGIN_PATH", "GZ_SIM_SYSTEM_PLUGIN_PATH"), "gz_ros2_control")
+    except PackageNotFoundError:
+        _maybe_prepend_pkg_lib(("IGN_GAZEBO_SYSTEM_PLUGIN_PATH", "GZ_SIM_SYSTEM_PLUGIN_PATH"), "ign_ros2_control")
 
     cmd = ["ign", "gazebo"]
     if headless or not gui:
