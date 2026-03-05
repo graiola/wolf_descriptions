@@ -17,6 +17,9 @@
     <arg name="simulator" default="ignition"/>
     <arg name="world_file" default="$(find-pkg-share wolf_gazebo_resources)/worlds/$(var world_name).world"/>
     <arg name="bridge_imu" default="true" description="bridge Gazebo IMU topic to ROS 2"/>
+    <arg name="bridge_camera" default="true" description="bridge Gazebo camera topics to ROS 2"/>
+    <arg name="bridge_lidar" default="true" description="bridge Gazebo lidar topic to ROS 2"/>
+    <arg name="bridge_gps" default="true" description="bridge Gazebo GPS topic to ROS 2"/>
     
     <node pkg="wolf_description_utils" exec="ignition_world" name="ignition_world" output="screen">
         <param name="world_file" value="$(var world_file)"/>
@@ -46,6 +49,61 @@
         <group if="$(eval '\'$(var robot_name)\' != \'\'')">
             <node pkg="ros_gz_bridge" exec="parameter_bridge" name="imu_bridge" output="screen"
                   args="/$(var robot_name)/trunk_imu/data@sensor_msgs/msg/Imu[ignition.msgs.IMU"/>
+        </group>
+    </group>
+
+    <group if="$(var sensors)">
+        <group if="$(var bridge_camera)">
+            <group if="$(eval '\'$(var robot_name)\' == \'\'')">
+                <node pkg="ros_gz_bridge" exec="parameter_bridge" name="camera_bridge" output="screen"
+                      args="/camera@sensor_msgs/msg/Image[ignition.msgs.Image"/>
+                <node pkg="ros_gz_bridge" exec="parameter_bridge" name="camera_info_bridge" output="screen"
+                      args="/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo"/>
+                <node pkg="ros_gz_bridge" exec="parameter_bridge" name="camera_points_bridge" output="screen"
+                      args="/camera/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked"/>
+            </group>
+            <group if="$(eval '\'$(var robot_name)\' != \'\'')">
+                <node pkg="ros_gz_bridge" exec="parameter_bridge" name="camera_bridge" output="screen"
+                      args="/$(var robot_name)/camera@sensor_msgs/msg/Image[ignition.msgs.Image"/>
+                <node pkg="ros_gz_bridge" exec="parameter_bridge" name="camera_info_bridge" output="screen"
+                      args="/$(var robot_name)/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo"/>
+                <node pkg="ros_gz_bridge" exec="parameter_bridge" name="camera_points_bridge" output="screen"
+                      args="/$(var robot_name)/camera/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked"/>
+            </group>
+        </group>
+
+        <group if="$(var bridge_lidar)">
+            <group if="$(eval '\'$(var robot_name)\' == \'\'')">
+                <node pkg="ros_gz_bridge" exec="parameter_bridge" name="lidar_scan_bridge" output="screen"
+                      args="/lidar_points@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan">
+                    <remap from="/lidar_points" to="/lidar_scan"/>
+                </node>
+                <node pkg="ros_gz_bridge" exec="parameter_bridge" name="lidar_points_bridge" output="screen"
+                      args="/lidar_points/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked">
+                    <remap from="/lidar_points/points" to="/lidar_points"/>
+                </node>
+            </group>
+            <group if="$(eval '\'$(var robot_name)\' != \'\'')">
+                <node pkg="ros_gz_bridge" exec="parameter_bridge" name="lidar_scan_bridge" output="screen"
+                      args="/$(var robot_name)/lidar_points@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan">
+                    <remap from="/$(var robot_name)/lidar_points" to="/$(var robot_name)/lidar_scan"/>
+                </node>
+                <node pkg="ros_gz_bridge" exec="parameter_bridge" name="lidar_points_bridge" output="screen"
+                      args="/$(var robot_name)/lidar_points/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked">
+                    <remap from="/$(var robot_name)/lidar_points/points" to="/$(var robot_name)/lidar_points"/>
+                </node>
+            </group>
+        </group>
+
+        <group if="$(var bridge_gps)">
+            <group if="$(eval '\'$(var robot_name)\' == \'\'')">
+                <node pkg="ros_gz_bridge" exec="parameter_bridge" name="gps_bridge" output="screen"
+                      args="/gps/fix@sensor_msgs/msg/NavSatFix[ignition.msgs.NavSat"/>
+            </group>
+            <group if="$(eval '\'$(var robot_name)\' != \'\'')">
+                <node pkg="ros_gz_bridge" exec="parameter_bridge" name="gps_bridge" output="screen"
+                      args="/$(var robot_name)/gps/fix@sensor_msgs/msg/NavSatFix[ignition.msgs.NavSat"/>
+            </group>
         </group>
     </group>
 

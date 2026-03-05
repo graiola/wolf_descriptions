@@ -12,12 +12,14 @@
 
     <!-- Sensor definition -->
     <gazebo reference="${frame_id}">
-      <sensor type="ray" name="${sensor_name}">
+      <sensor type="gpu_lidar" name="${sensor_name}">
         <pose>0 0 0 0 0 0</pose>
+        <always_on>true</always_on>
         <visualize>false</visualize>
         <update_rate>${update_rate}</update_rate>
         <topic>${lidar_topic_ns}</topic>
-        <ray>
+        <gz_frame_id>${frame_id}</gz_frame_id>
+        <lidar>
           <scan>
             <horizontal>
               <samples>${horizontal_samples}</samples>
@@ -42,9 +44,9 @@
           <noise>
             <type>gaussian</type>
             <mean>0.0</mean>
-            <stddev>0.0</stddev>
+            <stddev>${noise_stddev}</stddev>
           </noise>
-        </ray>
+        </lidar>
       </sensor>
     </gazebo>
 
