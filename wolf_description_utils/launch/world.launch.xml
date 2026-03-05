@@ -17,6 +17,7 @@
     <arg name="simulator" default="ignition"/>
     <arg name="world_file" default="$(find-pkg-share wolf_gazebo_resources)/worlds/$(var world_name).world"/>
     <arg name="bridge_imu" default="true" description="bridge Gazebo IMU topic to ROS 2"/>
+    <arg name="bridge_clock" default="true" description="bridge Gazebo clock topic to ROS 2"/>
     <arg name="bridge_camera" default="true" description="bridge Gazebo camera topics to ROS 2"/>
     <arg name="bridge_lidar" default="true" description="bridge Gazebo lidar topic to ROS 2"/>
     <arg name="bridge_gps" default="true" description="bridge Gazebo GPS topic to ROS 2"/>
@@ -40,6 +41,13 @@
         <arg name="robot_name" value="$(var robot_name)"/>
         <arg name="simulator" value="$(var simulator)"/>
     </include>
+
+    <group if="$(var bridge_clock)">
+        <group if="$(var use_sim_time)">
+            <node pkg="ros_gz_bridge" exec="parameter_bridge" name="clock_bridge" output="screen"
+                  args="/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock"/>
+        </group>
+    </group>
 
     <group if="$(var bridge_imu)">
         <group if="$(eval '\'$(var robot_name)\' == \'\'')">
