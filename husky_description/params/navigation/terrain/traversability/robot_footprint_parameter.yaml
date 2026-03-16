@@ -1,0 +1,9 @@
+footprint:
+  footprint_polygon: [[0.5, 0.32], [0.5, -0.32], [-0.5, -0.32], [-0.5, 0.32]]
+  circular_footprint_radius: 0.5
+  circular_footprint_radius_inscribed: 0.30
+  circular_footprint_offset: 0.15
+  footprint_frame_id: $(arg prefix)$(arg footprint_frame)
+  traversability_default: 0.3
+  verify_roughness_footprint: false
+  check_robot_inclination: false
