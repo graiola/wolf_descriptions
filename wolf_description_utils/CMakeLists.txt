@@ -10,7 +10,20 @@ if(${catkin_FOUND})
     catkin_package()
 elseif(${ament_cmake_FOUND})
     set(ROS_VERSION "ros2")
-    ament_package()
+    find_package(ignition-gazebo6 REQUIRED)
+    find_package(ignition-plugin1 REQUIRED COMPONENTS register)
+
+    add_library(wolf_joint_position_reset_system SHARED
+      src/joint_position_reset_system.cpp)
+    target_compile_features(wolf_joint_position_reset_system PUBLIC cxx_std_17)
+    target_link_libraries(wolf_joint_position_reset_system
+      ignition-gazebo6::ignition-gazebo6
+      ignition-plugin1::register)
+
+    install(TARGETS wolf_joint_position_reset_system
+      LIBRARY DESTINATION lib
+      ARCHIVE DESTINATION lib
+      RUNTIME DESTINATION bin)
 endif()
 
 install(DIRECTORY launch/
@@ -25,4 +38,5 @@ install(PROGRAMS scripts/${ROS_VERSION}/go0 scripts/ros2/description_loader scri
 if(${ament_cmake_FOUND})
   install(PROGRAMS scripts/ros2/ignition_world
     DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME})
+  ament_package()
 endif()

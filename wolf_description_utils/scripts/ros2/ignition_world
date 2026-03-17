@@ -76,6 +76,7 @@ def main(args=None):
         _maybe_prepend_pkg_lib(("IGN_GAZEBO_SYSTEM_PLUGIN_PATH", "GZ_SIM_SYSTEM_PLUGIN_PATH"), "gz_ros2_control")
     except PackageNotFoundError:
         _maybe_prepend_pkg_lib(("IGN_GAZEBO_SYSTEM_PLUGIN_PATH", "GZ_SIM_SYSTEM_PLUGIN_PATH"), "ign_ros2_control")
+    _maybe_prepend_pkg_lib(("IGN_GAZEBO_SYSTEM_PLUGIN_PATH", "GZ_SIM_SYSTEM_PLUGIN_PATH"), "wolf_description_utils")
 
     cmd = ["ign", "gazebo"]
     if headless or not gui:

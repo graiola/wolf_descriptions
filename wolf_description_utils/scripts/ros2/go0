@@ -10,7 +10,9 @@ import xml.etree.ElementTree as ET
 from ast import literal_eval
 
 import rclpy
+from ament_index_python.packages import PackageNotFoundError, get_package_prefix
 from geometry_msgs.msg import Pose
+from rclpy.exceptions import ParameterNotDeclaredException
 from rcl_interfaces.srv import GetParameters
 
 
@@ -24,7 +26,10 @@ def initialize_node(args):
 
 
 def get_param(node, param_name, default=None):
-    param = node.get_parameter(param_name)
+    try:
+        param = node.get_parameter(param_name)
+    except ParameterNotDeclaredException:
+        return default
     value = param.value
     if value is None and default is not None:
         return default
@@ -91,6 +96,71 @@ def convert_urdf_to_sdf(node, urdf_xml):
     finally:
         if tmp_urdf and os.path.exists(tmp_urdf):
             os.remove(tmp_urdf)
+
+
+def extract_string_parameter(result):
+    if result is None or not result.values:
+        return None
+    return result.values[0].string_value
+
+
+def parse_standdown_joint_positions(srdf_xml):
+    if not srdf_xml:
+        return []
+
+    root = ET.fromstring(srdf_xml)
+    for group_state in root.findall(".//group_state"):
+        if group_state.attrib.get("name") != "standdown":
+            continue
+
+        joint_positions = []
+        for joint in group_state.findall("joint"):
+            joint_name = joint.attrib.get("name")
+            joint_value = joint.attrib.get("value")
+            if not joint_name or joint_value is None:
+                continue
+            joint_positions.append((joint_name, float(joint_value.split()[0])))
+        return joint_positions
+
+    return []
+
+
+def resolve_joint_reset_plugin():
+    prefix = get_package_prefix("wolf_description_utils")
+    plugin_path = os.path.join(prefix, "lib", "libwolf_joint_position_reset_system.so")
+    if not os.path.exists(plugin_path):
+        raise RuntimeError(f"Gazebo Sim joint reset plugin not found: {plugin_path}")
+    return "wolf_joint_position_reset_system"
+
+
+def inject_joint_reset_plugin(model_sdf, joint_positions, plugin_path):
+    if not joint_positions:
+        return model_sdf
+
+    root = ET.fromstring(model_sdf)
+    model_element = None
+    for elem in root.iter():
+        if elem.tag.split("}")[-1] == "model":
+            model_element = elem
+            break
+
+    if model_element is None:
+        raise RuntimeError("Failed to locate the top-level <model> in generated SDF.")
+
+    plugin_element = ET.SubElement(
+        model_element,
+        "plugin",
+        {
+            "filename": plugin_path,
+            "name": "wolf::sim::systems::JointPositionReset",
+        },
+    )
+    for joint_name, joint_position in joint_positions:
+        joint_element = ET.SubElement(plugin_element, "joint")
+        ET.SubElement(joint_element, "name").text = joint_name
+        ET.SubElement(joint_element, "position").text = str(joint_position)
+
+    return ET.tostring(root, encoding="unicode")
 
 
 def resolve_ignition_world_name(node):
@@ -167,8 +237,13 @@ def spawn_model_ignition(node, world_name, model_name, model_sdf, pose):
                 node.get_logger().error(proc.stdout.strip())
                 return False
 
+            error_text = (proc.stderr or proc.stdout or "").strip()
+            if error_text:
+                node.get_logger().warn(
+                    f"Gazebo Sim create request via {service} did not complete yet: {error_text}"
+                )
             node.get_logger().info(
-                f"Waiting for Gazebo Sim create service {service} (attempt {attempt}/10)"
+                f"Retrying Gazebo Sim create request {service} (attempt {attempt}/10)"
             )
             time.sleep(1.0)
 
@@ -190,6 +265,7 @@ def main(args=None):
     model_name = get_param(node, "robot_model")
     robot_name = get_param(node, "robot_name")
     robot_description_name = get_param(node, "description")
+    semantic_description_name = get_param(node, "semantic_description")
     initial_xyz = parse_vector_param(get_param(node, "initial_xyz", [0.0, 0.0, 0.0]), [0.0, 0.0, 0.0])
     initial_rpy = parse_vector_param(get_param(node, "initial_rpy", [0.0, 0.0, 0.0]), [0.0, 0.0, 0.0])
     ignition_world_name = resolve_ignition_world_name(node)
@@ -205,11 +281,21 @@ def main(args=None):
         rclpy.shutdown()
         sys.exit(1)
 
-    model_xml = model_result.values[0].string_value if model_result.values else None
+    model_xml = extract_string_parameter(model_result)
     if not model_xml:
         node.get_logger().error(f"Robot description unavailable for {spawn_entity_name}")
         rclpy.shutdown()
         sys.exit(1)
+
+    standdown_joint_positions = []
+    if semantic_description_name:
+        semantic_result = get_parameter_from_remote_node(node, f"/{semantic_description_name}")
+        semantic_xml = extract_string_parameter(semantic_result)
+        if semantic_xml:
+            try:
+                standdown_joint_positions = parse_standdown_joint_positions(semantic_xml)
+            except (ET.ParseError, ValueError) as exc:
+                node.get_logger().warn(f"Failed to parse SRDF standdown joint positions: {exc}")
 
     pose = Pose()
     pose.position.x = float(initial_xyz[0])
@@ -228,13 +314,19 @@ def main(args=None):
         rclpy.shutdown()
         sys.exit(1)
 
+    if standdown_joint_positions:
+        try:
+            plugin_path = resolve_joint_reset_plugin()
+            model_sdf = inject_joint_reset_plugin(model_sdf, standdown_joint_positions, plugin_path)
+            node.get_logger().info(
+                f"Injected Gazebo Sim joint reset plugin for {len(standdown_joint_positions)} standdown joint(s)."
+            )
+        except (PackageNotFoundError, RuntimeError, ET.ParseError) as exc:
+            node.get_logger().warn(f"Failed to inject Gazebo Sim standdown joint reset plugin: {exc}")
+
     if not spawn_model_ignition(node, ignition_world_name, spawn_entity_name, model_sdf, pose):
         rclpy.shutdown()
         sys.exit(1)
-
-    node.get_logger().warn(
-        "Gazebo Sim path does not apply the SRDF 'standdown' joint initialization yet."
-    )
 
     rclpy.shutdown()
 

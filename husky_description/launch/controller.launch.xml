@@ -84,6 +84,7 @@
             <param name="semantic_description"     value="$(var robot_name)/robot_description_semantic/description"/>
             <param name="initial_xyz"              value="$(var initial_xyz)"/>
             <param name="initial_rpy"              value="$(var initial_rpy)"/>
+            <param name="world_file"               value="$(var world_file)"/>
         </node>
 
         <!-- Convert joint states to TF transforms for rviz, etc -->
