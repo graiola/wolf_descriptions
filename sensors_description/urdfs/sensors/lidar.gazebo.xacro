@@ -5,9 +5,11 @@
 
     <xacro:if value="${namespace == ''}">
       <xacro:property name="lidar_topic_ns" value="${topic_name}"/>
+      <xacro:property name="lidar_frame_id_ns" value="${frame_id}"/>
     </xacro:if>
     <xacro:if value="${namespace != ''}">
       <xacro:property name="lidar_topic_ns" value="${namespace + '/' + topic_name}"/>
+      <xacro:property name="lidar_frame_id_ns" value="${namespace + '/' + frame_id}"/>
     </xacro:if>
 
     <!-- Sensor definition -->
@@ -18,7 +20,7 @@
         <visualize>false</visualize>
         <update_rate>${update_rate}</update_rate>
         <topic>${lidar_topic_ns}</topic>
-        <gz_frame_id>${frame_id}</gz_frame_id>
+        <gz_frame_id>${lidar_frame_id_ns}</gz_frame_id>
         <lidar>
           <scan>
             <horizontal>

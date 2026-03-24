@@ -17,9 +17,11 @@
     
       <xacro:if value="${namespace == ''}">
                     <xacro:property name="gps_topic_ns" value="${gps_topic}"/>
+                    <xacro:property name="gps_frame_id_ns" value="${frame_id}"/>
       </xacro:if>
       <xacro:if value="${namespace != ''}">
                     <xacro:property name="gps_topic_ns" value="${namespace+'/'+gps_topic}"/>
+                    <xacro:property name="gps_frame_id_ns" value="${namespace+'/'+frame_id}"/>
       </xacro:if>
   
     <gazebo reference="${frame_id}">
@@ -27,6 +29,7 @@
         <always_on>1</always_on>
         <update_rate>${update_rate}</update_rate>
         <topic>${gps_topic_ns}</topic>
+        <gz_frame_id>${gps_frame_id_ns}</gz_frame_id>
         <gps>
           <!-- Optionally, include additional sensor-specific parameters here -->
         </gps>

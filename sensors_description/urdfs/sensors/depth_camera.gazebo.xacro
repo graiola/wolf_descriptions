@@ -37,9 +37,11 @@
 
     <xacro:if value="${namespace == ''}">
       <xacro:property name="camera_topic_ns" value="${name}"/>
+      <xacro:property name="camera_frame_id" value="${name + '_link'}"/>
     </xacro:if>
     <xacro:if value="${namespace != ''}">
       <xacro:property name="camera_topic_ns" value="${namespace + '/' + name}"/>
+      <xacro:property name="camera_frame_id" value="${namespace + '/' + name + '_link'}"/>
     </xacro:if>
 
     <!-- Gazebo Sim depth camera sensor -->
@@ -49,6 +51,7 @@
         <always_on>true</always_on>
         <pose>${origin_xyz} ${origin_rpy}</pose>
         <topic>${camera_topic_ns}</topic>
+        <gz_frame_id>${camera_frame_id}</gz_frame_id>
 
         <camera name="${name}">
           <horizontal_fov>${fov}</horizontal_fov>
