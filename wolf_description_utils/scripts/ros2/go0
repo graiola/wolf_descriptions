@@ -189,6 +189,60 @@ def resolve_ignition_world_name(node):
     return get_param(node, "ignition_world_name", "default") or "default"
 
 
+def list_ignition_services():
+    proc = subprocess.run(
+        ["ign", "service", "-l"],
+        capture_output=True,
+        text=True,
+        check=False,
+        timeout=5.0,
+    )
+    if proc.returncode != 0:
+        raise RuntimeError(proc.stderr.strip() or proc.stdout.strip() or "ign service -l failed")
+    return {
+        line.strip()
+        for line in proc.stdout.splitlines()
+        if line.strip()
+    }
+
+
+def wait_for_ignition_service(node, service_name, timeout=120.0):
+    deadline = time.monotonic() + timeout
+    warned = False
+
+    while time.monotonic() < deadline:
+        try:
+            services = list_ignition_services()
+        except (RuntimeError, subprocess.TimeoutExpired) as exc:
+            if not warned:
+                node.get_logger().warn(
+                    f"Waiting for Gazebo Sim services before spawning: {exc}"
+                )
+                warned = True
+            time.sleep(1.0)
+            continue
+
+        if service_name in services:
+            return True
+
+        if not warned:
+            available_worlds = sorted(
+                service for service in services if service.startswith("/world/") and service.endswith("/create")
+            )
+            if available_worlds:
+                node.get_logger().warn(
+                    f"Waiting for {service_name}; currently available world create services: {', '.join(available_worlds)}"
+                )
+            else:
+                node.get_logger().warn(
+                    f"Waiting for {service_name}; Gazebo Sim world create service not advertised yet"
+                )
+            warned = True
+        time.sleep(1.0)
+
+    return False
+
+
 def spawn_model_ignition(node, world_name, model_name, model_sdf, pose):
     tmp_sdf = None
     try:
@@ -214,6 +268,16 @@ def spawn_model_ignition(node, world_name, model_name, model_sdf, pose):
         )
 
         service = f"/world/{world_name}/create"
+        if not wait_for_ignition_service(
+            node,
+            service,
+            timeout=float(get_param(node, "spawn_service_wait_timeout", 120.0)),
+        ):
+            node.get_logger().error(
+                f"Gazebo Sim create service {service} did not become available before timeout."
+            )
+            return False
+
         cmd = [
             "ign", "service",
             "-s", service,
