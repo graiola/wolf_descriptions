@@ -5,13 +5,15 @@
 <xacro:arg name="robot_name"  default=""/>
 <xacro:arg name="robot_model" default=""/>
 <xacro:arg name="base_name"   default="base_link"/>
+<xacro:arg name="gazebo_plugins" default="true"/>
 
 <xacro:property name="model_name" value="$(arg robot_model)"/>
 
-	<gazebo>
-        <plugin name="gazebo_ros_controller_manager" filename="libgazebo_ros_control.so">
-                <robotNamespace>$(arg robot_name)</robotNamespace>
-                <robotSimType>wolf_gazebo_interface/WolfRobotHwSim</robotSimType>
+	<xacro:if value="$(arg gazebo_plugins)">
+		<gazebo>
+	        <plugin name="gazebo_ros_controller_manager" filename="libgazebo_ros_control.so">
+	                <robotNamespace>$(arg robot_name)</robotNamespace>
+	                <robotSimType>wolf_gazebo_interface/WolfRobotHwSim</robotSimType>
                 <controlPeriod>$(arg period)</controlPeriod>
         </plugin>
         <plugin name="gazebo_ros2_controller_manager" filename="libgazebo_ros2_control.so">
@@ -27,9 +29,9 @@
                 <rpyOffsets>0 0 0</rpyOffsets>
                 <gaussianNoise>0</gaussianNoise>
                 <alwaysOn>true</alwaysOn>
-                <updateRate>${1/ $(arg period)}</updateRate>
-        </plugin>
-	</gazebo>
+	                <updateRate>${1/ $(arg period)}</updateRate>
+	        </plugin>
+		</gazebo>
+	</xacro:if>
 
 </robot>
-

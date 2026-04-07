@@ -4,7 +4,10 @@ delay: 0.1
 yaw_offset: $(arg yaw_offset) # pi/2
 zero_altitude: true
 publish_filtered_gps: true
-use_odometry_yaw: false
+# In hybrid mode the Spot IMU path is bridged from ROS2 and can prevent
+# navsat_transform from ever producing odometry/gps. Using filtered odom yaw
+# matches the behavior we validated live and restores the utm <-> map link.
+use_odometry_yaw: true
 transform_timeout: 0
 broadcast_cartesian_transform: true
 broadcast_cartesian_transform_as_parent_frame: true

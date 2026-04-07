@@ -5,6 +5,7 @@
     <arg name="robot_name"    default=""/>
     <arg name="period"        default="0.001"/>
     <arg name="arm_name"      default=""/>
+    <arg name="gazebo_plugins" default="true"/>
     <arg name="urdf_file"     default="$(find-pkg-share $(var robot_model)_description)/robots/$(var robot_model).urdf.xacro"/>
     <arg name="srdf_file"     default="$(find-pkg-share $(var robot_model)_description)/robots/$(var robot_model).srdf.xacro"/>
     <arg name="srdf_file_arm" default="$(find-pkg-share $(var robot_model)_description)/robots/$(var robot_model)_$(var arm_name).srdf.xacro"/>
@@ -30,6 +31,7 @@
         <param name="floating_base_link" value="true"/>
         <param name="sensors"            value="$(var sensors)"/>
         <param name="period"             value="$(var period)"/>
+        <param name="gazebo_plugins"     value="$(var gazebo_plugins)"/>
         <param name="output_name"        value="description"/>
     </node>
 
@@ -41,6 +43,7 @@
         <param name="floating_base_link" value="false"/>
         <param name="sensors"            value="$(var sensors)"/>
         <param name="period"             value="$(var period)"/>
+        <param name="gazebo_plugins"     value="$(var gazebo_plugins)"/>
         <param name="output_name"        value="description"/>
     </node>
 

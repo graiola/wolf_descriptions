@@ -1,40 +1,60 @@
-frequency: 100.0
-sensor_timeout: 0.2
+# ------------------------------
+# LOCAL UKF (robot_localization)
+# Stable 2D planar odom -> base_link
+# ------------------------------
+
+frequency: 50.0
+sensor_timeout: 0.5
 two_d_mode: true
 publish_tf: true
 transform_time_offset: 0.05
 print_diagnostics: true
 
-# Imu
-imu0_config: [false, false, false, # x,   y,   z
-              true,  true,  true,  # r,   p,   w (yaw)
-              false, false, false, # dx,  dy,  dz
-              true,  true,  true,  # dr,  dp,  dw
-              true,  true,  true]  # ddx, ddy, ddz
+# UKF settings to be more robust under /use_sim_time and bridged inputs
+filter_type: ukf
+predict_to_current_time: true
+reset_on_time_jump: true
+history_length: 1.0
+smooth_lagged_data: true
+dynamic_process_noise_covariance: true
+
+# IMU
+# Keep orientation + angular velocity only. The hybrid Spot IMU arrives with
+# zero covariances, and fusing linear acceleration here easily destabilizes the UKF.
+imu0_config: [false, false, false,
+              true,  true,  true,
+              false, false, false,
+              true,  true,  true,
+              false, false, false]
 imu0_differential: false
+imu0_relative: false
 imu0_nodelay: true
-imu0_queue_size: 10
+imu0_queue_size: 50
 imu0_remove_gravitational_acceleration: true
 
 # Robot odometry
-odom0_config: [true,  true,  false, # x,   y,   z
-               false, false, true,  # r,   p,   w (yaw)
-               false, false, false, # dx,  dy,  dz
-               false, false, false, # dr,  dp,  dw
-               false, false, false] # ddx, ddy, ddz
-odom0_differential: true
+# Prefer absolute pose + twist instead of differential mode to avoid
+# numerical blow-ups when the hybrid controller odometry jitters or resets.
+odom0_config: [true,  true,  false,
+               false, false, true,
+               true,  true,  false,
+               false, false, true,
+               false, false, false]
+odom0_differential: false
+odom0_relative: false
 odom0_nodelay: true
-odom0_queue_size: 10
+odom0_queue_size: 20
 
 # Visual odometry
-odom1_config: [true,  true,  false, # x,   y,   z
-               false, false, true,  # r,   p,   w (yaw)
-               false, false, false, # dx,  dy,  dz
-               false, false, false, # dr,  dp,  dw
-               false, false, false] # ddx, ddy, ddz
-odom1_differential: true
+odom1_config: [true,  true,  false,
+               false, false, true,
+               true,  true,  false,
+               false, false, true,
+               false, false, false]
+odom1_differential: false
+odom1_relative: false
 odom1_nodelay: true
-odom1_queue_size: 10
+odom1_queue_size: 20
 
 # [ADVANCED] The process noise covariance matrix can be difficult to tune, and can vary for each application, so it is exposed as a configuration parameter. This matrix represents the noise we add to the total error after each prediction step. 
 
@@ -66,18 +86,18 @@ process_noise_covariance:
 # Defaults to the matrix below if unspecified. 
 
 initial_estimate_covariance:
-    [1e-9, 0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
-    0,    1e-9, 0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
-    0,    0,    1e-9, 0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
-    0,    0,    0,    1e-9, 0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
-    0,    0,    0,    0,    1e-9, 0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
-    0,    0,    0,    0,    0,    1e-9, 0,    0,    0,    0,     0,     0,     0,    0,    0,
-    0,    0,    0,    0,    0,    0,    1e-9, 0,    0,    0,     0,     0,     0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    1e-9, 0,    0,     0,     0,     0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    1e-9, 0,     0,     0,     0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    1e-9,  0,     0,     0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     1e-9,  0,     0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     1e-9,  0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     1e-9, 0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    1e-9, 0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    1e-9]
+    [1e-3, 0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+    0,    1e-3, 0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+    0,    0,    1e-1, 0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+    0,    0,    0,    1e-2, 0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+    0,    0,    0,    0,    1e-2, 0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+    0,    0,    0,    0,    0,    1e-2, 0,    0,    0,    0,     0,     0,     0,    0,    0,
+    0,    0,    0,    0,    0,    0,    1e-2, 0,    0,    0,     0,     0,     0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    1e-2, 0,    0,     0,     0,     0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    1e-1, 0,     0,     0,     0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    1e-2,  0,     0,     0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     1e-2,  0,     0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     1e-2,  0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     1e-1, 0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    1e-1, 0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    1e-1]

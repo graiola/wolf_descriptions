@@ -39,7 +39,7 @@ local_costmap:
     observation_sources: lidar_sensor
     lidar_sensor:
       data_type: PointCloud2
-      topic:  $(arg prefix)$(arg lidar_topic)_filtered
+      topic:  /$(arg prefix)$(arg lidar_topic)_filtered
       sensor_frame: $(arg prefix)$(arg stabilized_frame)
       marking: true
       clearing: true

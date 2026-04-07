@@ -1,6 +1,7 @@
 exploration:
   task_gui: $(arg task_gui)
   robot_base_frame: $(arg base_frame)
+  tf_prefix: "$(arg robot_name)"
   costmap_topic: "/$(arg robot_name)/map"
   costmap_updates_topic: "/$(arg robot_name)/map_updates"
   visualize: true
