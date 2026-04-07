@@ -24,6 +24,7 @@
     <arg name="initial_rpy"   default="[0,0,0]"  description="initial robot rpy position in the world"/>
     <arg name="world_name"    default="empty"    description="load a specific world from wolf_gazebo_resources"/>
     <arg name="world_file"    default="$(find-pkg-share wolf_gazebo_resources)/worlds/$(var world_name).world" description="load a specific world file"/>
+    <arg name="load_global_gazebo_systems" default="true" description="load Gazebo Sim global sensor systems for this robot"/>
 
     <!-- GUI related arguments -->
     <arg name="gazebo_gui"      default="true"  description="start gzclient"/>
@@ -75,15 +76,24 @@
                 <arg name="arm_name"          value="$(var arm_name)"/>
                 <arg name="debug"             value="$(var gazebo_debug)"/>
                 <arg name="engine"            value="$(var engine)"/>
+                <arg name="load_global_gazebo_systems" value="$(var load_global_gazebo_systems)"/>
             </include>
         </group>
         <group unless="$(var gazebo)">
-            <include file="$(find-pkg-share wolf_description_utils)/launch/upload.launch.xml">
-            <arg name="sensors"      value="$(var sensors)" />
-            <arg name="robot_model"  value="$(var robot_model)" />
-            <arg name="robot_name"   value="$(var robot_name)" />
-            <arg name="arm_name"     value="$(var arm_name)"/>
-            <arg name="period"       value="$(var period)" />
+            <include file="$(find-pkg-share wolf_description_utils)/launch/world.launch.xml">
+                <arg name="launch_world"      value="false"/>
+                <arg name="bridge_clock"      value="false"/>
+                <arg name="sensors"           value="$(var sensors)" />
+                <arg name="robot_model"       value="$(var robot_model)" />
+                <arg name="robot_name"        value="$(var robot_name)" />
+                <arg name="world_name"        value="$(var world_name)" />
+                <arg name="world_file"        value="$(var world_file)" />
+                <arg name="period"            value="$(var period)" />
+                <arg name="gui"               value="$(var gazebo_gui)"/>
+                <arg name="arm_name"          value="$(var arm_name)"/>
+                <arg name="debug"             value="$(var gazebo_debug)"/>
+                <arg name="engine"            value="$(var engine)"/>
+                <arg name="load_global_gazebo_systems" value="$(var load_global_gazebo_systems)"/>
             </include>
         </group>
 

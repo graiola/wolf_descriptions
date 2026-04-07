@@ -1,13 +1,20 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
+  <xacro:if value="$(eval robot_name != '')">
+    <xacro:property name="wheel_imu_sensor_name" value="$(arg robot_name)_imu"/>
+  </xacro:if>
+  <xacro:if value="$(eval robot_name == '')">
+    <xacro:property name="wheel_imu_sensor_name" value="imu"/>
+  </xacro:if>
+
   <!-- ros2_control system definition -->
   <ros2_control name="wheels_system" type="system">
     <hardware>
       <plugin>gz_ros2_control/GazeboSimSystem</plugin>
     </hardware>
 
-    <sensor name="imu">
+    <sensor name="${wheel_imu_sensor_name}">
       <param name="frame_id">trunk_imu</param>
       <state_interface name="orientation.x"/>
       <state_interface name="orientation.y"/>

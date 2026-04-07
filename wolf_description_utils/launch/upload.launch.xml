@@ -6,6 +6,7 @@
     <arg name="period"        default="0.001"/>
     <arg name="arm_name"      default=""/>
     <arg name="simulator"     default="ignition"/>
+    <arg name="load_global_gazebo_systems" default="true"/>
     <arg name="urdf_file"     default="$(find-pkg-share $(var robot_model)_description)/robots/$(var robot_model).urdf.xacro"/>
     <arg name="srdf_file"     default="$(find-pkg-share $(var robot_model)_description)/robots/$(var robot_model).srdf.xacro"/>
     <arg name="srdf_file_arm" default="$(find-pkg-share $(var robot_model)_description)/robots/$(var robot_model)_$(var arm_name).srdf.xacro"/>
@@ -32,6 +33,7 @@
         <param name="sensors"            value="$(var sensors)"/>
         <param name="period"             value="$(var period)"/>
         <param name="simulator"          value="$(var simulator)"/>
+        <param name="load_global_gazebo_systems" value="$(var load_global_gazebo_systems)"/>
         <param name="output_name"        value="description"/>
     </node>
 
@@ -44,6 +46,7 @@
         <param name="sensors"            value="$(var sensors)"/>
         <param name="period"             value="$(var period)"/>
         <param name="simulator"          value="$(var simulator)"/>
+        <param name="load_global_gazebo_systems" value="$(var load_global_gazebo_systems)"/>
         <param name="output_name"        value="description"/>
     </node>
 

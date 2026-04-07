@@ -24,6 +24,7 @@
   <arg name="world_name"         default="empty" description="load a specific world" />
   <arg name="world_file" default="$(find-pkg-share wolf_gazebo_resources)/worlds/$(var world_name).world"
        description="load a specific world file" />
+  <arg name="load_global_gazebo_systems" default="true" description="load Gazebo Sim global sensor systems" />
 
   <!-- GUI related arguments -->
   <arg name="gazebo_gui"         default="true"  description="start gzclient" />
@@ -60,6 +61,7 @@
     <arg name="initial_rpy"         value="$(var initial_rpy)" />
     <arg name="world_name"          value="$(var world_name)" />
     <arg name="world_file"          value="$(var world_file)" />
+    <arg name="load_global_gazebo_systems" value="$(var load_global_gazebo_systems)" />
     <arg name="gazebo_gui"          value="$(var gazebo_gui)" />
     <arg name="plotjuggler_gui"     value="$(var plotjuggler_gui)" />
     <arg name="rviz_gui"            value="$(var rviz_gui)" />

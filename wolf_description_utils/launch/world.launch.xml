@@ -10,11 +10,13 @@
     <arg name="gui" default="true"/>
     <arg name="headless" default="false"/>
     <arg name="debug" default="false"/>
+    <arg name="launch_world" default="true"/>
     <arg name="world_name" default="empty"/>
     <arg name="period" default="0.001"/>
     <arg name="arm_name" default=""/>
     <arg name="engine" default="ode"/>
     <arg name="simulator" default="ignition"/>
+    <arg name="load_global_gazebo_systems" default="true"/>
     <arg name="world_file" default="$(find-pkg-share wolf_gazebo_resources)/worlds/$(var world_name).world"/>
     <arg name="bridge_imu" default="true" description="bridge Gazebo IMU topic to ROS 2"/>
     <arg name="bridge_clock" default="true" description="bridge Gazebo clock topic to ROS 2"/>
@@ -22,15 +24,17 @@
     <arg name="bridge_lidar" default="true" description="bridge Gazebo lidar topic to ROS 2"/>
     <arg name="bridge_gps" default="true" description="bridge Gazebo GPS topic to ROS 2"/>
     
-    <node pkg="wolf_description_utils" exec="ignition_world" name="ignition_world" output="screen">
-        <param name="world_file" value="$(var world_file)"/>
-        <param name="paused" value="$(var paused)"/>
-        <param name="use_sim_time" value="$(var use_sim_time)"/>
-        <param name="gui" value="$(var gui)"/>
-        <param name="headless" value="$(var headless)"/>
-        <param name="debug" value="$(var debug)"/>
-        <param name="engine" value="$(var engine)"/>
-    </node>
+    <group if="$(var launch_world)">
+        <node pkg="wolf_description_utils" exec="ignition_world" name="ignition_world" output="screen">
+            <param name="world_file" value="$(var world_file)"/>
+            <param name="paused" value="$(var paused)"/>
+            <param name="use_sim_time" value="$(var use_sim_time)"/>
+            <param name="gui" value="$(var gui)"/>
+            <param name="headless" value="$(var headless)"/>
+            <param name="debug" value="$(var debug)"/>
+            <param name="engine" value="$(var engine)"/>
+        </node>
+    </group>
 
     <!-- Send the robot urdf to parameter server -->
     <include file="$(find-pkg-share wolf_description_utils)/launch/upload.launch.xml">
@@ -40,6 +44,7 @@
         <arg name="arm_name" value="$(var arm_name)"/>
         <arg name="robot_name" value="$(var robot_name)"/>
         <arg name="simulator" value="$(var simulator)"/>
+        <arg name="load_global_gazebo_systems" value="$(var load_global_gazebo_systems)"/>
     </include>
 
     <group if="$(var bridge_clock)">
@@ -64,17 +69,29 @@
         <group if="$(var bridge_camera)">
             <group if="$(eval '\'$(var robot_name)\' == \'\'')">
                 <node pkg="ros_gz_bridge" exec="parameter_bridge" name="camera_bridge" output="screen"
-                      args="/camera@sensor_msgs/msg/Image[ignition.msgs.Image"/>
+                      args="/camera/image@sensor_msgs/msg/Image[ignition.msgs.Image">
+                    <remap from="/camera/image" to="/camera/image_raw"/>
+                </node>
                 <node pkg="ros_gz_bridge" exec="parameter_bridge" name="camera_info_bridge" output="screen"
-                      args="/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo"/>
+                      args="/camera/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo"/>
+                <node pkg="ros_gz_bridge" exec="parameter_bridge" name="camera_depth_bridge" output="screen"
+                      args="/camera/depth_image@sensor_msgs/msg/Image[ignition.msgs.Image">
+                    <remap from="/camera/depth_image" to="/camera/depth/image_raw"/>
+                </node>
                 <node pkg="ros_gz_bridge" exec="parameter_bridge" name="camera_points_bridge" output="screen"
                       args="/camera/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked"/>
             </group>
             <group if="$(eval '\'$(var robot_name)\' != \'\'')">
                 <node pkg="ros_gz_bridge" exec="parameter_bridge" name="camera_bridge" output="screen"
-                      args="/$(var robot_name)/camera@sensor_msgs/msg/Image[ignition.msgs.Image"/>
+                      args="/$(var robot_name)/camera/image@sensor_msgs/msg/Image[ignition.msgs.Image">
+                    <remap from="/$(var robot_name)/camera/image" to="/$(var robot_name)/camera/image_raw"/>
+                </node>
                 <node pkg="ros_gz_bridge" exec="parameter_bridge" name="camera_info_bridge" output="screen"
-                      args="/$(var robot_name)/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo"/>
+                      args="/$(var robot_name)/camera/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo"/>
+                <node pkg="ros_gz_bridge" exec="parameter_bridge" name="camera_depth_bridge" output="screen"
+                      args="/$(var robot_name)/camera/depth_image@sensor_msgs/msg/Image[ignition.msgs.Image">
+                    <remap from="/$(var robot_name)/camera/depth_image" to="/$(var robot_name)/camera/depth/image_raw"/>
+                </node>
                 <node pkg="ros_gz_bridge" exec="parameter_bridge" name="camera_points_bridge" output="screen"
                       args="/$(var robot_name)/camera/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked"/>
             </group>

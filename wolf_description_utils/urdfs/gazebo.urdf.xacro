@@ -6,6 +6,7 @@
 <xacro:arg name="robot_model" default=""/>
 <xacro:arg name="base_name"   default="base_link"/>
 <xacro:arg name="sensors"     default="false"/>
+<xacro:arg name="load_global_gazebo_systems" default="true"/>
 
 <xacro:property name="model_name" value="$(arg robot_model)"/>
 
@@ -24,16 +25,16 @@
 	                </ros>
                 <parameters>$(find ${model_name}_description)/params/${model_name}_params_$(arg robot_name).ros2.yaml</parameters>
         </plugin>
-        <!-- Gazebo Sim IMU system is required so IMU sensors expose topics/components
-             that gz_ros2_control can subscribe to and populate ros2_control IMU interfaces. -->
-        <plugin filename="ignition-gazebo-imu-system" name="gz::sim::systems::Imu"/>
-        <xacro:if value="$(arg sensors)">
-                <!-- Gazebo Sim Sensors system drives rendering-based sensors (camera, lidar). -->
-                <plugin filename="ignition-gazebo-sensors-system" name="gz::sim::systems::Sensors">
-                        <render_engine>ogre2</render_engine>
-                </plugin>
-                <!-- Gazebo Sim NavSat system enables GPS sensor data publication. -->
-                <plugin filename="ignition-gazebo-navsat-system" name="ignition::gazebo::systems::NavSat"/>
+        <xacro:if value="$(arg load_global_gazebo_systems)">
+                <!-- Gazebo Sim sensor systems are global to the running world.
+                     Loading them once avoids multi-robot duplicate visual/rendering crashes. -->
+                <plugin filename="ignition-gazebo-imu-system" name="gz::sim::systems::Imu"/>
+                <xacro:if value="$(arg sensors)">
+                        <plugin filename="ignition-gazebo-sensors-system" name="gz::sim::systems::Sensors">
+                                <render_engine>ogre2</render_engine>
+                        </plugin>
+                        <plugin filename="ignition-gazebo-navsat-system" name="ignition::gazebo::systems::NavSat"/>
+                </xacro:if>
         </xacro:if>
 	</gazebo>
 

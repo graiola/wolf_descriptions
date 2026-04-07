@@ -44,9 +44,11 @@
       <xacro:property name="camera_frame_id" value="${namespace + '/' + name + '_link'}"/>
     </xacro:if>
 
-    <!-- Gazebo Sim depth camera sensor -->
+    <!-- Gazebo Sim RGB-D camera sensor.
+         It publishes ${camera_topic_ns}/image, ${camera_topic_ns}/camera_info,
+         ${camera_topic_ns}/depth_image, and ${camera_topic_ns}/points. -->
     <gazebo reference="${name}_link">
-      <sensor type="depth_camera" name="${name}">
+      <sensor type="rgbd_camera" name="${name}">
         <update_rate>${update_rate}</update_rate>
         <always_on>true</always_on>
         <pose>${origin_xyz} ${origin_rpy}</pose>

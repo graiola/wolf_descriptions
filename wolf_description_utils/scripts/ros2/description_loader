@@ -9,7 +9,9 @@ def process_xacro_file(xacro_file, mappings):
     # Process the xacro file and return the generated URDF
     try:
         doc = xacro.process_file(xacro_file, mappings=mappings)
-        urdf_xml = doc.toprettyxml(indent='  ')
+        # Keep the parameter payload compact; large pretty-printed URDF strings
+        # make remote GetParameters calls from gz_ros2_control more timing-sensitive.
+        urdf_xml = doc.toxml()
         return urdf_xml
     except Exception as e:
         raise RuntimeError(f"Failed to process xacro file: {e}")
@@ -43,6 +45,7 @@ def main(args=None):
     period = node.get_parameter('period').get_parameter_value().double_value
     floating_base_link = node.get_parameter('floating_base_link').get_parameter_value().bool_value
     simulator = node.get_parameter('simulator').get_parameter_value().string_value
+    load_global_gazebo_systems = node.get_parameter('load_global_gazebo_systems').get_parameter_value().bool_value
     output_name = node.get_parameter('output_name').get_parameter_value().string_value
 
     # Ensure the xacro file exists
@@ -59,7 +62,8 @@ def main(args=None):
         "sensors": str(sensors).lower(),
         "period": str(period),
         "floating_base_link": str(floating_base_link),
-        "simulator": simulator or "ignition"
+        "simulator": simulator or "ignition",
+        "load_global_gazebo_systems": str(load_global_gazebo_systems).lower()
     }
 
     try:

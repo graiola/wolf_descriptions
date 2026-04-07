@@ -23,9 +23,16 @@
 
   <xacro:husky floating_base_link="$(arg floating_base_link)" />
 
+  <xacro:if value="$(eval robot_name != '')">
+    <xacro:property name="husky_imu_sensor_name" value="$(arg robot_name)_imu"/>
+  </xacro:if>
+  <xacro:if value="$(eval robot_name == '')">
+    <xacro:property name="husky_imu_sensor_name" value="imu"/>
+  </xacro:if>
+
     <!-- IMU sensor -->
     <xacro:imu_sensor
-        sensor_name="imu"
+        sensor_name="${husky_imu_sensor_name}"
         frame_name="trunk_imu"
         imu_topic="trunk_imu/data"
         namespace="$(arg robot_name)"
