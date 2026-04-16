@@ -22,17 +22,17 @@
     <link name="pack_mount">
       <visual>
         <geometry>
-          <mesh filename="file://$(find spot_description)/meshes/pack_top.dae"/>
+          <mesh filename="package://spot_description/meshes/pack_top.dae"/>
         </geometry>
       </visual>
       <visual>
         <geometry>
-          <mesh filename="file://$(find spot_description)/meshes/pack_body.dae"/>
+          <mesh filename="package://spot_description/meshes/pack_body.dae"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find spot_description)/meshes/pack_body.dae"/>
+          <mesh filename="package://spot_description/meshes/pack_body.dae"/>
         </geometry>
       </collision>
     </link>
@@ -49,12 +49,12 @@
     <link name="lidar_mount">
       <visual>
         <geometry>
-          <mesh filename="file://$(find spot_description)/meshes/lidar_mount.dae"/>
+          <mesh filename="package://spot_description/meshes/lidar_mount.dae"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find spot_description)/meshes/lidar_mount_collision.stl"/>
+          <mesh filename="package://spot_description/meshes/lidar_mount_collision.stl"/>
         </geometry>
       </collision>
     </link>
@@ -70,12 +70,12 @@
       <link name="velodyne_mount">
         <visual>
           <geometry>
-            <mesh filename="file://$(find spot_description)/meshes/velo.dae"/>
+            <mesh filename="package://spot_description/meshes/velo.dae"/>
           </geometry>
         </visual>
         <collision>
           <geometry>
-            <mesh filename="file://$(find spot_description)/meshes/velo_collision.stl"/>
+            <mesh filename="package://spot_description/meshes/velo_collision.stl"/>
           </geometry>
         </collision>
       </link>

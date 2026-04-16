@@ -104,7 +104,7 @@
         <visual>
             <origin rpy="1.57 0 1.57" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="file://$(find sensors_description)/meshes/sensors/realsense_t265.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://sensors_description/meshes/sensors/realsense_t265.stl" scale="0.001 0.001 0.001"/>
             </geometry>
         </visual>
         <collision>

@@ -48,7 +48,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="file://$(find husky_description)/meshes/base_link.dae" />
+          <mesh filename="package://husky_description/meshes/base_link.dae" />
         </geometry>
       </visual>
       <collision>
@@ -117,7 +117,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 ${-M_PI/2}" />
         <geometry>
-          <mesh filename="file://$(find husky_description)/meshes/accessories/lms1xx_mount.dae" />
+          <mesh filename="package://husky_description/meshes/accessories/lms1xx_mount.dae" />
         </geometry>
       </visual>
       <collision>
@@ -137,13 +137,13 @@
     <link name="sensor_arch_mount_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find husky_description)/meshes/accessories/300_mm_sensor_arch.dae" />
+          <mesh filename="package://husky_description/meshes/accessories/300_mm_sensor_arch.dae" />
         </geometry>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="file://$(find husky_description)/meshes/accessories/300_mm_sensor_arch.dae" />
+          <mesh filename="package://husky_description/meshes/accessories/300_mm_sensor_arch.dae" />
         </geometry>
       </collision>
     </link>
@@ -156,7 +156,7 @@
     <link name="realsense_mountpoint_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find husky_description)/meshes/accessories/depth_camera.dae"/>
+          <mesh filename="package://husky_description/meshes/accessories/depth_camera.dae"/>
         </geometry>
       </visual>
     </link>
@@ -175,12 +175,12 @@
     <link name="lidar_arch_mount_link">
       <visual>
         <geometry>
-          <mesh filename="file://$(find husky_description)/meshes/accessories/lidar.dae"/>
+          <mesh filename="package://husky_description/meshes/accessories/lidar.dae"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find husky_description)/meshes/accessories/lidar_collision.stl"/>
+          <mesh filename="package://husky_description/meshes/accessories/lidar_collision.stl"/>
         </geometry>
       </collision>
     </link>
