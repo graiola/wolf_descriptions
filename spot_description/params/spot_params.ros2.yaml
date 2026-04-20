@@ -50,15 +50,6 @@ wolf_controller:
             Kd: {x: 63.0, y: 63.0, z: 63.0, roll: 0, pitch: 0, yaw: 0}
             weight: 100.0
 
-        lf_foot_wrench:
-            weight: 2.0
-        rf_foot_wrench:
-            weight: 2.0
-        rh_foot_wrench:
-            weight: 2.0
-        lh_foot_wrench:
-            weight: 2.0
-
         waist:
             Kp: {x: 0.0, y: 0.0, z: 0.0, roll: 240.0, pitch: 140.0, yaw: 80.0}
             Kd: {x: 0.0, y: 0.0, z: 0.0, roll: 31.0, pitch: 23.0, yaw: 18.0}
@@ -70,5 +61,5 @@ wolf_controller:
             weight: 100.0
 
         angular_momentum:
-            weight: 0.1
+            weight: 0.01
 
