@@ -68,6 +68,13 @@
         launch-prefix="bash -c 'sleep 1; $0 $@' ">
     </node>
 
+    <!-- Gazebo's diff_drive_controller publishes on diff_drive_controller/odom from inside the
+         controller plugin, so ROS launch remaps in the parent file do not affect it. Relay it
+         explicitly to the generic odometry/robot topic consumed by navigation/localization. -->
+    <node name="robot_odom_relay"
+        pkg="topic_tools" type="relay" output="screen"
+        args="diff_drive_controller/odom odometry/robot" />
+
     <!-- Twist mux -->
     <node pkg="twist_mux" type="twist_mux" name="twist_mux">
         <rosparam command="load" file="$(find husky_description)/params/twist_mux.yaml" />
