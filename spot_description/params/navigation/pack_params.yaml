@@ -19,6 +19,36 @@ w_rate: $(arg max_vel_yaw)              # [rad/s] yaw rate
 obstacle_filter_alpha: 0.3 # [0..1]
 obstacle_cone_deg: 45 # [deg]
 
+# -------------------------------------------------------------
+# wolf_pack optimization defaults (MPC/QP)
+# -------------------------------------------------------------
+optimizer_type: "MPC"
+
+formation_weight: 2.0
+formation_lambda: 2.0
+
+navigation_weight: 1.5
+navigation_lambda_pos: 2.0
+navigation_lambda_theta: 1.0
+
+heading_weight: 2.0
+heading_lambda: 2.0
+
+env_avoidance_weight: 5.0
+env_avoidance_lambda_rep: 2.0
+env_avoidance_lambda_tan: 1.0
+
+pair_avoidance_weight: 8.0
+pair_avoidance_lambda: 2.5
+
+backward_vel_weight: 0.2
+lookahead_L: 0.8
+env_hyst_in: 0.05
+env_hyst_out: 0.10
+
+enable_env_avoid: true
+enable_pair_avoid: true
+
 # If using omni:
 # vx_max: 1.2
 # vy_max: 1.2

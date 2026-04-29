@@ -1,16 +1,43 @@
-wolf_pack:
-  # Geometry / safety
-  robot_radius: 0.35                 # [m]
-  world_margin: 0.20                 # [m] extra margin around robot_radius
+# Geometry / safety
+robot_radius: 0.35                 # [m]
+world_margin: 0.20                 # [m] extra margin around robot_radius
 
-  # Unicycle velocity limits
-  v_max: 0.60                        # [m/s]
-  v_min: -0.20                       # [m/s]
-  w_rate: 1.20                       # [rad/s]
+# Unicycle velocity limits
+v_max: 0.60                        # [m/s]
+v_min: -0.20                       # [m/s]
+w_rate: 1.20                       # [rad/s]
 
-  # Obstacle filtering / cone
-  obstacle_filter_alpha: 0.30        # EMA alpha in [0,1]
-  obstacle_cone_deg: 180.0           # [deg] half-cone, clamped [0..180] (180 => no restriction)
+# Obstacle filtering / cone
+obstacle_filter_alpha: 0.30        # EMA alpha in [0,1]
+obstacle_cone_deg: 180.0           # [deg] half-cone, clamped [0..180] (180 => no restriction)
 
-  # Frames (optional override; SRDF may overwrite it if a "base*" group exists)
-  base_link_name: base_link
+# wolf_pack optimization defaults (MPC/QP)
+optimizer_type: "MPC"
+
+formation_weight: 2.0
+formation_lambda: 2.0
+
+navigation_weight: 1.5
+navigation_lambda_pos: 2.0
+navigation_lambda_theta: 1.0
+
+heading_weight: 2.0
+heading_lambda: 2.0
+
+env_avoidance_weight: 5.0
+env_avoidance_lambda_rep: 2.0
+env_avoidance_lambda_tan: 1.0
+
+pair_avoidance_weight: 8.0
+pair_avoidance_lambda: 2.5
+
+backward_vel_weight: 0.2
+lookahead_L: 0.8
+env_hyst_in: 0.05
+env_hyst_out: 0.10
+
+enable_env_avoid: true
+enable_pair_avoid: true
+
+# Frames (optional override; SRDF may overwrite it if a "base*" group exists)
+base_link_name: base_link
