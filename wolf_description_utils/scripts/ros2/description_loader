@@ -46,6 +46,7 @@ def main(args=None):
     floating_base_link = node.get_parameter('floating_base_link').get_parameter_value().bool_value
     simulator = node.get_parameter('simulator').get_parameter_value().string_value
     load_global_gazebo_systems = node.get_parameter('load_global_gazebo_systems').get_parameter_value().bool_value
+    controller_params_file = node.get_parameter('controller_params_file').get_parameter_value().string_value
     output_name = node.get_parameter('output_name').get_parameter_value().string_value
 
     # Ensure the xacro file exists
@@ -62,8 +63,9 @@ def main(args=None):
         "sensors": str(sensors).lower(),
         "period": str(period),
         "floating_base_link": str(floating_base_link),
-        "simulator": simulator or "ignition",
-        "load_global_gazebo_systems": str(load_global_gazebo_systems).lower()
+        "simulator": simulator or "gz",
+        "load_global_gazebo_systems": str(load_global_gazebo_systems).lower(),
+        "controller_params_file": controller_params_file,
     }
 
     try:

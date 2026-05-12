@@ -6,9 +6,17 @@
 <xacro:arg name="robot_model" default=""/>
 <xacro:arg name="base_name"   default="base_link"/>
 <xacro:arg name="sensors"     default="false"/>
+<xacro:arg name="simulator"   default="gz"/>
 <xacro:arg name="load_global_gazebo_systems" default="true"/>
+<xacro:arg name="controller_params_file" default="$(find $(arg robot_model)_description)/params/$(arg robot_model)_params.ros2.yaml"/>
 
 <xacro:property name="model_name" value="$(arg robot_model)"/>
+<xacro:property name="imu_plugin_filename" value="gz-sim-imu-system"/>
+<xacro:property name="imu_plugin_name" value="gz::sim::systems::Imu"/>
+<xacro:property name="sensors_plugin_filename" value="gz-sim-sensors-system"/>
+<xacro:property name="sensors_plugin_name" value="gz::sim::systems::Sensors"/>
+<xacro:property name="navsat_plugin_filename" value="gz-sim-navsat-system"/>
+<xacro:property name="navsat_plugin_name" value="gz::sim::systems::NavSat"/>
 
 		<gazebo>
 		        <plugin name="gz_ros2_control::GazeboSimROS2ControlPlugin" filename="gz_ros2_control-system">
@@ -23,17 +31,17 @@
 	                        <remapping>wolf_controller/odom:=odometry/robot</remapping>
 	                        <remapping>diffdrive_controller/odom:=odometry/robot</remapping>
 	                </ros>
-                <parameters>$(find ${model_name}_description)/params/${model_name}_params_$(arg robot_name).ros2.yaml</parameters>
+                <parameters>$(arg controller_params_file)</parameters>
         </plugin>
         <xacro:if value="$(arg load_global_gazebo_systems)">
                 <!-- Gazebo Sim sensor systems are global to the running world.
                      Loading them once avoids multi-robot duplicate visual/rendering crashes. -->
-                <plugin filename="ignition-gazebo-imu-system" name="gz::sim::systems::Imu"/>
+                <plugin filename="${imu_plugin_filename}" name="${imu_plugin_name}"/>
                 <xacro:if value="$(arg sensors)">
-                        <plugin filename="ignition-gazebo-sensors-system" name="gz::sim::systems::Sensors">
+                        <plugin filename="${sensors_plugin_filename}" name="${sensors_plugin_name}">
                                 <render_engine>ogre2</render_engine>
                         </plugin>
-                        <plugin filename="ignition-gazebo-navsat-system" name="ignition::gazebo::systems::NavSat"/>
+                        <plugin filename="${navsat_plugin_filename}" name="${navsat_plugin_name}"/>
                 </xacro:if>
         </xacro:if>
 	</gazebo>

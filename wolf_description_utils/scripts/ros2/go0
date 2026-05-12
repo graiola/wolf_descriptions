@@ -2,6 +2,7 @@
 
 import math
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -10,10 +11,34 @@ import xml.etree.ElementTree as ET
 from ast import literal_eval
 
 import rclpy
-from ament_index_python.packages import PackageNotFoundError, get_package_prefix
+from ament_index_python.packages import get_package_prefix
 from geometry_msgs.msg import Pose
 from rclpy.exceptions import ParameterNotDeclaredException
 from rcl_interfaces.srv import GetParameters
+
+
+def normalize_simulator_name(value):
+    simulator = (value or "").strip().lower()
+    if simulator in ("gz", "gazebo", "gazebo_sim", "gazebo-sim"):
+        return "gz"
+    return ""
+
+
+def resolve_sim_cli(requested_simulator=""):
+    requested = normalize_simulator_name(requested_simulator)
+    if requested in ("", "gz") and shutil.which("gz"):
+        return {
+            "name": "gz",
+            "sdf": ["gz", "sdf"],
+            "service": ["gz", "service"],
+            "entity_factory_type": "gz.msgs.EntityFactory",
+            "boolean_type": "gz.msgs.Boolean",
+        }
+    if requested and requested != "gz":
+        raise RuntimeError(
+            f"Unsupported simulator '{requested_simulator}' on the active ROS2 branch. Use gz."
+        )
+    raise RuntimeError("The 'gz' command is not available in the environment.")
 
 
 def initialize_node(args):
@@ -80,18 +105,19 @@ def get_parameter_from_remote_node(node, param_path, timeout=10.0):
 def convert_urdf_to_sdf(node, urdf_xml):
     tmp_urdf = None
     try:
+        sim_cli = resolve_sim_cli(get_param(node, "simulator", ""))
         with tempfile.NamedTemporaryFile(mode="w", suffix=".urdf", delete=False) as fp:
             fp.write(urdf_xml)
             tmp_urdf = fp.name
 
         proc = subprocess.run(
-            ["ign", "sdf", "-p", tmp_urdf],
+            [*sim_cli["sdf"], "-p", tmp_urdf],
             capture_output=True,
             text=True,
             check=False,
         )
         if proc.returncode != 0:
-            raise RuntimeError(proc.stderr.strip() or "ign sdf -p failed")
+            raise RuntimeError(proc.stderr.strip() or f'{sim_cli["name"]} sdf -p failed')
         return proc.stdout
     finally:
         if tmp_urdf and os.path.exists(tmp_urdf):
@@ -147,8 +173,7 @@ def inject_joint_reset_plugin(model_sdf, joint_positions, plugin_path):
     if model_element is None:
         raise RuntimeError("Failed to locate the top-level <model> in generated SDF.")
 
-    plugin_element = ET.SubElement(
-        model_element,
+    plugin_element = ET.Element(
         "plugin",
         {
             "filename": plugin_path,
@@ -159,11 +184,22 @@ def inject_joint_reset_plugin(model_sdf, joint_positions, plugin_path):
         joint_element = ET.SubElement(plugin_element, "joint")
         ET.SubElement(joint_element, "name").text = joint_name
         ET.SubElement(joint_element, "position").text = str(joint_position)
+    ET.SubElement(plugin_element, "hold_iterations").text = "10000"
+    ET.SubElement(plugin_element, "settle_iterations").text = "100"
+    ET.SubElement(plugin_element, "position_tolerance").text = "0.02"
+
+    plugin_insert_index = 0
+    for index, child in enumerate(list(model_element)):
+        if child.tag.split("}")[-1] == "plugin":
+            plugin_insert_index = index
+            break
+        plugin_insert_index = index + 1
+    model_element.insert(plugin_insert_index, plugin_element)
 
     return ET.tostring(root, encoding="unicode")
 
 
-def resolve_ignition_world_name(node):
+def resolve_sim_world_name(node):
     world_file = get_param(node, "world_file")
     if isinstance(world_file, str) and world_file:
         try:
@@ -179,26 +215,32 @@ def resolve_ignition_world_name(node):
                     return world_name
                 break
             node.get_logger().warn(
-                f"No <world name=\"...\"> found in {world_file}. Falling back to ignition_world_name/default."
+                f"No <world name=\"...\"> found in {world_file}. Falling back to sim_world_name/default."
             )
         except (OSError, ET.ParseError) as exc:
             node.get_logger().warn(
-                f"Failed to parse world_file '{world_file}': {exc}. Falling back to ignition_world_name/default."
+                f"Failed to parse world_file '{world_file}': {exc}. Falling back to sim_world_name/default."
             )
 
-    return get_param(node, "ignition_world_name", "default") or "default"
+    return (
+        get_param(node, "sim_world_name")
+        or "default"
+    )
 
 
-def list_ignition_services():
+def list_sim_services(requested_simulator=""):
+    sim_cli = resolve_sim_cli(requested_simulator)
     proc = subprocess.run(
-        ["ign", "service", "-l"],
+        [*sim_cli["service"], "-l"],
         capture_output=True,
         text=True,
         check=False,
         timeout=5.0,
     )
     if proc.returncode != 0:
-        raise RuntimeError(proc.stderr.strip() or proc.stdout.strip() or "ign service -l failed")
+        raise RuntimeError(
+            proc.stderr.strip() or proc.stdout.strip() or f'{sim_cli["name"]} service -l failed'
+        )
     return {
         line.strip()
         for line in proc.stdout.splitlines()
@@ -206,13 +248,14 @@ def list_ignition_services():
     }
 
 
-def wait_for_ignition_service(node, service_name, timeout=120.0):
+def wait_for_sim_service(node, service_name, timeout=120.0):
     deadline = time.monotonic() + timeout
     warned = False
+    requested_simulator = get_param(node, "simulator", "")
 
     while time.monotonic() < deadline:
         try:
-            services = list_ignition_services()
+            services = list_sim_services(requested_simulator)
         except (RuntimeError, subprocess.TimeoutExpired) as exc:
             if not warned:
                 node.get_logger().warn(
@@ -243,20 +286,23 @@ def wait_for_ignition_service(node, service_name, timeout=120.0):
     return False
 
 
-def spawn_model_ignition(node, world_name, model_name, model_sdf, pose):
-    tmp_sdf = None
+def spawn_model_sim(node, world_name, model_name, model_sdf, pose):
     try:
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".sdf", delete=False) as fp:
-            fp.write(model_sdf)
-            tmp_sdf = fp.name
+        sim_cli = resolve_sim_cli(get_param(node, "simulator", ""))
+        escaped_sdf = (
+            model_sdf
+            .replace("\\", "\\\\")
+            .replace('"', '\\"')
+            .replace("\n", "\\n")
+        )
 
         req = (
-            'sdf_filename: "{sdf}" '
+            'sdf: "{sdf}" '
             'name: "{name}" '
             'pose: {{ position: {{ x: {x} y: {y} z: {z} }} '
             'orientation: {{ x: {qx} y: {qy} z: {qz} w: {qw} }} }}'
         ).format(
-            sdf=tmp_sdf.replace("\\", "\\\\").replace('"', '\\"'),
+            sdf=escaped_sdf,
             name=model_name.replace("\\", "\\\\").replace('"', '\\"'),
             x=pose.position.x,
             y=pose.position.y,
@@ -268,7 +314,7 @@ def spawn_model_ignition(node, world_name, model_name, model_sdf, pose):
         )
 
         service = f"/world/{world_name}/create"
-        if not wait_for_ignition_service(
+        if not wait_for_sim_service(
             node,
             service,
             timeout=float(get_param(node, "spawn_service_wait_timeout", 120.0)),
@@ -279,10 +325,10 @@ def spawn_model_ignition(node, world_name, model_name, model_sdf, pose):
             return False
 
         cmd = [
-            "ign", "service",
+            *sim_cli["service"],
             "-s", service,
-            "--reqtype", "ignition.msgs.EntityFactory",
-            "--reptype", "ignition.msgs.Boolean",
+            "--reqtype", sim_cli["entity_factory_type"],
+            "--reptype", sim_cli["boolean_type"],
             "--timeout", "10000",
             "--req", req,
         ]
@@ -292,9 +338,6 @@ def spawn_model_ignition(node, world_name, model_name, model_sdf, pose):
             proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
             if proc.returncode == 0 and "data: true" in proc.stdout:
                 node.get_logger().info(f"Spawned '{model_name}' in world '{world_name}'")
-                node.get_logger().debug(
-                    f"Keeping temporary SDF file for Gazebo Sim async load: {tmp_sdf}"
-                )
                 return True
 
             if proc.returncode == 0 and "data: false" in proc.stdout:
@@ -316,10 +359,6 @@ def spawn_model_ignition(node, world_name, model_name, model_sdf, pose):
         )
         return False
     finally:
-        # Gazebo Sim resolves sdf_filename asynchronously after the create service
-        # returns, so deleting the file here can race the actual model insertion.
-        # Intentionally leave the file in /tmp (small leak) until we move to an
-        # inline `sdf:` EntityFactory request.
         pass
 
 
@@ -332,7 +371,7 @@ def main(args=None):
     semantic_description_name = get_param(node, "semantic_description")
     initial_xyz = parse_vector_param(get_param(node, "initial_xyz", [0.0, 0.0, 0.0]), [0.0, 0.0, 0.0])
     initial_rpy = parse_vector_param(get_param(node, "initial_rpy", [0.0, 0.0, 0.0]), [0.0, 0.0, 0.0])
-    ignition_world_name = resolve_ignition_world_name(node)
+    sim_world_name = resolve_sim_world_name(node)
 
     spawn_entity_name = robot_name or model_name
 
@@ -388,7 +427,7 @@ def main(args=None):
         except (PackageNotFoundError, RuntimeError, ET.ParseError) as exc:
             node.get_logger().warn(f"Failed to inject Gazebo Sim standdown joint reset plugin: {exc}")
 
-    if not spawn_model_ignition(node, ignition_world_name, spawn_entity_name, model_sdf, pose):
+    if not spawn_model_sim(node, sim_world_name, spawn_entity_name, model_sdf, pose):
         rclpy.shutdown()
         sys.exit(1)
 

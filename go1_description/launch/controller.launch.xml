@@ -24,6 +24,7 @@
   <arg name="world_name"         default="empty" description="load a specific world" />
   <arg name="world_file" default="$(find-pkg-share wolf_gazebo_resources)/worlds/$(var world_name).world"
        description="load a specific world file" />
+  <arg name="simulator"          default="gz" description="Gazebo CLI family to use for world interaction" />
   <arg name="load_global_gazebo_systems" default="true" description="load Gazebo Sim global sensor systems" />
 
   <!-- GUI related arguments -->
@@ -37,6 +38,7 @@
   <!-- Odometry arguments -->
   <arg name="publish_odom_msg"   default="true" description="publish nav_msgs/Odometry" />
   <arg name="publish_odom_tf"    default="true" description="publish odom tf frame" />
+  <arg name="controller_params_file" default="/tmp/wolf_controller_params/go1_params_$(var robot_name).ros2.yaml" description="shared resolved ROS2 controller params file" />
 
   <!-- Planner arguments -->
   <arg name="launch_planner"     default="false" description="launch the MPC planner" />
@@ -61,6 +63,7 @@
     <arg name="initial_rpy"         value="$(var initial_rpy)" />
     <arg name="world_name"          value="$(var world_name)" />
     <arg name="world_file"          value="$(var world_file)" />
+    <arg name="simulator"           value="$(var simulator)" />
     <arg name="load_global_gazebo_systems" value="$(var load_global_gazebo_systems)" />
     <arg name="gazebo_gui"          value="$(var gazebo_gui)" />
     <arg name="plotjuggler_gui"     value="$(var plotjuggler_gui)" />
@@ -70,6 +73,7 @@
     <arg name="full_gui"            value="$(var full_gui)" />
     <arg name="publish_odom_msg"    value="$(var publish_odom_msg)" />
     <arg name="publish_odom_tf"     value="$(var publish_odom_tf)" />
+    <arg name="controller_params_file" value="$(var controller_params_file)" />
     <arg name="launch_planner"      value="$(var launch_planner)" />
   </include>
 

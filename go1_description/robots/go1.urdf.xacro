@@ -11,7 +11,7 @@
     <xacro:arg name="robot_model"        default="go1"/>
     <xacro:arg name="robot_name"         default=""/>
     <xacro:arg name="base_name"          default="base_link"/>
-    <xacro:arg name="simulator"          default="ignition"/>
+    <xacro:arg name="simulator"          default="gz"/>
 
     <!-- load generic materials -->
     <xacro:include filename="$(find wolf_description_utils)/urdfs/materials.xacro"/>

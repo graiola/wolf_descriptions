@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 
 import os
+import shutil
 import sys
 
 import rclpy
-from ament_index_python.packages import get_package_share_directory, get_package_prefix, PackageNotFoundError
+from ament_index_python.packages import (
+    PackageNotFoundError,
+    get_package_prefix,
+    get_package_share_directory,
+)
 
 
 def _prepend_env_path(var_name, path):
@@ -17,15 +22,12 @@ def _prepend_env_path(var_name, path):
         os.environ[var_name] = path
 
 
-def _maybe_prepend_pkg_lib(var_names, pkg_name):
+def _maybe_prepend_pkg_lib(pkg_name):
     try:
         prefix = get_package_prefix(pkg_name)
     except PackageNotFoundError:
         return
-
-    lib_path = os.path.join(prefix, "lib")
-    for var_name in var_names:
-        _prepend_env_path(var_name, lib_path)
+    _prepend_env_path("GZ_SIM_SYSTEM_PLUGIN_PATH", os.path.join(prefix, "lib"))
 
 
 def _parse_bool(value, default=False):
@@ -41,7 +43,7 @@ def _parse_bool(value, default=False):
 def main(args=None):
     rclpy.init(args=args)
     node = rclpy.create_node(
-        "ignition_world",
+        "gz_world",
         allow_undeclared_parameters=False,
         automatically_declare_parameters_from_overrides=True,
     )
@@ -51,7 +53,7 @@ def main(args=None):
     gui = _parse_bool(node.get_parameter("gui").value, default=True)
     headless = _parse_bool(node.get_parameter("headless").value, default=False)
     debug = _parse_bool(node.get_parameter("debug").value, default=False)
-    _engine = node.get_parameter("engine").value
+    simulator = str(node.get_parameter("simulator").value or "").strip().lower()
 
     if not world_file:
         node.get_logger().error("Missing 'world_file' parameter")
@@ -63,22 +65,25 @@ def main(args=None):
         rclpy.shutdown()
         sys.exit(1)
 
+    if simulator and simulator not in ("gz", "gazebo", "gazebo_sim", "gazebo-sim"):
+        node.get_logger().warn(
+            f"Requested simulator '{simulator}' is no longer supported on the active ROS2 branch. Using gz sim."
+        )
+
+    if not shutil.which("gz"):
+        node.get_logger().error("The 'gz' command is not available in the environment.")
+        rclpy.shutdown()
+        sys.exit(1)
+
     resources_share = get_package_share_directory("wolf_gazebo_resources")
     worlds_path = os.path.join(resources_share, "worlds")
     models_path = os.path.join(resources_share, "models")
-    _prepend_env_path("IGN_GAZEBO_RESOURCE_PATH", worlds_path)
-    _prepend_env_path("IGN_GAZEBO_RESOURCE_PATH", models_path)
     _prepend_env_path("GZ_SIM_RESOURCE_PATH", worlds_path)
     _prepend_env_path("GZ_SIM_RESOURCE_PATH", models_path)
-    # Prefer gz_ros2_control on Humble; fallback to ign_ros2_control only if needed.
-    try:
-        get_package_prefix("gz_ros2_control")
-        _maybe_prepend_pkg_lib(("IGN_GAZEBO_SYSTEM_PLUGIN_PATH", "GZ_SIM_SYSTEM_PLUGIN_PATH"), "gz_ros2_control")
-    except PackageNotFoundError:
-        _maybe_prepend_pkg_lib(("IGN_GAZEBO_SYSTEM_PLUGIN_PATH", "GZ_SIM_SYSTEM_PLUGIN_PATH"), "ign_ros2_control")
-    _maybe_prepend_pkg_lib(("IGN_GAZEBO_SYSTEM_PLUGIN_PATH", "GZ_SIM_SYSTEM_PLUGIN_PATH"), "wolf_description_utils")
+    _maybe_prepend_pkg_lib("gz_ros2_control")
+    _maybe_prepend_pkg_lib("wolf_description_utils")
 
-    cmd = ["ign", "gazebo"]
+    cmd = ["gz", "sim"]
     if headless or not gui:
         cmd.append("-s")
     if not paused:
@@ -87,7 +92,7 @@ def main(args=None):
         cmd.extend(["-v", "4"])
     cmd.append(world_file)
 
-    node.get_logger().info("Launching Gazebo Sim (Ignition/Fortress): %s" % " ".join(cmd))
+    node.get_logger().info("Launching Gazebo Sim via gz: %s" % " ".join(cmd))
     node.destroy_node()
     rclpy.shutdown()
     os.execvpe(cmd[0], cmd, os.environ.copy())

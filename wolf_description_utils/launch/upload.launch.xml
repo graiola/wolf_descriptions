@@ -5,8 +5,9 @@
     <arg name="robot_name"    default=""/>
     <arg name="period"        default="0.001"/>
     <arg name="arm_name"      default=""/>
-    <arg name="simulator"     default="ignition"/>
+    <arg name="simulator"     default="gz"/>
     <arg name="load_global_gazebo_systems" default="true"/>
+    <arg name="controller_params_file" default="/tmp/wolf_controller_params/$(var robot_model)_params_$(var robot_name).ros2.yaml"/>
     <arg name="urdf_file"     default="$(find-pkg-share $(var robot_model)_description)/robots/$(var robot_model).urdf.xacro"/>
     <arg name="srdf_file"     default="$(find-pkg-share $(var robot_model)_description)/robots/$(var robot_model).srdf.xacro"/>
     <arg name="srdf_file_arm" default="$(find-pkg-share $(var robot_model)_description)/robots/$(var robot_model)_$(var arm_name).srdf.xacro"/>
@@ -34,6 +35,7 @@
         <param name="period"             value="$(var period)"/>
         <param name="simulator"          value="$(var simulator)"/>
         <param name="load_global_gazebo_systems" value="$(var load_global_gazebo_systems)"/>
+        <param name="controller_params_file" value="$(var controller_params_file)"/>
         <param name="output_name"        value="description"/>
     </node>
 
@@ -47,6 +49,7 @@
         <param name="period"             value="$(var period)"/>
         <param name="simulator"          value="$(var simulator)"/>
         <param name="load_global_gazebo_systems" value="$(var load_global_gazebo_systems)"/>
+        <param name="controller_params_file" value="$(var controller_params_file)"/>
         <param name="output_name"        value="description"/>
     </node>
 

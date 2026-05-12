@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:arg name="simulator" default="ignition"/>
+  <xacro:arg name="simulator" default="gz"/>
 
   <xacro:include filename="$(find sensors_description)/urdfs/common.xacro"/>
   <xacro:include filename="$(find sensors_description)/urdfs/sensors/depth_camera.gazebo.xacro"/>

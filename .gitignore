@@ -3,3 +3,4 @@
 *.autosave
 *.~
 *.ddeb
+__pycache__/

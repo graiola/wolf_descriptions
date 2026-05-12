@@ -1,5 +1,8 @@
 /${TF_PREFIX}/twist_mux:
   ros__parameters:
+    # Jazzy defaults to stamped twists, but Husky's existing command sources
+    # still publish geometry_msgs/msg/Twist.
+    use_stamped: false
     topics:
       keyboard:
         topic: keyboard
