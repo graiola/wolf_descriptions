@@ -3,6 +3,8 @@
 import os
 import shutil
 import sys
+import tempfile
+import xml.etree.ElementTree as ET
 
 import rclpy
 from ament_index_python.packages import (
@@ -38,6 +40,28 @@ def _parse_bool(value, default=False):
     if isinstance(value, str):
         return value.strip().lower() in ("1", "true", "yes", "on")
     return bool(value)
+
+
+def _ensure_world_plugin(world_file, plugin_name, plugin_filename):
+    tree = ET.parse(world_file)
+    root = tree.getroot()
+    world = root.find("world")
+    if world is None:
+        return world_file, False
+
+    for plugin in world.findall("plugin"):
+        if plugin.get("name") == plugin_name:
+            return world_file, False
+
+    plugin = ET.Element("plugin")
+    plugin.set("filename", plugin_filename)
+    plugin.set("name", plugin_name)
+    world.insert(0, plugin)
+
+    fd, patched_world = tempfile.mkstemp(prefix="wolf_gz_world_", suffix=".world")
+    os.close(fd)
+    tree.write(patched_world, encoding="utf-8", xml_declaration=True)
+    return patched_world, True
 
 
 def main(args=None):
@@ -83,6 +107,61 @@ def main(args=None):
     _maybe_prepend_pkg_lib("gz_ros2_control")
     _maybe_prepend_pkg_lib("wolf_description_utils")
 
+    world_file_to_launch, injected_physics_plugin = _ensure_world_plugin(
+        world_file,
+        "gz::sim::systems::Physics",
+        "ignition-gazebo-physics-system",
+    )
+    world_file_to_launch, injected_scene_plugin = _ensure_world_plugin(
+        world_file_to_launch,
+        "gz::sim::systems::SceneBroadcaster",
+        "ignition-gazebo-scene-broadcaster-system",
+    )
+    world_file_to_launch, injected_user_commands_plugin = _ensure_world_plugin(
+        world_file_to_launch,
+        "gz::sim::systems::UserCommands",
+        "ignition-gazebo-user-commands-system",
+    )
+    world_file_to_launch, injected_sensors_plugin = _ensure_world_plugin(
+        world_file_to_launch,
+        "gz::sim::systems::Sensors",
+        "gz-sim-sensors-system",
+    )
+    if injected_sensors_plugin:
+        tree = ET.parse(world_file_to_launch)
+        root = tree.getroot()
+        world = root.find("world")
+        if world is not None:
+            for plugin in world.findall("plugin"):
+                if plugin.get("name") == "gz::sim::systems::Sensors" and plugin.find("render_engine") is None:
+                    render_engine = ET.Element("render_engine")
+                    render_engine.text = "ogre2"
+                    plugin.append(render_engine)
+                    tree.write(world_file_to_launch, encoding="utf-8", xml_declaration=True)
+                    break
+
+    world_file_to_launch, injected_imu_plugin = _ensure_world_plugin(
+        world_file_to_launch,
+        "gz::sim::systems::Imu",
+        "gz-sim-imu-system",
+    )
+    world_file_to_launch, injected_navsat_plugin = _ensure_world_plugin(
+        world_file_to_launch,
+        "gz::sim::systems::NavSat",
+        "gz-sim-navsat-system",
+    )
+    if (
+        injected_physics_plugin
+        or injected_scene_plugin
+        or injected_user_commands_plugin
+        or injected_sensors_plugin
+        or injected_imu_plugin
+        or injected_navsat_plugin
+    ):
+        node.get_logger().info(
+            "Injected missing global Gazebo world systems into world file before launch."
+        )
+
     cmd = ["gz", "sim"]
     if headless or not gui:
         cmd.append("-s")
@@ -90,7 +169,7 @@ def main(args=None):
         cmd.append("-r")
     if debug:
         cmd.extend(["-v", "4"])
-    cmd.append(world_file)
+    cmd.append(world_file_to_launch)
 
     node.get_logger().info("Launching Gazebo Sim via gz: %s" % " ".join(cmd))
     node.destroy_node()
