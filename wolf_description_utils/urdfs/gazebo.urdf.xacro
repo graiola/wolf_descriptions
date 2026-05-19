@@ -30,6 +30,7 @@
 	                        <!--<remapping>tf:=$(arg robot_name)/tf</remapping>-->
 	                        <remapping>wolf_controller/odom:=odometry/robot</remapping>
 	                        <remapping>diffdrive_controller/odom:=odometry/robot</remapping>
+							<remapping>ackermann_steering_controller/odom:=odometry/robot</remapping>
 	                </ros>
                 <parameters>$(arg controller_params_file)</parameters>
         </plugin>
