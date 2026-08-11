@@ -64,6 +64,11 @@ def _ensure_world_plugin(world_file, plugin_name, plugin_filename):
     return patched_world, True
 
 
+def resolve_system_plugin_prefix(distro: str = None) -> str:
+    ros_distro = (distro or os.environ.get("ROS_DISTRO", "jazzy")).lower()
+    return "gz-sim" if ros_distro in ("jazzy", "rolling") else "ignition-gazebo"
+
+
 def main(args=None):
     rclpy.init(args=args)
     node = rclpy.create_node(
@@ -107,25 +112,28 @@ def main(args=None):
     _maybe_prepend_pkg_lib("gz_ros2_control")
     _maybe_prepend_pkg_lib("wolf_description_utils")
 
+    ros_distro = os.environ.get("ROS_DISTRO", "jazzy").lower()
+    system_prefix = resolve_system_plugin_prefix(ros_distro)
+
     world_file_to_launch, injected_physics_plugin = _ensure_world_plugin(
         world_file,
         "gz::sim::systems::Physics",
-        "ignition-gazebo-physics-system",
+        f"{system_prefix}-physics-system",
     )
     world_file_to_launch, injected_scene_plugin = _ensure_world_plugin(
         world_file_to_launch,
         "gz::sim::systems::SceneBroadcaster",
-        "ignition-gazebo-scene-broadcaster-system",
+        f"{system_prefix}-scene-broadcaster-system",
     )
     world_file_to_launch, injected_user_commands_plugin = _ensure_world_plugin(
         world_file_to_launch,
         "gz::sim::systems::UserCommands",
-        "ignition-gazebo-user-commands-system",
+        f"{system_prefix}-user-commands-system",
     )
     world_file_to_launch, injected_sensors_plugin = _ensure_world_plugin(
         world_file_to_launch,
         "gz::sim::systems::Sensors",
-        "gz-sim-sensors-system",
+        "gz-sim-sensors-system" if ros_distro in ("jazzy", "rolling") else "ignition-gazebo-sensors-system",
     )
     if injected_sensors_plugin:
         tree = ET.parse(world_file_to_launch)
@@ -143,12 +151,22 @@ def main(args=None):
     world_file_to_launch, injected_imu_plugin = _ensure_world_plugin(
         world_file_to_launch,
         "gz::sim::systems::Imu",
-        "gz-sim-imu-system",
+        f"{system_prefix}-imu-system",
     )
     world_file_to_launch, injected_navsat_plugin = _ensure_world_plugin(
         world_file_to_launch,
         "gz::sim::systems::NavSat",
-        "gz-sim-navsat-system",
+        f"{system_prefix}-navsat-system",
+    )
+    world_file_to_launch, injected_air_pressure_plugin = _ensure_world_plugin(
+        world_file_to_launch,
+        "gz::sim::systems::AirPressure",
+        f"{system_prefix}-air-pressure-system",
+    )
+    world_file_to_launch, injected_magnetometer_plugin = _ensure_world_plugin(
+        world_file_to_launch,
+        "gz::sim::systems::Magnetometer",
+        f"{system_prefix}-magnetometer-system",
     )
     if (
         injected_physics_plugin
@@ -157,6 +175,8 @@ def main(args=None):
         or injected_sensors_plugin
         or injected_imu_plugin
         or injected_navsat_plugin
+        or injected_air_pressure_plugin
+        or injected_magnetometer_plugin
     ):
         node.get_logger().info(
             "Injected missing global Gazebo world systems into world file before launch."

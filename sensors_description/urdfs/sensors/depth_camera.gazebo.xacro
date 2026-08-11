@@ -35,13 +35,24 @@
       <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
     </joint>
 
+    <!-- REP-103 camera convention boundary.
+         The Gazebo RGB-D samples use the ROS optical convention (x right,
+         y down, z forward).  Keep the mechanical link in the normal ROS body
+         convention and publish sensor samples in an explicit optical child. -->
+    <link name="${name}_optical_frame"/>
+    <joint name="${name}_optical_joint" type="fixed">
+      <parent link="${name}_link"/>
+      <child link="${name}_optical_frame"/>
+      <origin xyz="0 0 0" rpy="-${pi / 2} 0 -${pi / 2}"/>
+    </joint>
+
     <xacro:if value="${namespace == ''}">
       <xacro:property name="camera_topic_ns" value="${name}"/>
-      <xacro:property name="camera_frame_id" value="${name + '_link'}"/>
+      <xacro:property name="camera_frame_id" value="${name + '_optical_frame'}"/>
     </xacro:if>
     <xacro:if value="${namespace != ''}">
       <xacro:property name="camera_topic_ns" value="${namespace + '/' + name}"/>
-      <xacro:property name="camera_frame_id" value="${namespace + '/' + name + '_link'}"/>
+      <xacro:property name="camera_frame_id" value="${namespace + '/' + name + '_optical_frame'}"/>
     </xacro:if>
 
     <!-- Gazebo Sim RGB-D camera sensor.
