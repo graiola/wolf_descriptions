@@ -4,6 +4,7 @@
 
 import math
 import pathlib
+import shutil
 import subprocess
 import tempfile
 import xml.etree.ElementTree as ET
@@ -15,6 +16,22 @@ MACRO_PATH = (
     / "sensors"
     / "depth_camera.gazebo.xacro"
 )
+
+XACRO_NS = "http://ros.org/wiki/xacro"
+
+
+def _load_macro_body() -> ET.Element:
+    """Parse the *production* xacro file directly (no xacro binary needed).
+
+    This is a hermetic, deterministic proof that the shipped
+    depth_camera.gazebo.xacro carries the truthful REP-103 optical topology
+    and gz_frame_id binding, independent of whether a `xacro` renderer is
+    installed in the environment.
+    """
+    tree = ET.parse(MACRO_PATH)
+    macro = tree.getroot().find(f"{{{XACRO_NS}}}macro")
+    assert macro is not None, "depth_camera macro not found in production xacro"
+    return macro
 
 
 def render_camera(namespace: str) -> ET.Element:
@@ -36,16 +53,101 @@ def render_camera(namespace: str) -> ET.Element:
       origin_rpy="0 0 0"/>
 </robot>
 """
+    xacro_bin = (
+        shutil.which("xacro")
+        or (pathlib.Path("/opt/ros/jazzy/bin/xacro") if pathlib.Path("/opt/ros/jazzy/bin/xacro").exists() else None)
+        or (pathlib.Path("/opt/ros/humble/bin/xacro") if pathlib.Path("/opt/ros/humble/bin/xacro").exists() else None)
+        or "xacro"
+    )
+    import os
+    env = dict(os.environ)
+    env.pop("PYTHONNOUSERSITE", None)
+    ros_paths = []
+    for ros_dir in ["/opt/ros/jazzy", "/opt/ros/humble"]:
+        if pathlib.Path(ros_dir).exists():
+            bin_dir = f"{ros_dir}/bin"
+            if bin_dir not in env.get("PATH", ""):
+                env["PATH"] = f"{bin_dir}:{env.get('PATH', '')}"
+            for sub in ["lib/python3.10/site-packages", "local/lib/python3.10/dist-packages", "lib/python3/dist-packages"]:
+                p = f"{ros_dir}/{sub}"
+                if pathlib.Path(p).exists():
+                    ros_paths.append(p)
+    if ros_paths:
+        env["PYTHONPATH"] = ":".join(ros_paths) + ":" + env.get("PYTHONPATH", "")
+
     with tempfile.NamedTemporaryFile(mode="w", suffix=".urdf.xacro") as source:
         source.write(wrapper)
         source.flush()
-        rendered = subprocess.run(
-            ["xacro", source.name],
-            check=True,
-            capture_output=True,
-            text=True,
-        ).stdout
+        try:
+            rendered = subprocess.run(
+                [str(xacro_bin), source.name],
+                check=True,
+                capture_output=True,
+                text=True,
+                env=env,
+            ).stdout
+        except subprocess.CalledProcessError as e:
+            raise RuntimeError(f"xacro failed (code {e.returncode}):\nSTDOUT: {e.stdout}\nSTDERR: {e.stderr}") from e
     return ET.fromstring(rendered)
+
+
+def test_production_xacro_declares_rep103_optical_topology():
+    """F1: the shipped xacro must define the static optical TF topology.
+
+    Parses the real production file (not a self-declared expectation) and
+    asserts the ${name}_optical_frame child, its fixed joint under
+    ${name}_link, and the REP-103 rotation (rpy = -pi/2 0 -pi/2).
+    """
+    macro = _load_macro_body()
+
+    optical_link = macro.find("./link[@name='${name}_optical_frame']")
+    assert optical_link is not None, "missing ${name}_optical_frame link"
+
+    joint = macro.find("./joint[@name='${name}_optical_joint']")
+    assert joint is not None, "missing ${name}_optical_joint"
+    assert joint.attrib.get("type") == "fixed"
+    assert joint.find("parent").attrib["link"] == "${name}_link"
+    assert joint.find("child").attrib["link"] == "${name}_optical_frame"
+
+    # REP-103 body->optical rotation, expressed with xacro's pi property.
+    rpy = joint.find("origin").attrib["rpy"].split()
+    assert rpy == ["-${pi", "/", "2}", "0", "-${pi", "/", "2}"], (
+        f"unexpected optical rotation: {joint.find('origin').attrib['rpy']!r}"
+    )
+
+
+def test_production_xacro_binds_sensor_frame_to_optical_not_map():
+    """F2 / R03-AC3: the sensor must publish its truthful optical frame.
+
+    The Gazebo sensor gz_frame_id must resolve to the declared
+    camera_frame_id, and that property must be the *_optical_frame -- never
+    a map/world frame -- so optical coordinates are not relabeled as map
+    coordinates at the producer.
+    """
+    macro = _load_macro_body()
+
+    gz_frame = macro.find(".//gz_frame_id")
+    assert gz_frame is not None, "missing gz_frame_id on the RGB-D sensor"
+    assert gz_frame.text == "${camera_frame_id}", (
+        f"sensor frame must bind to the declared camera_frame_id, got "
+        f"{gz_frame.text!r}"
+    )
+
+    # camera_frame_id must be defined as the optical frame in both the
+    # namespaced and un-namespaced branches, and must not be a map frame.
+    frame_values = [
+        prop.attrib["value"]
+        for prop in macro.iter(f"{{{XACRO_NS}}}property")
+        if prop.attrib.get("name") == "camera_frame_id"
+    ]
+    assert frame_values, "camera_frame_id property is not declared"
+    for value in frame_values:
+        assert "_optical_frame" in value, (
+            f"camera_frame_id must reference the optical frame, got {value!r}"
+        )
+        assert "map" not in value and "world" not in value, (
+            f"camera_frame_id must not relabel to a map/world frame: {value!r}"
+        )
 
 
 def test_namespaced_camera_renders_truthful_optical_child_and_sensor_frame():
