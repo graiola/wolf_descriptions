@@ -24,6 +24,7 @@
     <arg name="initial_rpy"   default="[0,0,0]"  description="initial robot rpy position in the world"/>
     <arg name="world_name"    default="empty"    description="load a specific world from wolf_gazebo_resources"/>
     <arg name="world_file"    default="$(find-pkg-share wolf_gazebo_resources)/worlds/$(var world_name).world" description="load a specific world file"/>
+    <arg name="sim_world_name" default="$(var world_name)" description="shared Gazebo Sim world name for service resolution"/>
     <arg name="simulator"     default="gz"       description="Gazebo CLI family to use for world interaction"/>
     <arg name="load_global_gazebo_systems" default="true" description="load Gazebo Sim global sensor systems for this robot"/>
 
@@ -112,6 +113,7 @@
             <param name="initial_rpy"              value="$(var initial_rpy)"/>
             <param name="world_file"               value="$(var world_file)"/>
             <param name="simulator"                value="$(var simulator)"/>
+            <param name="sim_world_name"           value="$(var sim_world_name)"/>
         </node>
 
         <!-- Convert joint states to TF transforms for rviz, etc -->
@@ -192,14 +194,9 @@
             <remap from="cmd_vel_out" to="diffdrive_controller/cmd_vel"/>
         </node>
 
-        <group if="$(eval '\'$(var robot_name)\' == \'\'')">
-            <node pkg="topic_tools" exec="relay" name="cmdvel_to_wolf" output="screen"
-                args="/diffdrive_controller/cmd_vel_unstamped /wolf_controller/twist" />
-        </group>
-        <group if="$(eval '\'$(var robot_name)\' != \'\'')">
-            <node pkg="topic_tools" exec="relay" name="$(var robot_name)_cmdvel_to_wolf" output="screen"
-                args="/$(var robot_name)/diffdrive_controller/cmd_vel_unstamped /$(var robot_name)/wolf_controller/twist" />
-        </group>
+        <!-- No relay from the mux output back into wolf_controller/twist: twist is
+             a mux input, so echoing the output there latches the last command
+             and keeps the base moving after navigation stops publishing. -->
 
         <!-- Mirror the ROS1 Husky launch: navigation/localization expects the
              generic odometry/robot topic, while diff_drive_controller publishes
