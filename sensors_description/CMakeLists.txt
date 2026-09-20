@@ -14,6 +14,10 @@ elseif(${ament_cmake_FOUND})
         test_depth_camera_contract
         test/test_depth_camera_contract.py
         TIMEOUT 30)
+      ament_add_pytest_test(
+        test_rgb_camera_contract
+        test/test_rgb_camera_contract.py
+        TIMEOUT 30)
     endif()
     ament_package()
 

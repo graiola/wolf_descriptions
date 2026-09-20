@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="rgb_camera" params="
+    name namespace update_rate image_width image_height fov near far parent_link origin_xyz origin_rpy
+  ">
+    
+    <!-- Camera Link -->
+    <link name="${name}_link">
+      <visual>
+        <geometry>
+          <box size="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="Black">
+          <color rgba="0 0 0 1"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.001"/>
+        <inertia ixx="1e-05" ixy="0.0" ixz="0.0"
+                 iyy="1e-05" iyz="0.0"
+                 izz="1e-05"/>
+      </inertial>
+    </link>
+
+    <!-- Fixed Joint to Parent -->
+    <joint name="${name}_joint" type="fixed">
+      <parent link="${parent_link}"/>
+      <child link="${name}_link"/>
+      <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
+    </joint>
+
+    <!-- REP-103 camera convention boundary.
+         The Gazebo RGB samples use the ROS optical convention (x right,
+         y down, z forward).  Keep the mechanical link in the normal ROS body
+         convention and publish sensor samples in an explicit optical child. -->
+    <link name="${name}_optical_frame"/>
+    <joint name="${name}_optical_joint" type="fixed">
+      <parent link="${name}_link"/>
+      <child link="${name}_optical_frame"/>
+      <origin xyz="0 0 0" rpy="-${pi / 2} 0 -${pi / 2}"/>
+    </joint>
+
+    <xacro:if value="${namespace == ''}">
+      <xacro:property name="camera_topic_ns" value="${name}"/>
+      <xacro:property name="camera_frame_id" value="${name + '_optical_frame'}"/>
+    </xacro:if>
+    <xacro:if value="${namespace != ''}">
+      <xacro:property name="camera_topic_ns" value="${namespace + '/' + name}"/>
+      <xacro:property name="camera_frame_id" value="${namespace + '/' + name + '_optical_frame'}"/>
+    </xacro:if>
+
+    <!-- Gazebo Sim RGB camera sensor.
+         It publishes ${camera_topic_ns}/image and ${camera_topic_ns}/camera_info. -->
+    <gazebo reference="${name}_link">
+      <sensor type="camera" name="${name}">
+        <update_rate>${update_rate}</update_rate>
+        <always_on>true</always_on>
+        <pose>${origin_xyz} ${origin_rpy}</pose>
+        <topic>${camera_topic_ns}/image</topic>
+        <camera_info_topic>${camera_topic_ns}/camera_info</camera_info_topic>
+        <gz_frame_id>${camera_frame_id}</gz_frame_id>
+
+        <camera name="${name}">
+          <horizontal_fov>${fov}</horizontal_fov>
+          <image>
+            <width>${image_width}</width>
+            <height>${image_height}</height>
+            <format>R8G8B8</format> <!-- RGB format -->
+          </image>
+          <clip>
+            <near>${near}</near>
+            <far>${far}</far>
+          </clip>
+        </camera>
+
+      </sensor>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>
